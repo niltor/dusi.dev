@@ -4,7 +4,7 @@ namespace Core.Entities.EntityDesign;
 /// <summary>
 /// 属性的约束
 /// </summary>
-public class EntityMemberConstraint
+public class EntityMemberConstraint : EntityBase
 {
     /// <summary>
     /// 字符串最长长度
@@ -31,5 +31,6 @@ public class EntityMemberConstraint
     /// 所属属性
     /// </summary>
     public required EntityMember EntityMember { get; set; }
+    public Guid EntityMemberId { get; set; }
 
 }

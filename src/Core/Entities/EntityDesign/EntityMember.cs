@@ -78,6 +78,7 @@ public class EntityMember : EntityBase
     /// 对象类型
     /// </summary>
     public EntityModel? ObjectType { get; set; }
+    public Guid? ObjectTypeId { get; set; }
 
     /// <summary>
     /// 所属模型
