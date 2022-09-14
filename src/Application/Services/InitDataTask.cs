@@ -4,28 +4,35 @@ public class InitDataTask
 {
     public static async Task InitDataAsync(IServiceProvider provider)
     {
-        var context = provider.GetRequiredService<ContextBase>();
+        var context = provider.GetRequiredService<CommandDbContext>();
         try
         {
-            // 判断是否初始化
-            var role = await context.Roles.SingleOrDefaultAsync(r => r.Name.ToLower() == "admin");
-            if (role == null)
+            if (!await context.Database.CanConnectAsync())
             {
-                Console.WriteLine("初始化数据");
-                await InitRoleAndUserAsync(context);
+                Console.WriteLine("数据库无法连接，请先配置数据库！");
             }
+            else
+            {
+                // 判断是否初始化
+                var role = await context.Roles.SingleOrDefaultAsync(r => r.Name.ToLower() == "admin");
+                if (role == null)
+                {
+                    Console.WriteLine("初始化数据");
+                    await InitRoleAndUserAsync(context);
+                }
+            }
+
         }
         catch (Exception ex)
         {
-
-            Console.WriteLine("请检查数据库配置:" + ex.Message);
+            Console.WriteLine("初始化异常,请检查数据库配置：" + ex.Message);
         }
     }
 
     /// <summary>
     /// 初始化角色和管理用户
     /// </summary>
-    public static async Task InitRoleAndUserAsync(ContextBase context)
+    public static async Task InitRoleAndUserAsync(CommandDbContext context)
     {
         var role = new Role()
         {

@@ -160,7 +160,7 @@ public class CommandStoreBase<TContext, TEntity> : ICommandStore<TEntity>, IComm
     /// <returns></returns>
     public virtual async Task<int> DeleteRangeAsync(List<Guid> ids)
     {
-        //return await _db.Where(d => ids.Contains(d.Id)).BatchDeleteAsync();
+        //return await _db.Where(d => ids.Contains(d.Id)).ExecuteDeleteAsync();
         throw new NotImplementedException();
 
     }
