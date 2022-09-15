@@ -21,7 +21,6 @@ public class InitDataTask
                     await InitRoleAndUserAsync(context);
                 }
             }
-
         }
         catch (Exception ex)
         {

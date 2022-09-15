@@ -1,5 +1,4 @@
 ﻿using Core.Entities.EntityDesign;
-
 namespace Core.Entities.Codes;
 /// <summary>
 /// 实体属性
