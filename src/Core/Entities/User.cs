@@ -56,3 +56,9 @@ public class User : EntityBase
     public ICollection<Role>? Roles { get; set; }
 }
 
+public enum SexType
+{
+    Male,
+    Female,
+    Else
+}

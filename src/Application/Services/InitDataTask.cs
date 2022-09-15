@@ -5,11 +5,13 @@ public class InitDataTask
     public static async Task InitDataAsync(IServiceProvider provider)
     {
         var context = provider.GetRequiredService<CommandDbContext>();
+        var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
+        var logger = loggerFactory.CreateLogger<InitDataTask>();
         try
         {
             if (!await context.Database.CanConnectAsync())
             {
-                Console.WriteLine("数据库无法连接，请先配置数据库！");
+                logger.LogError("数据库无法连接，请先配置数据库！");
             }
             else
             {
@@ -17,14 +19,14 @@ public class InitDataTask
                 var role = await context.Roles.SingleOrDefaultAsync(r => r.Name.ToLower() == "admin");
                 if (role == null)
                 {
-                    Console.WriteLine("初始化数据");
+                    logger.LogInformation("初始化数据");
                     await InitRoleAndUserAsync(context);
                 }
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine("初始化异常,请检查数据库配置：" + ex.Message);
+            logger.LogError("初始化异常,请检查数据库配置：" + ex.Message);
         }
     }
 

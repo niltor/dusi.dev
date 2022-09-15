@@ -1,11 +1,35 @@
+using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using Application.Implement;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.Generation.Processors.Security;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
+
+#region logger
+// config logger
+var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "unknown";
+Action<ResourceBuilder> configureResource = r => r.AddService(
+    "dusi.dev", serviceVersion: assemblyVersion, serviceInstanceId: Environment.MachineName);
+builder.Logging.ClearProviders();
+builder.Logging.AddOpenTelemetry(options =>
+{
+    options.AddConsoleExporter();
+});
+
+builder.Services.Configure<OpenTelemetryLoggerOptions>(opt =>
+{
+    opt.IncludeScopes = true;
+    opt.ParseStateValues = true;
+    opt.IncludeFormattedMessage = true;
+});
+#endregion
 
 var services = builder.Services;
 var configuration = builder.Configuration;
@@ -29,6 +53,9 @@ services.AddDbContextPool<CommandDbContext>(option =>
     });
 });
 
+services.AddDataStore();
+services.AddManager();
+
 // redis
 //builder.Services.AddStackExchangeRedisCache(options =>
 //{
@@ -36,7 +63,6 @@ services.AddDbContextPool<CommandDbContext>(option =>
 //    options.InstanceName = builder.Configuration.GetConnectionString("RedisInstanceName");
 //});
 //services.AddSingleton(typeof(RedisService));
-
 
 #region 接口相关内容:jwt/授权/cors
 // use jwt
@@ -48,9 +74,15 @@ services.AddAuthentication(options =>
 .AddJwtBearer(cfg =>
 {
     cfg.SaveToken = true;
+    var sign = configuration.GetSection("Jwt")["Sign"];
+    if (string.IsNullOrEmpty(sign))
+    {
+        throw new Exception("未找到有效的jwt配置");
+    }
     cfg.TokenValidationParameters = new TokenValidationParameters()
     {
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Jwt")["Sign"])),
+
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(sign)),
         ValidIssuer = configuration.GetSection("Jwt")["Issuer"],
         ValidAudience = configuration.GetSection("Jwt")["Audience"],
         ValidateIssuer = true,
@@ -103,6 +135,7 @@ services.AddOpenApiDocument(c =>
     });
     c.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
 });
+
 services.AddControllers()
     .ConfigureApiBehaviorOptions(o =>
     {
