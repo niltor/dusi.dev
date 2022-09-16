@@ -20,6 +20,7 @@ Action<ResourceBuilder> configureResource = r => r.AddService(
 builder.Logging.ClearProviders();
 builder.Logging.AddOpenTelemetry(options =>
 {
+    options.ConfigureResource(configureResource);
     options.AddConsoleExporter();
 });
 

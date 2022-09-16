@@ -7,6 +7,10 @@ public class InitDataTask
         var context = provider.GetRequiredService<CommandDbContext>();
         var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
         var logger = loggerFactory.CreateLogger<InitDataTask>();
+
+        var connectionString = context.Database.GetConnectionString();
+        logger.LogInformation("当前数据库:" + connectionString);
+
         try
         {
             if (!await context.Database.CanConnectAsync())

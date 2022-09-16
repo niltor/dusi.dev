@@ -12,13 +12,15 @@ public class AuthController : ControllerBase
 {
     private readonly UserQueryStore _store;
     private readonly IConfiguration _config;
-    private readonly RedisService _redis;
+    //private readonly RedisService _redis;
     public AuthController(
-        IConfiguration config, RedisService redis, UserQueryStore store)
+        IConfiguration config,
+        //RedisService redis,
+        UserQueryStore store)
     {
         //_store = userDataStore;
         _config = config;
-        _redis = redis;
+        //_redis = redis;
         _store = store;
     }
 

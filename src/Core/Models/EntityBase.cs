@@ -4,7 +4,7 @@ namespace Core.Models;
 /// 数据加基础字段模型
 /// </summary>
 /// <inheritdoc/>
-public class EntityBase
+public abstract class EntityBase
 {
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();

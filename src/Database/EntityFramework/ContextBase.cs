@@ -1,6 +1,7 @@
 using Core.Entities;
 using Core.Entities.Codes;
 using Core.Entities.EntityDesign;
+using Core.Models;
 
 namespace EntityFramework;
 
@@ -19,6 +20,7 @@ public class ContextBase : DbContext
     }
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.Entity<EntityBase>().UseTpcMappingStrategy();
         builder.Entity<EntityLibrary>(e =>
         {
             e.HasIndex(a => a.Name);

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EntityFramework.Migrator.Migrations
 {
     [DbContext(typeof(ContextBase))]
-    [Migration("20220915063811_Init")]
+    [Migration("20220916065620_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -20,16 +20,51 @@ namespace EntityFramework.Migrator.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0-preview.7.22376.2")
+                .HasAnnotation("ProductVersion", "7.0.0-rc.1.22426.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Core.Entities.Codes.EntityMember", b =>
+            modelBuilder.Entity("Core.Models.EntityBase", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset>("UpdatedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable((string)null);
+
+                    b.UseTpcMappingStrategy();
+                });
+
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.Property<Guid>("RolesId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("RolesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("RoleUser");
+                });
+
+            modelBuilder.Entity("Core.Entities.Codes.EntityMember", b =>
+                {
+                    b.HasBaseType("Core.Models.EntityBase");
 
                     b.Property<int>("AccessModifier")
                         .HasColumnType("integer");
@@ -41,9 +76,6 @@ namespace EntityFramework.Migrator.Migrations
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)");
-
-                    b.Property<DateTimeOffset>("CreatedTime")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("DefaultValue")
                         .HasMaxLength(100)
@@ -57,9 +89,6 @@ namespace EntityFramework.Migrator.Migrations
 
                     b.Property<Guid>("EntityModelId")
                         .HasColumnType("uuid");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsEnum")
                         .HasColumnType("boolean");
@@ -87,11 +116,6 @@ namespace EntityFramework.Migrator.Migrations
                     b.Property<Guid?>("ObjectTypeId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("UpdatedTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
                     b.HasIndex("AccessModifier");
 
                     b.HasIndex("EntityModelId");
@@ -106,9 +130,7 @@ namespace EntityFramework.Migrator.Migrations
 
             modelBuilder.Entity("Core.Entities.Codes.EntityModel", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("Core.Models.EntityBase");
 
                     b.Property<int>("AccessModifier")
                         .HasColumnType("integer");
@@ -125,14 +147,8 @@ namespace EntityFramework.Migrator.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)");
 
-                    b.Property<DateTimeOffset>("CreatedTime")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid>("EntityLibraryId")
                         .HasColumnType("uuid");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -141,11 +157,6 @@ namespace EntityFramework.Migrator.Migrations
 
                     b.Property<Guid?>("ParentEntityId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTimeOffset>("UpdatedTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
 
                     b.HasIndex("AccessModifier");
 
@@ -162,19 +173,11 @@ namespace EntityFramework.Migrator.Migrations
 
             modelBuilder.Entity("Core.Entities.EntityDesign.EntityLibrary", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTimeOffset>("CreatedTime")
-                        .HasColumnType("timestamp with time zone");
+                    b.HasBaseType("Core.Models.EntityBase");
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsPublic")
                         .HasColumnType("boolean");
@@ -184,13 +187,8 @@ namespace EntityFramework.Migrator.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("character varying(60)");
 
-                    b.Property<DateTimeOffset>("UpdatedTime")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
-
-                    b.HasKey("Id");
 
                     b.HasIndex("IsPublic");
 
@@ -203,18 +201,10 @@ namespace EntityFramework.Migrator.Migrations
 
             modelBuilder.Entity("Core.Entities.EntityDesign.EntityMemberConstraint", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTimeOffset>("CreatedTime")
-                        .HasColumnType("timestamp with time zone");
+                    b.HasBaseType("Core.Models.EntityBase");
 
                     b.Property<Guid>("EntityMemberId")
                         .HasColumnType("uuid");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
 
                     b.Property<int?>("Length")
                         .HasColumnType("integer");
@@ -231,11 +221,6 @@ namespace EntityFramework.Migrator.Migrations
                     b.Property<int?>("MinLength")
                         .HasColumnType("integer");
 
-                    b.Property<DateTimeOffset>("UpdatedTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
                     b.HasIndex("EntityMemberId")
                         .IsUnique();
 
@@ -244,19 +229,11 @@ namespace EntityFramework.Migrator.Migrations
 
             modelBuilder.Entity("Core.Entities.Role", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTimeOffset>("CreatedTime")
-                        .HasColumnType("timestamp with time zone");
+                    b.HasBaseType("Core.Models.EntityBase");
 
                     b.Property<string>("Icon")
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsSystem")
                         .HasColumnType("boolean");
@@ -270,11 +247,6 @@ namespace EntityFramework.Migrator.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset>("UpdatedTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
                     b.HasIndex("Name");
 
                     b.ToTable("Roles");
@@ -282,9 +254,7 @@ namespace EntityFramework.Migrator.Migrations
 
             modelBuilder.Entity("Core.Entities.User", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("Core.Models.EntityBase");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
@@ -292,9 +262,6 @@ namespace EntityFramework.Migrator.Migrations
                     b.Property<string>("Avatar")
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
-
-                    b.Property<DateTimeOffset>("CreatedTime")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .HasMaxLength(100)
@@ -306,9 +273,6 @@ namespace EntityFramework.Migrator.Migrations
                     b.Property<string>("IdNumber")
                         .HasMaxLength(18)
                         .HasColumnType("character varying(18)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LastLoginTime")
                         .HasColumnType("timestamp with time zone");
@@ -349,15 +313,10 @@ namespace EntityFramework.Migrator.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTimeOffset>("UpdatedTime")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
-
-                    b.HasKey("Id");
 
                     b.HasIndex("CreatedTime");
 
@@ -374,17 +333,17 @@ namespace EntityFramework.Migrator.Migrations
 
             modelBuilder.Entity("RoleUser", b =>
                 {
-                    b.Property<Guid>("RolesId")
-                        .HasColumnType("uuid");
+                    b.HasOne("Core.Entities.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("RolesId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("RoleUser");
+                    b.HasOne("Core.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Entities.Codes.EntityMember", b =>
@@ -441,21 +400,6 @@ namespace EntityFramework.Migrator.Migrations
                         .IsRequired();
 
                     b.Navigation("EntityMember");
-                });
-
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.HasOne("Core.Entities.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Entities.Codes.EntityMember", b =>

@@ -135,7 +135,7 @@ public class CommandStoreBase<TContext, TEntity> : ICommandStore<TEntity>, IComm
     /// <returns></returns>
     public virtual async Task<int> UpdateRangeAsync<TUpdate>(Expression<Func<TEntity, bool>> whereExp, TUpdate dto)
     {
-        //return await _db.Where(whereExp).BatchUpdateAsync(dto!);
+        //return await _db.Where(whereExp).ExecuteUpdateAsync();
         throw new NotImplementedException();
     }
 
@@ -160,7 +160,7 @@ public class CommandStoreBase<TContext, TEntity> : ICommandStore<TEntity>, IComm
     /// <returns></returns>
     public virtual async Task<int> DeleteRangeAsync(List<Guid> ids)
     {
-        //return await _db.Where(d => ids.Contains(d.Id)).ExecuteDeleteAsync();
+        return await _db.Where(d => ids.Contains(d.Id)).ExecuteDeleteAsync();
         throw new NotImplementedException();
 
     }
@@ -172,7 +172,7 @@ public class CommandStoreBase<TContext, TEntity> : ICommandStore<TEntity>, IComm
     /// <returns></returns>
     public virtual async Task<int> DeleteRangeAsync(Expression<Func<TEntity, bool>> whereExp)
     {
-        //return await _db.Where(whereExp).BatchDeleteAsync();
+        return await _db.Where(whereExp).ExecuteDeleteAsync();
         throw new NotImplementedException();
 
     }

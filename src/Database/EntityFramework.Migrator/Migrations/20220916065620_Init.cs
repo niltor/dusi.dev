@@ -16,13 +16,13 @@ namespace EntityFramework.Migrator.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     Name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
                     NameValue = table.Column<string>(type: "text", nullable: false),
                     IsSystem = table.Column<bool>(type: "boolean", nullable: false),
-                    Icon = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: true),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                    Icon = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -34,6 +34,9 @@ namespace EntityFramework.Migrator.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     UserName = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
                     RealName = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: true),
                     Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
@@ -50,10 +53,7 @@ namespace EntityFramework.Migrator.Migrations
                     RetryCount = table.Column<int>(type: "integer", nullable: false),
                     Avatar = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     IdNumber = table.Column<string>(type: "character varying(18)", maxLength: 18, nullable: true),
-                    Sex = table.Column<int>(type: "integer", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                    Sex = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,13 +65,13 @@ namespace EntityFramework.Migrator.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     Name = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
                     Description = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     IsPublic = table.Column<bool>(type: "boolean", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -113,16 +113,16 @@ namespace EntityFramework.Migrator.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     Name = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
                     Comment = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
                     AccessModifier = table.Column<int>(type: "integer", nullable: false),
                     CodeExample = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
                     CodeLanguage = table.Column<int>(type: "integer", nullable: true),
                     ParentEntityId = table.Column<Guid>(type: "uuid", nullable: true),
-                    EntityLibraryId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                    EntityLibraryId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -145,6 +145,9 @@ namespace EntityFramework.Migrator.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     Name = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
                     Comment = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
                     DefaultValue = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
@@ -159,10 +162,7 @@ namespace EntityFramework.Migrator.Migrations
                     DictionaryValueType = table.Column<int>(type: "integer", nullable: true),
                     MemberType = table.Column<int>(type: "integer", nullable: false),
                     ObjectTypeId = table.Column<Guid>(type: "uuid", nullable: true),
-                    EntityModelId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                    EntityModelId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -185,15 +185,15 @@ namespace EntityFramework.Migrator.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     MaxLength = table.Column<int>(type: "integer", nullable: true),
                     MinLength = table.Column<int>(type: "integer", nullable: true),
                     Length = table.Column<int>(type: "integer", nullable: true),
                     Min = table.Column<int>(type: "integer", nullable: true),
                     Max = table.Column<long>(type: "bigint", nullable: true),
-                    EntityMemberId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                    EntityMemberId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
