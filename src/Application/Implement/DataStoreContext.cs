@@ -4,7 +4,17 @@ public class DataStoreContext
     public QueryDbContext QueryContext { get; init; }
     public CommandDbContext CommandContext { get; init; }
 
+    public QuerySet<EntityLibrary> EntityLibraryQuery { get; init; }
+    public QuerySet<EntityMemberConstraint> EntityMemberConstraintQuery { get; init; }
+    public QuerySet<EntityMember> EntityMemberQuery { get; init; }
+    public QuerySet<EntityModel> EntityModelQuery { get; init; }
+    public QuerySet<Role> RoleQuery { get; init; }
     public QuerySet<User> UserQuery { get; init; }
+    public CommandSet<EntityLibrary> EntityLibraryCommand { get; init; }
+    public CommandSet<EntityMember> EntityMemberCommand { get; init; }
+    public CommandSet<EntityMemberConstraint> EntityMemberConstraintCommand { get; init; }
+    public CommandSet<EntityModel> EntityModelCommand { get; init; }
+    public CommandSet<Role> RoleCommand { get; init; }
     public CommandSet<User> UserCommand { get; init; }
 
 
@@ -14,7 +24,17 @@ public class DataStoreContext
     private readonly Dictionary<string, object> SetCache = new();
 
     public DataStoreContext(
+        EntityLibraryQueryStore entityLibraryQuery,
+        EntityMemberConstraintQueryStore entityMemberConstraintQuery,
+        EntityMemberQueryStore entityMemberQuery,
+        EntityModelQueryStore entityModelQuery,
+        RoleQueryStore roleQuery,
         UserQueryStore userQuery,
+        EntityLibraryCommandStore entityLibraryCommand,
+        EntityMemberCommandStore entityMemberCommand,
+        EntityMemberConstraintCommandStore entityMemberConstraintCommand,
+        EntityModelCommandStore entityModelCommand,
+        RoleCommandStore roleCommand,
         UserCommandStore userCommand,
 
         QueryDbContext queryDbContext,
@@ -23,8 +43,28 @@ public class DataStoreContext
     {
         QueryContext = queryDbContext;
         CommandContext = commandDbContext;
+        EntityLibraryQuery = entityLibraryQuery;
+        AddCache(EntityLibraryQuery);
+        EntityMemberConstraintQuery = entityMemberConstraintQuery;
+        AddCache(EntityMemberConstraintQuery);
+        EntityMemberQuery = entityMemberQuery;
+        AddCache(EntityMemberQuery);
+        EntityModelQuery = entityModelQuery;
+        AddCache(EntityModelQuery);
+        RoleQuery = roleQuery;
+        AddCache(RoleQuery);
         UserQuery = userQuery;
         AddCache(UserQuery);
+        EntityLibraryCommand = entityLibraryCommand;
+        AddCache(EntityLibraryCommand);
+        EntityMemberCommand = entityMemberCommand;
+        AddCache(EntityMemberCommand);
+        EntityMemberConstraintCommand = entityMemberConstraintCommand;
+        AddCache(EntityMemberConstraintCommand);
+        EntityModelCommand = entityModelCommand;
+        AddCache(EntityModelCommand);
+        RoleCommand = roleCommand;
+        AddCache(RoleCommand);
         UserCommand = userCommand;
         AddCache(UserCommand);
 

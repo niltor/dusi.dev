@@ -1,8 +1,8 @@
-﻿namespace Core.Entities.EntityDesign;
+namespace Share.Models.EntityMemberConstraintDtos;
 /// <summary>
-/// 属性的约束
+/// 属性的约束更新时请求结构
 /// </summary>
-public class EntityMemberConstraint : EntityBase
+public class EntityMemberConstraintUpdateDto
 {
     /// <summary>
     /// 字符串最长长度
@@ -24,11 +24,6 @@ public class EntityMemberConstraint : EntityBase
     /// 数值最大
     /// </summary>
     public long? Max { get; set; }
-
-    /// <summary>
-    /// 所属属性
-    /// </summary>
-    public required EntityMember EntityMember { get; set; }
-    public Guid EntityMemberId { get; set; }
-
+    public Guid? EntityMemberId { get; set; }
+    
 }

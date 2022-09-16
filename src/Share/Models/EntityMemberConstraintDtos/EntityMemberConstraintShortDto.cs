@@ -1,8 +1,10 @@
-﻿namespace Core.Entities.EntityDesign;
+using Core.Entities.EntityDesign;
+
+namespace Share.Models.EntityMemberConstraintDtos;
 /// <summary>
-/// 属性的约束
+/// 属性的约束概要
 /// </summary>
-public class EntityMemberConstraint : EntityBase
+public class EntityMemberConstraintShortDto
 {
     /// <summary>
     /// 字符串最长长度
@@ -28,7 +30,14 @@ public class EntityMemberConstraint : EntityBase
     /// <summary>
     /// 所属属性
     /// </summary>
-    public required EntityMember EntityMember { get; set; }
-    public Guid EntityMemberId { get; set; }
-
+    public EntityMember EntityMember { get; set; } = default!;
+    public Guid EntityMemberId { get; set; } = default!;
+    public Guid Id { get; set; } = default!;
+    public DateTimeOffset CreatedTime { get; set; } = default!;
+    public DateTimeOffset UpdatedTime { get; set; } = default!;
+    /// <summary>
+    /// 软删除
+    /// </summary>
+    public bool IsDeleted { get; set; } = default!;
+    
 }

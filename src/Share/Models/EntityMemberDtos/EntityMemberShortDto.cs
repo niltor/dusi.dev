@@ -1,19 +1,21 @@
-﻿namespace Core.Entities.EntityDesign;
+using Core.Entities.EntityDesign;
+
+namespace Share.Models.EntityMemberDtos;
 /// <summary>
-/// 实体属性
+/// 实体属性概要
 /// </summary>
-public class EntityMember : EntityBase
+public class EntityMemberShortDto
 {
     /// <summary>
     /// 属性名
     /// </summary>
     [MaxLength(60)]
-    public required string Name { get; set; }
+    public string Name { get; set; } = default!;
     /// <summary>
     /// 属性注释内容
     /// </summary>
     [MaxLength(300)]
-    public required string Comment { get; set; }
+    public string Comment { get; set; } = default!;
     /// <summary>
     /// 默认值，根据类型推断
     /// </summary>
@@ -23,34 +25,34 @@ public class EntityMember : EntityBase
     /// <summary>
     /// 访问修饰符
     /// </summary>
-    public required AccessModifier AccessModifier { get; set; } = AccessModifier.Public;
+    public AccessModifier AccessModifier { get; set; } = default!;
 
     /// <summary>
     /// 是否必须
     /// </summary>
-    public bool IsRequired { get; set; } = false;
+    public bool IsRequired { get; set; } = default!;
     /// <summary>
     /// 是否为枚举
     /// </summary>
-    public bool IsEnum { get; set; } = false;
+    public bool IsEnum { get; set; } = default!;
     /// <summary>
     /// 是否为列表
     /// </summary>
-    public bool IsList { get; set; } = false;
+    public bool IsList { get; set; } = default!;
     /// <summary>
     /// 是否为自定义对象
     /// </summary>
-    public bool IsObject { get; set; } = false;
+    public bool IsObject { get; set; } = default!;
 
     /// <summary>
     /// 是否可赋值
     /// </summary>
-    public bool CanSet { get; set; } = true;
+    public bool CanSet { get; set; } = default!;
 
     /// <summary>
     /// 是否要初始化
     /// </summary>
-    public bool NeedInit { get; set; } = false;
+    public bool NeedInit { get; set; } = default!;
 
     /// <summary>
     /// 字典的键类型
@@ -65,43 +67,29 @@ public class EntityMember : EntityBase
     /// <summary>
     /// 属性类型
     /// </summary>
-    public required MemberType MemberType { get; set; } = MemberType.String;
+    public MemberType MemberType { get; set; } = default!;
 
     /// <summary>
     /// 约束
     /// </summary>
-    public EntityMemberConstraint? Constraint { get; set; }
+    public EntityMemberConstraint? Constraint { get; set; } = default!;
 
     /// <summary>
     /// 对象类型
     /// </summary>
-    public EntityModel? ObjectType { get; set; }
+    public EntityModel? ObjectType { get; set; } = default!;
     public Guid? ObjectTypeId { get; set; }
 
     /// <summary>
     /// 所属模型
     /// </summary>
-    public required EntityModel EntityModel { get; set; }
-
+    public EntityModel EntityModel { get; set; } = default!;
+    public Guid Id { get; set; } = default!;
+    public DateTimeOffset CreatedTime { get; set; } = default!;
+    public DateTimeOffset UpdatedTime { get; set; } = default!;
+    /// <summary>
+    /// 软删除
+    /// </summary>
+    public bool IsDeleted { get; set; } = default!;
+    
 }
-/// <summary>
-/// 属性的类型
-/// </summary>
-public enum MemberType
-{
-    Byte,
-    Short,
-    Int,
-    Long,
-    Double,
-    Float,
-    Decimal,
-    String,
-    Array,
-    List,
-    Dictionary,
-    Customer
-}
-
-
-

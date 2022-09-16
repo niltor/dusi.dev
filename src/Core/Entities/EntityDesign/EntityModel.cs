@@ -1,6 +1,4 @@
-﻿using Core.Entities.EntityDesign;
-
-namespace Core.Entities.Codes;
+﻿namespace Core.Entities.EntityDesign;
 /// <summary>
 /// 实体模型类
 /// </summary>
