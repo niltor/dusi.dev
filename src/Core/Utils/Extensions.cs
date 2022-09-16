@@ -116,4 +116,8 @@ public static partial class Extensions
         return orderQuery;
     }
 
+
+    public static void BuildSetProperty<TEntity, TUpdate>(TUpdate dto)
+    {
+    }
 }

@@ -135,22 +135,8 @@ public class CommandStoreBase<TContext, TEntity> : ICommandStore<TEntity>, IComm
     /// <returns></returns>
     public virtual async Task<int> UpdateRangeAsync<TUpdate>(Expression<Func<TEntity, bool>> whereExp, TUpdate dto)
     {
-        //return await _db.Where(whereExp).ExecuteUpdateAsync();
+        //return await _db.Where(whereExp).ExecuteUpdateAsync(d => d.SetProperty(d => d.Id, d => Guid.NewGuid()));
         throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// 批量编辑
-    /// </summary>
-    /// <typeparam name="TUpdate"></typeparam>
-    /// <param name="ids"></param>
-    /// <param name="dto"></param>
-    /// <returns></returns>
-    public virtual async Task<int> EditRangeAsync<TUpdate>(List<Guid> ids, TUpdate dto)
-    {
-        //return await _db.Where(d => ids.Contains(d.Id)).BatchUpdateAsync(dto!);
-        throw new NotImplementedException();
-
     }
 
     /// <summary>
