@@ -1,5 +1,7 @@
+global using System.Linq;
 global using System.Text;
 global using System.Text.Json.Serialization;
+global using System.Threading.Tasks;
 global using Application.IManager;
 global using Application.Interface;
 global using Application.Services;
@@ -13,5 +15,6 @@ global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
 // global using Core.Identity;
 global using Share.Models;
