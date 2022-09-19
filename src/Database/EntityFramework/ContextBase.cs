@@ -16,10 +16,12 @@ public class ContextBase : DbContext
 
     public ContextBase(DbContextOptions options) : base(options)
     {
+
     }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<EntityBase>().UseTpcMappingStrategy();
+        
         builder.Entity<EntityLibrary>(e =>
         {
             e.HasIndex(a => a.Name);

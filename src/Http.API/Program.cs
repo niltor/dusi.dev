@@ -198,11 +198,7 @@ app.UseHealthChecks("/health");
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
-
+app.MapDefaultControllerRoute();
 app.Run();
 
 public partial class Program { }
