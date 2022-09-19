@@ -6,7 +6,8 @@ public class CustomBadRequest : ObjectResult
     {
 
         StatusCode = 400;
-        Value = new {
+        Value = new
+        {
             Title = "请求参数错误",
             Detail = GetErrorMessage(context),
             Status = 400,

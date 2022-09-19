@@ -1,4 +1,3 @@
-using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Application.Implement;
@@ -6,30 +5,27 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.Generation.Processors.Security;
-using OpenTelemetry.Logs;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
 #region logger
 // config logger
-var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "unknown";
-Action<ResourceBuilder> configureResource = r => r.AddService(
-    "dusi.dev", serviceVersion: assemblyVersion, serviceInstanceId: Environment.MachineName);
-builder.Logging.ClearProviders();
-builder.Logging.AddOpenTelemetry(options =>
-{
-    options.ConfigureResource(configureResource);
-    options.AddConsoleExporter();
-});
+//var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "unknown";
+//Action<ResourceBuilder> configureResource = r => r.AddService(
+//    "dusi.dev", serviceVersion: assemblyVersion, serviceInstanceId: Environment.MachineName);
+//builder.Logging.ClearProviders();
+//builder.Logging.AddOpenTelemetry(options =>
+//{
+//    options.ConfigureResource(configureResource);
+//    options.AddConsoleExporter();
+//});
 
-builder.Services.Configure<OpenTelemetryLoggerOptions>(opt =>
-{
-    opt.IncludeScopes = true;
-    opt.ParseStateValues = true;
-    opt.IncludeFormattedMessage = true;
-});
+//builder.Services.Configure<OpenTelemetryLoggerOptions>(opt =>
+//{
+//    opt.IncludeScopes = true;
+//    opt.ParseStateValues = true;
+//    opt.IncludeFormattedMessage = true;
+//});
 #endregion
 
 var services = builder.Services;
@@ -137,7 +133,7 @@ services.AddOpenApiDocument(c =>
     c.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
 });
 
-services.AddControllers()
+services.AddControllersWithViews()
     .ConfigureApiBehaviorOptions(o =>
     {
         o.InvalidModelStateResponseFactory = context =>
@@ -163,8 +159,6 @@ await using (var scope = app.Services.CreateAsyncScope())
 if (app.Environment.IsDevelopment())
 {
     app.UseCors("default");
-    app.UseDeveloperExceptionPage();
-    app.UseStaticFiles();
     app.UseOpenApi();
     app.UseSwaggerUi3(c => { c.DocumentTitle = "文档"; });
 }
@@ -175,6 +169,8 @@ else
     //app.UseHsts();
     app.UseHttpsRedirection();
 }
+app.UseStaticFiles();
+
 // 异常统一处理
 //app.UseExceptionHandler(handler =>
 //{
@@ -198,7 +194,12 @@ app.UseHealthChecks("/health");
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapDefaultControllerRoute();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller}/{action=Index}/{id?}");
+app.MapFallbackToFile("index.html");
+
 app.Run();
 
 public partial class Program { }
