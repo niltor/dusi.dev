@@ -8,22 +8,24 @@ public class User : EntityBase
     /// 用户名
     /// </summary>
     [MaxLength(30)]
-    public required string UserName { get; set; }
+    public string UserName { get; set; } = default!;
     /// <summary>
     /// 真实姓名
     /// </summary>
     [MaxLength(30)]
     public string? RealName { get; set; }
+    /// <summary>
+    /// 职位
+    /// </summary>
+    [MaxLength(30)]
+    public string? Position { get; set; }
     [MaxLength(100)]
     public string? Email { get; set; } = null!;
     public bool EmailConfirmed { get; set; } = false;
     [MaxLength(100)]
-    public required string PasswordHash { get; set; }
+    public string PasswordHash { get; set; } = default!;
     [MaxLength(60)]
-    public required string PasswordSalt { get; set; }
-    /// <summary>
-    /// 手机号
-    /// </summary>
+    public string PasswordSalt { get; set; } = default!;
     [MaxLength(20)]
     public string? PhoneNumber { get; set; }
     public bool PhoneNumberConfirmed { get; set; } = false;
@@ -44,18 +46,29 @@ public class User : EntityBase
     /// </summary>
     [MaxLength(200)]
     public string? Avatar { get; set; }
+
+    public ICollection<Role>? Roles { get; set; }
+
     /// <summary>
     /// 身份证号
     /// </summary>
     [MaxLength(18)]
-    public string? IdNumber { get; set; }
+    public string IdNumber { get; set; } = default!;
+
     /// <summary>
     /// 性别
     /// </summary>
     public SexType Sex { get; set; } = SexType.Male;
-    public ICollection<Role>? Roles { get; set; }
-}
 
+    /// <summary>
+    /// 地址
+    /// </summary>
+    [MaxLength(200)]
+    public string? Address { get; set; } = default!;
+}
+/// <summary>
+/// 性别
+/// </summary>
 public enum SexType
 {
     Male,
