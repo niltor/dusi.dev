@@ -28,8 +28,7 @@
 		<ProjectReference Include="..\Application\Application.csproj" />
 	</ItemGroup>
 	<!--生成swagger.json-->
-	<Target Name="DebugEnsureNodeEnv" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
-		<Exec Command="dotnet tool restore"></Exec>
+	<Target Name="SwaggerPostBuildTarget" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
 		<Exec Command="dotnet swagger tofile --output ./swagger.json .\bin\Debug\net7.0\Http.API.dll v1" />
 	</Target>
 
