@@ -9,7 +9,7 @@
         <div>
           <mat-form-field appearance="outline">
             <mat-label>用户名</mat-label>
-            <input matInput type="text" placeholder="用户名4位以上" formControlName="username" required>
+            <input matInput type="text" placeholder="用户名至少3位" formControlName="username" required minlength="3">
             <mat-error *ngIf="username?.invalid">{{getValidatorMessage('username')}}</mat-error>
           </mat-form-field>
         </div>

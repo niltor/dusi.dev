@@ -17,7 +17,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.0-rc.1" />
-		<PackageReference Include="NSwag.AspNetCore" Version="13.16.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -27,6 +27,11 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Application\Application.csproj" />
 	</ItemGroup>
+	<!--生成swagger.json-->
+	<Target Name="DebugEnsureNodeEnv" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+		<Exec Command="dotnet tool restore"></Exec>
+		<Exec Command="dotnet swagger tofile --output ./swagger.json .\bin\Debug\net7.0\Http.API.dll v1" />
+	</Target>
 
 	<ItemGroup>
 		<!-- Don't publish the SPA source files, but do show them in the project files list -->
