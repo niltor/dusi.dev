@@ -2,6 +2,7 @@
 /// <summary>
 /// 实体库
 /// </summary>
+[NgPage("system", "user")]
 public class EntityLibrary : EntityBase
 {
     /// <summary>

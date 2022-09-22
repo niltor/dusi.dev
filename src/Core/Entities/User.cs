@@ -2,6 +2,7 @@
 /// <summary>
 /// 系统用户
 /// </summary>
+[NgPage("system", "user")]
 public class User : EntityBase
 {
     /// <summary>
