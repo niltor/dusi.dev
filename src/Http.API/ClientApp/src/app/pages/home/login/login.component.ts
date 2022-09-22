@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/auth/login.service';
+import { AuthService } from 'src/app/share/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
   constructor(
     private loginService: LoginService,
+    private authService: AuthService,
     private router: Router
 
   ) {
@@ -46,7 +48,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-
   /**
    * 错误信息
    * @param type 字段名称
@@ -67,7 +68,7 @@ export class LoginComponent implements OnInit {
     return '';
   }
   doLogin(): void {
-    
+
     let data = this.loginForm.value;
     // 登录接口
     this.authService.login(data)

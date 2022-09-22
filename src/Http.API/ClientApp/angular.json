@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "NGAdmin": {
+    "ngadmin": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "NGAdmin:build:production"
+              "browserTarget": "ngadmin:build:production"
             },
             "development": {
-              "browserTarget": "NGAdmin:build:development",
+              "browserTarget": "ngadmin:build:development",
               "proxyConfig": "proxy.conf.js"
             }
           },
@@ -81,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "NGAdmin:build"
+            "browserTarget": "ngadmin:build"
           }
         },
         "test": {

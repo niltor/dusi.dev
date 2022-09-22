@@ -8,17 +8,12 @@ public class User : EntityBase
     /// 用户名
     /// </summary>
     [MaxLength(30)]
-    public string UserName { get; set; } = default!;
+    public required string UserName { get; set; }
     /// <summary>
     /// 真实姓名
     /// </summary>
     [MaxLength(30)]
     public string? RealName { get; set; }
-    /// <summary>
-    /// 职位
-    /// </summary>
-    [MaxLength(30)]
-    public string? Position { get; set; }
     [MaxLength(100)]
     public string? Email { get; set; } = null!;
     public bool EmailConfirmed { get; set; } = false;
@@ -53,18 +48,13 @@ public class User : EntityBase
     /// 身份证号
     /// </summary>
     [MaxLength(18)]
-    public string IdNumber { get; set; } = default!;
+    public string? IdNumber { get; set; }
 
     /// <summary>
     /// 性别
     /// </summary>
     public SexType Sex { get; set; } = SexType.Male;
 
-    /// <summary>
-    /// 地址
-    /// </summary>
-    [MaxLength(200)]
-    public string? Address { get; set; } = default!;
 }
 /// <summary>
 /// 性别

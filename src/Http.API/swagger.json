@@ -2805,12 +2805,6 @@
             "description": "真实姓名",
             "nullable": true
           },
-          "position": {
-            "maxLength": 30,
-            "type": "string",
-            "description": "职位",
-            "nullable": true
-          },
           "email": {
             "maxLength": 100,
             "type": "string",
@@ -2884,12 +2878,6 @@
           },
           "sex": {
             "$ref": "#/components/schemas/SexType"
-          },
-          "address": {
-            "maxLength": 200,
-            "type": "string",
-            "description": "地址",
-            "nullable": true
           }
         },
         "additionalProperties": false,

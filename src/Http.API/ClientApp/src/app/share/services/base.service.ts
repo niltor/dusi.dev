@@ -17,6 +17,9 @@ export class BaseService {
   ) {
     this.isMobile = this.isMoblie();
     this.baseUrl = baseUrl;
+    if (this.baseUrl.endsWith('/'))
+      this.baseUrl = this.baseUrl.slice(0, -1);
+
   }
 
   request<R>(method: string, path: string, body?: any): Observable<R> {
