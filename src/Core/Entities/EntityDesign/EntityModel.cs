@@ -2,7 +2,7 @@
 /// <summary>
 /// 实体模型类
 /// </summary>
-[NgPage("system", "user")]
+[NgPage("system", "entityModel")]
 public class EntityModel : EntityBase
 {
     /// <summary>

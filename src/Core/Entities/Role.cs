@@ -2,7 +2,7 @@
 /// <summary>
 /// 角色表
 /// </summary>
-[NgPage("system", "user")]
+[NgPage("system", "role")]
 public class Role : EntityBase
 {
     /// <summary>
