@@ -1,4 +1,4 @@
-import { RoleItemDto } from '../role-item-dto.model';
+import { RoleItemDto } from '../role/role-item-dto.model';
 export interface RoleItemDtoPageList {
   count: number;
   data?: RoleItemDto[] | null;

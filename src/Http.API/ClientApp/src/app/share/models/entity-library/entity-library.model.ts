@@ -1,5 +1,5 @@
 import { EntityModel } from '../entity-model/entity-model.model';
-import { User } from '../user.model';
+import { User } from '../user/user.model';
 /**
  * 实体库
  */
