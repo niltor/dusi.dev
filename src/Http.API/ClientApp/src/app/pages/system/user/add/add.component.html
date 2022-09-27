@@ -77,7 +77,7 @@
 <mat-form-field>
   <mat-label>Sex</mat-label>
   <mat-select formControlName="sex">
-    <mat-option *ngFor="let item of Sex | toKeyValue" [value]="item.value">
+    <mat-option *ngFor="let item of SexType | toKeyValue" [value]="item.value">
       {{item.key}}
     </mat-option>
   </mat-select>

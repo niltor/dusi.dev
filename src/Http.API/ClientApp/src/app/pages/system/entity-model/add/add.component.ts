@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EntityModel } from 'src/app/share/models/entity-model/entity-model.model';
-import { EntityModelService } from 'src/app/share/services/entity-model.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { EntityModelUpdateDto } from 'src/app/share/models/entity-model/entity-model-update-dto.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { EntityModelService } from 'src/app/share/services/entity-model.service';
+import { EntityModel } from 'src/app/share/models/entity-model/entity-model.model';
+import { EntityModelAddDto } from 'src/app/share/models/entity-model/entity-model-add-dto.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import * as ClassicEditor from 'ng-ckeditor5-classic';
@@ -15,39 +15,32 @@ import { AccessModifier } from 'src/app/share/models/enum/access-modifier.model'
 import { CodeLanguage } from 'src/app/share/models/enum/code-language.model';
 
 @Component({
-  selector: 'app-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+    selector: 'app-add',
+    templateUrl: './add.component.html',
+    styleUrls: ['./add.component.css']
 })
-export class EditComponent implements OnInit {
-  public editorConfig!: CKEditor5.Config;
+export class AddComponent implements OnInit {
+    public editorConfig!: CKEditor5.Config;
   public editor: CKEditor5.EditorConstructor = ClassicEditor;
   AccessModifier = AccessModifier;
 CodeLanguage = CodeLanguage;
 
-  id!: string;
-  isLoading = true;
-  data = {} as EntityModel;
-  updateData = {} as EntityModelUpdateDto;
-  formGroup!: FormGroup;
+    formGroup!: FormGroup;
+    data = {} as EntityModelAddDto;
+    isLoading = true;
     constructor(
-    
+        
     // private authService: OidcSecurityService,
-    private service: EntityModelService,
-    private snb: MatSnackBar,
-    private router: Router,
-    private route: ActivatedRoute,
-    private location: Location
-    // public dialogRef: MatDialogRef<EditComponent>,
-    // @Inject(MAT_DIALOG_DATA) public dlgData: { id: '' }
-  ) {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.id = id;
-    } else {
-      // TODO: id为空
+        private service: EntityModelService,
+        public snb: MatSnackBar,
+        private router: Router,
+        private route: ActivatedRoute,
+        private location: Location
+        // public dialogRef: MatDialogRef<AddComponent>,
+        // @Inject(MAT_DIALOG_DATA) public dlgData: { id: '' }
+    ) {
+
     }
-  }
 
     get name() { return this.formGroup.get('name'); }
     get comment() { return this.formGroup.get('comment'); }
@@ -57,16 +50,16 @@ CodeLanguage = CodeLanguage;
 
 
   ngOnInit(): void {
-    this.getDetail();
+    this.initForm();
     this.initEditor();
-    // TODO:等待数据加载完成
-    // this.isLoading = false;
+    // TODO:获取其他相关数据后设置加载状态
+    this.isLoading = false;
   }
     initEditor(): void {
     this.editorConfig = {
       // placeholder: '请添加图文信息提供证据，也可以直接从Word文档中复制',
       simpleUpload: {
-        uploadUrl: environment.uploadEditorFileUrl,
+        // uploadUrl: environment.uploadEditorFileUrl,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem("accessToken")
         }
@@ -80,24 +73,13 @@ CodeLanguage = CodeLanguage;
       editor.ui.getEditableElement()
     );
   }
-  getDetail(): void {
-    this.service.getDetail(this.id)
-      .subscribe(res => {
-        this.data = res;
-        this.initForm();
-        this.isLoading = false;
-      }, error => {
-        this.snb.open(error);
-      })
-  }
-
   initForm(): void {
     this.formGroup = new FormGroup({
-      name: new FormControl(this.data.name, [Validators.maxLength(60)]),
-      comment: new FormControl(this.data.comment, [Validators.maxLength(300)]),
-      accessModifier: new FormControl(this.data.accessModifier, []),
-      codeExample: new FormControl(this.data.codeExample, [Validators.maxLength(2000)]),
-      codeLanguage: new FormControl(this.data.codeLanguage, []),
+      name: new FormControl(null, [Validators.maxLength(60)]),
+      comment: new FormControl(null, [Validators.maxLength(300)]),
+      accessModifier: new FormControl(null, []),
+      codeExample: new FormControl(null, [Validators.maxLength(2000)]),
+      codeLanguage: new FormControl(null, []),
 
     });
   }
@@ -125,23 +107,23 @@ CodeLanguage = CodeLanguage;
             this.codeLanguage?.errors?.['maxlength'] ? 'CodeLanguage长度最多位' : '';
 
       default:
-        return '';
+    return '';
     }
   }
-  edit(): void {
+
+  add(): void {
     if(this.formGroup.valid) {
-      this.updateData = this.formGroup.value as EntityModelUpdateDto;
-      this.service.update(this.id, this.updateData)
+    const data = this.formGroup.value as EntityModelAddDto;
+    this.data = { ...data, ...this.data };
+    this.service.add(this.data)
         .subscribe(res => {
-          this.snb.open('修改成功');
-           // this.dialogRef.close(res);
-          this.router.navigate(['../../index'],{relativeTo: this.route});
+            this.snb.open('添加成功');
+            // this.dialogRef.close(res);
+            this.router.navigate(['../index'],{relativeTo: this.route});
         });
     }
   }
-
   back(): void {
     this.location.back();
   }
-
 }

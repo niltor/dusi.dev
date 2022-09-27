@@ -37,6 +37,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 const MaterialModules = [
   MatToolbarModule,
@@ -84,6 +85,7 @@ const MaterialModules = [
     CommonModule,
     RouterModule,
     ...MaterialModules,
+    CKEditorModule,
     LayoutComponent,
     NavigationComponent,
     ConfirmDialogComponent,

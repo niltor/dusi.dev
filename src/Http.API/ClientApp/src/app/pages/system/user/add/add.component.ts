@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
-import { Sex } from 'src/app/share/models/enum/sex.model';
+import { SexType } from 'src/app/share/models/enum/sex-type.model';
 
 @Component({
     selector: 'app-add',
@@ -15,7 +15,7 @@ import { Sex } from 'src/app/share/models/enum/sex.model';
     styleUrls: ['./add.component.css']
 })
 export class AddComponent implements OnInit {
-    Sex = Sex;
+    SexType = SexType;
 
     formGroup!: FormGroup;
     data = {} as UserAddDto;

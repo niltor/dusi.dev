@@ -7,7 +7,7 @@ import { UserUpdateDto } from 'src/app/share/models/user/user-update-dto.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
-import { Sex } from 'src/app/share/models/enum/sex.model';
+import { SexType } from 'src/app/share/models/enum/sex-type.model';
 
 @Component({
   selector: 'app-edit',
@@ -15,7 +15,7 @@ import { Sex } from 'src/app/share/models/enum/sex.model';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-  Sex = Sex;
+  SexType = SexType;
 
   id!: string;
   isLoading = true;
