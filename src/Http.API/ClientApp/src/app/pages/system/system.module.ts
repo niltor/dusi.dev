@@ -6,6 +6,8 @@ import { RoleModule } from './role/role.module';
 import { UserModule } from './user/user.module';
 import { EntityLibraryModule } from './entity-library/entity-library.module';
 import { EntityModelModule } from './entity-model/entity-model.module';
+import { RouteReuseStrategy } from '@angular/router';
+import { CustomRouteReuseStrategy } from 'src/app/custom-route-strategy';
 
 @NgModule({
   declarations: [],
@@ -18,6 +20,10 @@ import { EntityModelModule } from './entity-model/entity-model.module';
     EntityLibraryModule,
     EntityModelModule
 
-  ]
+  ],
+  providers: [{
+    provide: RouteReuseStrategy,
+    useClass: CustomRouteReuseStrategy
+  }]
 })
 export class SystemModule { }
