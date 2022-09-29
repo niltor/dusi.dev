@@ -10,7 +10,7 @@ public class RolePermission : EntityBase
     /// 权限类型
     /// </summary>
     public PermissionType PermissionTypeMyProperty { get; set; } = PermissionType.Write;
-    public Role Role { get; set; } = null!;
+    public SystemRole Role { get; set; } = null!;
     public Permission Permission { get; set; } = null!;
 
 }

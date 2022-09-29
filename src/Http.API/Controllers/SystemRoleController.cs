@@ -1,15 +1,15 @@
-using Share.Models.RoleDtos;
+using Share.Models.SystemRoleDtos;
 namespace Http.API.Infrastructure;
 
 /// <summary>
 /// 角色表
 /// </summary>
-public class RoleController : RestControllerBase<IRoleManager>
+public class SystemRoleController : RestControllerBase<ISystemRoleManager>
 {
-    public RoleController(
+    public SystemRoleController(
         IUserContext user,
-        ILogger<RoleController> logger,
-        IRoleManager manager
+        ILogger<SystemRoleController> logger,
+        ISystemRoleManager manager
         ) : base(manager, user, logger)
     {
     }
@@ -20,7 +20,7 @@ public class RoleController : RestControllerBase<IRoleManager>
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async Task<ActionResult<PageList<RoleItemDto>>> FilterAsync(RoleFilterDto filter)
+    public async Task<ActionResult<PageList<SystemRoleItemDto>>> FilterAsync(SystemRoleFilterDto filter)
     {
         return await manager.FilterAsync(filter);
     }
@@ -31,9 +31,9 @@ public class RoleController : RestControllerBase<IRoleManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<Role>> AddAsync(RoleAddDto form)
+    public async Task<ActionResult<SystemRole>> AddAsync(SystemRoleAddDto form)
     {
-        var entity = form.MapTo<RoleAddDto, Role>();
+        var entity = form.MapTo<SystemRoleAddDto, SystemRole>();
         return await manager.AddAsync(entity);
     }
 
@@ -44,7 +44,7 @@ public class RoleController : RestControllerBase<IRoleManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<Role?>> UpdateAsync([FromRoute] Guid id, RoleUpdateDto form)
+    public async Task<ActionResult<SystemRole?>> UpdateAsync([FromRoute] Guid id, SystemRoleUpdateDto form)
     {
         var current = await manager.GetCurrent(id);
         if (current == null) return NotFound();
@@ -57,7 +57,7 @@ public class RoleController : RestControllerBase<IRoleManager>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<Role?>> GetDetailAsync([FromRoute] Guid id)
+    public async Task<ActionResult<SystemRole?>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
         return (res == null) ? NotFound() : res;
@@ -70,7 +70,7 @@ public class RoleController : RestControllerBase<IRoleManager>
     /// <returns></returns>
     // [ApiExplorerSettings(IgnoreApi = true)]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Role?>> DeleteAsync([FromRoute] Guid id)
+    public async Task<ActionResult<SystemRole?>> DeleteAsync([FromRoute] Guid id)
     {
         var entity = await manager.GetCurrent(id);
         if (entity == null) return NotFound();

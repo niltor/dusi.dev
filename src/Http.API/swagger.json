@@ -1040,27 +1040,27 @@
         }
       }
     },
-    "/api/Role/filter": {
+    "/api/SystemRole/filter": {
       "post": {
         "tags": [
-          "Role"
+          "SystemRole"
         ],
-        "operationId": "Role_Filter",
+        "operationId": "SystemRole_Filter",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RoleFilterDto"
+                "$ref": "#/components/schemas/SystemRoleFilterDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/RoleFilterDto"
+                "$ref": "#/components/schemas/SystemRoleFilterDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/RoleFilterDto"
+                "$ref": "#/components/schemas/SystemRoleFilterDto"
               }
             }
           }
@@ -1071,17 +1071,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/RoleItemDtoPageList"
+                  "$ref": "#/components/schemas/SystemRoleItemDtoPageList"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RoleItemDtoPageList"
+                  "$ref": "#/components/schemas/SystemRoleItemDtoPageList"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RoleItemDtoPageList"
+                  "$ref": "#/components/schemas/SystemRoleItemDtoPageList"
                 }
               }
             }
@@ -1089,27 +1089,27 @@
         }
       }
     },
-    "/api/Role": {
+    "/api/SystemRole": {
       "post": {
         "tags": [
-          "Role"
+          "SystemRole"
         ],
-        "operationId": "Role_Add",
+        "operationId": "SystemRole_Add",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RoleAddDto"
+                "$ref": "#/components/schemas/SystemRoleAddDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/RoleAddDto"
+                "$ref": "#/components/schemas/SystemRoleAddDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/RoleAddDto"
+                "$ref": "#/components/schemas/SystemRoleAddDto"
               }
             }
           }
@@ -1120,17 +1120,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/SystemRole"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/SystemRole"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/SystemRole"
                 }
               }
             }
@@ -1138,12 +1138,12 @@
         }
       }
     },
-    "/api/Role/{id}": {
+    "/api/SystemRole/{id}": {
       "put": {
         "tags": [
-          "Role"
+          "SystemRole"
         ],
-        "operationId": "Role_Update",
+        "operationId": "SystemRole_Update",
         "parameters": [
           {
             "name": "id",
@@ -1159,17 +1159,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RoleUpdateDto"
+                "$ref": "#/components/schemas/SystemRoleUpdateDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/RoleUpdateDto"
+                "$ref": "#/components/schemas/SystemRoleUpdateDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/RoleUpdateDto"
+                "$ref": "#/components/schemas/SystemRoleUpdateDto"
               }
             }
           }
@@ -1180,17 +1180,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/SystemRole"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/SystemRole"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/SystemRole"
                 }
               }
             }
@@ -1199,9 +1199,9 @@
       },
       "get": {
         "tags": [
-          "Role"
+          "SystemRole"
         ],
-        "operationId": "Role_GetDetail",
+        "operationId": "SystemRole_GetDetail",
         "parameters": [
           {
             "name": "id",
@@ -1219,17 +1219,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/SystemRole"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/SystemRole"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/SystemRole"
                 }
               }
             }
@@ -1238,9 +1238,9 @@
       },
       "delete": {
         "tags": [
-          "Role"
+          "SystemRole"
         ],
-        "operationId": "Role_Delete",
+        "operationId": "SystemRole_Delete",
         "parameters": [
           {
             "name": "id",
@@ -1258,17 +1258,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/SystemRole"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/SystemRole"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/SystemRole"
                 }
               }
             }
@@ -1276,27 +1276,27 @@
         }
       }
     },
-    "/api/User/filter": {
+    "/api/SystemUser/filter": {
       "post": {
         "tags": [
-          "User"
+          "SystemUser"
         ],
-        "operationId": "User_Filter",
+        "operationId": "SystemUser_Filter",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserFilterDto"
+                "$ref": "#/components/schemas/SystemUserFilterDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserFilterDto"
+                "$ref": "#/components/schemas/SystemUserFilterDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UserFilterDto"
+                "$ref": "#/components/schemas/SystemUserFilterDto"
               }
             }
           }
@@ -1307,17 +1307,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserItemDtoPageList"
+                  "$ref": "#/components/schemas/SystemUserItemDtoPageList"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserItemDtoPageList"
+                  "$ref": "#/components/schemas/SystemUserItemDtoPageList"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserItemDtoPageList"
+                  "$ref": "#/components/schemas/SystemUserItemDtoPageList"
                 }
               }
             }
@@ -1325,27 +1325,27 @@
         }
       }
     },
-    "/api/User": {
+    "/api/SystemUser": {
       "post": {
         "tags": [
-          "User"
+          "SystemUser"
         ],
-        "operationId": "User_Add",
+        "operationId": "SystemUser_Add",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserAddDto"
+                "$ref": "#/components/schemas/SystemUserAddDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserAddDto"
+                "$ref": "#/components/schemas/SystemUserAddDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UserAddDto"
+                "$ref": "#/components/schemas/SystemUserAddDto"
               }
             }
           }
@@ -1356,17 +1356,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/SystemUser"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/SystemUser"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/SystemUser"
                 }
               }
             }
@@ -1374,12 +1374,12 @@
         }
       }
     },
-    "/api/User/{id}": {
+    "/api/SystemUser/{id}": {
       "put": {
         "tags": [
-          "User"
+          "SystemUser"
         ],
-        "operationId": "User_Update",
+        "operationId": "SystemUser_Update",
         "parameters": [
           {
             "name": "id",
@@ -1395,17 +1395,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserUpdateDto"
+                "$ref": "#/components/schemas/SystemUserUpdateDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserUpdateDto"
+                "$ref": "#/components/schemas/SystemUserUpdateDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UserUpdateDto"
+                "$ref": "#/components/schemas/SystemUserUpdateDto"
               }
             }
           }
@@ -1416,17 +1416,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/SystemUser"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/SystemUser"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/SystemUser"
                 }
               }
             }
@@ -1435,9 +1435,9 @@
       },
       "get": {
         "tags": [
-          "User"
+          "SystemUser"
         ],
-        "operationId": "User_GetDetail",
+        "operationId": "SystemUser_GetDetail",
         "parameters": [
           {
             "name": "id",
@@ -1455,17 +1455,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/SystemUser"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/SystemUser"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/SystemUser"
                 }
               }
             }
@@ -1474,9 +1474,9 @@
       },
       "delete": {
         "tags": [
-          "User"
+          "SystemUser"
         ],
-        "operationId": "User_Delete",
+        "operationId": "SystemUser_Delete",
         "parameters": [
           {
             "name": "id",
@@ -1494,17 +1494,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/SystemUser"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/SystemUser"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/SystemUser"
                 }
               }
             }
@@ -1655,7 +1655,7 @@
             "nullable": true
           },
           "user": {
-            "$ref": "#/components/schemas/User"
+            "$ref": "#/components/schemas/SystemUser"
           }
         },
         "additionalProperties": false,
@@ -2788,7 +2788,22 @@
           "Customer"
         ]
       },
-      "Role": {
+      "Sex": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "description": "性别",
+        "format": "int32",
+        "x-enumNames": [
+          "Male",
+          "Female",
+          "Else"
+        ]
+      },
+      "SystemRole": {
         "type": "object",
         "properties": {
           "id": {
@@ -2831,7 +2846,7 @@
           "users": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/User"
+              "$ref": "#/components/schemas/SystemUser"
             },
             "nullable": true
           }
@@ -2839,11 +2854,13 @@
         "additionalProperties": false,
         "description": "角色表"
       },
-      "RoleAddDto": {
+      "SystemRoleAddDto": {
         "type": "object",
         "properties": {
           "name": {
+            "maxLength": 30,
             "type": "string",
+            "description": "角色显示名称",
             "nullable": true
           },
           "nameValue": {
@@ -2865,7 +2882,7 @@
         "additionalProperties": false,
         "description": "角色添加时请求结构"
       },
-      "RoleFilterDto": {
+      "SystemRoleFilterDto": {
         "type": "object",
         "properties": {
           "pageIndex": {
@@ -2888,7 +2905,9 @@
             "nullable": true
           },
           "name": {
+            "maxLength": 30,
             "type": "string",
+            "description": "角色显示名称",
             "nullable": true
           },
           "nameValue": {
@@ -2905,11 +2924,13 @@
         "additionalProperties": false,
         "description": "角色查询筛选"
       },
-      "RoleItemDto": {
+      "SystemRoleItemDto": {
         "type": "object",
         "properties": {
           "name": {
+            "maxLength": 30,
             "type": "string",
+            "description": "角色显示名称",
             "nullable": true
           },
           "nameValue": {
@@ -2947,7 +2968,7 @@
         "additionalProperties": false,
         "description": "角色列表元素"
       },
-      "RoleItemDtoPageList": {
+      "SystemRoleItemDtoPageList": {
         "type": "object",
         "properties": {
           "count": {
@@ -2957,7 +2978,7 @@
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/RoleItemDto"
+              "$ref": "#/components/schemas/SystemRoleItemDto"
             },
             "nullable": true
           },
@@ -2968,11 +2989,13 @@
         },
         "additionalProperties": false
       },
-      "RoleUpdateDto": {
+      "SystemRoleUpdateDto": {
         "type": "object",
         "properties": {
           "name": {
+            "maxLength": 30,
             "type": "string",
+            "description": "角色显示名称",
             "nullable": true
           },
           "nameValue": {
@@ -2995,22 +3018,7 @@
         "additionalProperties": false,
         "description": "角色更新时请求结构"
       },
-      "SexType": {
-        "enum": [
-          0,
-          1,
-          2
-        ],
-        "type": "integer",
-        "description": "性别",
-        "format": "int32",
-        "x-enumNames": [
-          "Male",
-          "Female",
-          "Else"
-        ]
-      },
-      "User": {
+      "SystemUser": {
         "type": "object",
         "properties": {
           "id": {
@@ -3099,31 +3107,27 @@
             "description": "头像url",
             "nullable": true
           },
-          "roles": {
+          "systemRoles": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Role"
+              "$ref": "#/components/schemas/SystemRole"
             },
             "nullable": true
           },
-          "idNumber": {
-            "maxLength": 18,
-            "type": "string",
-            "description": "身份证号",
-            "nullable": true
-          },
           "sex": {
-            "$ref": "#/components/schemas/SexType"
+            "$ref": "#/components/schemas/Sex"
           }
         },
         "additionalProperties": false,
         "description": "系统用户"
       },
-      "UserAddDto": {
+      "SystemUserAddDto": {
         "type": "object",
         "properties": {
           "userName": {
+            "maxLength": 30,
             "type": "string",
+            "description": "用户名",
             "nullable": true
           },
           "realName": {
@@ -3143,7 +3147,6 @@
           "phoneNumber": {
             "maxLength": 20,
             "type": "string",
-            "description": "手机号",
             "nullable": true
           },
           "phoneNumberConfirmed": {
@@ -3181,20 +3184,14 @@
             "description": "头像url",
             "nullable": true
           },
-          "idNumber": {
-            "maxLength": 18,
-            "type": "string",
-            "description": "身份证号",
-            "nullable": true
-          },
           "sex": {
-            "$ref": "#/components/schemas/SexType"
+            "$ref": "#/components/schemas/Sex"
           }
         },
         "additionalProperties": false,
         "description": "系统用户添加时请求结构"
       },
-      "UserFilterDto": {
+      "SystemUserFilterDto": {
         "type": "object",
         "properties": {
           "pageIndex": {
@@ -3217,7 +3214,9 @@
             "nullable": true
           },
           "userName": {
+            "maxLength": 30,
             "type": "string",
+            "description": "用户名",
             "nullable": true
           },
           "emailConfirmed": {
@@ -3248,17 +3247,19 @@
             "nullable": true
           },
           "sex": {
-            "$ref": "#/components/schemas/SexType"
+            "$ref": "#/components/schemas/Sex"
           }
         },
         "additionalProperties": false,
         "description": "系统用户查询筛选"
       },
-      "UserItemDto": {
+      "SystemUserItemDto": {
         "type": "object",
         "properties": {
           "userName": {
+            "maxLength": 30,
             "type": "string",
+            "description": "用户名",
             "nullable": true
           },
           "realName": {
@@ -3278,7 +3279,6 @@
           "phoneNumber": {
             "maxLength": 20,
             "type": "string",
-            "description": "手机号",
             "nullable": true
           },
           "phoneNumberConfirmed": {
@@ -3316,14 +3316,8 @@
             "description": "头像url",
             "nullable": true
           },
-          "idNumber": {
-            "maxLength": 18,
-            "type": "string",
-            "description": "身份证号",
-            "nullable": true
-          },
           "sex": {
-            "$ref": "#/components/schemas/SexType"
+            "$ref": "#/components/schemas/Sex"
           },
           "id": {
             "type": "string",
@@ -3345,7 +3339,7 @@
         "additionalProperties": false,
         "description": "系统用户列表元素"
       },
-      "UserItemDtoPageList": {
+      "SystemUserItemDtoPageList": {
         "type": "object",
         "properties": {
           "count": {
@@ -3355,7 +3349,7 @@
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/UserItemDto"
+              "$ref": "#/components/schemas/SystemUserItemDto"
             },
             "nullable": true
           },
@@ -3366,11 +3360,13 @@
         },
         "additionalProperties": false
       },
-      "UserUpdateDto": {
+      "SystemUserUpdateDto": {
         "type": "object",
         "properties": {
           "userName": {
+            "maxLength": 30,
             "type": "string",
+            "description": "用户名",
             "nullable": true
           },
           "realName": {
@@ -3391,7 +3387,6 @@
           "phoneNumber": {
             "maxLength": 20,
             "type": "string",
-            "description": "手机号",
             "nullable": true
           },
           "phoneNumberConfirmed": {
@@ -3434,14 +3429,8 @@
             "description": "头像url",
             "nullable": true
           },
-          "idNumber": {
-            "maxLength": 18,
-            "type": "string",
-            "description": "身份证号",
-            "nullable": true
-          },
           "sex": {
-            "$ref": "#/components/schemas/SexType"
+            "$ref": "#/components/schemas/Sex"
           }
         },
         "additionalProperties": false,

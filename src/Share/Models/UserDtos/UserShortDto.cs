@@ -46,7 +46,7 @@ public class UserShortDto
     /// <summary>
     /// 性别
     /// </summary>
-    public SexType Sex { get; set; } = default!;
+    public Sex Sex { get; set; } = default!;
     public Guid Id { get; set; } = default!;
     public DateTimeOffset CreatedTime { get; set; } = default!;
     public DateTimeOffset UpdatedTime { get; set; } = default!;

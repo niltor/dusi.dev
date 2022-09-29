@@ -1,15 +1,15 @@
-using Share.Models.UserDtos;
+using Share.Models.SystemUserDtos;
 namespace Http.API.Infrastructure;
 
 /// <summary>
 /// 系统用户
 /// </summary>
-public class UserController : RestControllerBase<IUserManager>
+public class SystemUserController : RestControllerBase<ISystemUserManager>
 {
-    public UserController(
+    public SystemUserController(
         IUserContext user,
-        ILogger<UserController> logger,
-        IUserManager manager
+        ILogger<SystemUserController> logger,
+        ISystemUserManager manager
         ) : base(manager, user, logger)
     {
     }
@@ -20,7 +20,7 @@ public class UserController : RestControllerBase<IUserManager>
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async Task<ActionResult<PageList<UserItemDto>>> FilterAsync(UserFilterDto filter)
+    public async Task<ActionResult<PageList<SystemUserItemDto>>> FilterAsync(SystemUserFilterDto filter)
     {
         return await manager.FilterAsync(filter);
     }
@@ -31,9 +31,9 @@ public class UserController : RestControllerBase<IUserManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<User>> AddAsync(UserAddDto form)
+    public async Task<ActionResult<SystemUser>> AddAsync(SystemUserAddDto form)
     {
-        var entity = form.MapTo<UserAddDto, User>();
+        var entity = form.MapTo<SystemUserAddDto, SystemUser>();
         return await manager.AddAsync(entity);
     }
 
@@ -44,7 +44,7 @@ public class UserController : RestControllerBase<IUserManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<User?>> UpdateAsync([FromRoute] Guid id, UserUpdateDto form)
+    public async Task<ActionResult<SystemUser?>> UpdateAsync([FromRoute] Guid id, SystemUserUpdateDto form)
     {
         var current = await manager.GetCurrent(id);
         if (current == null) return NotFound();
@@ -57,7 +57,7 @@ public class UserController : RestControllerBase<IUserManager>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<User?>> GetDetailAsync([FromRoute] Guid id)
+    public async Task<ActionResult<SystemUser?>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
         return (res == null) ? NotFound() : res;
@@ -70,7 +70,7 @@ public class UserController : RestControllerBase<IUserManager>
     /// <returns></returns>
     // [ApiExplorerSettings(IgnoreApi = true)]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<User?>> DeleteAsync([FromRoute] Guid id)
+    public async Task<ActionResult<SystemUser?>> DeleteAsync([FromRoute] Guid id)
     {
         var entity = await manager.GetCurrent(id);
         if (entity == null) return NotFound();

@@ -46,6 +46,6 @@ public class UserAddDto
     /// <summary>
     /// 性别
     /// </summary>
-    public SexType Sex { get; set; } = default!;
+    public Sex Sex { get; set; } = default!;
     
 }

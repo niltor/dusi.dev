@@ -10,14 +10,14 @@ public static class StoreServicesExtensions
         services.AddScoped(typeof(EntityMemberConstraintQueryStore));
         services.AddScoped(typeof(EntityMemberQueryStore));
         services.AddScoped(typeof(EntityModelQueryStore));
-        services.AddScoped(typeof(RoleQueryStore));
-        services.AddScoped(typeof(UserQueryStore));
+        services.AddScoped(typeof(SystemRoleQueryStore));
+        services.AddScoped(typeof(SystemUserQueryStore));
         services.AddScoped(typeof(EntityLibraryCommandStore));
         services.AddScoped(typeof(EntityMemberCommandStore));
         services.AddScoped(typeof(EntityMemberConstraintCommandStore));
         services.AddScoped(typeof(EntityModelCommandStore));
-        services.AddScoped(typeof(RoleCommandStore));
-        services.AddScoped(typeof(UserCommandStore));
+        services.AddScoped(typeof(SystemRoleCommandStore));
+        services.AddScoped(typeof(SystemUserCommandStore));
 
     }
 
@@ -27,8 +27,8 @@ public static class StoreServicesExtensions
         services.AddScoped<IEntityMemberConstraintManager, EntityMemberConstraintManager>();
         services.AddScoped<IEntityMemberManager, EntityMemberManager>();
         services.AddScoped<IEntityModelManager, EntityModelManager>();
-        services.AddScoped<IRoleManager, RoleManager>();
-        services.AddScoped<IUserManager, UserManager>();
+        services.AddScoped<ISystemRoleManager, SystemRoleManager>();
+        services.AddScoped<ISystemUserManager, SystemUserManager>();
 
     }
 }

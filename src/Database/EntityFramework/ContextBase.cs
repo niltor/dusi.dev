@@ -6,8 +6,8 @@ namespace EntityFramework;
 
 public class ContextBase : DbContext
 {
-    public DbSet<User> Users { get; set; }
-    public DbSet<Role> Roles { get; set; }
+    public DbSet<SystemUser> Users { get; set; }
+    public DbSet<SystemRole> Roles { get; set; }
     public DbSet<EntityLibrary> EntityLibraries { get; set; }
     public DbSet<EntityModel> EntityModels { get; set; }
     public DbSet<EntityMember> EntityMembers { get; set; }
@@ -47,7 +47,7 @@ public class ContextBase : DbContext
 
 
 
-        builder.Entity<User>(e =>
+        builder.Entity<SystemUser>(e =>
         {
             e.HasIndex(a => a.Email);
             e.HasIndex(a => a.PhoneNumber);
@@ -56,7 +56,7 @@ public class ContextBase : DbContext
             e.HasIndex(a => a.CreatedTime);
         });
 
-        builder.Entity<Role>(e =>
+        builder.Entity<SystemRole>(e =>
         {
             e.HasIndex(m => m.Name);
         });

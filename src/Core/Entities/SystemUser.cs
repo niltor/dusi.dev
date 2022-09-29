@@ -3,7 +3,7 @@
 /// 系统用户
 /// </summary>
 [NgPage("system", "user")]
-public class User : EntityBase
+public class SystemUser : EntityBase
 {
     /// <summary>
     /// 用户名
@@ -43,24 +43,18 @@ public class User : EntityBase
     [MaxLength(200)]
     public string? Avatar { get; set; }
 
-    public ICollection<Role>? Roles { get; set; }
-
-    /// <summary>
-    /// 身份证号
-    /// </summary>
-    [MaxLength(18)]
-    public string? IdNumber { get; set; }
+    public ICollection<SystemRole>? SystemRoles { get; set; }
 
     /// <summary>
     /// 性别
     /// </summary>
-    public SexType Sex { get; set; } = SexType.Male;
+    public Sex Sex { get; set; } = Sex.Male;
 
 }
 /// <summary>
 /// 性别
 /// </summary>
-public enum SexType
+public enum Sex
 {
     Male,
     Female,

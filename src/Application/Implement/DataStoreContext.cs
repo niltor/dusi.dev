@@ -8,14 +8,14 @@ public class DataStoreContext
     public QuerySet<EntityMemberConstraint> EntityMemberConstraintQuery { get; init; }
     public QuerySet<EntityMember> EntityMemberQuery { get; init; }
     public QuerySet<EntityModel> EntityModelQuery { get; init; }
-    public QuerySet<Role> RoleQuery { get; init; }
-    public QuerySet<User> UserQuery { get; init; }
+    public QuerySet<SystemRole> SystemRoleQuery { get; init; }
+    public QuerySet<SystemUser> SystemUserQuery { get; init; }
     public CommandSet<EntityLibrary> EntityLibraryCommand { get; init; }
     public CommandSet<EntityMember> EntityMemberCommand { get; init; }
     public CommandSet<EntityMemberConstraint> EntityMemberConstraintCommand { get; init; }
     public CommandSet<EntityModel> EntityModelCommand { get; init; }
-    public CommandSet<Role> RoleCommand { get; init; }
-    public CommandSet<User> UserCommand { get; init; }
+    public CommandSet<SystemRole> SystemRoleCommand { get; init; }
+    public CommandSet<SystemUser> SystemUserCommand { get; init; }
 
 
     /// <summary>
@@ -28,14 +28,14 @@ public class DataStoreContext
         EntityMemberConstraintQueryStore entityMemberConstraintQuery,
         EntityMemberQueryStore entityMemberQuery,
         EntityModelQueryStore entityModelQuery,
-        RoleQueryStore roleQuery,
-        UserQueryStore userQuery,
+        SystemRoleQueryStore systemRoleQuery,
+        SystemUserQueryStore systemUserQuery,
         EntityLibraryCommandStore entityLibraryCommand,
         EntityMemberCommandStore entityMemberCommand,
         EntityMemberConstraintCommandStore entityMemberConstraintCommand,
         EntityModelCommandStore entityModelCommand,
-        RoleCommandStore roleCommand,
-        UserCommandStore userCommand,
+        SystemRoleCommandStore systemRoleCommand,
+        SystemUserCommandStore systemUserCommand,
 
         QueryDbContext queryDbContext,
         CommandDbContext commandDbContext
@@ -51,10 +51,10 @@ public class DataStoreContext
         AddCache(EntityMemberQuery);
         EntityModelQuery = entityModelQuery;
         AddCache(EntityModelQuery);
-        RoleQuery = roleQuery;
-        AddCache(RoleQuery);
-        UserQuery = userQuery;
-        AddCache(UserQuery);
+        SystemRoleQuery = systemRoleQuery;
+        AddCache(SystemRoleQuery);
+        SystemUserQuery = systemUserQuery;
+        AddCache(SystemUserQuery);
         EntityLibraryCommand = entityLibraryCommand;
         AddCache(EntityLibraryCommand);
         EntityMemberCommand = entityMemberCommand;
@@ -63,10 +63,10 @@ public class DataStoreContext
         AddCache(EntityMemberConstraintCommand);
         EntityModelCommand = entityModelCommand;
         AddCache(EntityModelCommand);
-        RoleCommand = roleCommand;
-        AddCache(RoleCommand);
-        UserCommand = userCommand;
-        AddCache(UserCommand);
+        SystemRoleCommand = systemRoleCommand;
+        AddCache(SystemRoleCommand);
+        SystemUserCommand = systemUserCommand;
+        AddCache(SystemUserCommand);
 
     }
 

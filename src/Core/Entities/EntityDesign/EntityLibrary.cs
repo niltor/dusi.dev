@@ -29,5 +29,5 @@ public class EntityLibrary : EntityBase
     /// <summary>
     /// 所属用户
     /// </summary>
-    public required User User { get; set; }
+    public required SystemUser User { get; set; }
 }
