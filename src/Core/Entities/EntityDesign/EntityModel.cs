@@ -23,11 +23,20 @@ public class EntityModel : EntityBase
     public required AccessModifier AccessModifier { get; set; } = AccessModifier.Public;
 
     /// <summary>
-    /// 代码示例
+    /// 代码内容
     /// </summary>
-    [MaxLength(2000)]
-    public string? CodeExample { get; set; }
-    public CodeLanguage? CodeLanguage { get; set; }
+    [MaxLength(8000)]
+    public string? CodeContent { get; set; }
+
+    /// <summary>
+    /// 代码语言
+    /// </summary>
+    public CodeLanguage CodeLanguage { get; set; } = CodeLanguage.Csharp;
+
+    /// <summary>
+    /// 语言版本
+    /// </summary>
+    public string LanguageVersion { get; set; } = "latest";
 
     /// <summary>
     /// 父类
