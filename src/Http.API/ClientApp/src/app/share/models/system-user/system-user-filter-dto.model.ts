@@ -3,8 +3,8 @@ import { Sex } from '../enum/sex.model';
  * 系统用户查询筛选
  */
 export interface SystemUserFilterDto {
-  pageIndex?: number | null;
-  pageSize?: number | null;
+  pageIndex: number;
+  pageSize: number;
   /**
    * 排序
    */

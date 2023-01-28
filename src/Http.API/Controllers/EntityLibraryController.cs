@@ -48,7 +48,7 @@ public class EntityLibraryController : RestControllerBase<IEntityLibraryManager>
     [HttpPut("{id}")]
     public async Task<ActionResult<EntityLibrary?>> UpdateAsync([FromRoute] Guid id, EntityLibraryUpdateDto form)
     {
-        var current = await manager.GetCurrent(id);
+        var current = await manager.GetCurrentAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -74,7 +74,7 @@ public class EntityLibraryController : RestControllerBase<IEntityLibraryManager>
     [HttpDelete("{id}")]
     public async Task<ActionResult<EntityLibrary?>> DeleteAsync([FromRoute] Guid id)
     {
-        var entity = await manager.GetCurrent(id);
+        var entity = await manager.GetCurrentAsync(id);
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity);
     }

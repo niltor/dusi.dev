@@ -1687,13 +1687,11 @@
         "properties": {
           "pageIndex": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "pageSize": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "orderBy": {
             "type": "object",
@@ -2068,13 +2066,11 @@
         "properties": {
           "pageIndex": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "pageSize": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "orderBy": {
             "type": "object",
@@ -2219,13 +2215,11 @@
         "properties": {
           "pageIndex": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "pageSize": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "orderBy": {
             "type": "object",
@@ -2595,13 +2589,11 @@
         "properties": {
           "pageIndex": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "pageSize": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "orderBy": {
             "type": "object",
@@ -2887,13 +2879,11 @@
         "properties": {
           "pageIndex": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "pageSize": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "orderBy": {
             "type": "object",
@@ -3196,13 +3186,11 @@
         "properties": {
           "pageIndex": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "pageSize": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "orderBy": {
             "type": "object",

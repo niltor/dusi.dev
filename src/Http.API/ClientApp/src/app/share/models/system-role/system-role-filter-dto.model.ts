@@ -2,8 +2,8 @@
  * 角色查询筛选
  */
 export interface SystemRoleFilterDto {
-  pageIndex?: number | null;
-  pageSize?: number | null;
+  pageIndex: number;
+  pageSize: number;
   /**
    * 排序
    */

@@ -2,51 +2,32 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Application.Implement;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region logger
-// config logger
-//var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "unknown";
-//Action<ResourceBuilder> configureResource = r => r.AddService(
-//    "dusi.dev", serviceVersion: assemblyVersion, serviceInstanceId: Environment.MachineName);
-//builder.Logging.ClearProviders();
-//builder.Logging.AddOpenTelemetry(options =>
-//{
-//    options.ConfigureResource(configureResource);
-//    options.AddConsoleExporter();
-//});
-
-//builder.Services.Configure<OpenTelemetryLoggerOptions>(opt =>
-//{
-//    opt.IncludeScopes = true;
-//    opt.ParseStateValues = true;
-//    opt.IncludeFormattedMessage = true;
-//});
-#endregion
-
 var services = builder.Services;
 var configuration = builder.Configuration;
 services.AddHttpContextAccessor();
 // database sql
-var connectionString = configuration.GetConnectionString("Default");
+string? connectionString = configuration.GetConnectionString("Default");
 services.AddDbContextPool<QueryDbContext>(option =>
 {
-    option.UseNpgsql(connectionString, sql =>
+    _ = option.UseNpgsql(connectionString, sql =>
     {
-        sql.MigrationsAssembly("EntityFramework.Migrator");
-        sql.CommandTimeout(10);
+        _ = sql.MigrationsAssembly("Http.API");
+        _ = sql.CommandTimeout(10);
     });
 });
 services.AddDbContextPool<CommandDbContext>(option =>
 {
-    option.UseNpgsql(connectionString, sql =>
+    _ = option.UseNpgsql(connectionString, sql =>
     {
-        sql.MigrationsAssembly("EntityFramework.Migrator");
-        sql.CommandTimeout(10);
+        _ = sql.MigrationsAssembly("Http.API");
+        _ = sql.CommandTimeout(10);
     });
 });
 
@@ -159,13 +140,6 @@ services.AddControllersWithViews()
 
 var app = builder.Build();
 
-// 初始化工作
-await using (var scope = app.Services.CreateAsyncScope())
-{
-    var provider = scope.ServiceProvider;
-    await InitDataTask.InitDataAsync(provider);
-}
-
 if (app.Environment.IsDevelopment())
 {
     app.UseCors("default");
@@ -182,22 +156,22 @@ else
 app.UseStaticFiles();
 
 // 异常统一处理
-//app.UseExceptionHandler(handler =>
-//{
-//    handler.Run(async context =>
-//    {
-//        context.Response.StatusCode = 500;
-//        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
-//        var result = new
-//        {
-//            Title = "程序内部错误:" + exception?.Message,
-//            Detail = exception?.Source,
-//            Status = 500,
-//            TraceId = context.TraceIdentifier
-//        };
-//        await context.Response.WriteAsJsonAsync(result);
-//    });
-//});
+app.UseExceptionHandler(handler =>
+{
+    handler.Run(async context =>
+    {
+        context.Response.StatusCode = 500;
+        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
+        var result = new
+        {
+            Title = "程序内部错误:" + exception?.Message,
+            Detail = exception?.Source,
+            Status = 500,
+            TraceId = context.TraceIdentifier
+        };
+        await context.Response.WriteAsJsonAsync(result);
+    });
+});
 
 app.UseHealthChecks("/health");
 
@@ -210,6 +184,16 @@ app.MapControllerRoute(
     pattern: "{controller}/{action=Index}/{id?}");
 app.MapFallbackToFile("index.html");
 
-app.Run();
+using (app)
+{
+    app.Start();
+    // 初始化工作
+    await using (AsyncServiceScope scope = app.Services.CreateAsyncScope())
+    {
+        IServiceProvider provider = scope.ServiceProvider;
+        await InitDataTask.InitDataAsync(provider);
+    }
+    app.WaitForShutdown();
+}
 
 public partial class Program { }

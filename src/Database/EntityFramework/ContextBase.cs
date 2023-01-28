@@ -18,6 +18,7 @@ public class ContextBase : DbContext
     {
 
     }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<EntityBase>().UseTpcMappingStrategy();

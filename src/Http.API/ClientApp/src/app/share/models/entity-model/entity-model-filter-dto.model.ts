@@ -3,8 +3,8 @@ import { AccessModifier } from '../enum/access-modifier.model';
  * 实体模型类查询筛选
  */
 export interface EntityModelFilterDto {
-  pageIndex?: number | null;
-  pageSize?: number | null;
+  pageIndex: number;
+  pageSize: number;
   /**
    * 排序
    */

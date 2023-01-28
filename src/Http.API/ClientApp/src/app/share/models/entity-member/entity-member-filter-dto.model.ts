@@ -4,8 +4,8 @@ import { MemberType } from '../enum/member-type.model';
  * 实体属性查询筛选
  */
 export interface EntityMemberFilterDto {
-  pageIndex?: number | null;
-  pageSize?: number | null;
+  pageIndex: number;
+  pageSize: number;
   /**
    * 排序
    */
