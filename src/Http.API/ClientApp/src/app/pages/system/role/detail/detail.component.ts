@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { RoleService } from 'src/app/share/services/role.service';
+import { SystemRoleService } from 'src/app/share/services/system-role.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Role } from 'src/app/share/models/role/role.model';
+import { SystemRole } from 'src/app/share/models/system-role/system-role.model';
 import { Location } from '@angular/common';
 
 @Component({
@@ -13,9 +13,9 @@ import { Location } from '@angular/common';
 export class DetailComponent implements OnInit {
   id!: string;
   isLoading = true;
-  data = {} as Role;
+  data = {} as SystemRole;
   constructor(
-    private service: RoleService,
+    private service: SystemRoleService,
     private snb: MatSnackBar,
     private route: ActivatedRoute,
     public location: Location,
@@ -34,11 +34,16 @@ export class DetailComponent implements OnInit {
   }
   getDetail(): void {
     this.service.getDetail(this.id)
-      .subscribe(res => {
-        this.data = res;
-        this.isLoading = false;
-      }, error => {
-        this.snb.open(error);
+      .subscribe({
+        next: (res) => {
+          if(res) {
+            this.data = res;
+              this.isLoading = false;
+            }
+        },
+        error:(error) => {
+          this.snb.open(error);
+        }
       })
   }
   back(): void {

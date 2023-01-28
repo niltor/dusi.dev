@@ -23,15 +23,15 @@ export class EditComponent implements OnInit {
   public editorConfig!: CKEditor5.Config;
   public editor: CKEditor5.EditorConstructor = ClassicEditor;
   AccessModifier = AccessModifier;
-  CodeLanguage = CodeLanguage;
+CodeLanguage = CodeLanguage;
 
   id!: string;
   isLoading = true;
   data = {} as EntityModel;
   updateData = {} as EntityModelUpdateDto;
   formGroup!: FormGroup;
-  constructor(
-
+    constructor(
+    
     // private authService: OidcSecurityService,
     private service: EntityModelService,
     private snb: MatSnackBar,
@@ -49,11 +49,11 @@ export class EditComponent implements OnInit {
     }
   }
 
-  get name() { return this.formGroup.get('name'); }
-  get comment() { return this.formGroup.get('comment'); }
-  get accessModifier() { return this.formGroup.get('accessModifier'); }
-  get codeExample() { return this.formGroup.get('codeExample'); }
-  get codeLanguage() { return this.formGroup.get('codeLanguage'); }
+    get name() { return this.formGroup.get('name'); }
+    get comment() { return this.formGroup.get('comment'); }
+    get accessModifier() { return this.formGroup.get('accessModifier'); }
+    get codeExample() { return this.formGroup.get('codeExample'); }
+    get codeLanguage() { return this.formGroup.get('codeLanguage'); }
 
 
   ngOnInit(): void {
@@ -62,7 +62,7 @@ export class EditComponent implements OnInit {
     // TODO:等待数据加载完成
     // this.isLoading = false;
   }
-  initEditor(): void {
+    initEditor(): void {
     this.editorConfig = {
       // placeholder: '请添加图文信息提供证据，也可以直接从Word文档中复制',
       simpleUpload: {
@@ -129,13 +129,19 @@ export class EditComponent implements OnInit {
     }
   }
   edit(): void {
-    if (this.formGroup.valid) {
+    if(this.formGroup.valid) {
       this.updateData = this.formGroup.value as EntityModelUpdateDto;
       this.service.update(this.id, this.updateData)
-        .subscribe(res => {
-          this.snb.open('修改成功');
-          // this.dialogRef.close(res);
-          this.router.navigate(['../../index'], { relativeTo: this.route });
+        .subscribe({
+          next: (res) => {
+            if(res){
+              this.snb.open('修改成功');
+              // this.dialogRef.close(res);
+              this.router.navigate(['../../index'], { relativeTo: this.route });
+            }
+          },
+          error:()=>{
+          }
         });
     }
   }

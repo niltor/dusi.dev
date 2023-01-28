@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UserService } from 'src/app/share/services/user.service';
-import { Router } from '@angular/router';
+import { SystemUserService } from 'src/app/share/services/system-user.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
-import { UserItemDto } from 'src/app/share/models/user/user-item-dto.model';
-import { UserFilterDto } from 'src/app/share/models/user/user-filter-dto.model';
+import { SystemUserItemDto } from 'src/app/share/models/system-user/system-user-item-dto.model';
+import { SystemUserFilterDto } from 'src/app/share/models/system-user/system-user-filter-dto.model';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -18,15 +18,16 @@ export class IndexComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   isLoading = true;
   total = 0;
-  data: UserItemDto[] = [];
+  data: SystemUserItemDto[] = [];
   columns: string[] = ['userName', 'realName', 'email', 'emailConfirmed', 'phoneNumber', 'actions'];
-  dataSource!: MatTableDataSource<UserItemDto>;
-  filter: UserFilterDto;
+  dataSource!: MatTableDataSource<SystemUserItemDto>;
+  filter: SystemUserFilterDto;
   pageSizeOption = [12, 20, 50];
   constructor(
-    private service: UserService,
+    private service: SystemUserService,
     private snb: MatSnackBar,
     private dialog: MatDialog,
+    private route: ActivatedRoute,
     private router: Router,
   ) {
 
@@ -50,13 +51,13 @@ export class IndexComponent implements OnInit {
         if (res.data) {
           this.data = res.data;
           this.total = res.count;
-          this.dataSource = new MatTableDataSource<UserItemDto>(this.data);
+          this.dataSource = new MatTableDataSource<SystemUserItemDto>(this.data);
         }
         this.isLoading = false;
       });
   }
 
-  deleteConfirm(item: UserItemDto): void {
+  deleteConfirm(item: SystemUserItemDto): void {
     const ref = this.dialog.open(ConfirmDialogComponent, {
       hasBackdrop: true,
       disableClose: false,
@@ -72,7 +73,7 @@ export class IndexComponent implements OnInit {
       }
     });
   }
-  delete(item: UserItemDto): void {
+  delete(item: SystemUserItemDto): void {
     this.service.delete(item.id)
       .subscribe(res => {
         if (res) {
@@ -129,8 +130,7 @@ openEditDialog(id: string): void {
    * 编辑
    */
   edit(id: string): void {
-    console.log(id);
-    this.router.navigateByUrl('/admin/user/edit/' + id);
+    this.router.navigate(['../edit/' + id], { relativeTo: this.route });
   }
 
 }

@@ -8,7 +8,7 @@ export interface SystemUserFilterDto {
   /**
    * 排序
    */
-  orderBy?:  | null;
+  orderBy?: any | null;
   /**
    * 用户名
    */

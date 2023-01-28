@@ -1,13 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'src/app/share/models/user/user.model';
-import { UserService } from 'src/app/share/services/user.service';
+import { SystemUser } from 'src/app/share/models/system-user/system-user.model';
+import { SystemUserService } from 'src/app/share/services/system-user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserUpdateDto } from 'src/app/share/models/user/user-update-dto.model';
+import { SystemUserUpdateDto } from 'src/app/share/models/system-user/system-user-update-dto.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
-import { SexType } from 'src/app/share/models/enum/sex-type.model';
+import { Sex } from 'src/app/share/models/enum/sex.model';
 
 @Component({
   selector: 'app-edit',
@@ -15,16 +15,16 @@ import { SexType } from 'src/app/share/models/enum/sex-type.model';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-  SexType = SexType;
+  Sex = Sex;
 
   id!: string;
   isLoading = true;
-  data = {} as User;
-  updateData = {} as UserUpdateDto;
+  data = {} as SystemUser;
+  updateData = {} as SystemUserUpdateDto;
   formGroup!: FormGroup;
     constructor(
     
-    private service: UserService,
+    private service: SystemUserService,
     private snb: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
@@ -53,7 +53,6 @@ export class EditComponent implements OnInit {
     get lastLoginTime() { return this.formGroup.get('lastLoginTime'); }
     get retryCount() { return this.formGroup.get('retryCount'); }
     get avatar() { return this.formGroup.get('avatar'); }
-    get idNumber() { return this.formGroup.get('idNumber'); }
     get sex() { return this.formGroup.get('sex'); }
 
 
@@ -77,7 +76,7 @@ export class EditComponent implements OnInit {
 
   initForm(): void {
     this.formGroup = new FormGroup({
-      userName: new FormControl(this.data.userName, []),
+      userName: new FormControl(this.data.userName, [Validators.maxLength(30)]),
       realName: new FormControl(this.data.realName, [Validators.maxLength(30)]),
       email: new FormControl(this.data.email, [Validators.maxLength(100)]),
       emailConfirmed: new FormControl(this.data.emailConfirmed, []),
@@ -90,7 +89,6 @@ export class EditComponent implements OnInit {
       lastLoginTime: new FormControl(this.data.lastLoginTime, []),
       retryCount: new FormControl(this.data.retryCount, []),
       avatar: new FormControl(this.data.avatar, [Validators.maxLength(200)]),
-      idNumber: new FormControl(this.data.idNumber, [Validators.maxLength(18)]),
       sex: new FormControl(this.data.sex, []),
 
     });
@@ -100,7 +98,7 @@ export class EditComponent implements OnInit {
       case 'userName':
         return this.userName?.errors?.['required'] ? 'UserName必填' :
           this.userName?.errors?.['minlength'] ? 'UserName长度最少位' :
-            this.userName?.errors?.['maxlength'] ? 'UserName长度最多位' : '';
+            this.userName?.errors?.['maxlength'] ? 'UserName长度最多30位' : '';
       case 'realName':
         return this.realName?.errors?.['required'] ? 'RealName必填' :
           this.realName?.errors?.['minlength'] ? 'RealName长度最少位' :
@@ -149,10 +147,6 @@ export class EditComponent implements OnInit {
         return this.avatar?.errors?.['required'] ? 'Avatar必填' :
           this.avatar?.errors?.['minlength'] ? 'Avatar长度最少位' :
             this.avatar?.errors?.['maxlength'] ? 'Avatar长度最多200位' : '';
-      case 'idNumber':
-        return this.idNumber?.errors?.['required'] ? 'IdNumber必填' :
-          this.idNumber?.errors?.['minlength'] ? 'IdNumber长度最少位' :
-            this.idNumber?.errors?.['maxlength'] ? 'IdNumber长度最多18位' : '';
       case 'sex':
         return this.sex?.errors?.['required'] ? 'Sex必填' :
           this.sex?.errors?.['minlength'] ? 'Sex长度最少位' :
@@ -164,12 +158,18 @@ export class EditComponent implements OnInit {
   }
   edit(): void {
     if(this.formGroup.valid) {
-      this.updateData = this.formGroup.value as UserUpdateDto;
+      this.updateData = this.formGroup.value as SystemUserUpdateDto;
       this.service.update(this.id, this.updateData)
-        .subscribe(res => {
-          this.snb.open('修改成功');
-           // this.dialogRef.close(res);
-          this.router.navigate(['../../index'],{relativeTo: this.route});
+        .subscribe({
+          next: (res) => {
+            if(res){
+              this.snb.open('修改成功');
+              // this.dialogRef.close(res);
+              this.router.navigate(['../../index'], { relativeTo: this.route });
+            }
+          },
+          error:()=>{
+          }
         });
     }
   }

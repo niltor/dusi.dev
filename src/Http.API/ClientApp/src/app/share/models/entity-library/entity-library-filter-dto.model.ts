@@ -7,7 +7,7 @@ export interface EntityLibraryFilterDto {
   /**
    * 排序
    */
-  orderBy?:  | null;
+  orderBy?: any | null;
   name?: string | null;
   /**
    * 是否公开

@@ -1,36 +1,43 @@
+using Core.Const;
+using Microsoft.Extensions.Configuration;
+
 namespace Application.Services;
 
 public class InitDataTask
 {
     public static async Task InitDataAsync(IServiceProvider provider)
     {
-        var context = provider.GetRequiredService<CommandDbContext>();
-        var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
-        var logger = loggerFactory.CreateLogger<InitDataTask>();
+        CommandDbContext context = provider.GetRequiredService<CommandDbContext>();
+        ILoggerFactory loggerFactory = provider.GetRequiredService<ILoggerFactory>();
+        ILogger<InitDataTask> logger = loggerFactory.CreateLogger<InitDataTask>();
+        var configuration = provider.GetRequiredService<IConfiguration>();
 
-        var connectionString = context.Database.GetConnectionString();
-        logger.LogInformation("当前数据库:" + connectionString);
-
+        string? connectionString = context.Database.GetConnectionString();
         try
         {
+            // 执行迁移,如果手动执行,请删除该代码
+            context.Database.Migrate();
+
             if (!await context.Database.CanConnectAsync())
             {
-                logger.LogError("数据库无法连接，请先配置数据库！");
+                logger.LogError("数据库无法连接:{message}", connectionString);
+                return;
             }
             else
             {
                 // 判断是否初始化
-                var role = await context.Roles.SingleOrDefaultAsync(r => r.Name.ToLower() == "admin");
+                SystemRole? role = await context.SystemRoles.SingleOrDefaultAsync(r => r.Name.ToLower() == "admin");
                 if (role == null)
                 {
                     logger.LogInformation("初始化数据");
                     await InitRoleAndUserAsync(context);
                 }
+                await UpdateAsync(context, configuration, logger);
             }
         }
         catch (Exception ex)
         {
-            logger.LogError("初始化异常,请检查数据库配置：" + ex.Message);
+            logger.LogError("初始化异常,请检查数据库配置：{message}", connectionString + ex.Message);
         }
     }
 
@@ -55,9 +62,53 @@ public class InitDataTask
             PasswordHash = HashCrypto.GeneratePwd("123456", salt),
             SystemRoles = new List<SystemRole>() { role },
         };
-        context.Roles.Add(userRole);
-        context.Roles.Add(role);
-        context.Users.Add(user);
+        context.SystemRoles.Add(userRole);
+        context.SystemRoles.Add(role);
+        context.SystemUsers.Add(user);
         await context.SaveChangesAsync();
+    }
+
+    /// <summary>
+    /// 更新
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="configuration"></param>
+    /// <param name="logger"></param>
+    /// <returns></returns>
+    public static async Task UpdateAsync(CommandDbContext context, IConfiguration configuration, ILogger<InitDataTask> logger)
+    {
+        // 查询库中版本
+        var version = await context.WebConfigs.Where(c => c.Key == Const.Version).FirstOrDefaultAsync();
+        if (version == null)
+        {
+            var config = new WebConfig
+            {
+                IsSystem = true,
+                Valid = true,
+                Key = Const.Version,
+                // 版本格式:yyMMdd.编号
+                Value = DateTime.UtcNow.ToString("yyMMdd") + ".01"
+            };
+            context.Add(config);
+            await context.SaveChangesAsync();
+            version = config;
+        }
+        // 比对新版本
+        var newVersion = configuration.GetValue<string>(Const.Version);
+
+        if (double.TryParse(newVersion, out var newVersionValue)
+            && double.TryParse(version.Value, out var versionValue))
+        {
+            if (newVersionValue > versionValue)
+            {
+                // TODO:执行更新方法
+                version.Value = newVersionValue.ToString();
+                await context.SaveChangesAsync();
+            }
+        }
+        else
+        {
+            logger.LogError("版本格式错误");
+        }
     }
 }

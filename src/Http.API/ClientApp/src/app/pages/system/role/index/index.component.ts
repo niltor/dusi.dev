@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { RoleService } from 'src/app/share/services/role.service';
+import { SystemRoleService } from 'src/app/share/services/system-role.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
-import { RoleItemDto } from 'src/app/share/models/role/role-item-dto.model';
-import { RoleFilterDto } from 'src/app/share/models/role/role-filter-dto.model';
+import { SystemRoleItemDto } from 'src/app/share/models/system-role/system-role-item-dto.model';
+import { SystemRoleFilterDto } from 'src/app/share/models/system-role/system-role-filter-dto.model';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -18,13 +18,13 @@ export class IndexComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   isLoading = true;
   total = 0;
-  data: RoleItemDto[] = [];
+  data: SystemRoleItemDto[] = [];
   columns: string[] = ['name', 'nameValue', 'isSystem', 'icon', 'createdTime', 'actions'];
-  dataSource!: MatTableDataSource<RoleItemDto>;
-  filter: RoleFilterDto;
+  dataSource!: MatTableDataSource<SystemRoleItemDto>;
+  filter: SystemRoleFilterDto;
   pageSizeOption = [12, 20, 50];
   constructor(
-    private service: RoleService,
+    private service: SystemRoleService,
     private snb: MatSnackBar,
     private dialog: MatDialog,
     private route: ActivatedRoute,
@@ -42,7 +42,7 @@ export class IndexComponent implements OnInit {
   }
 
   getList(event?: PageEvent): void {
-    if (event) {
+    if(event) {
       this.filter.pageIndex = event.pageIndex + 1;
       this.filter.pageSize = event.pageSize;
     }
@@ -51,13 +51,13 @@ export class IndexComponent implements OnInit {
         if (res.data) {
           this.data = res.data;
           this.total = res.count;
-          this.dataSource = new MatTableDataSource<RoleItemDto>(this.data);
+          this.dataSource = new MatTableDataSource<SystemRoleItemDto>(this.data);
         }
         this.isLoading = false;
       });
   }
 
-  deleteConfirm(item: RoleItemDto): void {
+  deleteConfirm(item: SystemRoleItemDto): void {
     const ref = this.dialog.open(ConfirmDialogComponent, {
       hasBackdrop: true,
       disableClose: false,
@@ -73,7 +73,7 @@ export class IndexComponent implements OnInit {
       }
     });
   }
-  delete(item: RoleItemDto): void {
+  delete(item: SystemRoleItemDto): void {
     this.service.delete(item.id)
       .subscribe(res => {
         if (res) {
@@ -84,47 +84,47 @@ export class IndexComponent implements OnInit {
           this.snb.open('删除失败');
         }
       });
-  }
+}
 
-  /*
-  openAddDialog(): void {
-    const ref = this.dialog.open(AddComponent, {
-      hasBackdrop: true,
-      disableClose: false,
-      data: {
-      }
-    });
-    ref.afterClosed().subscribe(res => {
-      if (res) {
-        this.snb.open('添加成功');
-        this.getList();
-      }
-    });
-  }
-  openDetailDialog(id: string): void {
-    const ref = this.dialog.open(DetailComponent, {
-      hasBackdrop: true,
-      disableClose: false,
-      data: { id }
-    });
-    ref.afterClosed().subscribe(res => {
-      if (res) { }
-    });
-  }
-  
-  openEditDialog(id: string): void {
-    const ref = this.dialog.open(EditComponent, {
-      hasBackdrop: true,
-      disableClose: false,
-      data: { id }
-    });
-    ref.afterClosed().subscribe(res => {
-      if (res) {
-        this.snb.open('修改成功');
-        this.getList();
-      }
-    });
-  }*/
+/*
+openAddDialog(): void {
+  const ref = this.dialog.open(AddComponent, {
+    hasBackdrop: true,
+    disableClose: false,
+    data: {
+    }
+  });
+  ref.afterClosed().subscribe(res => {
+    if (res) {
+      this.snb.open('添加成功');
+      this.getList();
+    }
+  });
+}
+openDetailDialog(id: string): void {
+  const ref = this.dialog.open(DetailComponent, {
+    hasBackdrop: true,
+    disableClose: false,
+    data: { id }
+  });
+  ref.afterClosed().subscribe(res => {
+    if (res) { }
+  });
+}
+
+openEditDialog(id: string): void {
+  const ref = this.dialog.open(EditComponent, {
+    hasBackdrop: true,
+    disableClose: false,
+    data: { id }
+  });
+  ref.afterClosed().subscribe(res => {
+    if (res) {
+      this.snb.open('修改成功');
+      this.getList();
+    }
+  });
+}*/
 
   /**
    * 编辑
@@ -132,4 +132,5 @@ export class IndexComponent implements OnInit {
   edit(id: string): void {
     this.router.navigate(['../edit/' + id], { relativeTo: this.route });
   }
+
 }

@@ -7,7 +7,7 @@ export interface SystemRoleFilterDto {
   /**
    * 排序
    */
-  orderBy?:  | null;
+  orderBy?: any | null;
   /**
    * 角色显示名称
    */

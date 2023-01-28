@@ -59,7 +59,7 @@ CodeLanguage = CodeLanguage;
     this.editorConfig = {
       // placeholder: '请添加图文信息提供证据，也可以直接从Word文档中复制',
       simpleUpload: {
-        // uploadUrl: environment.uploadEditorFileUrl,
+        uploadUrl: '',// set your api url like:environment.uploadEditorFileUrl,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem("accessToken")
         }
@@ -116,11 +116,19 @@ CodeLanguage = CodeLanguage;
     const data = this.formGroup.value as EntityModelAddDto;
     this.data = { ...data, ...this.data };
     this.service.add(this.data)
-        .subscribe(res => {
+      .subscribe({
+        next: (res) => {
+          if (res) {
             this.snb.open('添加成功');
             // this.dialogRef.close(res);
-            this.router.navigate(['../index'],{relativeTo: this.route});
-        });
+            this.router.navigate(['../index'], { relativeTo: this.route });
+          }
+
+        },
+        error: () => {
+
+        }
+      });
     }
   }
   back(): void {

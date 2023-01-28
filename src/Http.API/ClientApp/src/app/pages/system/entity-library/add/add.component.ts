@@ -76,11 +76,19 @@ export class AddComponent implements OnInit {
     const data = this.formGroup.value as EntityLibraryAddDto;
     this.data = { ...data, ...this.data };
     this.service.add(this.data)
-        .subscribe(res => {
+      .subscribe({
+        next: (res) => {
+          if (res) {
             this.snb.open('添加成功');
             // this.dialogRef.close(res);
-            this.router.navigate(['../index'],{relativeTo: this.route});
-        });
+            this.router.navigate(['../index'], { relativeTo: this.route });
+          }
+
+        },
+        error: () => {
+
+        }
+      });
     }
   }
   back(): void {

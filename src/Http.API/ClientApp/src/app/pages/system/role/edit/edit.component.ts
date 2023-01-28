@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Role } from 'src/app/share/models/role/role.model';
-import { RoleService } from 'src/app/share/services/role.service';
+import { SystemRole } from 'src/app/share/models/system-role/system-role.model';
+import { SystemRoleService } from 'src/app/share/services/system-role.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { RoleUpdateDto } from 'src/app/share/models/role/role-update-dto.model';
+import { SystemRoleUpdateDto } from 'src/app/share/models/system-role/system-role-update-dto.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
@@ -17,12 +17,12 @@ export class EditComponent implements OnInit {
   
   id!: string;
   isLoading = true;
-  data = {} as Role;
-  updateData = {} as RoleUpdateDto;
+  data = {} as SystemRole;
+  updateData = {} as SystemRoleUpdateDto;
   formGroup!: FormGroup;
     constructor(
     
-    private service: RoleService,
+    private service: SystemRoleService,
     private snb: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
@@ -64,7 +64,7 @@ export class EditComponent implements OnInit {
 
   initForm(): void {
     this.formGroup = new FormGroup({
-      name: new FormControl(this.data.name, []),
+      name: new FormControl(this.data.name, [Validators.maxLength(30)]),
       nameValue: new FormControl(this.data.nameValue, []),
       isSystem: new FormControl(this.data.isSystem, []),
       icon: new FormControl(this.data.icon, [Validators.maxLength(30)]),
@@ -76,7 +76,7 @@ export class EditComponent implements OnInit {
       case 'name':
         return this.name?.errors?.['required'] ? 'Name必填' :
           this.name?.errors?.['minlength'] ? 'Name长度最少位' :
-            this.name?.errors?.['maxlength'] ? 'Name长度最多位' : '';
+            this.name?.errors?.['maxlength'] ? 'Name长度最多30位' : '';
       case 'nameValue':
         return this.nameValue?.errors?.['required'] ? 'NameValue必填' :
           this.nameValue?.errors?.['minlength'] ? 'NameValue长度最少位' :
@@ -96,12 +96,18 @@ export class EditComponent implements OnInit {
   }
   edit(): void {
     if(this.formGroup.valid) {
-      this.updateData = this.formGroup.value as RoleUpdateDto;
+      this.updateData = this.formGroup.value as SystemRoleUpdateDto;
       this.service.update(this.id, this.updateData)
-        .subscribe(res => {
-          this.snb.open('修改成功');
-           // this.dialogRef.close(res);
-          this.router.navigate(['../../index'],{relativeTo: this.route});
+        .subscribe({
+          next: (res) => {
+            if(res){
+              this.snb.open('修改成功');
+              // this.dialogRef.close(res);
+              this.router.navigate(['../../index'], { relativeTo: this.route });
+            }
+          },
+          error:()=>{
+          }
         });
     }
   }

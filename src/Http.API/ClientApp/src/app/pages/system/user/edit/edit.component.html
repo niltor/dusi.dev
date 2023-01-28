@@ -7,6 +7,13 @@
 <form class="d-flex" *ngIf="!isLoading" [formGroup]="formGroup" (ngSubmit)="edit()">
   <div class="d-flex flex-column w-100">
   <mat-form-field>
+    <mat-label>UserName</mat-label>
+    <input matInput placeholder="UserName" formControlName="userName"  minlength="" maxlength="30">
+    <mat-error *ngIf="userName?.invalid">
+    {{getValidatorMessage('userName')}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
     <mat-label>RealName</mat-label>
     <input matInput placeholder="RealName" formControlName="realName"  minlength="" maxlength="30">
     <mat-error *ngIf="realName?.invalid">
@@ -67,17 +74,10 @@
     {{getValidatorMessage('avatar')}}
     </mat-error>
   </mat-form-field>
-  <mat-form-field>
-    <mat-label>IdNumber</mat-label>
-    <input matInput placeholder="IdNumber" formControlName="idNumber"  minlength="" maxlength="18">
-    <mat-error *ngIf="idNumber?.invalid">
-    {{getValidatorMessage('idNumber')}}
-    </mat-error>
-  </mat-form-field>
 <mat-form-field>
   <mat-label>Sex</mat-label>
   <mat-select formControlName="sex">
-    <mat-option *ngFor="let item of SexType | toKeyValue" [value]="item.value">
+    <mat-option *ngFor="let item of Sex | toKeyValue" [value]="item.value">
       {{item.key}}
     </mat-option>
   </mat-select>

@@ -1,5 +1,6 @@
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using Application;
 using Application.Implement;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
@@ -41,7 +42,16 @@ services.AddManager();
 //    options.InstanceName = builder.Configuration.GetConnectionString("RedisInstanceName");
 //});
 //services.AddSingleton(typeof(RedisService));
+#region OpenTelemetry:log/trace/metric
+var otlpEndpoint = configuration.GetSection("OTLP")
+    .GetValue<string>("Endpoint")
+    ?? "http://localhost:4317";
+services.AddOpenTelemetry("dusi", opt =>
+{
+    opt.Endpoint = new Uri(otlpEndpoint);
+});
 
+#endregion
 #region 接口相关内容:jwt/授权/cors
 // use jwt
 services.AddAuthentication(options =>
@@ -164,8 +174,10 @@ app.UseExceptionHandler(handler =>
         var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
         var result = new
         {
-            Title = "程序内部错误:" + exception?.Message,
-            Detail = exception?.Source,
+            Title = "异常错误",
+            Source = exception?.Source,
+            Detail = exception?.Message,
+            StackTrace = exception?.StackTrace,
             Status = 500,
             TraceId = context.TraceIdentifier
         };

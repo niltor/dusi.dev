@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EntityModelService } from 'src/app/share/services/entity-model.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { EntityModelItemDto } from 'src/app/share/models/entity-model/entity-model-item-dto.model';
 import { EntityModelFilterDto } from 'src/app/share/models/entity-model/entity-model-filter-dto.model';
@@ -27,6 +27,7 @@ export class IndexComponent implements OnInit {
     private service: EntityModelService,
     private snb: MatSnackBar,
     private dialog: MatDialog,
+    private route: ActivatedRoute,
     private router: Router,
   ) {
 
@@ -129,8 +130,7 @@ openEditDialog(id: string): void {
    * 编辑
    */
   edit(id: string): void {
-    console.log(id);
-    this.router.navigateByUrl('/admin/entity-model/edit/' + id);
+    this.router.navigate(['../edit/' + id], { relativeTo: this.route });
   }
 
 }

@@ -7,7 +7,7 @@ export interface EntityMemberConstraintFilterDto {
   /**
    * 排序
    */
-  orderBy?:  | null;
+  orderBy?: any | null;
   entityMemberId?: string | null;
 
 }

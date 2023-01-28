@@ -1,13 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserService } from 'src/app/share/services/user.service';
-import { User } from 'src/app/share/models/user/user.model';
-import { UserAddDto } from 'src/app/share/models/user/user-add-dto.model';
+import { SystemUserService } from 'src/app/share/services/system-user.service';
+import { SystemUser } from 'src/app/share/models/system-user/system-user.model';
+import { SystemUserAddDto } from 'src/app/share/models/system-user/system-user-add-dto.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
-import { SexType } from 'src/app/share/models/enum/sex-type.model';
+import { Sex } from 'src/app/share/models/enum/sex.model';
 
 @Component({
     selector: 'app-add',
@@ -15,14 +15,14 @@ import { SexType } from 'src/app/share/models/enum/sex-type.model';
     styleUrls: ['./add.component.css']
 })
 export class AddComponent implements OnInit {
-    SexType = SexType;
+    Sex = Sex;
 
     formGroup!: FormGroup;
-    data = {} as UserAddDto;
+    data = {} as SystemUserAddDto;
     isLoading = true;
     constructor(
         
-        private service: UserService,
+        private service: SystemUserService,
         public snb: MatSnackBar,
         private router: Router,
         private route: ActivatedRoute,
@@ -46,7 +46,6 @@ export class AddComponent implements OnInit {
     get lastLoginTime() { return this.formGroup.get('lastLoginTime'); }
     get retryCount() { return this.formGroup.get('retryCount'); }
     get avatar() { return this.formGroup.get('avatar'); }
-    get idNumber() { return this.formGroup.get('idNumber'); }
     get sex() { return this.formGroup.get('sex'); }
 
 
@@ -59,7 +58,7 @@ export class AddComponent implements OnInit {
   
   initForm(): void {
     this.formGroup = new FormGroup({
-      userName: new FormControl(null, []),
+      userName: new FormControl(null, [Validators.maxLength(30)]),
       realName: new FormControl(null, [Validators.maxLength(30)]),
       email: new FormControl(null, [Validators.maxLength(100)]),
       emailConfirmed: new FormControl(null, []),
@@ -72,7 +71,6 @@ export class AddComponent implements OnInit {
       lastLoginTime: new FormControl(null, []),
       retryCount: new FormControl(null, []),
       avatar: new FormControl(null, [Validators.maxLength(200)]),
-      idNumber: new FormControl(null, [Validators.maxLength(18)]),
       sex: new FormControl(null, []),
 
     });
@@ -82,7 +80,7 @@ export class AddComponent implements OnInit {
       case 'userName':
         return this.userName?.errors?.['required'] ? 'UserName必填' :
           this.userName?.errors?.['minlength'] ? 'UserName长度最少位' :
-            this.userName?.errors?.['maxlength'] ? 'UserName长度最多位' : '';
+            this.userName?.errors?.['maxlength'] ? 'UserName长度最多30位' : '';
       case 'realName':
         return this.realName?.errors?.['required'] ? 'RealName必填' :
           this.realName?.errors?.['minlength'] ? 'RealName长度最少位' :
@@ -131,10 +129,6 @@ export class AddComponent implements OnInit {
         return this.avatar?.errors?.['required'] ? 'Avatar必填' :
           this.avatar?.errors?.['minlength'] ? 'Avatar长度最少位' :
             this.avatar?.errors?.['maxlength'] ? 'Avatar长度最多200位' : '';
-      case 'idNumber':
-        return this.idNumber?.errors?.['required'] ? 'IdNumber必填' :
-          this.idNumber?.errors?.['minlength'] ? 'IdNumber长度最少位' :
-            this.idNumber?.errors?.['maxlength'] ? 'IdNumber长度最多18位' : '';
       case 'sex':
         return this.sex?.errors?.['required'] ? 'Sex必填' :
           this.sex?.errors?.['minlength'] ? 'Sex长度最少位' :
@@ -147,14 +141,22 @@ export class AddComponent implements OnInit {
 
   add(): void {
     if(this.formGroup.valid) {
-    const data = this.formGroup.value as UserAddDto;
+    const data = this.formGroup.value as SystemUserAddDto;
     this.data = { ...data, ...this.data };
     this.service.add(this.data)
-        .subscribe(res => {
+      .subscribe({
+        next: (res) => {
+          if (res) {
             this.snb.open('添加成功');
             // this.dialogRef.close(res);
-            this.router.navigate(['../index'],{relativeTo: this.route});
-        });
+            this.router.navigate(['../index'], { relativeTo: this.route });
+          }
+
+        },
+        error: () => {
+
+        }
+      });
     }
   }
   back(): void {

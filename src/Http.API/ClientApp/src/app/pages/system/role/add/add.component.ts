@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { RoleService } from 'src/app/share/services/role.service';
-import { Role } from 'src/app/share/models/role/role.model';
-import { RoleAddDto } from 'src/app/share/models/role/role-add-dto.model';
+import { SystemRoleService } from 'src/app/share/services/system-role.service';
+import { SystemRole } from 'src/app/share/models/system-role/system-role.model';
+import { SystemRoleAddDto } from 'src/app/share/models/system-role/system-role-add-dto.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -16,11 +16,11 @@ import { Location } from '@angular/common';
 export class AddComponent implements OnInit {
     
     formGroup!: FormGroup;
-    data = {} as RoleAddDto;
+    data = {} as SystemRoleAddDto;
     isLoading = true;
     constructor(
         
-        private service: RoleService,
+        private service: SystemRoleService,
         public snb: MatSnackBar,
         private router: Router,
         private route: ActivatedRoute,
@@ -46,7 +46,7 @@ export class AddComponent implements OnInit {
   
   initForm(): void {
     this.formGroup = new FormGroup({
-      name: new FormControl(null, []),
+      name: new FormControl(null, [Validators.maxLength(30)]),
       nameValue: new FormControl(null, []),
       isSystem: new FormControl(null, []),
       icon: new FormControl(null, [Validators.maxLength(30)]),
@@ -58,7 +58,7 @@ export class AddComponent implements OnInit {
       case 'name':
         return this.name?.errors?.['required'] ? 'Name必填' :
           this.name?.errors?.['minlength'] ? 'Name长度最少位' :
-            this.name?.errors?.['maxlength'] ? 'Name长度最多位' : '';
+            this.name?.errors?.['maxlength'] ? 'Name长度最多30位' : '';
       case 'nameValue':
         return this.nameValue?.errors?.['required'] ? 'NameValue必填' :
           this.nameValue?.errors?.['minlength'] ? 'NameValue长度最少位' :
@@ -79,14 +79,22 @@ export class AddComponent implements OnInit {
 
   add(): void {
     if(this.formGroup.valid) {
-    const data = this.formGroup.value as RoleAddDto;
+    const data = this.formGroup.value as SystemRoleAddDto;
     this.data = { ...data, ...this.data };
     this.service.add(this.data)
-        .subscribe(res => {
+      .subscribe({
+        next: (res) => {
+          if (res) {
             this.snb.open('添加成功');
             // this.dialogRef.close(res);
-            this.router.navigate(['../index'],{relativeTo: this.route});
-        });
+            this.router.navigate(['../index'], { relativeTo: this.route });
+          }
+
+        },
+        error: () => {
+
+        }
+      });
     }
   }
   back(): void {

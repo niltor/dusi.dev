@@ -8,7 +8,7 @@ export interface EntityModelFilterDto {
   /**
    * 排序
    */
-  orderBy?:  | null;
+  orderBy?: any | null;
   /**
    * 实体类名
    */

@@ -6,13 +6,13 @@ namespace EntityFramework;
 
 public class ContextBase : DbContext
 {
-    public DbSet<SystemUser> Users { get; set; }
-    public DbSet<SystemRole> Roles { get; set; }
+    public DbSet<SystemUser> SystemUsers { get; set; }
+    public DbSet<SystemRole> SystemRoles { get; set; }
+    public DbSet<WebConfig> WebConfigs { get; set; }
     public DbSet<EntityLibrary> EntityLibraries { get; set; }
     public DbSet<EntityModel> EntityModels { get; set; }
     public DbSet<EntityMember> EntityMembers { get; set; }
     public DbSet<EntityMemberConstraint> EntityMemberConstraints { get; set; }
-
 
     public ContextBase(DbContextOptions options) : base(options)
     {

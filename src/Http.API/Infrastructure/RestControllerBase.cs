@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Http.API.Infrastructure;
 
@@ -12,6 +13,7 @@ public class RestControllerBase<TManager> : RestControllerBase
     protected readonly TManager manager;
     protected readonly ILogger _logger;
     protected readonly IUserContext _user;
+
     public RestControllerBase(
         TManager manager,
         IUserContext user,
@@ -30,6 +32,7 @@ public class RestControllerBase<TManager> : RestControllerBase
 [ApiController]
 [Route("api/[controller]")]
 [Authorize("User")]
+[Produces("application/json")]
 public class RestControllerBase : ControllerBase
 {
 
@@ -38,16 +41,17 @@ public class RestControllerBase : ControllerBase
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    [ApiExplorerSettings(IgnoreApi = true)]
+    [NonAction]
     public override NotFoundObjectResult NotFound([ActionResultObjectValue] object? value)
     {
-        var res = new
-        {
+        var res = new {
             Title = "访问的资源不存在",
             Detail = value?.ToString(),
             Status = 404,
             TraceId = HttpContext.TraceIdentifier
         };
+        var at = Activity.Current;
+        at?.SetTag("responseBody", value);
         return base.NotFound(res);
     }
 
@@ -56,16 +60,40 @@ public class RestControllerBase : ControllerBase
     /// </summary>
     /// <param name="error"></param>
     /// <returns></returns>
-    [ApiExplorerSettings(IgnoreApi = true)]
+    [NonAction]
     public override ConflictObjectResult Conflict([ActionResultObjectValue] object? error)
     {
-        var res = new
-        {
+        var res = new {
             Title = "重复的资源",
             Detail = error?.ToString(),
             Status = 409,
             TraceId = HttpContext.TraceIdentifier
         };
+        var at = Activity.Current;
+        at?.SetTag("responseBody", error);
         return base.Conflict(res);
+    }
+
+    /// <summary>
+    /// 500业务错误
+    /// </summary>
+    /// <param name="detail"></param>
+    /// <returns></returns>
+    [NonAction]
+    public ObjectResult Problem(string? detail = null)
+    {
+        var res = new {
+            Title = "业务错误",
+            Detail = detail,
+            Status = 500,
+            TraceId = HttpContext.TraceIdentifier
+        };
+        var at = Activity.Current;
+        at?.SetTag("responseBody", detail);
+        return new ObjectResult(res)
+        {
+            StatusCode = 500,
+
+        };
     }
 }

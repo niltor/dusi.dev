@@ -9,7 +9,7 @@ export interface EntityMemberFilterDto {
   /**
    * 排序
    */
-  orderBy?:  | null;
+  orderBy?: any | null;
   /**
    * 属性名
    */

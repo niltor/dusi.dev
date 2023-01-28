@@ -6,6 +6,13 @@
 </mat-toolbar>
 <form class="d-flex" *ngIf="!isLoading" [formGroup]="formGroup" (ngSubmit)="edit()">
   <div class="d-flex flex-column w-100">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput placeholder="Name" formControlName="name"  minlength="" maxlength="30">
+    <mat-error *ngIf="name?.invalid">
+    {{getValidatorMessage('name')}}
+    </mat-error>
+  </mat-form-field>
     <mat-slide-toggle color="primary" formControlName="isSystem">IsSystem</mat-slide-toggle>
   <mat-form-field>
     <mat-label>Icon</mat-label>

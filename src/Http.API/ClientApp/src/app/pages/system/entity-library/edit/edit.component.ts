@@ -92,10 +92,16 @@ export class EditComponent implements OnInit {
     if(this.formGroup.valid) {
       this.updateData = this.formGroup.value as EntityLibraryUpdateDto;
       this.service.update(this.id, this.updateData)
-        .subscribe(res => {
-          this.snb.open('修改成功');
-           // this.dialogRef.close(res);
-          this.router.navigate(['../../index'],{relativeTo: this.route});
+        .subscribe({
+          next: (res) => {
+            if(res){
+              this.snb.open('修改成功');
+              // this.dialogRef.close(res);
+              this.router.navigate(['../../index'], { relativeTo: this.route });
+            }
+          },
+          error:()=>{
+          }
         });
     }
   }
