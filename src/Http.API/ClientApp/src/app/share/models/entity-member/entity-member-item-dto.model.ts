@@ -60,9 +60,5 @@ export interface EntityMemberItemDto {
   id: string;
   createdTime: Date;
   updatedTime: Date;
-  /**
-   * 软删除
-   */
-  isDeleted: boolean;
 
 }

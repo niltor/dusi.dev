@@ -45,8 +45,9 @@ CodeLanguage = CodeLanguage;
     get name() { return this.formGroup.get('name'); }
     get comment() { return this.formGroup.get('comment'); }
     get accessModifier() { return this.formGroup.get('accessModifier'); }
-    get codeExample() { return this.formGroup.get('codeExample'); }
+    get codeContent() { return this.formGroup.get('codeContent'); }
     get codeLanguage() { return this.formGroup.get('codeLanguage'); }
+    get languageVersion() { return this.formGroup.get('languageVersion'); }
 
 
   ngOnInit(): void {
@@ -75,11 +76,12 @@ CodeLanguage = CodeLanguage;
   }
   initForm(): void {
     this.formGroup = new FormGroup({
-      name: new FormControl(null, [Validators.maxLength(60)]),
-      comment: new FormControl(null, [Validators.maxLength(300)]),
-      accessModifier: new FormControl(null, []),
-      codeExample: new FormControl(null, [Validators.maxLength(2000)]),
+      name: new FormControl(null, [Validators.required,Validators.maxLength(60)]),
+      comment: new FormControl(null, [Validators.required,Validators.maxLength(300)]),
+      accessModifier: new FormControl(null, [Validators.required]),
+      codeContent: new FormControl(null, [Validators.maxLength(8000)]),
       codeLanguage: new FormControl(null, []),
+      languageVersion: new FormControl(null, []),
 
     });
   }
@@ -97,14 +99,18 @@ CodeLanguage = CodeLanguage;
         return this.accessModifier?.errors?.['required'] ? 'AccessModifier必填' :
           this.accessModifier?.errors?.['minlength'] ? 'AccessModifier长度最少位' :
             this.accessModifier?.errors?.['maxlength'] ? 'AccessModifier长度最多位' : '';
-      case 'codeExample':
-        return this.codeExample?.errors?.['required'] ? 'CodeExample必填' :
-          this.codeExample?.errors?.['minlength'] ? 'CodeExample长度最少位' :
-            this.codeExample?.errors?.['maxlength'] ? 'CodeExample长度最多2000位' : '';
+      case 'codeContent':
+        return this.codeContent?.errors?.['required'] ? 'CodeContent必填' :
+          this.codeContent?.errors?.['minlength'] ? 'CodeContent长度最少位' :
+            this.codeContent?.errors?.['maxlength'] ? 'CodeContent长度最多8000位' : '';
       case 'codeLanguage':
         return this.codeLanguage?.errors?.['required'] ? 'CodeLanguage必填' :
           this.codeLanguage?.errors?.['minlength'] ? 'CodeLanguage长度最少位' :
             this.codeLanguage?.errors?.['maxlength'] ? 'CodeLanguage长度最多位' : '';
+      case 'languageVersion':
+        return this.languageVersion?.errors?.['required'] ? 'LanguageVersion必填' :
+          this.languageVersion?.errors?.['minlength'] ? 'LanguageVersion长度最少位' :
+            this.languageVersion?.errors?.['maxlength'] ? 'LanguageVersion长度最多位' : '';
 
       default:
     return '';

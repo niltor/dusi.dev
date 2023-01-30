@@ -19,6 +19,10 @@ export interface EntityMemberFilterDto {
    */
   comment?: string | null;
   /**
+   * 默认值，根据类型推断
+   */
+  defaultValue?: string | null;
+  /**
    * 访问修饰符
    */
   accessModifier?: AccessModifier | null;
@@ -49,9 +53,17 @@ export interface EntityMemberFilterDto {
   /**
    * 属性的类型
    */
+  dictionaryKeyType?: MemberType | null;
+  /**
+   * 属性的类型
+   */
+  dictionaryValueType?: MemberType | null;
+  /**
+   * 属性的类型
+   */
   memberType?: MemberType | null;
-  constraintId?: string | null;
   objectTypeId?: string | null;
+  constraintId?: string | null;
   entityModelId?: string | null;
 
 }

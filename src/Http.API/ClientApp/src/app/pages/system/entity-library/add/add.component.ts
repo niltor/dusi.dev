@@ -45,7 +45,7 @@ export class AddComponent implements OnInit {
   
   initForm(): void {
     this.formGroup = new FormGroup({
-      name: new FormControl(null, []),
+      name: new FormControl(null, [Validators.required,Validators.maxLength(60)]),
       description: new FormControl(null, [Validators.maxLength(200)]),
       isPublic: new FormControl(null, []),
 
@@ -56,7 +56,7 @@ export class AddComponent implements OnInit {
       case 'name':
         return this.name?.errors?.['required'] ? 'Name必填' :
           this.name?.errors?.['minlength'] ? 'Name长度最少位' :
-            this.name?.errors?.['maxlength'] ? 'Name长度最多位' : '';
+            this.name?.errors?.['maxlength'] ? 'Name长度最多60位' : '';
       case 'description':
         return this.description?.errors?.['required'] ? 'Description必填' :
           this.description?.errors?.['minlength'] ? 'Description长度最少位' :

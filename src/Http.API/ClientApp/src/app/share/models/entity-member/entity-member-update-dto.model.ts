@@ -1,5 +1,7 @@
 import { AccessModifier } from '../enum/access-modifier.model';
 import { MemberType } from '../enum/member-type.model';
+import { EntityMemberConstraint } from '../entity-member-constraint/entity-member-constraint.model';
+import { EntityModel } from '../entity-model/entity-model.model';
 /**
  * 实体属性更新时请求结构
  */
@@ -56,7 +58,19 @@ export interface EntityMemberUpdateDto {
    * 属性的类型
    */
   memberType?: MemberType | null;
+  /**
+   * 属性的约束
+   */
+  constraint?: EntityMemberConstraint | null;
+  /**
+   * 实体模型类
+   */
+  objectType?: EntityModel | null;
   objectTypeId?: string | null;
+  /**
+   * 实体模型类
+   */
+  entityModel?: EntityModel | null;
   entityModelId: string;
 
 }

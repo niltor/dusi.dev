@@ -35,17 +35,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthResult"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthResult"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AuthResult"
                 }
@@ -76,17 +66,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "boolean"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "type": "boolean"
                 }
@@ -125,17 +105,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityLibraryItemDtoPageList"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityLibraryItemDtoPageList"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityLibraryItemDtoPageList"
                 }
@@ -174,17 +144,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityLibrary"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityLibrary"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityLibrary"
                 }
@@ -234,17 +194,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityLibrary"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityLibrary"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityLibrary"
                 }
@@ -273,17 +223,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityLibrary"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityLibrary"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityLibrary"
                 }
@@ -312,17 +252,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityLibrary"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityLibrary"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityLibrary"
                 }
@@ -361,17 +291,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMemberItemDtoPageList"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMemberItemDtoPageList"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityMemberItemDtoPageList"
                 }
@@ -410,17 +330,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMember"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMember"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityMember"
                 }
@@ -470,17 +380,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMember"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMember"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityMember"
                 }
@@ -509,17 +409,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMember"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMember"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityMember"
                 }
@@ -548,17 +438,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMember"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMember"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityMember"
                 }
@@ -597,17 +477,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMemberConstraintItemDtoPageList"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMemberConstraintItemDtoPageList"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityMemberConstraintItemDtoPageList"
                 }
@@ -646,17 +516,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMemberConstraint"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMemberConstraint"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityMemberConstraint"
                 }
@@ -706,17 +566,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMemberConstraint"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMemberConstraint"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityMemberConstraint"
                 }
@@ -745,17 +595,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMemberConstraint"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMemberConstraint"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityMemberConstraint"
                 }
@@ -784,17 +624,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMemberConstraint"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityMemberConstraint"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityMemberConstraint"
                 }
@@ -833,17 +663,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityModelItemDtoPageList"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityModelItemDtoPageList"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityModelItemDtoPageList"
                 }
@@ -882,17 +702,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityModel"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityModel"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityModel"
                 }
@@ -942,17 +752,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityModel"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityModel"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityModel"
                 }
@@ -981,17 +781,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityModel"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityModel"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityModel"
                 }
@@ -1020,17 +810,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityModel"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntityModel"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntityModel"
                 }
@@ -1069,17 +849,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemRoleItemDtoPageList"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemRoleItemDtoPageList"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SystemRoleItemDtoPageList"
                 }
@@ -1118,17 +888,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemRole"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemRole"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SystemRole"
                 }
@@ -1178,17 +938,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemRole"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemRole"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SystemRole"
                 }
@@ -1217,17 +967,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemRole"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemRole"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SystemRole"
                 }
@@ -1256,17 +996,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemRole"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemRole"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SystemRole"
                 }
@@ -1305,17 +1035,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemUserItemDtoPageList"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemUserItemDtoPageList"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SystemUserItemDtoPageList"
                 }
@@ -1354,17 +1074,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemUser"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemUser"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SystemUser"
                 }
@@ -1414,17 +1124,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemUser"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemUser"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SystemUser"
                 }
@@ -1453,17 +1153,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemUser"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemUser"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SystemUser"
                 }
@@ -1492,17 +1182,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemUser"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SystemUser"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SystemUser"
                 }
@@ -1665,7 +1345,9 @@
         "type": "object",
         "properties": {
           "name": {
+            "maxLength": 60,
             "type": "string",
+            "description": "库名称",
             "nullable": true
           },
           "description": {
@@ -1677,6 +1359,21 @@
           "isPublic": {
             "type": "boolean",
             "description": "是否公开"
+          },
+          "entityModels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntityModel"
+            },
+            "description": "包含的实体类",
+            "nullable": true
+          },
+          "user": {
+            "$ref": "#/components/schemas/SystemUser"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
           }
         },
         "additionalProperties": false,
@@ -1703,12 +1400,25 @@
             "nullable": true
           },
           "name": {
+            "maxLength": 60,
             "type": "string",
+            "description": "库名称",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 200,
+            "type": "string",
+            "description": "库描述",
             "nullable": true
           },
           "isPublic": {
             "type": "boolean",
             "description": "是否公开",
+            "nullable": true
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
             "nullable": true
           }
         },
@@ -1719,7 +1429,9 @@
         "type": "object",
         "properties": {
           "name": {
+            "maxLength": 60,
             "type": "string",
+            "description": "库名称",
             "nullable": true
           },
           "description": {
@@ -1743,10 +1455,6 @@
           "updatedTime": {
             "type": "string",
             "format": "date-time"
-          },
-          "isDeleted": {
-            "type": "boolean",
-            "description": "软删除"
           }
         },
         "additionalProperties": false,
@@ -1777,7 +1485,9 @@
         "type": "object",
         "properties": {
           "name": {
+            "maxLength": 60,
             "type": "string",
+            "description": "库名称",
             "nullable": true
           },
           "description": {
@@ -1790,6 +1500,21 @@
             "type": "boolean",
             "description": "是否公开",
             "nullable": true
+          },
+          "entityModels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntityModel"
+            },
+            "description": "包含的实体类",
+            "nullable": true
+          },
+          "user": {
+            "$ref": "#/components/schemas/SystemUser"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
           }
         },
         "additionalProperties": false,
@@ -1943,10 +1668,19 @@
           "memberType": {
             "$ref": "#/components/schemas/MemberType"
           },
+          "constraint": {
+            "$ref": "#/components/schemas/EntityMemberConstraint"
+          },
+          "objectType": {
+            "$ref": "#/components/schemas/EntityModel"
+          },
           "objectTypeId": {
             "type": "string",
             "format": "uuid",
             "nullable": true
+          },
+          "entityModel": {
+            "$ref": "#/components/schemas/EntityModel"
           },
           "constraintId": {
             "type": "string",
@@ -2053,6 +1787,9 @@
             "format": "int64",
             "nullable": true
           },
+          "entityMember": {
+            "$ref": "#/components/schemas/EntityMember"
+          },
           "entityMemberId": {
             "type": "string",
             "format": "uuid"
@@ -2079,6 +1816,36 @@
               "nullable": true
             },
             "description": "排序",
+            "nullable": true
+          },
+          "maxLength": {
+            "type": "integer",
+            "description": "字符串最长长度",
+            "format": "int32",
+            "nullable": true
+          },
+          "minLength": {
+            "type": "integer",
+            "description": "字符串最短长度",
+            "format": "int32",
+            "nullable": true
+          },
+          "length": {
+            "type": "integer",
+            "description": "固定长度",
+            "format": "int32",
+            "nullable": true
+          },
+          "min": {
+            "type": "integer",
+            "description": "数值最小",
+            "format": "int32",
+            "nullable": true
+          },
+          "max": {
+            "type": "integer",
+            "description": "数值最大",
+            "format": "int64",
             "nullable": true
           },
           "entityMemberId": {
@@ -2138,10 +1905,6 @@
           "updatedTime": {
             "type": "string",
             "format": "date-time"
-          },
-          "isDeleted": {
-            "type": "boolean",
-            "description": "软删除"
           }
         },
         "additionalProperties": false,
@@ -2201,6 +1964,9 @@
             "format": "int64",
             "nullable": true
           },
+          "entityMember": {
+            "$ref": "#/components/schemas/EntityMember"
+          },
           "entityMemberId": {
             "type": "string",
             "format": "uuid",
@@ -2242,6 +2008,12 @@
             "description": "属性注释内容",
             "nullable": true
           },
+          "defaultValue": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "默认值，根据类型推断",
+            "nullable": true
+          },
           "accessModifier": {
             "$ref": "#/components/schemas/AccessModifier"
           },
@@ -2275,15 +2047,21 @@
             "description": "是否要初始化",
             "nullable": true
           },
+          "dictionaryKeyType": {
+            "$ref": "#/components/schemas/MemberType"
+          },
+          "dictionaryValueType": {
+            "$ref": "#/components/schemas/MemberType"
+          },
           "memberType": {
             "$ref": "#/components/schemas/MemberType"
           },
-          "constraintId": {
+          "objectTypeId": {
             "type": "string",
             "format": "uuid",
             "nullable": true
           },
-          "objectTypeId": {
+          "constraintId": {
             "type": "string",
             "format": "uuid",
             "nullable": true
@@ -2370,10 +2148,6 @@
           "updatedTime": {
             "type": "string",
             "format": "date-time"
-          },
-          "isDeleted": {
-            "type": "boolean",
-            "description": "软删除"
           }
         },
         "additionalProperties": false,
@@ -2463,10 +2237,19 @@
           "memberType": {
             "$ref": "#/components/schemas/MemberType"
           },
+          "constraint": {
+            "$ref": "#/components/schemas/EntityMemberConstraint"
+          },
+          "objectType": {
+            "$ref": "#/components/schemas/EntityModel"
+          },
           "objectTypeId": {
             "type": "string",
             "format": "uuid",
             "nullable": true
+          },
+          "entityModel": {
+            "$ref": "#/components/schemas/EntityModel"
           },
           "entityModelId": {
             "type": "string",
@@ -2510,14 +2293,19 @@
           "accessModifier": {
             "$ref": "#/components/schemas/AccessModifier"
           },
-          "codeExample": {
-            "maxLength": 2000,
+          "codeContent": {
+            "maxLength": 8000,
             "type": "string",
-            "description": "代码示例",
+            "description": "代码内容",
             "nullable": true
           },
           "codeLanguage": {
             "$ref": "#/components/schemas/CodeLanguage"
+          },
+          "languageVersion": {
+            "type": "string",
+            "description": "语言版本",
+            "nullable": true
           },
           "parentEntity": {
             "$ref": "#/components/schemas/EntityModel"
@@ -2563,14 +2351,41 @@
           "accessModifier": {
             "$ref": "#/components/schemas/AccessModifier"
           },
-          "codeExample": {
-            "maxLength": 2000,
+          "codeContent": {
+            "maxLength": 8000,
             "type": "string",
-            "description": "代码示例",
+            "description": "代码内容",
             "nullable": true
           },
           "codeLanguage": {
             "$ref": "#/components/schemas/CodeLanguage"
+          },
+          "languageVersion": {
+            "type": "string",
+            "description": "语言版本",
+            "nullable": true
+          },
+          "parentEntity": {
+            "$ref": "#/components/schemas/EntityModel"
+          },
+          "childrenEntities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntityModel"
+            },
+            "description": "直属子类",
+            "nullable": true
+          },
+          "entityMembers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntityMember"
+            },
+            "description": "包含的属性",
+            "nullable": true
+          },
+          "entityLibrary": {
+            "$ref": "#/components/schemas/EntityLibrary"
           },
           "parentEntityId": {
             "type": "string",
@@ -2619,6 +2434,14 @@
           "accessModifier": {
             "$ref": "#/components/schemas/AccessModifier"
           },
+          "codeLanguage": {
+            "$ref": "#/components/schemas/CodeLanguage"
+          },
+          "languageVersion": {
+            "type": "string",
+            "description": "语言版本",
+            "nullable": true
+          },
           "parentEntityId": {
             "type": "string",
             "format": "uuid",
@@ -2654,6 +2477,11 @@
           "codeLanguage": {
             "$ref": "#/components/schemas/CodeLanguage"
           },
+          "languageVersion": {
+            "type": "string",
+            "description": "语言版本",
+            "nullable": true
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -2665,10 +2493,6 @@
           "updatedTime": {
             "type": "string",
             "format": "date-time"
-          },
-          "isDeleted": {
-            "type": "boolean",
-            "description": "软删除"
           }
         },
         "additionalProperties": false,
@@ -2713,14 +2537,41 @@
           "accessModifier": {
             "$ref": "#/components/schemas/AccessModifier"
           },
-          "codeExample": {
-            "maxLength": 2000,
+          "codeContent": {
+            "maxLength": 8000,
             "type": "string",
-            "description": "代码示例",
+            "description": "代码内容",
             "nullable": true
           },
           "codeLanguage": {
             "$ref": "#/components/schemas/CodeLanguage"
+          },
+          "languageVersion": {
+            "type": "string",
+            "description": "语言版本",
+            "nullable": true
+          },
+          "parentEntity": {
+            "$ref": "#/components/schemas/EntityModel"
+          },
+          "childrenEntities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntityModel"
+            },
+            "description": "直属子类",
+            "nullable": true
+          },
+          "entityMembers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntityMember"
+            },
+            "description": "包含的属性",
+            "nullable": true
+          },
+          "entityLibrary": {
+            "$ref": "#/components/schemas/EntityLibrary"
           },
           "entityLibraryId": {
             "type": "string",

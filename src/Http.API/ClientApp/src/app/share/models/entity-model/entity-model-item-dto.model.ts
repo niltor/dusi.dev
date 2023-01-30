@@ -20,12 +20,12 @@ export interface EntityModelItemDto {
    * 编程语言
    */
   codeLanguage?: CodeLanguage | null;
+  /**
+   * 语言版本
+   */
+  languageVersion?: string | null;
   id: string;
   createdTime: Date;
   updatedTime: Date;
-  /**
-   * 软删除
-   */
-  isDeleted: boolean;
 
 }

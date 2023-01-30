@@ -1,3 +1,4 @@
+import { EntityMember } from '../entity-member/entity-member.model';
 /**
  * 属性的约束更新时请求结构
  */
@@ -22,6 +23,10 @@ export interface EntityMemberConstraintUpdateDto {
    * 数值最大
    */
   max?: number | null;
+  /**
+   * 实体属性
+   */
+  entityMember?: EntityMember | null;
   entityMemberId?: string | null;
 
 }

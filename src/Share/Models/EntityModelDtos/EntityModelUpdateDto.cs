@@ -10,16 +10,16 @@ public class EntityModelUpdateDto
     /// 实体类名
     /// </summary>
     [MaxLength(60)]
-    public string Name { get; set; } = default!;
+    public string? Name { get; set; }
     /// <summary>
     /// 实体注释内容
     /// </summary>
     [MaxLength(300)]
-    public string Comment { get; set; } = default!;
+    public string? Comment { get; set; }
     /// <summary>
     /// 访问修饰符
     /// </summary>
-    public AccessModifier AccessModifier { get; set; } = default!;
+    public AccessModifier? AccessModifier { get; set; }
     /// <summary>
     /// 代码内容
     /// </summary>
@@ -48,7 +48,7 @@ public class EntityModelUpdateDto
     /// <summary>
     /// 所属模型库
     /// </summary>
-    public EntityLibrary EntityLibrary { get; set; } = default!;
-    public Guid EntityLibraryId { get; set; } = default!;
+    public EntityLibrary? EntityLibrary { get; set; }
+    public Guid? EntityLibraryId { get; set; }
     
 }

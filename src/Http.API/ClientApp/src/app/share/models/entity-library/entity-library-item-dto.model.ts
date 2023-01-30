@@ -2,6 +2,9 @@
  * 实体库列表元素
  */
 export interface EntityLibraryItemDto {
+  /**
+   * 库名称
+   */
   name?: string | null;
   /**
    * 库描述
@@ -14,9 +17,5 @@ export interface EntityLibraryItemDto {
   id: string;
   createdTime: Date;
   updatedTime: Date;
-  /**
-   * 软删除
-   */
-  isDeleted: boolean;
 
 }

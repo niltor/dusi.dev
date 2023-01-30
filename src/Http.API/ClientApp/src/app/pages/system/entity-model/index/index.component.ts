@@ -19,7 +19,7 @@ export class IndexComponent implements OnInit {
   isLoading = true;
   total = 0;
   data: EntityModelItemDto[] = [];
-  columns: string[] = ['name', 'comment', 'accessModifier', 'codeLanguage', 'createdTime', 'actions'];
+  columns: string[] = ['name', 'comment', 'accessModifier', 'codeLanguage', 'languageVersion', 'actions'];
   dataSource!: MatTableDataSource<EntityModelItemDto>;
   filter: EntityModelFilterDto;
   pageSizeOption = [12, 20, 50];

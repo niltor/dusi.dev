@@ -26,13 +26,17 @@ export interface EntityModel {
    */
   accessModifier?: AccessModifier | null;
   /**
-   * 代码示例
+   * 代码内容
    */
-  codeExample?: string | null;
+  codeContent?: string | null;
   /**
    * 编程语言
    */
   codeLanguage?: CodeLanguage | null;
+  /**
+   * 语言版本
+   */
+  languageVersion?: string | null;
   /**
    * 实体模型类
    */

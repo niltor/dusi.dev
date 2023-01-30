@@ -8,10 +8,18 @@ export interface EntityLibraryFilterDto {
    * 排序
    */
   orderBy?: any | null;
+  /**
+   * 库名称
+   */
   name?: string | null;
+  /**
+   * 库描述
+   */
+  description?: string | null;
   /**
    * 是否公开
    */
   isPublic?: boolean | null;
+  userId?: string | null;
 
 }

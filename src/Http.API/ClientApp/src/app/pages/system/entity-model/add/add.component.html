@@ -8,14 +8,14 @@
   <div class="d-flex flex-column w-100">
   <mat-form-field>
     <mat-label>Name</mat-label>
-    <input matInput placeholder="Name" formControlName="name"  minlength="" maxlength="60">
+    <input matInput placeholder="Name" formControlName="name" required minlength="" maxlength="60">
     <mat-error *ngIf="name?.invalid">
     {{getValidatorMessage('name')}}
     </mat-error>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Comment</mat-label>
-    <textarea matInput placeholder="Comment" formControlName="comment"  minlength="" maxlength="300"
+    <textarea matInput placeholder="Comment" formControlName="comment" required minlength="" maxlength="300"
       cols="5"></textarea>
     <mat-error *ngIf="comment?.invalid">
     {{getValidatorMessage('comment')}}
@@ -31,7 +31,7 @@
   <mat-error *ngIf="accessModifier?.invalid">
     {{getValidatorMessage('accessModifier')}}
   </mat-error>
-</mat-form-field> <ckeditor [editor]="editor" [config]="editorConfig" formControlName="codeExample" (ready)="onReady($event)">
+</mat-form-field> <ckeditor [editor]="editor" [config]="editorConfig" formControlName="codeContent" (ready)="onReady($event)">
     </ckeditor><mat-form-field>
   <mat-label>CodeLanguage</mat-label>
   <mat-select formControlName="codeLanguage">

@@ -63,7 +63,7 @@ export class EditComponent implements OnInit {
 
   initForm(): void {
     this.formGroup = new FormGroup({
-      name: new FormControl(this.data.name, []),
+      name: new FormControl(this.data.name, [Validators.required,Validators.maxLength(60)]),
       description: new FormControl(this.data.description, [Validators.maxLength(200)]),
       isPublic: new FormControl(this.data.isPublic, []),
 
@@ -74,7 +74,7 @@ export class EditComponent implements OnInit {
       case 'name':
         return this.name?.errors?.['required'] ? 'Name必填' :
           this.name?.errors?.['minlength'] ? 'Name长度最少位' :
-            this.name?.errors?.['maxlength'] ? 'Name长度最多位' : '';
+            this.name?.errors?.['maxlength'] ? 'Name长度最多60位' : '';
       case 'description':
         return this.description?.errors?.['required'] ? 'Description必填' :
           this.description?.errors?.['minlength'] ? 'Description长度最少位' :
