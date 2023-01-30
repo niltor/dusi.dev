@@ -1,26 +1,31 @@
+using Core.Entities.EntityDesign;
 namespace Share.Models.EntityLibraryDtos;
 /// <summary>
 /// 实体库概要
 /// </summary>
+/// <inheritdoc cref="Core.Entities.EntityDesign.EntityLibrary"/>
 public class EntityLibraryShortDto
 {
-    public string Name { get; set; } = default!;
+    /// <summary>
+    /// 库名称
+    /// </summary>
+    [MaxLength(60)]
+    public required string Name { get; set; }
     /// <summary>
     /// 库描述
     /// </summary>
     [MaxLength(200)]
     public string? Description { get; set; }
-
     /// <summary>
     /// 是否公开
     /// </summary>
-    public bool IsPublic { get; set; } = default!;
-    public Guid Id { get; set; } = default!;
-    public DateTimeOffset CreatedTime { get; set; } = default!;
-    public DateTimeOffset UpdatedTime { get; set; } = default!;
+    public bool IsPublic { get; set; }
     /// <summary>
-    /// 软删除
+    /// 所属用户
     /// </summary>
-    public bool IsDeleted { get; set; } = default!;
+    public required SystemUser User { get; set; }
+    public Guid Id { get; set; }
+    public DateTimeOffset CreatedTime { get; set; }
+    public DateTimeOffset UpdatedTime { get; set; }
     
 }

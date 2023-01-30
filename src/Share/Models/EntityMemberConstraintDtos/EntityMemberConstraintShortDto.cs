@@ -1,9 +1,9 @@
 using Core.Entities.EntityDesign;
-
 namespace Share.Models.EntityMemberConstraintDtos;
 /// <summary>
 /// 属性的约束概要
 /// </summary>
+/// <inheritdoc cref="Core.Entities.EntityDesign.EntityMemberConstraint"/>
 public class EntityMemberConstraintShortDto
 {
     /// <summary>
@@ -26,18 +26,13 @@ public class EntityMemberConstraintShortDto
     /// 数值最大
     /// </summary>
     public long? Max { get; set; }
-
     /// <summary>
     /// 所属属性
     /// </summary>
-    public EntityMember EntityMember { get; set; } = default!;
-    public Guid EntityMemberId { get; set; } = default!;
-    public Guid Id { get; set; } = default!;
-    public DateTimeOffset CreatedTime { get; set; } = default!;
-    public DateTimeOffset UpdatedTime { get; set; } = default!;
-    /// <summary>
-    /// 软删除
-    /// </summary>
-    public bool IsDeleted { get; set; } = default!;
+    public required EntityMember EntityMember { get; set; }
+    public Guid EntityMemberId { get; set; }
+    public Guid Id { get; set; }
+    public DateTimeOffset CreatedTime { get; set; }
+    public DateTimeOffset UpdatedTime { get; set; }
     
 }

@@ -1,7 +1,9 @@
+using Core.Entities.EntityDesign;
 namespace Share.Models.EntityMemberConstraintDtos;
 /// <summary>
 /// 属性的约束更新时请求结构
 /// </summary>
+/// <inheritdoc cref="Core.Entities.EntityDesign.EntityMemberConstraint"/>
 public class EntityMemberConstraintUpdateDto
 {
     /// <summary>
@@ -24,6 +26,10 @@ public class EntityMemberConstraintUpdateDto
     /// 数值最大
     /// </summary>
     public long? Max { get; set; }
+    /// <summary>
+    /// 所属属性
+    /// </summary>
+    public required EntityMember EntityMember { get; set; }
     public Guid? EntityMemberId { get; set; }
     
 }

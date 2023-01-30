@@ -1,7 +1,9 @@
+using Core.Entities.EntityDesign;
 namespace Share.Models.EntityMemberConstraintDtos;
 /// <summary>
 /// 属性的约束列表元素
 /// </summary>
+/// <inheritdoc cref="Core.Entities.EntityDesign.EntityMemberConstraint"/>
 public class EntityMemberConstraintItemDto
 {
     /// <summary>
@@ -24,13 +26,9 @@ public class EntityMemberConstraintItemDto
     /// 数值最大
     /// </summary>
     public long? Max { get; set; }
-    public Guid EntityMemberId { get; set; } = default!;
-    public Guid Id { get; set; } = default!;
-    public DateTimeOffset CreatedTime { get; set; } = default!;
-    public DateTimeOffset UpdatedTime { get; set; } = default!;
-    /// <summary>
-    /// 软删除
-    /// </summary>
-    public bool IsDeleted { get; set; } = default!;
+    public Guid EntityMemberId { get; set; }
+    public Guid Id { get; set; }
+    public DateTimeOffset CreatedTime { get; set; }
+    public DateTimeOffset UpdatedTime { get; set; }
     
 }

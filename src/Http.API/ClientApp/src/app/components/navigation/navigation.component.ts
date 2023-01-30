@@ -20,7 +20,6 @@ export class NavigationComponent implements OnInit {
       this.accordion?.closeAll();
     }
   }
-
   toggle(): void {
     this.opened = !this.opened;
   }
