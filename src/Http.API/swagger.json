@@ -2575,7 +2575,8 @@
           },
           "entityLibraryId": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "nullable": true
           }
         },
         "additionalProperties": false,
