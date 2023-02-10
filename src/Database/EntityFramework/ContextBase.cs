@@ -1,4 +1,5 @@
 using Core.Entities;
+using Core.Entities.CMS;
 using Core.Entities.EntityDesign;
 using Core.Models;
 
@@ -13,6 +14,7 @@ public class ContextBase : DbContext
     public DbSet<EntityModel> EntityModels { get; set; }
     public DbSet<EntityMember> EntityMembers { get; set; }
     public DbSet<EntityMemberConstraint> EntityMemberConstraints { get; set; }
+    public DbSet<Blog> Blogs { get; set; }
 
     public ContextBase(DbContextOptions options) : base(options)
     {
@@ -22,7 +24,7 @@ public class ContextBase : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<EntityBase>().UseTpcMappingStrategy();
-        
+
         builder.Entity<EntityLibrary>(e =>
         {
             e.HasIndex(a => a.Name);

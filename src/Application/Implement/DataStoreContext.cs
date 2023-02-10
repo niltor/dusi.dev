@@ -4,12 +4,14 @@ public class DataStoreContext
     public QueryDbContext QueryContext { get; init; }
     public CommandDbContext CommandContext { get; init; }
 
+    public QuerySet<Blog> BlogQuery { get; init; }
     public QuerySet<EntityLibrary> EntityLibraryQuery { get; init; }
     public QuerySet<EntityMemberConstraint> EntityMemberConstraintQuery { get; init; }
     public QuerySet<EntityMember> EntityMemberQuery { get; init; }
     public QuerySet<EntityModel> EntityModelQuery { get; init; }
     public QuerySet<SystemRole> SystemRoleQuery { get; init; }
     public QuerySet<SystemUser> SystemUserQuery { get; init; }
+    public CommandSet<Blog> BlogCommand { get; init; }
     public CommandSet<EntityLibrary> EntityLibraryCommand { get; init; }
     public CommandSet<EntityMember> EntityMemberCommand { get; init; }
     public CommandSet<EntityMemberConstraint> EntityMemberConstraintCommand { get; init; }
@@ -24,12 +26,14 @@ public class DataStoreContext
     private readonly Dictionary<string, object> SetCache = new();
 
     public DataStoreContext(
+        BlogQueryStore blogQuery,
         EntityLibraryQueryStore entityLibraryQuery,
         EntityMemberConstraintQueryStore entityMemberConstraintQuery,
         EntityMemberQueryStore entityMemberQuery,
         EntityModelQueryStore entityModelQuery,
         SystemRoleQueryStore systemRoleQuery,
         SystemUserQueryStore systemUserQuery,
+        BlogCommandStore blogCommand,
         EntityLibraryCommandStore entityLibraryCommand,
         EntityMemberCommandStore entityMemberCommand,
         EntityMemberConstraintCommandStore entityMemberConstraintCommand,
@@ -43,6 +47,8 @@ public class DataStoreContext
     {
         QueryContext = queryDbContext;
         CommandContext = commandDbContext;
+        BlogQuery = blogQuery;
+        AddCache(BlogQuery);
         EntityLibraryQuery = entityLibraryQuery;
         AddCache(EntityLibraryQuery);
         EntityMemberConstraintQuery = entityMemberConstraintQuery;
@@ -55,6 +61,8 @@ public class DataStoreContext
         AddCache(SystemRoleQuery);
         SystemUserQuery = systemUserQuery;
         AddCache(SystemUserQuery);
+        BlogCommand = blogCommand;
+        AddCache(BlogCommand);
         EntityLibraryCommand = entityLibraryCommand;
         AddCache(EntityLibraryCommand);
         EntityMemberCommand = entityMemberCommand;

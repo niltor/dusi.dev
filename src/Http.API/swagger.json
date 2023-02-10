@@ -76,6 +76,192 @@
         }
       }
     },
+    "/api/Blog/filter": {
+      "post": {
+        "tags": [
+          "Blog"
+        ],
+        "operationId": "Blog_Filter",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogFilterDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogFilterDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogFilterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlogItemDtoPageList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Blog": {
+      "post": {
+        "tags": [
+          "Blog"
+        ],
+        "operationId": "Blog_Add",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogAddDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogAddDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogAddDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Blog"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Blog/{id}": {
+      "put": {
+        "tags": [
+          "Blog"
+        ],
+        "operationId": "Blog_Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Blog"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Blog"
+        ],
+        "operationId": "Blog_GetDetail",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Blog"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Blog"
+        ],
+        "operationId": "Blog_Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Blog"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/EntityLibrary/filter": {
       "post": {
         "tags": [
@@ -1229,6 +1415,268 @@
           "token": {
             "type": "string",
             "description": "token",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Blog": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "description": "软删除"
+          },
+          "title": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "标题",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 300,
+            "type": "string",
+            "description": "描述",
+            "nullable": true
+          },
+          "content": {
+            "maxLength": 10000,
+            "type": "string",
+            "description": "内容",
+            "nullable": true
+          },
+          "authors": {
+            "maxLength": 200,
+            "type": "string",
+            "description": "作者",
+            "nullable": true
+          },
+          "translateTitle": {
+            "type": "string",
+            "description": "标题",
+            "nullable": true
+          },
+          "translateContent": {
+            "maxLength": 12000,
+            "type": "string",
+            "description": "翻译内容",
+            "nullable": true
+          },
+          "languageType": {
+            "$ref": "#/components/schemas/LanguageType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BlogAddDto": {
+        "type": "object",
+        "properties": {
+          "translateTitle": {
+            "type": "string",
+            "description": "标题",
+            "nullable": true
+          },
+          "translateContent": {
+            "maxLength": 12000,
+            "type": "string",
+            "description": "翻译内容",
+            "nullable": true
+          },
+          "languageType": {
+            "$ref": "#/components/schemas/LanguageType"
+          },
+          "title": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "标题",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 300,
+            "type": "string",
+            "description": "描述",
+            "nullable": true
+          },
+          "content": {
+            "maxLength": 10000,
+            "type": "string",
+            "description": "内容",
+            "nullable": true
+          },
+          "authors": {
+            "maxLength": 200,
+            "type": "string",
+            "description": "作者",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BlogFilterDto": {
+        "type": "object",
+        "properties": {
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderBy": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "description": "排序",
+            "nullable": true
+          },
+          "translateTitle": {
+            "type": "string",
+            "description": "标题",
+            "nullable": true
+          },
+          "languageType": {
+            "$ref": "#/components/schemas/LanguageType"
+          },
+          "title": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "标题",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 300,
+            "type": "string",
+            "description": "描述",
+            "nullable": true
+          },
+          "authors": {
+            "maxLength": 200,
+            "type": "string",
+            "description": "作者",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BlogItemDto": {
+        "type": "object",
+        "properties": {
+          "translateTitle": {
+            "type": "string",
+            "description": "标题",
+            "nullable": true
+          },
+          "languageType": {
+            "$ref": "#/components/schemas/LanguageType"
+          },
+          "title": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "标题",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 300,
+            "type": "string",
+            "description": "描述",
+            "nullable": true
+          },
+          "authors": {
+            "maxLength": 200,
+            "type": "string",
+            "description": "作者",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BlogItemDtoPageList": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BlogItemDto"
+            },
+            "nullable": true
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BlogUpdateDto": {
+        "type": "object",
+        "properties": {
+          "translateTitle": {
+            "type": "string",
+            "description": "标题",
+            "nullable": true
+          },
+          "translateContent": {
+            "maxLength": 12000,
+            "type": "string",
+            "description": "翻译内容",
+            "nullable": true
+          },
+          "languageType": {
+            "$ref": "#/components/schemas/LanguageType"
+          },
+          "title": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "标题",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 300,
+            "type": "string",
+            "description": "描述",
+            "nullable": true
+          },
+          "content": {
+            "maxLength": 10000,
+            "type": "string",
+            "description": "内容",
+            "nullable": true
+          },
+          "authors": {
+            "maxLength": 200,
+            "type": "string",
+            "description": "作者",
             "nullable": true
           }
         },
@@ -2581,6 +3029,18 @@
         },
         "additionalProperties": false,
         "description": "实体模型类更新时请求结构"
+      },
+      "LanguageType": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "CN",
+          "EN"
+        ]
       },
       "LoginDto": {
         "type": "object",

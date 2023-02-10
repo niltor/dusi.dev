@@ -101,6 +101,11 @@ services.AddCors(options =>
 });
 #endregion
 
+services.AddGrpcClient<Grpc.BlogService.Blog.BlogClient>(o =>
+{
+    o.Address = new Uri("https://localhost:7075");
+});
+
 services.AddHealthChecks();
 // api 接口文档设置
 services.AddSwaggerGen(c =>
