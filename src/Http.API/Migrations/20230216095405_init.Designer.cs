@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Http.API.Migrations
 {
     [DbContext(typeof(CommandDbContext))]
-    [Migration("20230128090813_Init")]
-    partial class Init
+    [Migration("20230216095405_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,6 +60,55 @@ namespace Http.API.Migrations
                     b.HasIndex("UsersId");
 
                     b.ToTable("SystemRoleSystemUser");
+                });
+
+            modelBuilder.Entity("Core.Entities.CMS.Blog", b =>
+                {
+                    b.HasBaseType("Core.Models.EntityBase");
+
+                    b.Property<string>("Authors")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(10000)
+                        .HasColumnType("character varying(10000)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<int>("LanguageType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("TranslateContent")
+                        .HasMaxLength(12000)
+                        .HasColumnType("character varying(12000)");
+
+                    b.Property<string>("TranslateTitle")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasIndex("Authors");
+
+                    b.HasIndex("CreatedTime");
+
+                    b.HasIndex("LanguageType");
+
+                    b.HasIndex("Title");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("Core.Entities.EntityDesign.EntityLibrary", b =>
@@ -191,11 +240,11 @@ namespace Http.API.Migrations
                     b.Property<int>("AccessModifier")
                         .HasColumnType("integer");
 
-                    b.Property<string>("CodeExample")
-                        .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
+                    b.Property<string>("CodeContent")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
 
-                    b.Property<int?>("CodeLanguage")
+                    b.Property<int>("CodeLanguage")
                         .HasColumnType("integer");
 
                     b.Property<string>("Comment")
@@ -206,12 +255,19 @@ namespace Http.API.Migrations
                     b.Property<Guid>("EntityLibraryId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("LanguageVersion")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("character varying(60)");
 
                     b.Property<Guid?>("ParentEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasIndex("AccessModifier");
@@ -223,6 +279,8 @@ namespace Http.API.Migrations
                     b.HasIndex("Name");
 
                     b.HasIndex("ParentEntityId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("EntityModels");
                 });
@@ -327,6 +385,38 @@ namespace Http.API.Migrations
                     b.ToTable("SystemUsers");
                 });
 
+            modelBuilder.Entity("Core.Entities.User", b =>
+                {
+                    b.HasBaseType("Core.Models.EntityBase");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("PasswordSalt")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.HasIndex("UserName")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("Core.Entities.WebConfig", b =>
                 {
                     b.HasBaseType("Core.Models.EntityBase");
@@ -372,10 +462,21 @@ namespace Http.API.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Core.Entities.CMS.Blog", b =>
+                {
+                    b.HasOne("Core.Entities.User", "User")
+                        .WithMany("Blogs")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Core.Entities.EntityDesign.EntityLibrary", b =>
                 {
-                    b.HasOne("Core.Entities.SystemUser", "User")
-                        .WithMany()
+                    b.HasOne("Core.Entities.User", "User")
+                        .WithMany("EntityLibraries")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -423,9 +524,17 @@ namespace Http.API.Migrations
                         .WithMany("ChildrenEntities")
                         .HasForeignKey("ParentEntityId");
 
+                    b.HasOne("Core.Entities.User", "User")
+                        .WithMany("EntityModels")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("EntityLibrary");
 
                     b.Navigation("ParentEntity");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Core.Entities.EntityDesign.EntityLibrary", b =>
@@ -443,6 +552,15 @@ namespace Http.API.Migrations
                     b.Navigation("ChildrenEntities");
 
                     b.Navigation("EntityMembers");
+                });
+
+            modelBuilder.Entity("Core.Entities.User", b =>
+                {
+                    b.Navigation("Blogs");
+
+                    b.Navigation("EntityLibraries");
+
+                    b.Navigation("EntityModels");
                 });
 #pragma warning restore 612, 618
         }

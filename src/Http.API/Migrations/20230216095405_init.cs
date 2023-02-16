@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Http.API.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -60,6 +60,25 @@ namespace Http.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    UserName = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    PasswordHash = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    PasswordSalt = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "WebConfigs",
                 columns: table => new
                 {
@@ -77,30 +96,6 @@ namespace Http.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WebConfigs", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EntityLibraries",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    Name = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
-                    Description = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
-                    IsPublic = table.Column<bool>(type: "boolean", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EntityLibraries", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EntityLibraries_SystemUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "SystemUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -128,6 +123,58 @@ namespace Http.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Blogs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    TranslateTitle = table.Column<string>(type: "text", nullable: true),
+                    TranslateContent = table.Column<string>(type: "character varying(12000)", maxLength: 12000, nullable: true),
+                    LanguageType = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true),
+                    Content = table.Column<string>(type: "character varying(10000)", maxLength: 10000, nullable: false),
+                    Authors = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blogs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Blogs_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EntityLibraries",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    Name = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
+                    Description = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    IsPublic = table.Column<bool>(type: "boolean", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EntityLibraries", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EntityLibraries_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EntityModels",
                 columns: table => new
                 {
@@ -138,10 +185,12 @@ namespace Http.API.Migrations
                     Name = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
                     Comment = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
                     AccessModifier = table.Column<int>(type: "integer", nullable: false),
-                    CodeExample = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
-                    CodeLanguage = table.Column<int>(type: "integer", nullable: true),
+                    CodeContent = table.Column<string>(type: "character varying(8000)", maxLength: 8000, nullable: true),
+                    CodeLanguage = table.Column<int>(type: "integer", nullable: false),
+                    LanguageVersion = table.Column<string>(type: "text", nullable: false),
                     ParentEntityId = table.Column<Guid>(type: "uuid", nullable: true),
-                    EntityLibraryId = table.Column<Guid>(type: "uuid", nullable: false)
+                    EntityLibraryId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -157,6 +206,12 @@ namespace Http.API.Migrations
                         column: x => x.ParentEntityId,
                         principalTable: "EntityModels",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_EntityModels_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -226,6 +281,31 @@ namespace Http.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Blogs_Authors",
+                table: "Blogs",
+                column: "Authors");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Blogs_CreatedTime",
+                table: "Blogs",
+                column: "CreatedTime");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Blogs_LanguageType",
+                table: "Blogs",
+                column: "LanguageType");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Blogs_Title",
+                table: "Blogs",
+                column: "Title");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Blogs_UserId",
+                table: "Blogs",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EntityLibraries_IsPublic",
                 table: "EntityLibraries",
                 column: "IsPublic");
@@ -293,6 +373,11 @@ namespace Http.API.Migrations
                 column: "ParentEntityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EntityModels_UserId",
+                table: "EntityModels",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SystemRoles_Name",
                 table: "SystemRoles",
                 column: "Name");
@@ -326,11 +411,20 @@ namespace Http.API.Migrations
                 name: "IX_SystemUsers_UserName",
                 table: "SystemUsers",
                 column: "UserName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UserName",
+                table: "Users",
+                column: "UserName",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Blogs");
+
             migrationBuilder.DropTable(
                 name: "EntityMemberConstraints");
 
@@ -347,13 +441,16 @@ namespace Http.API.Migrations
                 name: "SystemRoles");
 
             migrationBuilder.DropTable(
+                name: "SystemUsers");
+
+            migrationBuilder.DropTable(
                 name: "EntityModels");
 
             migrationBuilder.DropTable(
                 name: "EntityLibraries");
 
             migrationBuilder.DropTable(
-                name: "SystemUsers");
+                name: "Users");
         }
     }
 }
