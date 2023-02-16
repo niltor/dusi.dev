@@ -57,6 +57,8 @@ public class EntityModel : EntityBase
     /// 所属模型库
     /// </summary>
     public required EntityLibrary EntityLibrary { get; set; }
+
+    public required User User { get; set; }
 }
 
 /// <summary>

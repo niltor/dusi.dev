@@ -14,6 +14,7 @@ public class ContextBase : DbContext
     public DbSet<EntityModel> EntityModels { get; set; }
     public DbSet<EntityMember> EntityMembers { get; set; }
     public DbSet<EntityMemberConstraint> EntityMemberConstraints { get; set; }
+    public DbSet<User> Users { get; set; }
     public DbSet<Blog> Blogs { get; set; }
 
     public ContextBase(DbContextOptions options) : base(options)
@@ -24,6 +25,19 @@ public class ContextBase : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<EntityBase>().UseTpcMappingStrategy();
+
+        builder.Entity<Blog>(e =>
+        {
+            e.HasIndex(b => b.Title);
+            e.HasIndex(b => b.LanguageType);
+            e.HasIndex(b => b.Authors);
+            e.HasIndex(b => b.CreatedTime);
+
+        });
+        builder.Entity<User>(e =>
+        {
+            e.HasIndex(m => m.UserName).IsUnique();
+        });
 
         builder.Entity<EntityLibrary>(e =>
         {
@@ -47,8 +61,6 @@ public class ContextBase : DbContext
                 .WithOne(c => c.EntityMember)
                 .HasForeignKey<EntityMemberConstraint>(c => c.EntityMemberId);
         });
-
-
 
         builder.Entity<SystemUser>(e =>
         {

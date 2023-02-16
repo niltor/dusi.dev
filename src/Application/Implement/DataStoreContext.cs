@@ -11,6 +11,7 @@ public class DataStoreContext
     public QuerySet<EntityModel> EntityModelQuery { get; init; }
     public QuerySet<SystemRole> SystemRoleQuery { get; init; }
     public QuerySet<SystemUser> SystemUserQuery { get; init; }
+    public QuerySet<User> UserQuery { get; init; }
     public CommandSet<Blog> BlogCommand { get; init; }
     public CommandSet<EntityLibrary> EntityLibraryCommand { get; init; }
     public CommandSet<EntityMember> EntityMemberCommand { get; init; }
@@ -18,6 +19,7 @@ public class DataStoreContext
     public CommandSet<EntityModel> EntityModelCommand { get; init; }
     public CommandSet<SystemRole> SystemRoleCommand { get; init; }
     public CommandSet<SystemUser> SystemUserCommand { get; init; }
+    public CommandSet<User> UserCommand { get; init; }
 
 
     /// <summary>
@@ -33,6 +35,7 @@ public class DataStoreContext
         EntityModelQueryStore entityModelQuery,
         SystemRoleQueryStore systemRoleQuery,
         SystemUserQueryStore systemUserQuery,
+        UserQueryStore userQuery,
         BlogCommandStore blogCommand,
         EntityLibraryCommandStore entityLibraryCommand,
         EntityMemberCommandStore entityMemberCommand,
@@ -40,6 +43,7 @@ public class DataStoreContext
         EntityModelCommandStore entityModelCommand,
         SystemRoleCommandStore systemRoleCommand,
         SystemUserCommandStore systemUserCommand,
+        UserCommandStore userCommand,
 
         QueryDbContext queryDbContext,
         CommandDbContext commandDbContext
@@ -61,6 +65,8 @@ public class DataStoreContext
         AddCache(SystemRoleQuery);
         SystemUserQuery = systemUserQuery;
         AddCache(SystemUserQuery);
+        UserQuery = userQuery;
+        AddCache(UserQuery);
         BlogCommand = blogCommand;
         AddCache(BlogCommand);
         EntityLibraryCommand = entityLibraryCommand;
@@ -75,6 +81,8 @@ public class DataStoreContext
         AddCache(SystemRoleCommand);
         SystemUserCommand = systemUserCommand;
         AddCache(SystemUserCommand);
+        UserCommand = userCommand;
+        AddCache(UserCommand);
 
     }
 

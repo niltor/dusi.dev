@@ -20,6 +20,8 @@ public class Blog : TextBase
     /// 语言类型
     /// </summary>
     public LanguageType LanguageType { get; set; } = LanguageType.CN;
+
+    public required User User { get; set; }
 }
 
 public enum LanguageType
