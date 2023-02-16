@@ -53,7 +53,7 @@ public class AuthController : RestControllerBase
             var sign = _config.GetSection("Jwt")["Sign"];
             var issuer = _config.GetSection("Jwt")["Issuer"];
             var audience = _config.GetSection("Jwt")["Audience"];
-            var role = user.SystemRoles?.FirstOrDefault();
+            var roles = user.SystemRoles?.Select(r => r.NameValue)?.ToArray();
             //var time = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             //1天后过期
             if (!string.IsNullOrWhiteSpace(sign) &&
@@ -64,14 +64,14 @@ public class AuthController : RestControllerBase
                 {
                     TokenExpires = 60 * 24 * 7,
                 };
-                var token = jwt.GetToken(user.Id.ToString(), role?.Name ?? "");
+                var token = jwt.GetToken(user.Id.ToString(),roles ?? new string[] { "Unknown" });
                 // 登录状态存储到Redis
                 //await _redis.SetValueAsync("login" + user.Id.ToString(), true, 60 * 24 * 7);
 
                 return new AuthResult
                 {
                     Id = user.Id,
-                    Role = role?.Name ?? "",
+                    Roles = roles ?? new string[] { "Unknown" },
                     Token = token,
                     Username = user.UserName
                 };

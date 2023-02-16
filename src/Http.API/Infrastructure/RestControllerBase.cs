@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Core.Const;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -31,7 +32,7 @@ public class RestControllerBase<TManager> : RestControllerBase
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-[Authorize("User")]
+[Authorize(Const.User)]
 [Produces("application/json")]
 public class RestControllerBase : ControllerBase
 {
@@ -44,7 +45,8 @@ public class RestControllerBase : ControllerBase
     [NonAction]
     public override NotFoundObjectResult NotFound([ActionResultObjectValue] object? value)
     {
-        var res = new {
+        var res = new
+        {
             Title = "访问的资源不存在",
             Detail = value?.ToString(),
             Status = 404,
@@ -63,7 +65,8 @@ public class RestControllerBase : ControllerBase
     [NonAction]
     public override ConflictObjectResult Conflict([ActionResultObjectValue] object? error)
     {
-        var res = new {
+        var res = new
+        {
             Title = "重复的资源",
             Detail = error?.ToString(),
             Status = 409,
@@ -82,7 +85,8 @@ public class RestControllerBase : ControllerBase
     [NonAction]
     public ObjectResult Problem(string? detail = null)
     {
-        var res = new {
+        var res = new
+        {
             Title = "业务错误",
             Detail = detail,
             Status = 500,
