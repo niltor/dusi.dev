@@ -53,4 +53,19 @@ public class UserManager : DomainManagerBase<User, UserUpdateDto, UserFilterDto,
         }
         return await query.FirstOrDefaultAsync();
     }
+
+    /// <summary>
+    /// 修改密码
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="password">新密码</param>
+    /// <returns></returns>
+    public async Task<bool> ChangePasswordAsync(User user, string password)
+    {
+        var salt = HashCrypto.BuildSalt();
+        user.PasswordHash = HashCrypto.GeneratePwd(password, salt);
+        user.PasswordSalt = salt;
+        Command.Update(user);
+        return await Command.SaveChangeAsync() > 0;
+    }
 }

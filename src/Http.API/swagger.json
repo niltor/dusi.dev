@@ -1378,6 +1378,45 @@
         }
       }
     },
+    "/api/User/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "User_Login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/User/filter": {
       "post": {
         "tags": [
@@ -1594,8 +1633,11 @@
             "description": "用户名",
             "nullable": true
           },
-          "role": {
-            "type": "string",
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           },
           "token": {

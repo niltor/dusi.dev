@@ -19,5 +19,6 @@ public interface IUserManager : IDomainManager<User, UserUpdateDto, UserFilterDt
     /// <param name="dto"></param>
     /// <returns></returns>
     Task<User> CreateNewEntityAsync(UserAddDto dto);
-	// TODO: 定义业务方法
+    Task<bool> ChangePasswordAsync(User user, string password);
+    // TODO: 定义业务方法
 }

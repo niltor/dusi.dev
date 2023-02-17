@@ -24,7 +24,7 @@ public class UserController : RestControllerBase<IUserManager>
     /// </summary>
     /// <param name="dto"></param>
     /// <returns></returns>
-    [HttpPost]
+    [HttpPost("login")]
     [AllowAnonymous]
     public async Task<ActionResult<AuthResult>> LoginAsync(LoginDto dto)
     {
