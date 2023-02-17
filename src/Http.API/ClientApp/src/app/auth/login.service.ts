@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { AuthResult } from "../share/models/auth/auth-result.model";
 // import { AuthResult } from "../share/models/auth/auth-result.model";
 
 @Injectable({ providedIn: 'root' })
@@ -11,16 +12,16 @@ export class LoginService {
     this.updateUserLoginState();
   }
 
-  saveLoginState(data: any): void {
+  saveLoginState(data: AuthResult): void {
     this.isLogin = true;
     this.userName = data.username;
-    if (data.role?.toLowerCase() == "admin") {
+    if (data.roles?.includes('Admin')) {
       this.isAdmin = true;
     }
     localStorage.setItem("id", data.id);
-    localStorage.setItem("role", data.role);
-    localStorage.setItem("username", data.username);
-    localStorage.setItem("accessToken", data.token);
+    localStorage.setItem("role", data.roles?.toString() ?? '');
+    localStorage.setItem("username", data.username!);
+    localStorage.setItem("accessToken", data.token!);
   }
 
   updateUserLoginState(): void {

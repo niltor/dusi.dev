@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/auth/login.service';
 import { AuthService } from 'src/app/share/services/auth.service';
-import { UserService } from 'src/app/share/services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -80,8 +79,8 @@ export class LoginComponent implements OnInit {
           this.snb.open('登录成功');
           this.router.navigate(['/']);
         },
-        error: (error)=>{
-          this.snb.open(error);
+        error: (error) => {
+          this.snb.open(error.detail);
         }
       });
   }

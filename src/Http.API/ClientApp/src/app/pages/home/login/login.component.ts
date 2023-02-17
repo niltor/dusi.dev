@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/']);
         },
         error: (error) => {
-          this.snb.open(error);
+          this.snb.open(error.detail);
         }
       });
   }

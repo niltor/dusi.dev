@@ -11,13 +11,10 @@ import { EntityModelModule } from './entity-model/entity-model.module';
 import { LoginComponent } from './login/login.component';
 
 @NgModule({
-  declarations: [
-    LoginComponent
-  ],
+  declarations: [LoginComponent],
   imports: [
-    ComponentsModule,
-    ShareModule,
     SystemRoutingModule,
+    ShareModule,
     RoleModule,
     UserModule,
     EntityLibraryModule,
