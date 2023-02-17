@@ -47,6 +47,6 @@ export interface EntityModelUpdateDto {
    * 实体库
    */
   entityLibrary?: EntityLibrary | null;
-  entityLibraryId: string;
+  entityLibraryId?: string | null;
 
 }

@@ -16,9 +16,9 @@ export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
   constructor(
     private loginService: LoginService,
-    private userService: UserService,
-    private snb: MatSnackBar,
-    private router: Router
+    private authService: AuthService,
+    private router: Router,
+    private snb: MatSnackBar
 
   ) {
   }
@@ -71,18 +71,16 @@ export class LoginComponent implements OnInit {
     return '';
   }
   doLogin(): void {
-
     let data = this.loginForm.value;
     // 登录接口
-    this.userService.login(data)
+    this.authService.login(data)
       .subscribe({
         next: res => {
-
           this.loginService.saveLoginState(res);
           this.snb.open('登录成功');
           this.router.navigate(['/']);
         },
-        error: (error) => {
+        error: (error)=>{
           this.snb.open(error);
         }
       });

@@ -4,7 +4,7 @@ export interface AuthResult {
    * 用户名
    */
   username?: string | null;
-  role?: string | null;
+  roles?: string[] | null;
   /**
    * token
    */

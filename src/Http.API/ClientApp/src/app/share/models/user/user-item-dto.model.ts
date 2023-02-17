@@ -1,4 +1,4 @@
-import { SexType } from '../enum/sex-type.model';
+import { Sex } from '../enum/sex.model';
 /**
  * 系统用户列表元素
  */
@@ -38,7 +38,7 @@ export interface UserItemDto {
   /**
    * 性别
    */
-  sex?: SexType | null;
+  sex?: Sex | null;
   id: string;
   createdTime: Date;
   updatedTime: Date;

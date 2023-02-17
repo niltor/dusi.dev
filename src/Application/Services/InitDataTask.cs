@@ -48,11 +48,13 @@ public class InitDataTask
     {
         var role = new SystemRole()
         {
-            Name = "Admin"
+            Name = "Admin",
+            NameValue = Const.Admin
         };
         var userRole = new SystemRole()
         {
-            Name = "User"
+            Name = "User",
+            NameValue = Const.User
         };
         var salt = HashCrypto.BuildSalt();
         var user = new SystemUser()

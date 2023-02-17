@@ -2,6 +2,7 @@ import { AccessModifier } from '../enum/access-modifier.model';
 import { CodeLanguage } from '../enum/code-language.model';
 import { EntityMember } from '../entity-member/entity-member.model';
 import { EntityLibrary } from '../entity-library/entity-library.model';
+import { User } from '../user/user.model';
 /**
  * 实体模型类
  */
@@ -53,5 +54,9 @@ export interface EntityModel {
    * 实体库
    */
   entityLibrary?: EntityLibrary | null;
+  /**
+   * 用户账户
+   */
+  user?: User | null;
 
 }

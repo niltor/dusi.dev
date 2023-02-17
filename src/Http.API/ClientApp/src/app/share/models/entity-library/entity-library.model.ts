@@ -1,5 +1,5 @@
 import { EntityModel } from '../entity-model/entity-model.model';
-import { SystemUser } from '../system-user/system-user.model';
+import { User } from '../user/user.model';
 /**
  * 实体库
  */
@@ -28,8 +28,8 @@ export interface EntityLibrary {
    */
   entityModels?: EntityModel[] | null;
   /**
-   * 系统用户
+   * 用户账户
    */
-  user?: SystemUser | null;
+  user?: User | null;
 
 }

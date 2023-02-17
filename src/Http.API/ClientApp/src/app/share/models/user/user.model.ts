@@ -1,7 +1,8 @@
-import { Role } from '../role/role.model';
-import { SexType } from '../enum/sex-type.model';
+import { EntityLibrary } from '../entity-library/entity-library.model';
+import { EntityModel } from '../entity-model/entity-model.model';
+import { Blog } from '../blog/blog.model';
 /**
- * 系统用户
+ * 用户账户
  */
 export interface User {
   id: string;
@@ -15,40 +16,12 @@ export interface User {
    * 用户名
    */
   userName?: string | null;
-  /**
-   * 真实姓名
-   */
-  realName?: string | null;
   email?: string | null;
   emailConfirmed: boolean;
   passwordHash?: string | null;
   passwordSalt?: string | null;
-  phoneNumber?: string | null;
-  phoneNumberConfirmed: boolean;
-  twoFactorEnabled: boolean;
-  lockoutEnd?: Date | null;
-  lockoutEnabled: boolean;
-  accessFailedCount: number;
-  /**
-   * 最后登录时间
-   */
-  lastLoginTime?: Date | null;
-  /**
-   * 密码重试次数
-   */
-  retryCount: number;
-  /**
-   * 头像url
-   */
-  avatar?: string | null;
-  roles?: Role[] | null;
-  /**
-   * 身份证号
-   */
-  idNumber?: string | null;
-  /**
-   * 性别
-   */
-  sex?: SexType | null;
+  entityLibraries?: EntityLibrary[] | null;
+  entityModels?: EntityModel[] | null;
+  blogs?: Blog[] | null;
 
 }

@@ -1,4 +1,4 @@
-import { SexType } from '../enum/sex-type.model';
+import { Sex } from '../enum/sex.model';
 /**
  * 系统用户更新时请求结构
  */
@@ -38,6 +38,6 @@ export interface UserUpdateDto {
   /**
    * 性别
    */
-  sex?: SexType | null;
+  sex?: Sex | null;
 
 }

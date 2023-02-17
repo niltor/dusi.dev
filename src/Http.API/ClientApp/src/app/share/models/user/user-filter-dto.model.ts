@@ -1,14 +1,14 @@
-import { SexType } from '../enum/sex-type.model';
+import { Sex } from '../enum/sex.model';
 /**
  * 系统用户查询筛选
  */
 export interface UserFilterDto {
-  pageIndex?: number | null;
-  pageSize?: number | null;
+  pageIndex: number;
+  pageSize: number;
   /**
    * 排序
    */
-  orderBy?:  | null;
+  orderBy?: any | null;
   userName?: string | null;
   emailConfirmed?: boolean | null;
   phoneNumberConfirmed?: boolean | null;
@@ -22,6 +22,6 @@ export interface UserFilterDto {
   /**
    * 性别
    */
-  sex?: SexType | null;
+  sex?: Sex | null;
 
 }

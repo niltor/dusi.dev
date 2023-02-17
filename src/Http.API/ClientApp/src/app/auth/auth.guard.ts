@@ -17,14 +17,27 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): boolean | UrlTree {
     const url = state.url;
 
-    if (url.startsWith('/index')) {
-      return true;
-    }
-    if (this.auth.isLogin) {
-      return true;
-    }
-    return this.router.parseUrl('/index');
+    const publicRoutes = ['/blog', '/index', '/news', '/system/login'];
 
+    if (this.auth.isAdmin) {
+      return true;
+    } else {
+
+      for (const route of publicRoutes) {
+        if (url.startsWith(route)) {
+          return true;
+        }
+      }
+
+      if (url.startsWith('/system')) {
+        return false;
+      }
+
+      if (this.auth.isLogin) {
+        return true;
+      }
+      return this.router.parseUrl('/index');
+    }
   }
   canActivateChild(
     next: ActivatedRouteSnapshot,

@@ -27,7 +27,7 @@ public class JwtService
     /// 生成jwt token
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="role"></param>
+    /// <param name="roles"></param>
     /// <returns></returns>
     public string GetToken(string id, string[] roles)
     {
