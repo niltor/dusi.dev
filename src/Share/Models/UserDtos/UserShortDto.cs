@@ -14,10 +14,6 @@ public class UserShortDto
     [MaxLength(100)]
     public string? Email { get; set; }
     public bool EmailConfirmed { get; set; } = false;
-    // [MaxLength(100)]
-    // public string PasswordHash { get; set; } = default!;
-    // [MaxLength(60)]
-    // public string PasswordSalt { get; set; } = default!;
     public Guid Id { get; set; } = Guid.NewGuid();
     public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset UpdatedTime { get; set; } = DateTimeOffset.UtcNow;

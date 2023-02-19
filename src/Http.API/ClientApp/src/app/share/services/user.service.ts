@@ -69,4 +69,13 @@ export class UserService extends BaseService {
     return this.request<User>('delete', url);
   }
 
+  /**
+   * 修改密码
+   * @param password 
+   */
+  changeMyPassword(password?: string): Observable<boolean> {
+    const url = `/api/User/password?password=${password}`;
+    return this.request<boolean>('put', url);
+  }
+
 }

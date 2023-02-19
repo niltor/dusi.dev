@@ -29,7 +29,11 @@ export class LoginService {
     const username = localStorage.getItem('username');
     const token = localStorage.getItem('accessToken');
     const role = localStorage.getItem('role');
+
+    console.log(userId, token, username);
+
     if (userId && token && username) {
+      this.id = userId;
       this.userName = username;
       this.isLogin = true;
       if (role?.toLowerCase() == "admin")

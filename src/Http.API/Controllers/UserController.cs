@@ -120,10 +120,23 @@ public class UserController : RestControllerBase<IUserManager>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<User?>> GetDetailAsync([FromRoute] Guid id)
+    public async Task<ActionResult<User>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
         return (res == null) ? NotFound() : res;
+    }
+
+    /// <summary>
+    /// 修改密码
+    /// </summary>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    [HttpPut("password")]
+    public async Task<ActionResult<bool>> ChangeMyPassword(string password)
+    {
+        var user = await manager.FindAsync(_user.UserId!.Value);
+        if (user == null) return NotFound("未找到该用户");
+        return await manager.ChangePasswordAsync(user, password);
     }
 
     /// <summary>
