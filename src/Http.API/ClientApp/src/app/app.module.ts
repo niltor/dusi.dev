@@ -12,6 +12,7 @@ import { SystemModule } from './pages/system/system.module';
 import { LoginComponent } from './pages/system/login/login.component';
 import { ShareModule } from './share/share.module';
 import { AccountModule } from './pages/account/account.module';
+import { WorkspaceModule } from './pages/workspace/workspace.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { AccountModule } from './pages/account/account.module';
     ShareModule,
     HomeModule,
     SystemModule,
-    AccountModule
+    AccountModule,
+    WorkspaceModule
   ],
   providers: [
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
