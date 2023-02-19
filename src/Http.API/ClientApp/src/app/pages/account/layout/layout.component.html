@@ -1,1 +1,36 @@
-<p>layout works!</p>
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="side" opened="true">
+    <div class="d-flex flex-row-reverse">
+      <button mat-icon-button *ngIf="opened" (click)="toggle()">
+        <mat-icon>keyboard_double_arrow_left</mat-icon>
+      </button>
+      <button mat-icon-button *ngIf="!opened" (click)="toggle()">
+        <mat-icon>keyboard_double_arrow_right</mat-icon>
+      </button>
+    </div>
+    <mat-accordion class="example-headers-align" multi>
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>settings_suggest</mat-icon>
+            <span *ngIf="opened">我的账号</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/account/info" routerLinkActive="active">
+            <mat-icon>home</mat-icon>
+            <span *ngIf="opened">账号信息</span>
+          </a>
+          <a mat-list-item routerLink="/account/password" routerLinkActive="active">
+            <mat-icon>home</mat-icon>
+            <span *ngIf="opened">修改密码</span>
+          </a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+  </mat-sidenav>
+  <mat-sidenav-content class="px-2">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
