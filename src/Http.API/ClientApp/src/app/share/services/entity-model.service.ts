@@ -8,12 +8,12 @@ import { EntityModelItemDtoPageList } from '../models/entity-model/entity-model-
 import { EntityModel } from '../models/entity-model/entity-model.model';
 
 /**
- * EntityModel
+ * 实体模型类
  */
 @Injectable({ providedIn: 'root' })
 export class EntityModelService extends BaseService {
   /**
-   * filter
+   * 筛选
    * @param data EntityModelFilterDto
    */
   filter(data: EntityModelFilterDto): Observable<EntityModelItemDtoPageList> {
@@ -22,7 +22,7 @@ export class EntityModelService extends BaseService {
   }
 
   /**
-   * add
+   * 新增
    * @param data EntityModelAddDto
    */
   add(data: EntityModelAddDto): Observable<EntityModel> {
@@ -31,8 +31,8 @@ export class EntityModelService extends BaseService {
   }
 
   /**
-   * update
-   * @param id string
+   * 更新
+   * @param id 
    * @param data EntityModelUpdateDto
    */
   update(id: string, data: EntityModelUpdateDto): Observable<EntityModel> {
@@ -41,8 +41,8 @@ export class EntityModelService extends BaseService {
   }
 
   /**
-   * getDetail
-   * @param id string
+   * 详情
+   * @param id 
    */
   getDetail(id: string): Observable<EntityModel> {
     const url = `/api/EntityModel/${id}`;
@@ -50,8 +50,8 @@ export class EntityModelService extends BaseService {
   }
 
   /**
-   * delete
-   * @param id string
+   * ⚠删除
+   * @param id 
    */
   delete(id: string): Observable<EntityModel> {
     const url = `/api/EntityModel/${id}`;

@@ -8,12 +8,12 @@ import { SystemRoleItemDtoPageList } from '../models/system-role/system-role-ite
 import { SystemRole } from '../models/system-role/system-role.model';
 
 /**
- * SystemRole
+ * 角色表
  */
 @Injectable({ providedIn: 'root' })
 export class SystemRoleService extends BaseService {
   /**
-   * filter
+   * 筛选
    * @param data SystemRoleFilterDto
    */
   filter(data: SystemRoleFilterDto): Observable<SystemRoleItemDtoPageList> {
@@ -22,7 +22,7 @@ export class SystemRoleService extends BaseService {
   }
 
   /**
-   * add
+   * 新增
    * @param data SystemRoleAddDto
    */
   add(data: SystemRoleAddDto): Observable<SystemRole> {
@@ -31,8 +31,8 @@ export class SystemRoleService extends BaseService {
   }
 
   /**
-   * update
-   * @param id string
+   * 更新
+   * @param id 
    * @param data SystemRoleUpdateDto
    */
   update(id: string, data: SystemRoleUpdateDto): Observable<SystemRole> {
@@ -41,8 +41,8 @@ export class SystemRoleService extends BaseService {
   }
 
   /**
-   * getDetail
-   * @param id string
+   * 详情
+   * @param id 
    */
   getDetail(id: string): Observable<SystemRole> {
     const url = `/api/SystemRole/${id}`;
@@ -50,8 +50,8 @@ export class SystemRoleService extends BaseService {
   }
 
   /**
-   * delete
-   * @param id string
+   * ⚠删除
+   * @param id 
    */
   delete(id: string): Observable<SystemRole> {
     const url = `/api/SystemRole/${id}`;

@@ -6,7 +6,7 @@
     <!-- <a mat-button [routerLink]="['/resource']" routerLinkActive="active">实用导航</a> -->
     <span style="display:flex;flex:1 1 auto"></span>
     <span *ngIf="isLogin">
-      <button [matMenuTriggerFor]="appMenu" mat-button>
+      <button [matMenuTriggerFor]="appMenu" mat-button style="flex-direction: row-reverse;">
         {{username}}
         <mat-icon>arrow_drop_down</mat-icon>
       </button>

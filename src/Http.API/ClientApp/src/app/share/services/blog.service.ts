@@ -13,7 +13,7 @@ import { Blog } from '../models/blog/blog.model';
 @Injectable({ providedIn: 'root' })
 export class BlogService extends BaseService {
   /**
-   * filter
+   * 筛选
    * @param data BlogFilterDto
    */
   filter(data: BlogFilterDto): Observable<BlogItemDtoPageList> {
@@ -22,7 +22,7 @@ export class BlogService extends BaseService {
   }
 
   /**
-   * add
+   * 新增
    * @param data BlogAddDto
    */
   add(data: BlogAddDto): Observable<Blog> {
@@ -31,8 +31,8 @@ export class BlogService extends BaseService {
   }
 
   /**
-   * update
-   * @param id string
+   * 更新
+   * @param id 
    * @param data BlogUpdateDto
    */
   update(id: string, data: BlogUpdateDto): Observable<Blog> {
@@ -41,8 +41,8 @@ export class BlogService extends BaseService {
   }
 
   /**
-   * getDetail
-   * @param id string
+   * 详情
+   * @param id 
    */
   getDetail(id: string): Observable<Blog> {
     const url = `/api/Blog/${id}`;
@@ -50,8 +50,8 @@ export class BlogService extends BaseService {
   }
 
   /**
-   * delete
-   * @param id string
+   * ⚠删除
+   * @param id 
    */
   delete(id: string): Observable<Blog> {
     const url = `/api/Blog/${id}`;

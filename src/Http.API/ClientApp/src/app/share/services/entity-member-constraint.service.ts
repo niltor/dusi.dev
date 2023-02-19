@@ -8,12 +8,12 @@ import { EntityMemberConstraintItemDtoPageList } from '../models/entity-member-c
 import { EntityMemberConstraint } from '../models/entity-member-constraint/entity-member-constraint.model';
 
 /**
- * EntityMemberConstraint
+ * 属性的约束
  */
 @Injectable({ providedIn: 'root' })
 export class EntityMemberConstraintService extends BaseService {
   /**
-   * filter
+   * 筛选
    * @param data EntityMemberConstraintFilterDto
    */
   filter(data: EntityMemberConstraintFilterDto): Observable<EntityMemberConstraintItemDtoPageList> {
@@ -22,7 +22,7 @@ export class EntityMemberConstraintService extends BaseService {
   }
 
   /**
-   * add
+   * 新增
    * @param data EntityMemberConstraintAddDto
    */
   add(data: EntityMemberConstraintAddDto): Observable<EntityMemberConstraint> {
@@ -31,8 +31,8 @@ export class EntityMemberConstraintService extends BaseService {
   }
 
   /**
-   * update
-   * @param id string
+   * 更新
+   * @param id 
    * @param data EntityMemberConstraintUpdateDto
    */
   update(id: string, data: EntityMemberConstraintUpdateDto): Observable<EntityMemberConstraint> {
@@ -41,8 +41,8 @@ export class EntityMemberConstraintService extends BaseService {
   }
 
   /**
-   * getDetail
-   * @param id string
+   * 详情
+   * @param id 
    */
   getDetail(id: string): Observable<EntityMemberConstraint> {
     const url = `/api/EntityMemberConstraint/${id}`;
@@ -50,8 +50,8 @@ export class EntityMemberConstraintService extends BaseService {
   }
 
   /**
-   * delete
-   * @param id string
+   * ⚠删除
+   * @param id 
    */
   delete(id: string): Observable<EntityMemberConstraint> {
     const url = `/api/EntityMemberConstraint/${id}`;

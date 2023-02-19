@@ -11,8 +11,10 @@
         "tags": [
           "Auth"
         ],
+        "summary": "登录获取Token",
         "operationId": "Auth_Login",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -50,6 +52,7 @@
         "tags": [
           "Auth"
         ],
+        "summary": "退出",
         "operationId": "Auth_Logout",
         "parameters": [
           {
@@ -81,8 +84,10 @@
         "tags": [
           "Blog"
         ],
+        "summary": "筛选",
         "operationId": "Blog_Filter",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -120,8 +125,10 @@
         "tags": [
           "Blog"
         ],
+        "summary": "新增",
         "operationId": "Blog_Add",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -159,11 +166,13 @@
         "tags": [
           "Blog"
         ],
+        "summary": "更新",
         "operationId": "Blog_Update",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -172,6 +181,7 @@
           }
         ],
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -207,11 +217,13 @@
         "tags": [
           "Blog"
         ],
+        "summary": "详情",
         "operationId": "Blog_GetDetail",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -236,11 +248,13 @@
         "tags": [
           "Blog"
         ],
+        "summary": "⚠删除",
         "operationId": "Blog_Delete",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -267,8 +281,10 @@
         "tags": [
           "EntityLibrary"
         ],
+        "summary": "筛选",
         "operationId": "EntityLibrary_Filter",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -306,8 +322,10 @@
         "tags": [
           "EntityLibrary"
         ],
+        "summary": "新增",
         "operationId": "EntityLibrary_Add",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -345,11 +363,13 @@
         "tags": [
           "EntityLibrary"
         ],
+        "summary": "更新",
         "operationId": "EntityLibrary_Update",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -358,6 +378,7 @@
           }
         ],
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -393,11 +414,13 @@
         "tags": [
           "EntityLibrary"
         ],
+        "summary": "详情",
         "operationId": "EntityLibrary_GetDetail",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -422,11 +445,13 @@
         "tags": [
           "EntityLibrary"
         ],
+        "summary": "⚠删除",
         "operationId": "EntityLibrary_Delete",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -453,8 +478,10 @@
         "tags": [
           "EntityMember"
         ],
+        "summary": "筛选",
         "operationId": "EntityMember_Filter",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -492,8 +519,10 @@
         "tags": [
           "EntityMember"
         ],
+        "summary": "新增",
         "operationId": "EntityMember_Add",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -531,11 +560,13 @@
         "tags": [
           "EntityMember"
         ],
+        "summary": "更新",
         "operationId": "EntityMember_Update",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -544,6 +575,7 @@
           }
         ],
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -579,11 +611,13 @@
         "tags": [
           "EntityMember"
         ],
+        "summary": "详情",
         "operationId": "EntityMember_GetDetail",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -608,11 +642,13 @@
         "tags": [
           "EntityMember"
         ],
+        "summary": "⚠删除",
         "operationId": "EntityMember_Delete",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -639,8 +675,10 @@
         "tags": [
           "EntityMemberConstraint"
         ],
+        "summary": "筛选",
         "operationId": "EntityMemberConstraint_Filter",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -678,8 +716,10 @@
         "tags": [
           "EntityMemberConstraint"
         ],
+        "summary": "新增",
         "operationId": "EntityMemberConstraint_Add",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -717,11 +757,13 @@
         "tags": [
           "EntityMemberConstraint"
         ],
+        "summary": "更新",
         "operationId": "EntityMemberConstraint_Update",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -730,6 +772,7 @@
           }
         ],
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -765,11 +808,13 @@
         "tags": [
           "EntityMemberConstraint"
         ],
+        "summary": "详情",
         "operationId": "EntityMemberConstraint_GetDetail",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -794,11 +839,13 @@
         "tags": [
           "EntityMemberConstraint"
         ],
+        "summary": "⚠删除",
         "operationId": "EntityMemberConstraint_Delete",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -825,8 +872,10 @@
         "tags": [
           "EntityModel"
         ],
+        "summary": "筛选",
         "operationId": "EntityModel_Filter",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -864,8 +913,10 @@
         "tags": [
           "EntityModel"
         ],
+        "summary": "新增",
         "operationId": "EntityModel_Add",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -903,11 +954,13 @@
         "tags": [
           "EntityModel"
         ],
+        "summary": "更新",
         "operationId": "EntityModel_Update",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -916,6 +969,7 @@
           }
         ],
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -951,11 +1005,13 @@
         "tags": [
           "EntityModel"
         ],
+        "summary": "详情",
         "operationId": "EntityModel_GetDetail",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -980,11 +1036,13 @@
         "tags": [
           "EntityModel"
         ],
+        "summary": "⚠删除",
         "operationId": "EntityModel_Delete",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -1011,8 +1069,10 @@
         "tags": [
           "SystemRole"
         ],
+        "summary": "筛选",
         "operationId": "SystemRole_Filter",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -1050,8 +1110,10 @@
         "tags": [
           "SystemRole"
         ],
+        "summary": "新增",
         "operationId": "SystemRole_Add",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -1089,11 +1151,13 @@
         "tags": [
           "SystemRole"
         ],
+        "summary": "更新",
         "operationId": "SystemRole_Update",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -1102,6 +1166,7 @@
           }
         ],
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -1137,11 +1202,13 @@
         "tags": [
           "SystemRole"
         ],
+        "summary": "详情",
         "operationId": "SystemRole_GetDetail",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -1166,11 +1233,13 @@
         "tags": [
           "SystemRole"
         ],
+        "summary": "⚠删除",
         "operationId": "SystemRole_Delete",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -1197,8 +1266,10 @@
         "tags": [
           "SystemUser"
         ],
+        "summary": "筛选",
         "operationId": "SystemUser_Filter",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -1236,8 +1307,10 @@
         "tags": [
           "SystemUser"
         ],
+        "summary": "新增",
         "operationId": "SystemUser_Add",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -1275,11 +1348,13 @@
         "tags": [
           "SystemUser"
         ],
+        "summary": "更新",
         "operationId": "SystemUser_Update",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -1288,6 +1363,7 @@
           }
         ],
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -1323,11 +1399,13 @@
         "tags": [
           "SystemUser"
         ],
+        "summary": "详情",
         "operationId": "SystemUser_GetDetail",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -1352,11 +1430,13 @@
         "tags": [
           "SystemUser"
         ],
+        "summary": "⚠删除",
         "operationId": "SystemUser_Delete",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -1383,8 +1463,10 @@
         "tags": [
           "User"
         ],
+        "summary": "登录获取Token",
         "operationId": "User_Login",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -1422,8 +1504,10 @@
         "tags": [
           "User"
         ],
+        "summary": "筛选",
         "operationId": "User_Filter",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -1461,8 +1545,10 @@
         "tags": [
           "User"
         ],
+        "summary": "新增",
         "operationId": "User_Add",
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -1500,11 +1586,13 @@
         "tags": [
           "User"
         ],
+        "summary": "更新",
         "operationId": "User_Update",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -1513,6 +1601,7 @@
           }
         ],
         "requestBody": {
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -1548,11 +1637,13 @@
         "tags": [
           "User"
         ],
+        "summary": "详情",
         "operationId": "User_GetDetail",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -1577,11 +1668,13 @@
         "tags": [
           "User"
         ],
+        "summary": "⚠删除",
         "operationId": "User_Delete",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "",
             "required": true,
             "schema": {
               "type": "string",
@@ -4043,71 +4136,18 @@
         "properties": {
           "userName": {
             "type": "string",
+            "description": "用户名",
             "nullable": true
           },
-          "realName": {
-            "maxLength": 30,
+          "password": {
             "type": "string",
-            "description": "真实姓名",
+            "description": "密码",
             "nullable": true
           },
           "email": {
             "maxLength": 100,
             "type": "string",
             "nullable": true
-          },
-          "emailConfirmed": {
-            "type": "boolean"
-          },
-          "phoneNumber": {
-            "maxLength": 20,
-            "type": "string",
-            "description": "手机号",
-            "nullable": true
-          },
-          "phoneNumberConfirmed": {
-            "type": "boolean"
-          },
-          "twoFactorEnabled": {
-            "type": "boolean"
-          },
-          "lockoutEnd": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "lockoutEnabled": {
-            "type": "boolean"
-          },
-          "accessFailedCount": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "lastLoginTime": {
-            "type": "string",
-            "description": "最后登录时间",
-            "format": "date-time",
-            "nullable": true
-          },
-          "retryCount": {
-            "type": "integer",
-            "description": "密码重试次数",
-            "format": "int32"
-          },
-          "avatar": {
-            "maxLength": 200,
-            "type": "string",
-            "description": "头像url",
-            "nullable": true
-          },
-          "idNumber": {
-            "maxLength": 18,
-            "type": "string",
-            "description": "身份证号",
-            "nullable": true
-          },
-          "sex": {
-            "$ref": "#/components/schemas/Sex"
           }
         },
         "additionalProperties": false,
@@ -4304,66 +4344,45 @@
           "emailConfirmed": {
             "type": "boolean",
             "nullable": true
-          },
-          "phoneNumber": {
-            "maxLength": 20,
-            "type": "string",
-            "description": "手机号",
-            "nullable": true
-          },
-          "phoneNumberConfirmed": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "twoFactorEnabled": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "lockoutEnd": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "lockoutEnabled": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "accessFailedCount": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "lastLoginTime": {
-            "type": "string",
-            "description": "最后登录时间",
-            "format": "date-time",
-            "nullable": true
-          },
-          "retryCount": {
-            "type": "integer",
-            "description": "密码重试次数",
-            "format": "int32",
-            "nullable": true
-          },
-          "avatar": {
-            "maxLength": 200,
-            "type": "string",
-            "description": "头像url",
-            "nullable": true
-          },
-          "idNumber": {
-            "maxLength": 18,
-            "type": "string",
-            "description": "身份证号",
-            "nullable": true
-          },
-          "sex": {
-            "$ref": "#/components/schemas/Sex"
           }
         },
         "additionalProperties": false,
         "description": "系统用户更新时请求结构"
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "EntityLibrary",
+      "description": "实体库"
+    },
+    {
+      "name": "EntityMemberConstraint",
+      "description": "属性的约束"
+    },
+    {
+      "name": "EntityMember",
+      "description": "实体属性"
+    },
+    {
+      "name": "EntityModel",
+      "description": "实体模型类"
+    },
+    {
+      "name": "SystemRole",
+      "description": "角色表"
+    },
+    {
+      "name": "SystemUser",
+      "description": "系统用户"
+    },
+    {
+      "name": "Auth",
+      "description": "系统用户授权登录"
+    },
+    {
+      "name": "User",
+      "description": "用户账户"
+    }
+  ]
 }

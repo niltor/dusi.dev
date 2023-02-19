@@ -8,12 +8,12 @@ import { EntityMemberItemDtoPageList } from '../models/entity-member/entity-memb
 import { EntityMember } from '../models/entity-member/entity-member.model';
 
 /**
- * EntityMember
+ * 实体属性
  */
 @Injectable({ providedIn: 'root' })
 export class EntityMemberService extends BaseService {
   /**
-   * filter
+   * 筛选
    * @param data EntityMemberFilterDto
    */
   filter(data: EntityMemberFilterDto): Observable<EntityMemberItemDtoPageList> {
@@ -22,7 +22,7 @@ export class EntityMemberService extends BaseService {
   }
 
   /**
-   * add
+   * 新增
    * @param data EntityMemberAddDto
    */
   add(data: EntityMemberAddDto): Observable<EntityMember> {
@@ -31,8 +31,8 @@ export class EntityMemberService extends BaseService {
   }
 
   /**
-   * update
-   * @param id string
+   * 更新
+   * @param id 
    * @param data EntityMemberUpdateDto
    */
   update(id: string, data: EntityMemberUpdateDto): Observable<EntityMember> {
@@ -41,8 +41,8 @@ export class EntityMemberService extends BaseService {
   }
 
   /**
-   * getDetail
-   * @param id string
+   * 详情
+   * @param id 
    */
   getDetail(id: string): Observable<EntityMember> {
     const url = `/api/EntityMember/${id}`;
@@ -50,8 +50,8 @@ export class EntityMemberService extends BaseService {
   }
 
   /**
-   * delete
-   * @param id string
+   * ⚠删除
+   * @param id 
    */
   delete(id: string): Observable<EntityMember> {
     const url = `/api/EntityMember/${id}`;

@@ -12,7 +12,6 @@ public class UserManager : DomainManagerBase<User, UserUpdateDto, UserFilterDto,
         _userContext = userContext;
     }
 
-
     /// <summary>
     /// 创建待添加实体
     /// </summary>
@@ -21,13 +20,19 @@ public class UserManager : DomainManagerBase<User, UserUpdateDto, UserFilterDto,
     public Task<User> CreateNewEntityAsync(UserAddDto dto)
     {
         var entity = dto.MapTo<UserAddDto, User>();
-        // TODO:构建实体
-        return Task.FromResult(entity);
+        entity.PasswordSalt = HashCrypto.BuildSalt();
+        entity.PasswordHash = HashCrypto.GeneratePwd(dto.Password, entity.PasswordSalt);
+        return Task.FromResult<User>(entity);
     }
 
     public override async Task<User> UpdateAsync(User entity, UserUpdateDto dto)
     {
-        // TODO:根据实际业务更新
+        // 根据实际业务更新
+        if (dto.Password != null)
+        {
+            entity.PasswordSalt = HashCrypto.BuildSalt();
+            entity.PasswordHash = HashCrypto.GeneratePwd(dto.Password, entity.PasswordSalt);
+        }
         return await base.UpdateAsync(entity, dto);
     }
 

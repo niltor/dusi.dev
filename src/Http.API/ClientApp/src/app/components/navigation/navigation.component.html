@@ -22,6 +22,10 @@
             <mat-icon>home</mat-icon>
             <span *ngIf="opened">网站设置</span>
           </a>
+          <a mat-list-item routerLink="/system/member" routerLinkActive="active">
+            <mat-icon>home</mat-icon>
+            <span *ngIf="opened">用户管理</span>
+          </a>
         </mat-nav-list>
       </mat-expansion-panel>
       <!-- 根据模型同步生成的菜单 -->
@@ -35,12 +39,12 @@
 </mat-sidenav-container>
 <!-- 自动生成菜单内容 -->
 <ng-template #automenu>
-      
+
   <mat-expansion-panel hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title>
         <mat-icon>view_list</mat-icon>
-          <span *ngIf="opened">system</span>
+        <span *ngIf="opened">system</span>
       </mat-panel-title>
     </mat-expansion-panel-header>
 
@@ -48,32 +52,32 @@
       <a mat-list-item routerLink="/system/role" routerLinkActive="active">
         <mat-icon>edit_note</mat-icon>
         <span *ngIf="opened">
-            角色表
-            </span>
+          角色表
+        </span>
       </a>
     </mat-nav-list>
     <mat-nav-list>
       <a mat-list-item routerLink="/system/user" routerLinkActive="active">
         <mat-icon>edit_note</mat-icon>
         <span *ngIf="opened">
-            系统用户
-            </span>
+          系统用户
+        </span>
       </a>
     </mat-nav-list>
     <mat-nav-list>
       <a mat-list-item routerLink="/system/entity-library" routerLinkActive="active">
         <mat-icon>edit_note</mat-icon>
         <span *ngIf="opened">
-            实体库
-            </span>
+          实体库
+        </span>
       </a>
     </mat-nav-list>
     <mat-nav-list>
       <a mat-list-item routerLink="/system/entity-model" routerLinkActive="active">
         <mat-icon>edit_note</mat-icon>
         <span *ngIf="opened">
-            实体模型类
-            </span>
+          实体模型类
+        </span>
       </a>
     </mat-nav-list>
   </mat-expansion-panel>

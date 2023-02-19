@@ -5,12 +5,12 @@ import { LoginDto } from '../models/auth/login-dto.model';
 import { AuthResult } from '../models/auth/auth-result.model';
 
 /**
- * Auth
+ * 系统用户授权登录
  */
 @Injectable({ providedIn: 'root' })
 export class AuthService extends BaseService {
   /**
-   * login
+   * 登录获取Token
    * @param data LoginDto
    */
   login(data: LoginDto): Observable<AuthResult> {
@@ -19,7 +19,7 @@ export class AuthService extends BaseService {
   }
 
   /**
-   * logout
+   * 退出
    * @param id string
    */
   logout(id: string): Observable<boolean> {

@@ -10,12 +10,12 @@ import { UserItemDtoPageList } from '../models/user/user-item-dto-page-list.mode
 import { User } from '../models/user/user.model';
 
 /**
- * User
+ * 用户账户
  */
 @Injectable({ providedIn: 'root' })
 export class UserService extends BaseService {
   /**
-   * login
+   * 登录获取Token
    * @param data LoginDto
    */
   login(data: LoginDto): Observable<AuthResult> {
@@ -24,7 +24,7 @@ export class UserService extends BaseService {
   }
 
   /**
-   * filter
+   * 筛选
    * @param data UserFilterDto
    */
   filter(data: UserFilterDto): Observable<UserItemDtoPageList> {
@@ -33,7 +33,7 @@ export class UserService extends BaseService {
   }
 
   /**
-   * add
+   * 新增
    * @param data UserAddDto
    */
   add(data: UserAddDto): Observable<User> {
@@ -42,8 +42,8 @@ export class UserService extends BaseService {
   }
 
   /**
-   * update
-   * @param id string
+   * 更新
+   * @param id 
    * @param data UserUpdateDto
    */
   update(id: string, data: UserUpdateDto): Observable<User> {
@@ -52,8 +52,8 @@ export class UserService extends BaseService {
   }
 
   /**
-   * getDetail
-   * @param id string
+   * 详情
+   * @param id 
    */
   getDetail(id: string): Observable<User> {
     const url = `/api/User/${id}`;
@@ -61,8 +61,8 @@ export class UserService extends BaseService {
   }
 
   /**
-   * delete
-   * @param id string
+   * ⚠删除
+   * @param id 
    */
   delete(id: string): Observable<User> {
     const url = `/api/User/${id}`;

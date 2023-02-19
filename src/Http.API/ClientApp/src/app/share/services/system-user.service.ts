@@ -8,12 +8,12 @@ import { SystemUserItemDtoPageList } from '../models/system-user/system-user-ite
 import { SystemUser } from '../models/system-user/system-user.model';
 
 /**
- * SystemUser
+ * 系统用户
  */
 @Injectable({ providedIn: 'root' })
 export class SystemUserService extends BaseService {
   /**
-   * filter
+   * 筛选
    * @param data SystemUserFilterDto
    */
   filter(data: SystemUserFilterDto): Observable<SystemUserItemDtoPageList> {
@@ -22,7 +22,7 @@ export class SystemUserService extends BaseService {
   }
 
   /**
-   * add
+   * 新增
    * @param data SystemUserAddDto
    */
   add(data: SystemUserAddDto): Observable<SystemUser> {
@@ -31,8 +31,8 @@ export class SystemUserService extends BaseService {
   }
 
   /**
-   * update
-   * @param id string
+   * 更新
+   * @param id 
    * @param data SystemUserUpdateDto
    */
   update(id: string, data: SystemUserUpdateDto): Observable<SystemUser> {
@@ -41,8 +41,8 @@ export class SystemUserService extends BaseService {
   }
 
   /**
-   * getDetail
-   * @param id string
+   * 详情
+   * @param id 
    */
   getDetail(id: string): Observable<SystemUser> {
     const url = `/api/SystemUser/${id}`;
@@ -50,8 +50,8 @@ export class SystemUserService extends BaseService {
   }
 
   /**
-   * delete
-   * @param id string
+   * ⚠删除
+   * @param id 
    */
   delete(id: string): Observable<SystemUser> {
     const url = `/api/SystemUser/${id}`;

@@ -8,12 +8,12 @@ import { EntityLibraryItemDtoPageList } from '../models/entity-library/entity-li
 import { EntityLibrary } from '../models/entity-library/entity-library.model';
 
 /**
- * EntityLibrary
+ * 实体库
  */
 @Injectable({ providedIn: 'root' })
 export class EntityLibraryService extends BaseService {
   /**
-   * filter
+   * 筛选
    * @param data EntityLibraryFilterDto
    */
   filter(data: EntityLibraryFilterDto): Observable<EntityLibraryItemDtoPageList> {
@@ -22,7 +22,7 @@ export class EntityLibraryService extends BaseService {
   }
 
   /**
-   * add
+   * 新增
    * @param data EntityLibraryAddDto
    */
   add(data: EntityLibraryAddDto): Observable<EntityLibrary> {
@@ -31,8 +31,8 @@ export class EntityLibraryService extends BaseService {
   }
 
   /**
-   * update
-   * @param id string
+   * 更新
+   * @param id 
    * @param data EntityLibraryUpdateDto
    */
   update(id: string, data: EntityLibraryUpdateDto): Observable<EntityLibrary> {
@@ -41,8 +41,8 @@ export class EntityLibraryService extends BaseService {
   }
 
   /**
-   * getDetail
-   * @param id string
+   * 详情
+   * @param id 
    */
   getDetail(id: string): Observable<EntityLibrary> {
     const url = `/api/EntityLibrary/${id}`;
@@ -50,8 +50,8 @@ export class EntityLibraryService extends BaseService {
   }
 
   /**
-   * delete
-   * @param id string
+   * ⚠删除
+   * @param id 
    */
   delete(id: string): Observable<EntityLibrary> {
     const url = `/api/EntityLibrary/${id}`;
