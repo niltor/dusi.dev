@@ -51,13 +51,12 @@ public class UserController : RestControllerBase<IUserManager>
                 {
                     TokenExpires = 60 * 24 * 7,
                 };
-                var token = jwt.GetToken(user.Id.ToString(), Array.Empty<string>());
-                // 登录状态存储到Redis
-                //await _redis.SetValueAsync("login" + user.Id.ToString(), true, 60 * 24 * 7);
+                var token = jwt.GetToken(user.Id.ToString(), new string[] { "User" });
 
                 return new AuthResult
                 {
                     Id = user.Id,
+                    Roles = new string[] { "User" },
                     Token = token,
                     Username = user.UserName
                 };
@@ -93,6 +92,10 @@ public class UserController : RestControllerBase<IUserManager>
     [HttpPost]
     public async Task<ActionResult<User>> AddAsync(UserAddDto form)
     {
+        if (await manager.FindAsync<User>(u => u.UserName == form.UserName) != null)
+        {
+            return Conflict("该用户名已被使用");
+        }
         var entity = await manager.CreateNewEntityAsync(form);
         return await manager.AddAsync(entity);
     }
@@ -136,6 +139,6 @@ public class UserController : RestControllerBase<IUserManager>
         // 实现删除逻辑,注意删除权限
         var entity = await manager.GetOwnedAsync(id);
         if (entity == null) return NotFound();
-        return await manager.DeleteAsync(entity);
+        return await manager.DeleteAsync(entity, false);
     }
 }

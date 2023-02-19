@@ -9,10 +9,14 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { CustomerHttpInterceptor } from './share/customer-http.interceptor';
 import { SystemModule } from './pages/system/system.module';
+import { LoginComponent } from './pages/system/login/login.component';
+import { ShareModule } from './share/share.module';
+import { AccountModule } from './pages/account/account.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -20,8 +24,10 @@ import { SystemModule } from './pages/system/system.module';
     HttpClientModule,
     AppRoutingModule,
     ComponentsModule,
+    ShareModule,
     HomeModule,
-    SystemModule
+    SystemModule,
+    AccountModule
   ],
   providers: [
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },

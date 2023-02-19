@@ -1,0 +1,37 @@
+<mat-toolbar fxLayoutGap="4px">
+  <button color="basic" mat-icon-button matTooltip="返回" (click)="back()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  编辑
+</mat-toolbar>
+<form class="d-flex" *ngIf="!isLoading" [formGroup]="formGroup" (ngSubmit)="edit()">
+  <div class="d-flex flex-column w-100">
+    <mat-form-field>
+      <mat-label>UserName</mat-label>
+      <input matInput placeholder="RealName" formControlName="userName" minlength="" maxlength="30">
+      <mat-error *ngIf="userName?.invalid">
+        {{getValidatorMessage('userName')}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput placeholder="Password" formControlName="password" minlength="" maxlength="30">
+      <mat-error *ngIf="userName?.invalid">
+        {{getValidatorMessage('password')}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Email" formControlName="email" minlength="" maxlength="100">
+      <mat-error *ngIf="email?.invalid">
+        {{getValidatorMessage('email')}}
+      </mat-error>
+    </mat-form-field>
+    <mat-slide-toggle color="primary" formControlName="emailConfirmed">EmailConfirmed</mat-slide-toggle>
+
+    <div class="d-flex mt-1">
+      <button class="d-flex flex-column" mat-flat-button color="primary" type="submit">保存</button>
+    </div>
+  </div>
+</form>

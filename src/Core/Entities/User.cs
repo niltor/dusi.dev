@@ -10,8 +10,10 @@ namespace Core.Entities;
 /// <summary>
 /// 用户账户
 /// </summary>
+[NgPage("system", "member")]
 public class User : EntityBase
 {
+
     /// <summary>
     /// 用户名
     /// </summary>

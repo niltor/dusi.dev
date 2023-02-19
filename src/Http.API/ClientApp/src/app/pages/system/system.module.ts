@@ -6,6 +6,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { CustomRouteReuseStrategy } from 'src/app/custom-route-strategy';
 import { RoleModule } from './role/role.module';
 import { UserModule } from './user/user.module';
+import { MemberModule } from './member/member.module';
 import { EntityLibraryModule } from './entity-library/entity-library.module';
 import { EntityModelModule } from './entity-model/entity-model.module';
 
@@ -17,6 +18,7 @@ import { EntityModelModule } from './entity-model/entity-model.module';
     SystemRoutingModule,
     RoleModule,
     UserModule,
+    MemberModule,
     EntityLibraryModule,
     EntityModelModule
   ],

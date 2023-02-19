@@ -1,5 +1,5 @@
 /**
- * 系统用户添加时请求结构
+ * 用户账户添加时请求结构
  */
 export interface UserAddDto {
   /**

@@ -34,7 +34,7 @@ export class CustomerHttpInterceptor implements HttpInterceptor {
   handleError(error: HttpErrorResponse) {
     const errors = {
       detail: '无法连接到服务器，请检查网络连接!',
-      status: 500,
+      status: error.status,
     };
 
     switch (error.status) {
@@ -46,8 +46,9 @@ export class CustomerHttpInterceptor implements HttpInterceptor {
       case 403:
         errors.detail = '403:已拒绝请求';
         break;
+      case 404:
       case 409:
-        errors.detail = error.error;
+        errors.detail = error.error.detail;
         break;
       default:
         if (!error.error) {

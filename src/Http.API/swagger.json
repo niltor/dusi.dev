@@ -4135,11 +4135,13 @@
         "type": "object",
         "properties": {
           "userName": {
+            "maxLength": 60,
             "type": "string",
             "description": "用户名",
             "nullable": true
           },
           "password": {
+            "maxLength": 100,
             "type": "string",
             "description": "密码",
             "nullable": true
@@ -4151,7 +4153,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "系统用户添加时请求结构"
+        "description": "用户账户添加时请求结构"
       },
       "UserFilterDto": {
         "type": "object",
@@ -4174,54 +4176,31 @@
             "nullable": true
           },
           "userName": {
+            "maxLength": 40,
+            "type": "string",
+            "description": "用户名",
+            "nullable": true
+          },
+          "email": {
+            "maxLength": 100,
             "type": "string",
             "nullable": true
           },
           "emailConfirmed": {
             "type": "boolean",
             "nullable": true
-          },
-          "phoneNumberConfirmed": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "twoFactorEnabled": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "lockoutEnabled": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "accessFailedCount": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "retryCount": {
-            "type": "integer",
-            "description": "密码重试次数",
-            "format": "int32",
-            "nullable": true
-          },
-          "sex": {
-            "$ref": "#/components/schemas/Sex"
           }
         },
         "additionalProperties": false,
-        "description": "系统用户查询筛选"
+        "description": "用户账户查询筛选"
       },
       "UserItemDto": {
         "type": "object",
         "properties": {
           "userName": {
+            "maxLength": 40,
             "type": "string",
-            "nullable": true
-          },
-          "realName": {
-            "maxLength": 30,
-            "type": "string",
-            "description": "真实姓名",
+            "description": "用户名",
             "nullable": true
           },
           "email": {
@@ -4231,56 +4210,6 @@
           },
           "emailConfirmed": {
             "type": "boolean"
-          },
-          "phoneNumber": {
-            "maxLength": 20,
-            "type": "string",
-            "description": "手机号",
-            "nullable": true
-          },
-          "phoneNumberConfirmed": {
-            "type": "boolean"
-          },
-          "twoFactorEnabled": {
-            "type": "boolean"
-          },
-          "lockoutEnd": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "lockoutEnabled": {
-            "type": "boolean"
-          },
-          "accessFailedCount": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "lastLoginTime": {
-            "type": "string",
-            "description": "最后登录时间",
-            "format": "date-time",
-            "nullable": true
-          },
-          "retryCount": {
-            "type": "integer",
-            "description": "密码重试次数",
-            "format": "int32"
-          },
-          "avatar": {
-            "maxLength": 200,
-            "type": "string",
-            "description": "头像url",
-            "nullable": true
-          },
-          "idNumber": {
-            "maxLength": 18,
-            "type": "string",
-            "description": "身份证号",
-            "nullable": true
-          },
-          "sex": {
-            "$ref": "#/components/schemas/Sex"
           },
           "id": {
             "type": "string",
@@ -4293,14 +4222,10 @@
           "updatedTime": {
             "type": "string",
             "format": "date-time"
-          },
-          "isDeleted": {
-            "type": "boolean",
-            "description": "软删除"
           }
         },
         "additionalProperties": false,
-        "description": "系统用户列表元素"
+        "description": "用户账户列表元素"
       },
       "UserItemDtoPageList": {
         "type": "object",
@@ -4330,10 +4255,9 @@
             "type": "string",
             "nullable": true
           },
-          "realName": {
-            "maxLength": 30,
+          "password": {
             "type": "string",
-            "description": "真实姓名",
+            "description": "密码",
             "nullable": true
           },
           "email": {
@@ -4347,7 +4271,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "系统用户更新时请求结构"
+        "description": "用户账户更新时请求结构"
       }
     }
   },
