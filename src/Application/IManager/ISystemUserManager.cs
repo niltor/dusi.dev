@@ -6,5 +6,8 @@ namespace Application.IManager;
 /// </summary>
 public interface ISystemUserManager : IDomainManager<SystemUser, SystemUserUpdateDto, SystemUserFilterDto, SystemUserItemDto>
 {
-	// TODO: 定义业务方法
+    Task<bool> ChangePasswordAsync(SystemUser user, string password);
+
+    // TODO: 定义业务方法
+    Task<User?> GetInfoAsUserAsync(Guid id);
 }

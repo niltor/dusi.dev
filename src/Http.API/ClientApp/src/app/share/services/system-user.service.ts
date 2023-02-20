@@ -58,4 +58,13 @@ export class SystemUserService extends BaseService {
     return this.request<SystemUser>('delete', url);
   }
 
+  /**
+   * 修改密码
+   * @param password 
+   */
+  changeMyPassword(password?: string): Observable<boolean> {
+    const url = `/api/SystemUser/password?password=${password}`;
+    return this.request<boolean>('put', url);
+  }
+
 }

@@ -26,13 +26,12 @@ export class CustomerHttpInterceptor implements HttpInterceptor {
     return next.handle(request)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          console.log(error);
           return this.handleError(error);
         })
       );
   }
   handleError(error: HttpErrorResponse) {
-    const errors = {
+    let errors = {
       detail: '无法连接到服务器，请检查网络连接!',
       status: error.status,
     };
@@ -48,7 +47,7 @@ export class CustomerHttpInterceptor implements HttpInterceptor {
         break;
       case 404:
       case 409:
-        errors.detail = error.error.detail;
+        errors.detail = error.error.detail ?? error.error.title;
         break;
       default:
         if (!error.error) {
@@ -63,6 +62,9 @@ export class CustomerHttpInterceptor implements HttpInterceptor {
         }
         break;
     }
+
+    console.log(errors);
+
     this.snb.open(errors.detail);
     return throwError(() => errors);
   }

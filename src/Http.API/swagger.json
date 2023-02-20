@@ -1458,6 +1458,37 @@
         }
       }
     },
+    "/api/SystemUser/password": {
+      "put": {
+        "tags": [
+          "SystemUser"
+        ],
+        "summary": "修改密码",
+        "operationId": "SystemUser_ChangeMyPassword",
+        "parameters": [
+          {
+            "name": "password",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/User/login": {
       "post": {
         "tags": [

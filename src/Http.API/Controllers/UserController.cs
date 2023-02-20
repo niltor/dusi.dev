@@ -1,4 +1,5 @@
 using Core.Const;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Share.Models.AuthDtos;
 using Share.Models.UserDtos;
 namespace Http.API.Controllers;
@@ -9,14 +10,17 @@ namespace Http.API.Controllers;
 public class UserController : RestControllerBase<IUserManager>
 {
     private readonly IConfiguration _config;
+    private readonly ISystemUserManager systemUserManager;
 
     public UserController(
         IUserContext user,
         ILogger<UserController> logger,
         IUserManager manager,
-        IConfiguration config) : base(manager, user, logger)
+        IConfiguration config,
+        ISystemUserManager systemUserManager) : base(manager, user, logger)
     {
         _config = config;
+        this.systemUserManager = systemUserManager;
     }
 
     /// <summary>
@@ -122,8 +126,10 @@ public class UserController : RestControllerBase<IUserManager>
     [HttpGet("{id}")]
     public async Task<ActionResult<User>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
-        return (res == null) ? NotFound() : res;
+        User? user = _user.IsAdmin
+            ? await systemUserManager.GetInfoAsUserAsync(id)
+            : await manager.FindAsync(id);
+        return (user == null) ? NotFound() : user;
     }
 
     /// <summary>
@@ -134,7 +140,7 @@ public class UserController : RestControllerBase<IUserManager>
     [HttpPut("password")]
     public async Task<ActionResult<bool>> ChangeMyPassword(string password)
     {
-        var user = await manager.FindAsync(_user.UserId!.Value);
+        var user = await manager.GetCurrentAsync(_user.UserId!.Value);
         if (user == null) return NotFound("未找到该用户");
         return await manager.ChangePasswordAsync(user, password);
     }

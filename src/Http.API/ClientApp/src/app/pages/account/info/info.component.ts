@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from 'src/app/auth/login.service';
 import { User } from 'src/app/share/models/user/user.model';
+import { SystemUserService } from 'src/app/share/services/system-user.service';
 import { UserService } from 'src/app/share/services/user.service';
 @Component({
   selector: 'app-info',
@@ -16,12 +17,13 @@ export class InfoComponent {
 
   constructor(
     private service: UserService,
+    private sysSrv: SystemUserService,
     private snb: MatSnackBar,
     private route: ActivatedRoute,
-    private loginService: LoginService,
+    private auth: LoginService,
     private router: Router,
   ) {
-    this.id = this.loginService.id!;
+    this.id = this.auth.id!;
   }
 
   ngOnInit(): void {
@@ -37,8 +39,8 @@ export class InfoComponent {
           }
         },
         error: (error) => {
-          this.snb.open(error);
+          this.snb.open(error.detail);
         }
-      })
+      });
   }
 }

@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { lastValueFrom } from 'rxjs';
 import { LoginService } from 'src/app/auth/login.service';
 import { User } from 'src/app/share/models/user/user.model';
+import { SystemUserService } from 'src/app/share/services/system-user.service';
 import { UserService } from 'src/app/share/services/user.service';
 
 @Component({
@@ -20,10 +21,12 @@ export class PasswordComponent {
   matcher = new MyErrorStateMatcher();
   constructor(
     private service: UserService,
+    private sysUserSrv: SystemUserService,
+
     private snb: MatSnackBar,
-    private loginService: LoginService
+    private auth: LoginService
   ) {
-    this.id = this.loginService.id!;
+    this.id = this.auth.id!;
   }
   get password() { return this.form.get('password'); }
   get rePassword() { return this.form.get('rePassword') }
@@ -61,14 +64,25 @@ export class PasswordComponent {
   }
   changePassword(): void {
     if (this.form.valid) {
-      this.service.changeMyPassword(this.password?.value)
-        .subscribe(res => {
-          if (res) {
-            this.snb.open('修改成功');
-          } else {
-            this.snb.open('修改失败');
-          }
-        })
+      if (this.auth.isAdmin) {
+        this.sysUserSrv.changeMyPassword(this.password?.value)
+          .subscribe(res => {
+            if (res) {
+              this.snb.open('修改成功');
+            } else {
+              this.snb.open('修改失败');
+            }
+          });
+      } else {
+        this.service.changeMyPassword(this.password?.value)
+          .subscribe(res => {
+            if (res) {
+              this.snb.open('修改成功');
+            } else {
+              this.snb.open('修改失败');
+            }
+          });
+      }
     }
   }
 

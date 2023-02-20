@@ -1,9 +1,11 @@
+using Core.Const;
 using Share.Models.SystemUserDtos;
 namespace Http.API.Infrastructure;
 
 /// <summary>
 /// 系统用户
 /// </summary>
+[Authorize(Const.Admin)]
 public class SystemUserController : RestControllerBase<ISystemUserManager>
 {
     public SystemUserController(
@@ -61,6 +63,20 @@ public class SystemUserController : RestControllerBase<ISystemUserManager>
     {
         var res = await manager.FindAsync(id);
         return (res == null) ? NotFound() : res;
+    }
+
+
+    /// <summary>
+    /// 修改密码
+    /// </summary>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    [HttpPut("password")]
+    public async Task<ActionResult<bool>> ChangeMyPassword(string password)
+    {
+        var user = await manager.GetCurrentAsync(_user.UserId!.Value);
+        if (user == null) return NotFound("未找到该用户");
+        return await manager.ChangePasswordAsync(user, password);
     }
 
     /// <summary>
