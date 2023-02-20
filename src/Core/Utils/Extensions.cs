@@ -117,7 +117,39 @@ public static partial class Extensions
     }
 
 
-    public static void BuildSetProperty<TEntity, TUpdate>(TUpdate dto)
+    /// <summary>
+    /// 将列表转成树型结构
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <returns></returns>
+    public static List<T>? ToTree<T>(List<T> list) where T : ITreeNode<T>
     {
+        var res = new List<T>();
+        // 根结点
+        var rootNodes = list.Where(l => l.ParentId == null).ToList();
+        if (rootNodes == null)
+        {
+            return default;
+        }
+        foreach (var node in rootNodes)
+        {
+            res.Add(node);
+            AddChildren(node, list);
+        }
+        return res;
+    }
+
+    public static void AddChildren<T>(T node, List<T> list) where T : ITreeNode<T>
+    {
+        var child = list.Where(l => l.ParentId == node.Id).ToList();
+        if (child != null)
+        {
+            node.Children = new List<T>(child);
+            foreach (var item in child)
+            {
+                AddChildren(item, list);
+            }
+        }
     }
 }

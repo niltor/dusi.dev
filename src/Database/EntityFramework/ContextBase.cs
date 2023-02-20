@@ -15,7 +15,12 @@ public class ContextBase : DbContext
     public DbSet<EntityMember> EntityMembers { get; set; }
     public DbSet<EntityMemberConstraint> EntityMemberConstraints { get; set; }
     public DbSet<User> Users { get; set; }
+
+    #region CMS entities
     public DbSet<Blog> Blogs { get; set; }
+    public DbSet<Tags> Tags { get; set; }
+    public DbSet<Catalog> Catalogs { get; set; }
+    #endregion
 
     public ContextBase(DbContextOptions options) : base(options)
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Entities.CMS;
@@ -11,7 +7,7 @@ namespace Core.Entities.CMS;
 /// </summary>
 [Index(nameof(Name))]
 [Index(nameof(Level))]
-public class Catalog : EntityBase
+public class Catalog : EntityBase, ITreeNode<Catalog>
 {
     /// <summary>
     /// 目录名称
@@ -31,7 +27,9 @@ public class Catalog : EntityBase
     /// <summary>
     /// 父目录
     /// </summary>
+    [ForeignKey(nameof(ParentId))]
     public Catalog? Parent { get; set; }
+    public Guid? ParentId { get; set; }
     public List<Blog>? Blogs { get; set; }
     public required User User { get; set; }
 }
