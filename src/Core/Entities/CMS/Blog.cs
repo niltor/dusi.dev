@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Core.Entities.CMS;
+/// <summary>
+/// 博客
+/// </summary>
 public class Blog : TextBase
 {
     /// <summary>
@@ -20,8 +24,18 @@ public class Blog : TextBase
     /// 语言类型
     /// </summary>
     public LanguageType LanguageType { get; set; } = LanguageType.CN;
-
+    /// <summary>
+    /// 是否公开
+    /// </summary>
+    public bool IsPublic { get; set; } = true;
+    /// <summary>
+    /// 是否原创
+    /// </summary>
+    public bool IsOriginal { get; set; }
     public required User User { get; set; }
+
+    public required Catalog Catalog { get; set; }
+    public List<Tags>? Tags { get; set; }
 }
 
 public enum LanguageType

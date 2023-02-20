@@ -19,7 +19,6 @@ public class ContextBase : DbContext
 
     public ContextBase(DbContextOptions options) : base(options)
     {
-
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -31,6 +30,8 @@ public class ContextBase : DbContext
             e.HasIndex(b => b.Title);
             e.HasIndex(b => b.LanguageType);
             e.HasIndex(b => b.Authors);
+            e.HasIndex(b => b.IsOriginal);
+            e.HasIndex(b => b.IsPublic);
             e.HasIndex(b => b.CreatedTime);
 
         });

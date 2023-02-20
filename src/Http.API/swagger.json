@@ -1862,6 +1862,14 @@
           },
           "user": {
             "$ref": "#/components/schemas/User"
+          },
+          "isPublic": {
+            "type": "boolean",
+            "description": "是否公开"
+          },
+          "isOriginal": {
+            "type": "boolean",
+            "description": "是否原创"
           }
         },
         "additionalProperties": false
