@@ -4,7 +4,7 @@
 /// </summary>
 public interface ITreeNode<T>
 {
-    public Guid Id { get; set }
+    public Guid Id { get; set; }
 
     public Guid? ParentId { get; set; }
 
