@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-
-namespace Core.Entities.CMS;
+﻿namespace Core.Entities.CMS;
 /// <summary>
 /// 博客
 /// </summary>
@@ -32,8 +25,11 @@ public class Blog : TextBase
     /// 是否原创
     /// </summary>
     public bool IsOriginal { get; set; }
-    public required User User { get; set; }
 
+    public required User User { get; set; }
+    /// <summary>
+    /// 所属目录
+    /// </summary>
     public required Catalog Catalog { get; set; }
     public List<Tags>? Tags { get; set; }
 }
