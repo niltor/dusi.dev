@@ -46,7 +46,7 @@ public class BlogUpdateDto
     /// <summary>
     /// 所属目录
     /// </summary>
-    public Guid CatalogId { get; set; } = default!;
+    public Guid? CatalogId { get; set; }
     /// <summary>
     /// 标签
     /// </summary>

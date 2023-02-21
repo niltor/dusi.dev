@@ -1,5 +1,10 @@
 import { LanguageType } from '../enum/language-type.model';
 import { User } from '../user/user.model';
+import { Catalog } from '../catalog/catalog.model';
+import { Tags } from '../tags/tags.model';
+/**
+ * 博客
+ */
 export interface Blog {
   id: string;
   createdTime: Date;
@@ -34,8 +39,21 @@ export interface Blog {
   translateContent?: string | null;
   languageType?: LanguageType | null;
   /**
+   * 是否公开
+   */
+  isPublic: boolean;
+  /**
+   * 是否原创
+   */
+  isOriginal: boolean;
+  /**
    * 用户账户
    */
   user?: User | null;
+  /**
+   * 目录
+   */
+  catalog?: Catalog | null;
+  tags?: Tags[] | null;
 
 }

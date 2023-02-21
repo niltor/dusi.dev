@@ -25,7 +25,6 @@ public class Blog : TextBase
     /// 是否原创
     /// </summary>
     public bool IsOriginal { get; set; }
-
     public required User User { get; set; }
     /// <summary>
     /// 所属目录

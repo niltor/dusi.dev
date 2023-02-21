@@ -30,8 +30,6 @@ export class LoginService {
     const token = localStorage.getItem('accessToken');
     const role = localStorage.getItem('role');
 
-    console.log(userId, token, username);
-
     if (userId && token && username) {
       this.id = userId;
       this.userName = username;

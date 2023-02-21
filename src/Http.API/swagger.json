@@ -2314,14 +2314,30 @@
             "description": "内容",
             "nullable": true
           },
-          "authors": {
-            "maxLength": 200,
+          "isPublic": {
+            "type": "boolean",
+            "description": "是否公开"
+          },
+          "isOriginal": {
+            "type": "boolean",
+            "description": "是否原创"
+          },
+          "catalogId": {
             "type": "string",
-            "description": "作者",
+            "description": "所属目录",
+            "format": "uuid"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "标签",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "博客添加时请求结构"
       },
       "BlogFilterDto": {
         "type": "object",
@@ -2343,11 +2359,6 @@
             "description": "排序",
             "nullable": true
           },
-          "translateTitle": {
-            "type": "string",
-            "description": "标题",
-            "nullable": true
-          },
           "languageType": {
             "$ref": "#/components/schemas/LanguageType"
           },
@@ -2357,20 +2368,37 @@
             "description": "标题",
             "nullable": true
           },
-          "description": {
-            "maxLength": 300,
-            "type": "string",
-            "description": "描述",
-            "nullable": true
-          },
           "authors": {
             "maxLength": 200,
             "type": "string",
             "description": "作者",
             "nullable": true
+          },
+          "isPublic": {
+            "type": "boolean",
+            "description": "是否公开",
+            "nullable": true
+          },
+          "catalogId": {
+            "type": "string",
+            "description": "所属目录",
+            "format": "uuid",
+            "nullable": true
+          },
+          "tag": {
+            "type": "string",
+            "description": "标签",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "description": "日期",
+            "format": "date",
+            "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "博客查询筛选"
       },
       "BlogItemDto": {
         "type": "object",
@@ -2412,9 +2440,13 @@
           "updatedTime": {
             "type": "string",
             "format": "date-time"
+          },
+          "catalog": {
+            "$ref": "#/components/schemas/Catalog"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "博客列表元素"
       },
       "BlogItemDtoPageList": {
         "type": "object",
@@ -2472,14 +2504,32 @@
             "description": "内容",
             "nullable": true
           },
+          "isPublic": {
+            "type": "boolean",
+            "description": "是否公开"
+          },
           "authors": {
             "maxLength": 200,
             "type": "string",
             "description": "作者",
             "nullable": true
+          },
+          "catalogId": {
+            "type": "string",
+            "description": "所属目录",
+            "format": "uuid"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "标签",
+            "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "博客更新时请求结构"
       },
       "Catalog": {
         "type": "object",

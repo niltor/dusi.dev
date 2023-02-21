@@ -1,4 +1,7 @@
 import { LanguageType } from '../enum/language-type.model';
+/**
+ * 博客更新时请求结构
+ */
 export interface BlogUpdateDto {
   /**
    * 标题
@@ -22,8 +25,20 @@ export interface BlogUpdateDto {
    */
   content?: string | null;
   /**
+   * 是否公开
+   */
+  isPublic: boolean;
+  /**
    * 作者
    */
   authors?: string | null;
+  /**
+   * 所属目录
+   */
+  catalogId: string;
+  /**
+   * 标签
+   */
+  tags?: string[] | null;
 
 }

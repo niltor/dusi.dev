@@ -1,4 +1,8 @@
 import { LanguageType } from '../enum/language-type.model';
+import { Catalog } from '../catalog/catalog.model';
+/**
+ * 博客列表元素
+ */
 export interface BlogItemDto {
   /**
    * 标题
@@ -20,5 +24,9 @@ export interface BlogItemDto {
   id: string;
   createdTime: Date;
   updatedTime: Date;
+  /**
+   * 目录
+   */
+  catalog?: Catalog | null;
 
 }
