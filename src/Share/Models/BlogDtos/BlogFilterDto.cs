@@ -1,13 +1,11 @@
 using Core.Entities.CMS;
 namespace Share.Models.BlogDtos;
-
+/// <summary>
+/// 博客查询筛选
+/// </summary>
 /// <inheritdoc cref="Core.Entities.CMS.Blog"/>
 public class BlogFilterDto : FilterBase
 {
-    /// <summary>
-    /// 标题
-    /// </summary>
-    public string? TranslateTitle { get; set; }
     /// <summary>
     /// 语言类型
     /// </summary>
@@ -18,14 +16,25 @@ public class BlogFilterDto : FilterBase
     [MaxLength(100)]
     public string? Title { get; set; }
     /// <summary>
-    /// 描述
-    /// </summary>
-    [MaxLength(300)]
-    public string? Description { get; set; }
-    /// <summary>
     /// 作者
     /// </summary>
     [MaxLength(200)]
     public string? Authors { get; set; }
+    /// <summary>
+    /// 是否公开
+    /// </summary>
+    public bool? IsPublic { get; set; }
+    /// <summary>
+    /// 所属目录
+    /// </summary>
+    public Guid? CatalogId { get; set; }
+    /// <summary>
+    /// 标签
+    /// </summary>
+    public string? Tag { get; set; }
+    /// <summary>
+    /// 日期
+    /// </summary>
+    public DateOnly? Date { get; set; }
     
 }

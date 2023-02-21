@@ -1,6 +1,8 @@
 using Core.Entities.CMS;
 namespace Share.Models.BlogDtos;
-
+/// <summary>
+/// 博客列表元素
+/// </summary>
 /// <inheritdoc cref="Core.Entities.CMS.Blog"/>
 public class BlogItemDto
 {
@@ -30,5 +32,9 @@ public class BlogItemDto
     public Guid Id { get; set; } = Guid.NewGuid();
     public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset UpdatedTime { get; set; } = DateTimeOffset.UtcNow;
+    /// <summary>
+    /// 所属目录
+    /// </summary>
+    public Catalog Catalog { get; set; } = default!;
     
 }

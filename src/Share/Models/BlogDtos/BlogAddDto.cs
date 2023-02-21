@@ -1,6 +1,8 @@
 using Core.Entities.CMS;
 namespace Share.Models.BlogDtos;
-
+/// <summary>
+/// 博客添加时请求结构
+/// </summary>
 /// <inheritdoc cref="Core.Entities.CMS.Blog"/>
 public class BlogAddDto
 {
@@ -33,9 +35,20 @@ public class BlogAddDto
     [MaxLength(10000)]
     public required string Content { get; set; }
     /// <summary>
-    /// 作者
+    /// 是否公开
     /// </summary>
-    [MaxLength(200)]
-    public required string Authors { get; set; }
+    public bool IsPublic { get; set; } = true;
+    /// <summary>
+    /// 是否原创
+    /// </summary>
+    public bool IsOriginal { get; set; }
+    /// <summary>
+    /// 所属目录
+    /// </summary>
+    public required Guid CatalogId { get; set; }
+    /// <summary>
+    /// 标签
+    /// </summary>
+    public List<string>? Tags { get; set; }
     
 }

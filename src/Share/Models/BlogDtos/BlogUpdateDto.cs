@@ -1,6 +1,8 @@
 using Core.Entities.CMS;
 namespace Share.Models.BlogDtos;
-
+/// <summary>
+/// 博客更新时请求结构
+/// </summary>
 /// <inheritdoc cref="Core.Entities.CMS.Blog"/>
 public class BlogUpdateDto
 {
@@ -21,7 +23,7 @@ public class BlogUpdateDto
     /// 标题
     /// </summary>
     [MaxLength(100)]
-    public string Title { get; set; } = default!;
+    public string? Title { get; set; }
     /// <summary>
     /// 描述
     /// </summary>
@@ -31,11 +33,23 @@ public class BlogUpdateDto
     /// 内容
     /// </summary>
     [MaxLength(10000)]
-    public string Content { get; set; } = default!;
+    public string? Content { get; set; }
+    /// <summary>
+    /// 是否公开
+    /// </summary>
+    public bool? IsPublic { get; set; }
     /// <summary>
     /// 作者
     /// </summary>
     [MaxLength(200)]
-    public string Authors { get; set; } = default!;
+    public string? Authors { get; set; }
+    /// <summary>
+    /// 所属目录
+    /// </summary>
+    public Guid CatalogId { get; set; } = default!;
+    /// <summary>
+    /// 标签
+    /// </summary>
+    public List<string>? Tags { get; set; }
     
 }
