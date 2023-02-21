@@ -7,15 +7,6 @@ namespace Share.Models.BlogDtos;
 public class BlogAddDto
 {
     /// <summary>
-    /// 标题
-    /// </summary>
-    public string? TranslateTitle { get; set; }
-    /// <summary>
-    /// 翻译内容
-    /// </summary>
-    [MaxLength(12000)]
-    public string? TranslateContent { get; set; }
-    /// <summary>
     /// 语言类型
     /// </summary>
     public LanguageType LanguageType { get; set; } = LanguageType.CN;

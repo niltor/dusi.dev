@@ -2241,6 +2241,7 @@
             "nullable": true
           },
           "translateTitle": {
+            "maxLength": 200,
             "type": "string",
             "description": "标题",
             "nullable": true
@@ -2282,17 +2283,6 @@
       "BlogAddDto": {
         "type": "object",
         "properties": {
-          "translateTitle": {
-            "type": "string",
-            "description": "标题",
-            "nullable": true
-          },
-          "translateContent": {
-            "maxLength": 12000,
-            "type": "string",
-            "description": "翻译内容",
-            "nullable": true
-          },
           "languageType": {
             "$ref": "#/components/schemas/LanguageType"
           },
@@ -2506,7 +2496,8 @@
           },
           "isPublic": {
             "type": "boolean",
-            "description": "是否公开"
+            "description": "是否公开",
+            "nullable": true
           },
           "authors": {
             "maxLength": 200,
@@ -2517,7 +2508,8 @@
           "catalogId": {
             "type": "string",
             "description": "所属目录",
-            "format": "uuid"
+            "format": "uuid",
+            "nullable": true
           },
           "tags": {
             "type": "array",

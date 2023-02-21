@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Mapster;
 
 namespace Core.Utils;
@@ -70,6 +71,24 @@ public static partial class Extensions
                 source.Expression, Expression.Quote(selector)));
     }
 
+    /// <summary>
+    /// where if 
+    /// </summary>
+    /// <typeparam name="TSource"></typeparam>
+    /// <param name="source"></param>
+    /// <param name="condition"></param>
+    /// <param name="expression"></param>
+    /// <returns></returns>
+    public static IQueryable<TSource> WhereIf<TSource>(this IQueryable<TSource> source, bool condition, Expression<Func<TSource, bool>> expression)
+    {
+        return condition ? source.Where(expression) : source;
+    }
+
+    public static IQueryable<TSource> WhereNotNull<TSource>(this IQueryable<TSource> source, object? condition, Expression<Func<TSource, bool>> expression)
+    {
+        return condition != null ? source.Where(expression) : source;
+    }
+
     public static IQueryable<TResult> ProjectTo<TResult>(this IQueryable source)
     {
         return source.ProjectToType<TResult>();
@@ -91,7 +110,6 @@ public static partial class Extensions
             var prop = Expression.PropertyOrField(parameter, item.Key);
             var body = Expression.MakeMemberAccess(parameter, prop.Member);
             var selector = Expression.Lambda(body, parameter);
-
 
             MethodCallExpression expression;
             if (item.Value)
@@ -115,7 +133,6 @@ public static partial class Extensions
         }
         return orderQuery;
     }
-
 
     /// <summary>
     /// 将列表转成树型结构

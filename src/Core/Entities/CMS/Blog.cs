@@ -7,6 +7,7 @@ public class Blog : TextBase
     /// <summary>
     /// 标题
     /// </summary>
+    [MaxLength(200)]
     public string? TranslateTitle { get; set; }
     /// <summary>
     /// 翻译内容

@@ -1,24 +1,14 @@
-using System.Text.Json;
-using Core.Utils;
-using Grpc.BlogService;
 using Share.Models.BlogDtos;
-using static Grpc.BlogService.Blog;
-using Blog = Core.Entities.CMS.Blog;
-
 namespace Http.API.Controllers;
 
 [AllowAnonymous]
 public class BlogController : RestControllerBase<IBlogManager>
 {
-    private readonly BlogClient _rpc;
     public BlogController(
         IUserContext user,
         ILogger<BlogController> logger,
-        IBlogManager manager
-,
-        BlogClient rpc) : base(manager, user, logger)
+        IBlogManager manager) : base(manager, user, logger)
     {
-        _rpc = rpc;
     }
 
     /// <summary>
@@ -29,10 +19,7 @@ public class BlogController : RestControllerBase<IBlogManager>
     [HttpPost("filter")]
     public async Task<ActionResult<PageList<BlogItemDto>>> FilterAsync(BlogFilterDto filter)
     {
-        var request = filter.MapTo<BlogFilterDto, FilterRequest>();
-        var reply = await _rpc.FilterAsync(request);
-        var  res = reply.MapTo<PageReply, PageList<BlogItemDto>>();
-        return res;
+        return await manager.FilterAsync(filter);
     }
 
     /// <summary>
@@ -43,12 +30,8 @@ public class BlogController : RestControllerBase<IBlogManager>
     [HttpPost]
     public async Task<ActionResult<Core.Entities.CMS.Blog>> AddAsync(BlogAddDto form)
     {
-        var request = form.MapTo<BlogAddDto, AddRequest>();
-        var reply = await _rpc.AddAsync(request);
-
-        var json = JsonSerializer.Serialize(reply);
-        var res = JsonSerializer.Deserialize<Blog>(json);
-        return res;
+        var entity = await manager.CreateNewEntityAsync(form);
+        return await manager.AddAsync(entity);
     }
 
     /// <summary>
@@ -86,10 +69,9 @@ public class BlogController : RestControllerBase<IBlogManager>
     [HttpDelete("{id}")]
     public async Task<ActionResult<Blog?>> DeleteAsync([FromRoute] Guid id)
     {
-        // TODO:实现删除逻辑,注意删除权限
+        // 实现删除逻辑,注意删除权限
         var entity = await manager.GetOwnedAsync(id);
         if (entity == null) return NotFound();
-        return Forbid();
-        // return await manager.DeleteAsync(entity);
+        return await manager.DeleteAsync(entity);
     }
 }
