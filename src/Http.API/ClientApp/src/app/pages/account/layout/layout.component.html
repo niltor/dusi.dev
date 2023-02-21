@@ -12,17 +12,17 @@
       <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <mat-icon>settings_suggest</mat-icon>
+            <mat-icon>manage_accounts</mat-icon>
             <span *ngIf="opened">我的账号</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-nav-list>
           <a mat-list-item routerLink="/account/info" routerLinkActive="active">
-            <mat-icon>home</mat-icon>
+            <mat-icon>assignment_ind</mat-icon>
             <span *ngIf="opened">账号信息</span>
           </a>
           <a mat-list-item routerLink="/account/password" routerLinkActive="active">
-            <mat-icon>home</mat-icon>
+            <mat-icon>lock</mat-icon>
             <span *ngIf="opened">修改密码</span>
           </a>
         </mat-nav-list>
