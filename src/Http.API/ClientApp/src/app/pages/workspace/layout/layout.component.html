@@ -17,13 +17,17 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-nav-list>
-          <a mat-list-item routerLink="/workspace/blog" routerLinkActive="active">
+          <a mat-list-item routerLink="/workspace/blog/index" routerLinkActive="active">
             <mat-icon>feed</mat-icon>
             <span *ngIf="opened">我的博客</span>
           </a>
-          <a mat-list-item routerLink="/workspace/blog/setting" routerLinkActive="active">
-            <mat-icon>widgets</mat-icon>
-            <span *ngIf="opened">博客设置</span>
+          <a mat-list-item routerLink="/workspace/blog/catalog" routerLinkActive="active">
+            <mat-icon>category</mat-icon>
+            <span *ngIf="opened">分类管理</span>
+          </a>
+          <a mat-list-item routerLink="/workspace/blog/tag" routerLinkActive="active">
+            <mat-icon fontSet="material-icons-outlined">label</mat-icon>
+            <span *ngIf="opened">标签管理</span>
           </a>
         </mat-nav-list>
       </mat-expansion-panel>
