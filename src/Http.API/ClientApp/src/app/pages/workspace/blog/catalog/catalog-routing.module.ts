@@ -5,29 +5,27 @@ import { IndexComponent } from './index/index.component';
 import { AddComponent } from './add/add.component';
 import { DetailComponent } from './detail/detail.component';
 import { EditComponent } from './edit/edit.component';
-import { LayoutComponent } from '../layout/layout.component';
-import { SettingComponent } from './setting/setting.component';
+import { AdminLayoutComponent } from 'src/app/components/admin-layout/admin-layout.component';
 
 const routes: Routes = [
   {
     path: 'workspace',
-    component: LayoutComponent,
-    data: { reuse: true },
+    component: AdminLayoutComponent,
+    data: {reuse: true},
     canActivate: [AuthGuard],
     children:
       [
         {
-          path: 'blog',
+          path: 'blog_catalog',
           canActivateChild: [AuthGuard],
           children: [
             { path: '', pathMatch: 'full', redirectTo: 'index' },
-            { path: 'setting', component: SettingComponent },
             { path: 'index', component: IndexComponent },
             { path: 'add', component: AddComponent },
             { path: 'detail/:id', component: DetailComponent },
             { path: 'edit/:id', component: EditComponent },
           ]
-        },
+        }
       ]
   }
 ];
@@ -36,4 +34,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class BlogRoutingModule { }
+export class CatalogRoutingModule { }

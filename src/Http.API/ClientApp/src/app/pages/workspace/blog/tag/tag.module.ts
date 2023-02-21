@@ -1,23 +1,18 @@
 import { NgModule } from '@angular/core';
-import { BlogRoutingModule } from './blog-routing.module';
+import { TagRoutingModule } from './tag-routing.module';
 import { ShareModule } from 'src/app/share/share.module';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { IndexComponent } from './index/index.component';
 import { DetailComponent } from './detail/detail.component';
 import { AddComponent } from './add/add.component';
 import { EditComponent } from './edit/edit.component';
-import { SettingComponent } from './setting/setting.component';
-import { CatalogModule } from './catalog/catalog.module';
-import { TagModule } from './tag/tag.module';
 
 @NgModule({
-  declarations: [IndexComponent, DetailComponent, AddComponent, EditComponent, SettingComponent],
+  declarations: [IndexComponent, DetailComponent, AddComponent, EditComponent],
   imports: [
     ComponentsModule,
     ShareModule,
-    BlogRoutingModule,
-    CatalogModule,
-    TagModule,
+    TagRoutingModule
   ]
 })
-export class BlogModule { }
+export class TagModule { }

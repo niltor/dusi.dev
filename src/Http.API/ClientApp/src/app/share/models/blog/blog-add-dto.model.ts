@@ -3,14 +3,6 @@ import { LanguageType } from '../enum/language-type.model';
  * 博客添加时请求结构
  */
 export interface BlogAddDto {
-  /**
-   * 标题
-   */
-  translateTitle?: string | null;
-  /**
-   * 翻译内容
-   */
-  translateContent?: string | null;
   languageType?: LanguageType | null;
   /**
    * 标题

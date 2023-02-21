@@ -27,7 +27,7 @@ export interface BlogUpdateDto {
   /**
    * 是否公开
    */
-  isPublic: boolean;
+  isPublic?: boolean | null;
   /**
    * 作者
    */
@@ -35,7 +35,7 @@ export interface BlogUpdateDto {
   /**
    * 所属目录
    */
-  catalogId: string;
+  catalogId?: string | null;
   /**
    * 标签
    */
