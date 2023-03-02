@@ -20,6 +20,7 @@ public class ContextBase : DbContext
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Tags> Tags { get; set; }
     public DbSet<Catalog> Catalogs { get; set; }
+    public DbSet<ThirdNews> ThirdNews { get; set; }
     #endregion
 
     public ContextBase(DbContextOptions options) : base(options)
