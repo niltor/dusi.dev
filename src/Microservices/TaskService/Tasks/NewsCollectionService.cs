@@ -1,4 +1,6 @@
-﻿namespace Application.Services.NewsCollectionService;
+﻿using Core.Entities.CMS;
+using Core.Utils;
+namespace TaskService.Tasks;
 
 /// <summary>
 /// 采集服务

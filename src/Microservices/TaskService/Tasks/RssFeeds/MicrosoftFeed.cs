@@ -2,7 +2,7 @@ using System.Web;
 using System.Xml.Linq;
 using HtmlAgilityPack;
 
-namespace Application.Services.NewsCollectionService.RssFeeds;
+namespace TaskService.Tasks.RssFeeds;
 
 public class MicrosoftFeed : BaseFeed
 {

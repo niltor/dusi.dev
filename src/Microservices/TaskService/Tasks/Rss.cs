@@ -1,4 +1,4 @@
-namespace Application.Services.NewsCollectionService;
+namespace TaskService.Tasks;
 
 public class Rss
 {

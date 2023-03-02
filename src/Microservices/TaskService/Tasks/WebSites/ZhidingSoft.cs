@@ -1,6 +1,7 @@
-﻿using HtmlAgilityPack;
+﻿
+using HtmlAgilityPack;
 
-namespace Application.Services.NewsCollectionService.WebSites;
+namespace TaskService.Tasks.WebSites;
 
 public class ZhidingSoft : BaseHtml
 {

@@ -1,6 +1,6 @@
 using System.Xml.Linq;
 
-namespace Application.Services.NewsCollectionService.RssFeeds;
+namespace TaskService.Tasks.RssFeeds;
 
 /// <summary>
 /// 基础feed

@@ -1,4 +1,6 @@
-﻿namespace Application.Services.NewsCollectionService.WebSites;
+﻿using TaskService.Tasks;
+
+namespace TaskService.Tasks.WebSites;
 
 public class BaseHtml
 {
