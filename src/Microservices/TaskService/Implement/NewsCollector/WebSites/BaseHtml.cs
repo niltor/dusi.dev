@@ -1,6 +1,6 @@
-﻿using TaskService.Tasks;
+﻿using TaskService.Implement.NewsCollector;
 
-namespace TaskService.Tasks.WebSites;
+namespace TaskService.Implement.NewsCollector.WebSites;
 
 public class BaseHtml
 {

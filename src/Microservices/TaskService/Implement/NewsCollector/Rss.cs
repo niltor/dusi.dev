@@ -1,4 +1,4 @@
-namespace TaskService.Tasks;
+namespace TaskService.Implement.NewsCollector;
 
 public class Rss
 {

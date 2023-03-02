@@ -1,15 +1,16 @@
 ﻿using Core.Entities.CMS;
 using Core.Utils;
-namespace TaskService.Tasks;
+
+namespace TaskService.Implement.NewsCollector;
 
 /// <summary>
 /// 采集服务
 /// </summary>
-public class NewsCollectionService
+public class NewsCollector
 {
     private readonly ILogger _logger;
     private readonly ContextBase _context;
-    public NewsCollectionService(ILogger<NewsCollectionService> logger, ContextBase context)
+    public NewsCollector(ILogger<NewsCollector> logger, ContextBase context)
     {
         _logger = logger;
         _context = context;
@@ -21,14 +22,14 @@ public class NewsCollectionService
         {
             _logger.LogInformation("===Start=== Collect news");
             var list = await GetThirdNewsAsync();
-            _logger.LogInformation("===Result=== collect news: " + list.Count);
+            _logger.LogInformation("===Result=== collect news: {couont}", list.Count);
             _logger.LogInformation("===Start=== Add news");
             await AddThirdNewsAsync(list);
             _logger.LogInformation("===Result=== finish!");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex.Message + ex.StackTrace);
+            _logger.LogError("{message}, {stackTrace}", ex.Message, ex.StackTrace);
         }
 
     }
@@ -63,7 +64,7 @@ public class NewsCollectionService
             .Where(n => n.Type == NewsSource.News)
             .Take(50).ToListAsync();
 
-        _logger.LogInformation("today total news: " + list.Count);
+        _logger.LogInformation("today total news: {count}", list.Count);
 
         foreach (var item in list)
         {
@@ -72,7 +73,7 @@ public class NewsCollectionService
                 result.Remove(item);
             }
         }
-        _logger.LogInformation("added news: " + result.Count);
+        _logger.LogInformation("added news: {count}", result.Count);
 
         if (result.Count > 0)
         {

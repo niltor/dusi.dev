@@ -1,7 +1,7 @@
-using TaskService.Tasks.RssFeeds;
-using TaskService.Tasks.WebSites;
+using TaskService.Implement.NewsCollector.RssFeeds;
+using TaskService.Implement.NewsCollector.WebSites;
 
-namespace TaskService.Tasks;
+namespace TaskService.Implement.NewsCollector;
 
 public class RssHelper
 {

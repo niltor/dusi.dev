@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace TaskService.Tasks.RssFeeds;
+namespace TaskService.Implement.NewsCollector.RssFeeds;
 
 public class InfoWorldFeed : BaseFeed
 {

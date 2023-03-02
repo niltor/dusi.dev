@@ -1,6 +1,7 @@
 using System.Xml.Linq;
+using TaskService.Implement.NewsCollector;
 
-namespace TaskService.Tasks.RssFeeds;
+namespace TaskService.Implement.NewsCollector.RssFeeds;
 
 /// <summary>
 /// 基础feed
