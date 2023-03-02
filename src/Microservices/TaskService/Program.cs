@@ -1,11 +1,33 @@
-using TaskService;
 using TaskService.Tasks;
 
-IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices(services =>
-    {
-        services.AddHostedService<NewsCollectTask>();
-    })
-    .Build();
+var builder = Host.CreateApplicationBuilder();
+var services = builder.Services;
+var configuration = builder.Configuration;
 
-host.Run();
+string? connectionString = configuration.GetConnectionString("Default");
+services.AddDbContextPool<QueryDbContext>(option =>
+{
+    _ = option.UseNpgsql(connectionString, sql =>
+    {
+        _ = sql.MigrationsAssembly("Http.API");
+        _ = sql.CommandTimeout(10);
+    });
+});
+services.AddDbContextPool<CommandDbContext>(option =>
+{
+    _ = option.UseNpgsql(connectionString, sql =>
+    {
+        _ = sql.MigrationsAssembly("Http.API");
+        _ = sql.CommandTimeout(10);
+    });
+});
+
+services.AddHostedService<NewsCollectTask>();
+
+var app = builder.Build();
+
+using (app)
+{
+    app.Start();
+    app.WaitForShutdown();
+}

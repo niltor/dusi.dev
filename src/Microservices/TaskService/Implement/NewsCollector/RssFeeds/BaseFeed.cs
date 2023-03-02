@@ -44,10 +44,6 @@ public class BaseFeed
 
     protected HttpClient httpClient = new();
 
-    public BaseFeed()
-    {
-    }
-
     /// <summary>
     /// 解析返回
     /// </summary>
@@ -143,6 +139,7 @@ public class BaseFeed
             .Where(e => e.Name.Equals(Category))?
             .Select(s => s.Value)
             .ToArray();
+        if (categories == null) return string.Empty;
         return string.Join(";", categories);
     }
 
