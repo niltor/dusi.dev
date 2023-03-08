@@ -52,7 +52,7 @@ public class ZhidingSoft : BaseHtml
                             Categories = node.SelectSingleNode(Category)?.InnerText?.Trim(),
                             CreateTime = DateTime.TryParse(date, out var pubDate) ? pubDate : DateTime.Now,
                             Description = node.SelectSingleNode(Description)?.InnerText?.Trim(),
-                            Title = node.SelectSingleNode(Title)?.InnerText?.Trim(),
+                            Title = node.SelectSingleNode(Title)?.InnerText?.Trim() ?? "",
                             Link = node.SelectSingleNode(Link)?.GetAttributeValue("href", "")
                         };
 

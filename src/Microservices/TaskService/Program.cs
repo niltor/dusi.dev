@@ -1,3 +1,4 @@
+using TaskService.Implement.NewsCollector;
 using TaskService.Tasks;
 
 var builder = Host.CreateApplicationBuilder();
@@ -22,6 +23,9 @@ services.AddDbContextPool<CommandDbContext>(option =>
     });
 });
 
+
+
+services.AddScoped<NewsCollector>();
 services.AddHostedService<NewsCollectTask>();
 
 var app = builder.Build();

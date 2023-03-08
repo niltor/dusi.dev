@@ -6,7 +6,7 @@ namespace TaskService.Implement.NewsCollector.RssFeeds;
 
 public class MicrosoftFeed : BaseFeed
 {
-    public MicrosoftFeed()
+    public MicrosoftFeed(ILogger<MicrosoftFeed> logger) : base(logger)
     {
         Urls = new string[]
         {
@@ -26,8 +26,9 @@ public class MicrosoftFeed : BaseFeed
     /// 
     /// </summary>
     /// <returns></returns>
-    protected override string GetThumb(XElement x)
+    protected override string? GetThumb(XElement? x)
     {
+        if (x == null) return null;
         var guidLink = new Uri(x.Value);
         var guid = HttpUtility.ParseQueryString(x.Value).Get("p");
         var link = guidLink.AbsoluteUri.Replace(guidLink.Query, "");
