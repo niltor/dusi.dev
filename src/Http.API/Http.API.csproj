@@ -9,9 +9,15 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<UserSecretsId>81d2c408-d1e0-4db5-8352-0c8b4940cbc1</UserSecretsId>
-		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-		<DockerfileContext>..\..</DockerfileContext>
+		<ContainerImageName>AterDev/http-api</ContainerImageName>
+		<ContainerRegistry>ghcr.io</ContainerRegistry>
 	</PropertyGroup>
+
+	<PropertyGroup>
+		<ContainerImageTag>v0.1</ContainerImageTag>
+	</PropertyGroup>
+
+
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	  <NoWarn>1701;1702;1591</NoWarn>
 	</PropertyGroup>
@@ -26,6 +32,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="Microsoft.NET.Build.Containers" Version="0.3.2" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.2" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
