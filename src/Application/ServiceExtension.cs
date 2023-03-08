@@ -2,6 +2,7 @@
 using System.Net.Http;
 using Application;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 using OpenTelemetry;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
@@ -25,7 +26,7 @@ public static class ServiceExtension
     /// <param name="loggerOptions"></param>
     /// <param name="tracerProvider"></param>
     /// <param name="meterProvider"></param>
-    public static void AddOpenTelemetry(this IServiceCollection services,
+    public static IServiceCollection AddOpenTelemetry(this IServiceCollection services,
         string serviceName,
         Action<OtlpExporterOptions>? otlpOptions = null,
         Action<OpenTelemetryLoggerOptions>? loggerOptions = null,
@@ -128,7 +129,7 @@ public static class ServiceExtension
         });
         services.AddOpenTelemetry()
             .WithTracing(tracerProvider)
-            .WithMetrics(meterProvider)
-            .StartWithHost();
+            .WithMetrics(meterProvider);
+        return services;
     }
 }
