@@ -12,7 +12,7 @@ jobs:
     - shell: bash
       env:
         PAT: ${{ secrets.PAT }}
-      run: |
+      run: echo "$PAT""
       
     - uses: actions/checkout@v3
 
