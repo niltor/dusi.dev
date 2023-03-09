@@ -10,13 +10,12 @@ services:
     ports:
       - "50006:50006"
     networks:
-      - genars_a
+      - dusi
 
   api:
-    image: ghcr.io/aterdev/dusi-api
-    build:
-      context: .
-      dockerfile: src/Http.API/Dockerfile
+    image: ghcr.io/aterdev/dusi-api:latest
+    environment:
+      - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
     depends_on:
       - placement
     networks:
@@ -48,10 +47,9 @@ services:
     network_mode: "service:api"
 
   task:
-    image: ghcr.io/aterdev/dusi-task
-    build:
-      context: .
-      dockerfile: src/Micrservices/TaskService/Dockerfile
+    image: ghcr.io/aterdev/dusi_task:latest
+    environment:
+      - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
     depends_on:
       - placement
     networks:
@@ -83,10 +81,9 @@ services:
     network_mode: "service:task"
 
   cms:
-    image: ghcr.io/aterdev/dusi-cms
-    build:
-      context: .
-      dockerfile: src/Micrservices/cmsService/Dockerfile
+    image: ghcr.io/aterdev/dusi_cms:latest
+    environment:
+      - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
     depends_on:
       - placement
     networks:
