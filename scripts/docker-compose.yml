@@ -12,11 +12,19 @@ services:
     networks:
       - dusi
 
+  redis:
+    image: "redis:7-alpine"
+    ports:
+      - "6379:6379"
+    networks:
+      - dusi
+
   api:
     image: ghcr.io/aterdev/dusi-api:latest
     environment:
       - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
     depends_on:
+      - redis
       - placement
     networks:
       - dusi
@@ -51,6 +59,7 @@ services:
     environment:
       - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
     depends_on:
+      - redis
       - placement
     networks:
       - dusi
@@ -85,6 +94,7 @@ services:
     environment:
       - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
     depends_on:
+      - redis
       - placement
     networks:
       - dusi
