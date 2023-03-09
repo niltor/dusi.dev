@@ -9,17 +9,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<UserSecretsId>81d2c408-d1e0-4db5-8352-0c8b4940cbc1</UserSecretsId>
-		<ContainerImageName>AterDev/http-api</ContainerImageName>
-		<ContainerRegistry>ghcr.io</ContainerRegistry>
-	</PropertyGroup>
-
-	<PropertyGroup>
-		<ContainerImageTag>v0.1</ContainerImageTag>
 	</PropertyGroup>
 
 	<!--docker--> 
 	<PropertyGroup>
-		<PublishProfile>DefaultContainer</PublishProfile>
 		<ContainerImageName>AterDev/http-api</ContainerImageName>
 		<ContainerRegistry>ghcr.io</ContainerRegistry>
 		<ContainerImageTags>0.1;latest</ContainerImageTags>
@@ -31,8 +24,7 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<NoWarn>1701;1702;1591</NoWarn>
 	</PropertyGroup>
-
-
+	
 	<ItemGroup>
 		<PackageReference Include="Grpc.AspNetCore" Version="2.51.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.3" />
