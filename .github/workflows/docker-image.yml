@@ -21,7 +21,7 @@ jobs:
       with: 
         registry: ghcr.io
         username: niltor
-        password: "$PAT"
+        password: ${{ vars.PAT }}
 
     - name: Build the Docker image
       run: |
