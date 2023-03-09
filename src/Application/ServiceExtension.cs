@@ -2,6 +2,7 @@
 using System.Net.Http;
 using Application;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 using OpenTelemetry;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
