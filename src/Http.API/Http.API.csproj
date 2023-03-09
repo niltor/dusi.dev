@@ -9,8 +9,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<UserSecretsId>81d2c408-d1e0-4db5-8352-0c8b4940cbc1</UserSecretsId>
-		<ContainerImageName>AterDev/http-api</ContainerImageName>
-		<ContainerRegistry>ghcr.io</ContainerRegistry>
+		<ContainerImageName>niltor/http-api</ContainerImageName>
+		<ContainerRegistry>registry.dusi.dev</ContainerRegistry>
 	</PropertyGroup>
 
 	<PropertyGroup>

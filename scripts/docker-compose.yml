@@ -1,0 +1,119 @@
+version: '3.4'
+
+networks:
+  dusi:
+
+services:
+  placement:
+    image: "daprio/dapr"
+    command: ["./placement", "-port", "50006"]
+    ports:
+      - "50006:50006"
+    networks:
+      - genars_a
+
+  api:
+    image: dusi-api
+    build:
+      context: .
+      dockerfile: src/Http.API/Dockerfile
+    depends_on:
+      - placement
+    networks:
+      - dusi
+    ports:
+      - "50002:50002"
+      - "5200:80"
+      
+  api-dapr:
+    image: "daprio/daprd:edge"
+    command:
+      [
+        "./daprd",
+        "-app-id",
+        "api",
+        "-app-port",
+        "5200",
+        "-placement-host-address",
+        "placement:50006",
+        "-dapr-grpc-port",
+        "50002",
+        "-components-path",
+        "/components"
+      ]
+    volumes:
+      - "./components/:/components"
+    depends_on:
+      - api
+    network_mode: "service:api"
+
+  task:
+    image: dusi-task
+    build:
+      context: .
+      dockerfile: src/Micrservices/TaskService/Dockerfile
+    depends_on:
+      - placement
+    networks:
+      - dusi
+    ports:
+      - "50003:50003"
+      - "5201:80"
+      
+  task-dapr:
+    image: "daprio/daprd:edge"
+    command:
+      [
+        "./daprd",
+        "-app-id",
+        "api",
+        "-app-port",
+        "5201",
+        "-placement-host-address",
+        "placement:50006",
+        "-dapr-grpc-port",
+        "50003",
+        "-components-path",
+        "/components"
+      ]
+    volumes:
+      - "./components/:/components"
+    depends_on:
+      - task
+    network_mode: "service:task"
+
+  cms:
+    image: dusi-cms
+    build:
+      context: .
+      dockerfile: src/Micrservices/cmsService/Dockerfile
+    depends_on:
+      - placement
+    networks:
+      - dusi
+    ports:
+      - "50004:50004"
+      - "5202:80"
+      
+  cms-dapr:
+    image: "daprio/daprd:edge"
+    command:
+      [
+        "./daprd",
+        "-app-id",
+        "api",
+        "-app-port",
+        "5202",
+        "-placement-host-address",
+        "placement:50006",
+        "-dapr-grpc-port",
+        "50004",
+        "-components-path",
+        "/components"
+      ]
+    volumes:
+      - "./components/:/components"
+    depends_on:
+      - cms
+    network_mode: "service:cms"
+
