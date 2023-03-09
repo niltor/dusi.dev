@@ -15,6 +15,7 @@ jobs:
     - shell: bash
       env:
         PAT: ${{ secrets.PAT }}
+      run: |
       
     - uses: actions/checkout@v3
     
@@ -29,7 +30,7 @@ jobs:
       with: 
         registry: ghcr.io
         username: niltor
-        password: $PAT
+        password: "$PAT"
 
     - name: docker push
       run: |
