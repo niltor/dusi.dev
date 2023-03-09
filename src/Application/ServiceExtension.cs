@@ -130,6 +130,7 @@ public static class ServiceExtension
         services.AddOpenTelemetry()
             .WithTracing(tracerProvider)
             .WithMetrics(meterProvider);
+
         return services;
     }
 }

@@ -2,7 +2,7 @@
 
 public class OsChinaFeed : BaseFeed
 {
-    public OsChinaFeed()
+    public OsChinaFeed(ILogger<OsChinaFeed> logger) : base(logger)
     {
         Urls = new string[]
         {

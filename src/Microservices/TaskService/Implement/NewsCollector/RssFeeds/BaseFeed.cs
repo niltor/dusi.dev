@@ -11,11 +11,11 @@ public class BaseFeed
     /// <summary>
     /// 链接
     /// </summary>
-    public string[] Urls { get; set; }
+    public string[] Urls { get; set; } = Array.Empty<string>();
     /// <summary>
     /// 作者过滤
     /// </summary>
-    protected string[] Authorfilter { get; set; }
+    protected string[] Authorfilter { get; set; } = Array.Empty<string>();
     /// <summary>
     /// 内容html标签过滤
     /// </summary>
@@ -35,14 +35,18 @@ public class BaseFeed
     public XName Title { get; set; } = "title";
     public XName Description { get; set; } = "description";
     public XName Link { get; set; } = "link";
-
     /// <summary>
     /// 是否包含内容
     /// </summary>
     public bool HasContent { get; set; } = true;
-    protected XDocument xmlDoc;
-
+    protected XDocument? xmlDoc;
     protected HttpClient httpClient = new();
+
+    private readonly ILogger _logger;
+    public BaseFeed(ILogger logger)
+    {
+        _logger = logger;
+    }
 
     /// <summary>
     /// 解析返回
@@ -60,9 +64,8 @@ public class BaseFeed
                 if (!string.IsNullOrEmpty(xmlString))
                 {
                     xmlDoc = XDocument.Parse(xmlString);
-                    var xmlList = xmlDoc.Root.Element(RootName)?.Elements(ItemName);
-
-                    var blogs = xmlList.Select(x =>
+                    var xmlList = xmlDoc?.Root?.Element(RootName)?.Elements(ItemName);
+                    var blogs = xmlList?.Select(x =>
                         {
                             var createTime = DateTime.Now;
                             var createTimeString = x.Element(PubDate)?.Value;
@@ -90,7 +93,7 @@ public class BaseFeed
 
                             return new Rss
                             {
-                                Title = x.Element(Title)?.Value,
+                                Title = x.Element(Title)?.Value ?? "",
                                 Content = content,
                                 Description = description ?? "",
                                 CreateTime = createTime,
@@ -103,7 +106,7 @@ public class BaseFeed
                         })
                         .Take(number)
                         .ToList();
-                    result.AddRange(blogs);
+                    if (blogs != null) result.AddRange(blogs);
                 }
             }
             catch (Exception e)
@@ -116,7 +119,7 @@ public class BaseFeed
         result.Where(r => string.IsNullOrEmpty(r.Content)).ToList()
             .ForEach(item =>
             {
-                item.Content = GetContent(item.Link);
+                item.Content = GetContent(item.Link ?? "");
             });
 
         return result;
@@ -147,7 +150,7 @@ public class BaseFeed
     /// 获取缩略图
     /// </summary>
     /// <returns></returns>
-    protected virtual string GetThumb(XElement x) => "";
+    protected virtual string? GetThumb(XElement? x) => "";
     /// <summary>
     /// 是否包含
     /// </summary>

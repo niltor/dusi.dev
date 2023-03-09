@@ -4,7 +4,8 @@ namespace TaskService.Implement.NewsCollector.RssFeeds;
 
 public class InfoWorldFeed : BaseFeed
 {
-    public InfoWorldFeed()
+
+    public InfoWorldFeed(ILogger<InfoWorldFeed> logger) : base(logger)
     {
         Urls = new string[]
         {
@@ -18,7 +19,7 @@ public class InfoWorldFeed : BaseFeed
         XName categoriesTag = "categories";
         var categories = element.Element(categoriesTag)?.Elements()
             .Where(e => e.Name.Equals(Category))
-            .Select(e => e.Name.LocalName)
+            .Select(e => e.Value)
             .ToList();
         if (categories == null) return string.Empty;
         return string.Join(";", categories);

@@ -1,12 +1,17 @@
 using TaskService.Implement.NewsCollector.RssFeeds;
-using TaskService.Implement.NewsCollector.WebSites;
-
 namespace TaskService.Implement.NewsCollector;
 
 public class RssHelper
 {
-    public RssHelper()
+    private readonly MicrosoftFeed microsoftFeed;
+    private readonly OsChinaFeed osChinaFeed;
+    private readonly InfoWorldFeed infoWorldFeed;
+
+    public RssHelper(InfoWorldFeed infoWorldFeed, OsChinaFeed osChinaFeed, MicrosoftFeed microsoftFeed)
     {
+        this.infoWorldFeed = infoWorldFeed;
+        this.osChinaFeed = osChinaFeed;
+        this.microsoftFeed = microsoftFeed;
     }
     public static bool IsContainKey(string[] strArray, string key)
     {
@@ -24,23 +29,15 @@ public class RssHelper
     /// 获取所有rss内容
     /// </summary>
     /// <returns></returns>
-    public async static Task<List<Rss>> GetAllBlogsAsync()
+    public async Task<List<Rss>> GetAllBlogsAsync()
     {
         var result = new List<Rss>();
-
-        var zhidingWeb = new ZhidingSoft();
-        var list = zhidingWeb.GetListAsync(5).Result;
+        var list = await microsoftFeed.GetBlogsAsync();
         result.AddRange(list);
 
-        var msFeed = new MicrosoftFeed();
-        list = await msFeed.GetBlogsAsync();
-        result.AddRange(list);
-
-        var osChinaFeed = new OsChinaFeed();
         list = await osChinaFeed.GetBlogsAsync(6);
         result.AddRange(list);
 
-        var infoWorldFeed = new InfoWorldFeed();
         list = await infoWorldFeed.GetBlogsAsync(5);
         result.AddRange(list);
 
