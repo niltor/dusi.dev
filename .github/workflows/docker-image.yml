@@ -11,7 +11,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    
+    - shell: bash
+      env:
+        PAT: ${{ secrets.PAT }}
+      
     - uses: actions/checkout@v3
+    
     - name: Build the Docker image
       run: |
         docker build -f ./src/Http.API/Dockerfile -t dusi-api:latest ./
@@ -23,7 +29,7 @@ jobs:
       with: 
         registry: ghcr.io
         username: niltor
-        password: ${{ secrets.PAT }}
+        password: $PAT
 
     - name: docker push
       run: |
