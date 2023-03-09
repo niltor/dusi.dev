@@ -20,13 +20,16 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
+        
     - name: Setup Node.js environment
       uses: actions/setup-node@v3.6.0
       with:
         node-version: 18.x
         cache: yarn
+        
     - name: Restore dependencies
       run: dotnet restore
+      
     - name: Build
       run: dotnet build --no-restore
       
@@ -35,7 +38,7 @@ jobs:
       with:
         registry: ghcr.io
         username: niltor
-        password: $PAT
+        password: $GITHUB_TOKEN
     
     - name: publish
       run: | 
