@@ -1,3 +1,5 @@
+using TaskService.Implement.NewsCollector;
+using TaskService.Implement.NewsCollector.RssFeeds;
 using TaskService.Tasks;
 
 var builder = Host.CreateApplicationBuilder();
@@ -22,6 +24,12 @@ services.AddDbContextPool<CommandDbContext>(option =>
     });
 });
 
+
+services.AddSingleton<MicrosoftFeed>();
+services.AddSingleton<OsChinaFeed>();
+services.AddSingleton<InfoWorldFeed>();
+services.AddSingleton<RssHelper>();
+services.AddScoped<NewsCollector>();
 services.AddHostedService<NewsCollectTask>();
 
 var app = builder.Build();

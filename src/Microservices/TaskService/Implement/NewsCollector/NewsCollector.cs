@@ -8,12 +8,14 @@ namespace TaskService.Implement.NewsCollector;
 /// </summary>
 public class NewsCollector
 {
-    private readonly ILogger _logger;
-    private readonly ContextBase _context;
-    public NewsCollector(ILogger<NewsCollector> logger, ContextBase context)
+    private readonly ILogger<NewsCollector> _logger;
+    private readonly CommandDbContext _context;
+    private readonly RssHelper rssHelper;
+    public NewsCollector(ILogger<NewsCollector> logger, CommandDbContext context, RssHelper rssHelper)
     {
         _logger = logger;
         _context = context;
+        this.rssHelper = rssHelper;
     }
 
     public async Task Start()
@@ -36,7 +38,7 @@ public class NewsCollector
 
     public async Task<List<ThirdNews>> GetThirdNewsAsync()
     {
-        var news = await RssHelper.GetAllBlogsAsync();
+        var news = await rssHelper.GetAllBlogsAsync();
         var result = new List<ThirdNews>();
         news.ForEach(news =>
         {

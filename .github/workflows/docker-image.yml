@@ -1,0 +1,35 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "prod" ]
+    
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Docker Login
+      uses: docker/login-action@v2.1.0
+      with: 
+        registry: ghcr.io
+        username: niltor
+        password: ${{ vars.PAT }}
+
+    - name: Build the Docker image
+      run: |
+        docker build -f ./src/Http.API/Dockerfile -t dusi-api:latest ./
+        docker build -f ./src/Microservices/TaskService/Dockerfile -t dusi_task:latest ./
+        docker build -f ./src/Microservices/CMSService/Dockerfile -t dusi_cms:latest ./
+
+    - name: docker tag & push
+      run: |
+        docker tag dusi-api:latest ghcr.io/aterdev/dusi-api:latest
+        docker tag dusi_task:latest ghcr.io/aterdev/dusi_task:latest
+        docker tag dusi_cms:latest ghcr.io/aterdev/dusi_cms
+        
+        docker push ghcr.io/aterdev/dusi-api:latest
+        docker push ghcr.io/aterdev/dusi_task:latest
+        docker push ghcr.io/aterdev/dusi_cms:latest

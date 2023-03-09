@@ -40,7 +40,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Http.API.Test", "test\Http.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMSService", "src\Microservices\CMSService\CMSService.csproj", "{E52373A6-16E2-4D9A-8027-A94103959539}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskService", "src\Microservices\TaskService\TaskService.csproj", "{DFB55BE8-2940-49DE-AA90-74488E53860E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskService", "src\Microservices\TaskService\TaskService.csproj", "{DFB55BE8-2940-49DE-AA90-74488E53860E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

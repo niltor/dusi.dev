@@ -13,7 +13,7 @@ services:
       - genars_a
 
   api:
-    image: dusi-api
+    image: ghcr.io/aterdev/dusi-api
     build:
       context: .
       dockerfile: src/Http.API/Dockerfile
@@ -48,7 +48,7 @@ services:
     network_mode: "service:api"
 
   task:
-    image: dusi-task
+    image: ghcr.io/aterdev/dusi-task
     build:
       context: .
       dockerfile: src/Micrservices/TaskService/Dockerfile
@@ -83,7 +83,7 @@ services:
     network_mode: "service:task"
 
   cms:
-    image: dusi-cms
+    image: ghcr.io/aterdev/dusi-cms
     build:
       context: .
       dockerfile: src/Micrservices/cmsService/Dockerfile
