@@ -14,14 +14,6 @@
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<Protobuf Include="Protos\blog.proto" GrpcServices="Server" />
-	</ItemGroup>
-	
-	<ItemGroup>
-		<Folder Include="Protos\" />
-	</ItemGroup>
 	
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Application\Application.csproj" />
