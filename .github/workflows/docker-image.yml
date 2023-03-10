@@ -35,5 +35,5 @@ jobs:
     - name: docker push
       run: |
         docker tag dusi-api:latest ghcr.io/aterdev/dusi-api:latest
-        docker tag dusi_task:latest ghcr.io/aterdev/dusi_task:latest
-        docker tag dusi_cms:latest ghcr.io/aterdev/dusi_cms:latest
+        docker tag dusi_task:latest ghcr.io/aterdev/dusi-task:latest
+        docker tag dusi_cms:latest ghcr.io/aterdev/dusi-cms:latest
