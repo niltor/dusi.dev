@@ -1,9 +1,7 @@
 ﻿using Application.QueryStore;
-using Grpc.BlogService;
 using Http.API.Infrastructure;
 using Share.Models.AuthDtos;
 using Share.Models.BlogDtos;
-using static Grpc.BlogService.Blog;
 
 namespace Http.API.Controllers;
 
@@ -17,18 +15,16 @@ public class AuthController : RestControllerBase
     private readonly IConfiguration _config;
     //private readonly RedisService _redis;
 
-    private readonly BlogClient _rpc;
     public AuthController(
         IConfiguration config,
         //RedisService redis,
-        SystemUserQueryStore store,
-        BlogClient grpc)
+        SystemUserQueryStore store
+        )
     {
         //_store = userDataStore;
         _config = config;
         //_redis = redis;
         _store = store;
-        _rpc = grpc;
     }
 
     /// <summary>

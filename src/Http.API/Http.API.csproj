@@ -29,6 +29,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Grpc.AspNetCore" Version="2.51.0" />
 		<PackageReference Include="Dapr.AspNetCore" Version="1.10.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.3" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
@@ -38,6 +39,10 @@
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 		<PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="7.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Protobuf Include="Protos\blog.proto" GrpcServices="Client" />
 	</ItemGroup>
 
 	<ItemGroup>

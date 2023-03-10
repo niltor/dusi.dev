@@ -11,6 +11,7 @@
 		<NoWarn>1701;1702;1591;1587</NoWarn>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="Google.Protobuf" Version="3.22.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />

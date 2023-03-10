@@ -5,9 +5,9 @@ networks:
 services:
   placement:
     image: "daprio/dapr"
-    command: ["./placement", "-port", "50006"]
+    command: ["./placement", "-port", "50000"]
     ports:
-      - "50006:50006"
+      - "50000:50000"
     networks:
       - dusi
 
@@ -24,32 +24,25 @@ services:
       context: .
       dockerfile: src/Http.API/Dockerfile
     environment:
-      - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
+      - "ConnectionStrings__Default=Server=192.168.5.65;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
     depends_on:
       - redis
-      - placement
     networks:
       - dusi
     ports:
-      - "80"
+      - "50002:50001"
+      - "5200:80"
       
   api-dapr:
     image: "daprio/daprd:edge"
     command:
       [
         "./daprd",
-        "-app-id",
-        "api",
-        "-app-port",
-        "5200",
-        "-placement-host-address",
-        "placement:50006",
-        "-dapr-grpc-port",
-        "50002",
-        "-components-path",
-        "/components"
+        "-app-id","api",
+        "-app-port","80",
+        "-components-path","/components"
       ]
     volumes:
       - "./components/:/components"
@@ -60,7 +53,7 @@ services:
   task:
     image: dusi-task:latest
     environment:
-      - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
+      - "ConnectionStrings__Default=Server=192.168.5.65;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
     build:
@@ -68,27 +61,20 @@ services:
       dockerfile: src/Microservices/TaskService/Dockerfile
     depends_on:
       - redis
-      - placement
     networks:
       - dusi
     ports:
-      - "80"
+      - "50003:50001"
+      - "5201:80"
       
   task-dapr:
     image: "daprio/daprd:edge"
     command:
       [
         "./daprd",
-        "-app-id",
-        "api",
-        "-app-port",
-        "5201",
-        "-placement-host-address",
-        "placement:50006",
-        "-dapr-grpc-port",
-        "50003",
-        "-components-path",
-        "/components"
+        "-app-id","task",
+        "-app-port","80",
+        "-components-path","/components"
       ]
     volumes:
       - "./components/:/components"
@@ -99,7 +85,7 @@ services:
   cms:
     image: dusi-cms:latest
     environment:
-      - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
+      - "ConnectionStrings__Default=Server=192.168.5.65;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
     build:
@@ -107,27 +93,20 @@ services:
       dockerfile: src/Microservices/CMSService/Dockerfile
     depends_on:
       - redis
-      - placement
     networks:
       - dusi
     ports:
-      - "80"
+      - "50004:50001"
+      - "5202:80"
       
   cms-dapr:
     image: "daprio/daprd:edge"
     command:
       [
         "./daprd",
-        "-app-id",
-        "api",
-        "-app-port",
-        "5202",
-        "-placement-host-address",
-        "placement:50006",
-        "-dapr-grpc-port",
-        "50004",
-        "-components-path",
-        "/components"
+        "-app-id","cms",
+        "-app-port","80",
+        "-components-path","/components"
       ]
     volumes:
       - "./components/:/components"

@@ -65,8 +65,17 @@ public static class ServiceExtension
                     {
                         if (httpRequestMessage.Content != null)
                         {
-                            var body = httpRequestMessage.Content.ReadAsStringAsync().Result;
-                            activity.SetTag("requestBody", body);
+                            var headers = httpRequestMessage.Content.Headers;
+                            // 过滤过长或文件类型
+                            var contentLength = headers.ContentLength ?? 0;
+                            var contentType = headers.ContentType?.ToString();
+                            if (contentLength > maxLength * 2
+                            || (contentType != null && contentType.Contains("multipart/form-data"))) { }
+                            else
+                            {
+                                var body = httpRequestMessage.Content.ReadAsStringAsync().Result;
+                                activity.SetTag("requestBody", body);
+                            }
                         }
                     };
 

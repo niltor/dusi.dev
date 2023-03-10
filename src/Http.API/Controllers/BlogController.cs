@@ -1,14 +1,22 @@
+using System.Text.Json;
+using Core.Entities.CMS;
+using Dapr.Client;
+using Grpc.BlogService;
 using Share.Models.BlogDtos;
 namespace Http.API.Controllers;
 
 [AllowAnonymous]
 public class BlogController : RestControllerBase<IBlogManager>
 {
+    private readonly DaprClient dapr;
+
     public BlogController(
         IUserContext user,
         ILogger<BlogController> logger,
-        IBlogManager manager) : base(manager, user, logger)
+        IBlogManager manager,
+        DaprClient dapr) : base(manager, user, logger)
     {
+        this.dapr = dapr;
     }
 
     /// <summary>
@@ -30,48 +38,63 @@ public class BlogController : RestControllerBase<IBlogManager>
     [HttpPost]
     public async Task<ActionResult<Core.Entities.CMS.Blog>> AddAsync(BlogAddDto form)
     {
-        var entity = await manager.CreateNewEntityAsync(form);
-        return await manager.AddAsync(entity);
+        var request = form.MapTo<BlogAddDto, AddRequest>();
+        var reply = await dapr.InvokeMethodGrpcAsync<AddRequest, BlogReply>("cms", "Add", request);
+        var res = reply.MapTo<BlogReply, Core.Entities.CMS.Blog>();
+        return res;
     }
 
-    /// <summary>
-    /// 更新
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="form"></param>
-    /// <returns></returns>
-    [HttpPut("{id}")]
-    public async Task<ActionResult<Blog?>> UpdateAsync([FromRoute] Guid id, BlogUpdateDto form)
+    [HttpGet("filter")]
+    public async Task<ActionResult> Filter()
     {
-        var current = await manager.GetOwnedAsync(id);
-        if (current == null) return NotFound();
-        return await manager.UpdateAsync(current, form);
+        var request = new FilterRequest
+        {
+            PageIndex = 1,
+            PageSize = 12
+        };
+        var reply = await dapr.InvokeMethodGrpcAsync<FilterRequest, PageReply>("cms", "Filter", request);
+
+        return Ok();
     }
 
-    /// <summary>
-    /// 详情
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Blog?>> GetDetailAsync([FromRoute] Guid id)
-    {
-        var res = await manager.FindAsync(id);
-        return (res == null) ? NotFound() : res;
-    }
+    ///// <summary>
+    ///// 更新
+    ///// </summary>
+    ///// <param name="id"></param>
+    ///// <param name="form"></param>
+    ///// <returns></returns>
+    //[HttpPut("{id}")]
+    //public async Task<ActionResult<Blog?>> UpdateAsync([FromRoute] Guid id, BlogUpdateDto form)
+    //{
+    //    var current = await manager.GetOwnedAsync(id);
+    //    if (current == null) return NotFound();
+    //    return await manager.UpdateAsync(current, form);
+    //}
 
-    /// <summary>
-    /// ⚠删除
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    // [ApiExplorerSettings(IgnoreApi = true)]
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<Blog?>> DeleteAsync([FromRoute] Guid id)
-    {
-        // 实现删除逻辑,注意删除权限
-        var entity = await manager.GetOwnedAsync(id);
-        if (entity == null) return NotFound();
-        return await manager.DeleteAsync(entity);
-    }
+    ///// <summary>
+    ///// 详情
+    ///// </summary>
+    ///// <param name="id"></param>
+    ///// <returns></returns>
+    //[HttpGet("{id}")]
+    //public async Task<ActionResult<Blog?>> GetDetailAsync([FromRoute] Guid id)
+    //{
+    //    var res = await manager.FindAsync(id);
+    //    return (res == null) ? NotFound() : res;
+    //}
+
+    ///// <summary>
+    ///// ⚠删除
+    ///// </summary>
+    ///// <param name="id"></param>
+    ///// <returns></returns>
+    //// [ApiExplorerSettings(IgnoreApi = true)]
+    //[HttpDelete("{id}")]
+    //public async Task<ActionResult<Blog?>> DeleteAsync([FromRoute] Guid id)
+    //{
+    //    // 实现删除逻辑,注意删除权限
+    //    var entity = await manager.GetOwnedAsync(id);
+    //    if (entity == null) return NotFound();
+    //    return await manager.DeleteAsync(entity);
+    //}
 }

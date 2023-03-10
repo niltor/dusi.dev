@@ -35,6 +35,7 @@ services.AddDbContextPool<CommandDbContext>(option =>
 
 services.AddDataStore();
 services.AddManager();
+services.AddDaprClient();
 
 // redis
 //builder.Services.AddStackExchangeRedisCache(options =>
@@ -47,10 +48,10 @@ services.AddManager();
 var otlpEndpoint = configuration.GetSection("OTLP")
     .GetValue<string>("Endpoint")
     ?? "http://localhost:4317";
-services.AddOpenTelemetry("dusi", opt =>
-{
-    opt.Endpoint = new Uri(otlpEndpoint);
-});
+//services.AddOpenTelemetry("dusi", opt =>
+//{
+//    opt.Endpoint = new Uri(otlpEndpoint);
+//});
 
 #endregion
 #region 接口相关内容:jwt/授权/cors
@@ -101,11 +102,6 @@ services.AddCors(options =>
     });
 });
 #endregion
-
-services.AddGrpcClient<Grpc.BlogService.Blog.BlogClient>(o =>
-{
-    o.Address = new Uri("https://localhost:7075");
-});
 
 services.AddHealthChecks();
 // api 接口文档设置

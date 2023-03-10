@@ -4,8 +4,9 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "http.api": "StartDebugging",
-        "taskservice": "StartDebugging"
+        "api": "StartDebugging",
+        "task": "StartDebugging",
+        "cms": "StartDebugging"
       }
     }
   }

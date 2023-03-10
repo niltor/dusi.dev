@@ -80,7 +80,7 @@ services:
       [
         "./daprd",
         "-app-id",
-        "api",
+        "task",
         "-app-port",
         "5201",
         "-placement-host-address",
@@ -119,7 +119,7 @@ services:
       [
         "./daprd",
         "-app-id",
-        "api",
+        "cms",
         "-app-port",
         "5202",
         "-placement-host-address",

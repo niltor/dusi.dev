@@ -118,6 +118,17 @@
             }
           }
         }
+      },
+      "get": {
+        "tags": [
+          "Blog"
+        ],
+        "operationId": "Blog_Filter",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
       }
     },
     "/api/Blog": {
@@ -147,121 +158,6 @@
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Blog"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Blog/{id}": {
-      "put": {
-        "tags": [
-          "Blog"
-        ],
-        "summary": "更新",
-        "operationId": "Blog_Update",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BlogUpdateDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BlogUpdateDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/BlogUpdateDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Blog"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Blog"
-        ],
-        "summary": "详情",
-        "operationId": "Blog_GetDetail",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Blog"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Blog"
-        ],
-        "summary": "⚠删除",
-        "operationId": "Blog_Delete",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -2458,70 +2354,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "BlogUpdateDto": {
-        "type": "object",
-        "properties": {
-          "translateTitle": {
-            "type": "string",
-            "description": "标题",
-            "nullable": true
-          },
-          "translateContent": {
-            "maxLength": 12000,
-            "type": "string",
-            "description": "翻译内容",
-            "nullable": true
-          },
-          "languageType": {
-            "$ref": "#/components/schemas/LanguageType"
-          },
-          "title": {
-            "maxLength": 100,
-            "type": "string",
-            "description": "标题",
-            "nullable": true
-          },
-          "description": {
-            "maxLength": 300,
-            "type": "string",
-            "description": "描述",
-            "nullable": true
-          },
-          "content": {
-            "maxLength": 10000,
-            "type": "string",
-            "description": "内容",
-            "nullable": true
-          },
-          "isPublic": {
-            "type": "boolean",
-            "description": "是否公开",
-            "nullable": true
-          },
-          "authors": {
-            "maxLength": 200,
-            "type": "string",
-            "description": "作者",
-            "nullable": true
-          },
-          "catalogId": {
-            "type": "string",
-            "description": "所属目录",
-            "format": "uuid",
-            "nullable": true
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "标签",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": "博客更新时请求结构"
       },
       "Catalog": {
         "type": "object",

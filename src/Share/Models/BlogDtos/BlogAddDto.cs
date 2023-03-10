@@ -1,4 +1,6 @@
 using Core.Entities.CMS;
+using Google.Protobuf;
+
 namespace Share.Models.BlogDtos;
 /// <summary>
 /// 博客添加时请求结构
@@ -41,5 +43,5 @@ public class BlogAddDto
     /// 标签
     /// </summary>
     public List<string>? Tags { get; set; }
-    
+
 }
