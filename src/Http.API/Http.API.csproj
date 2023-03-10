@@ -16,6 +16,9 @@
 		<ContainerImageName>AterDev/http-api</ContainerImageName>
 		<ContainerRegistry>ghcr.io</ContainerRegistry>
 		<ContainerImageTags>0.1;latest</ContainerImageTags>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>..\..</DockerfileContext>
+		<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

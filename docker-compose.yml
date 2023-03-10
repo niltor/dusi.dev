@@ -1,0 +1,126 @@
+version: '3.4'
+
+networks:
+  dusi:
+
+services:
+  placement:
+    image: "daprio/dapr"
+    command: ["./placement", "-port", "50006"]
+    ports:
+      - "50006:50006"
+    networks:
+      - dusi
+
+  redis:
+    image: "redis:7-alpine"
+    ports:
+      - "6379:6379"
+    networks:
+      - dusi
+
+  api:
+    image: ghcr.io/aterdev/dusi-api:latest
+    environment:
+      - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
+    depends_on:
+      - redis
+      - placement
+    networks:
+      - dusi
+    ports:
+      - "50002:50002"
+      - "5200:80"
+      
+  api-dapr:
+    image: "daprio/daprd:edge"
+    command:
+      [
+        "./daprd",
+        "-app-id",
+        "api",
+        "-app-port",
+        "5200",
+        "-placement-host-address",
+        "placement:50006",
+        "-dapr-grpc-port",
+        "50002",
+        "-components-path",
+        "/components"
+      ]
+    volumes:
+      - "./components/:/components"
+    depends_on:
+      - api
+    network_mode: "service:api"
+
+  task:
+    image: ghcr.io/aterdev/dusi-task:latest
+    environment:
+      - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
+    depends_on:
+      - redis
+      - placement
+    networks:
+      - dusi
+    ports:
+      - "50003:50003"
+      - "5201:80"
+      
+  task-dapr:
+    image: "daprio/daprd:edge"
+    command:
+      [
+        "./daprd",
+        "-app-id",
+        "api",
+        "-app-port",
+        "5201",
+        "-placement-host-address",
+        "placement:50006",
+        "-dapr-grpc-port",
+        "50003",
+        "-components-path",
+        "/components"
+      ]
+    volumes:
+      - "./components/:/components"
+    depends_on:
+      - task
+    network_mode: "service:task"
+
+  cms:
+    image: ghcr.io/aterdev/dusi-cms:latest
+    environment:
+      - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
+    depends_on:
+      - redis
+      - placement
+    networks:
+      - dusi
+    ports:
+      - "50004:50004"
+      - "5202:80"
+      
+  cms-dapr:
+    image: "daprio/daprd:edge"
+    command:
+      [
+        "./daprd",
+        "-app-id",
+        "api",
+        "-app-port",
+        "5202",
+        "-placement-host-address",
+        "placement:50006",
+        "-dapr-grpc-port",
+        "50004",
+        "-components-path",
+        "/components"
+      ]
+    volumes:
+      - "./components/:/components"
+    depends_on:
+      - cms
+    network_mode: "service:cms"
+
