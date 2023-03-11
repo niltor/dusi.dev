@@ -28,7 +28,10 @@ builder.Services.AddDbContextPool<CommandDbContext>(option =>
 builder.Services.AddDataStore();
 builder.Services.AddManager();
 
+
+
 var app = builder.Build();
+app.UseHttpsRedirection();
 // Configure the HTTP request pipeline.
 app.MapGrpcService<BlogService>();
 

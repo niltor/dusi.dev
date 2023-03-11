@@ -118,17 +118,6 @@
             }
           }
         }
-      },
-      "get": {
-        "tags": [
-          "Blog"
-        ],
-        "operationId": "Blog_Filter",
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
       }
     },
     "/api/Blog": {
@@ -164,7 +153,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Blog"
+                  "type": "string"
                 }
               }
             }

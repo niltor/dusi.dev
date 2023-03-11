@@ -11,11 +11,11 @@ services:
       - "50000:50000"
     networks:
       - dusi
-
+ 
   redis:
     image: "redis:7-alpine"
     ports:
-      - "6379:6379"
+      - "6380:6379"
     networks:
       - dusi
 
@@ -38,7 +38,6 @@ services:
         "./daprd",
         "-app-id","api",
         "-app-port","80",
-        "-placement-host-address","placement:50000",
         "-components-path","/components"
       ]
     volumes:
@@ -65,7 +64,7 @@ services:
       [
         "./daprd",
         "-app-id","task",
-        "-app-port","80",
+        "-app-portd","80",
         "-placement-host-address","placement:50000",
         "-components-path","/components"
       ]
@@ -86,6 +85,7 @@ services:
     ports:
       - "50004:50001"
       - "5202:80"
+      - "443" 
       
   cms-dapr:
     image: "daprio/daprd:edge"
@@ -93,7 +93,8 @@ services:
       [
         "./daprd",
         "-app-id","cms",
-        "-app-port","80",
+        "-app-port","443",
+        "-app-protocol","grpc",
         "-components-path","/components"
       ]
     volumes:

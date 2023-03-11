@@ -33,6 +33,8 @@ services.AddDbContextPool<CommandDbContext>(option =>
     });
 });
 
+services.AddGrpc();
+
 services.AddDataStore();
 services.AddManager();
 services.AddDaprClient();
