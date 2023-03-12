@@ -1,9 +1,12 @@
-name: Docker Image CI
-
+name: Update CMS Service
 on:
   push:
     branches: [ "prod" ]
-    
+    paths:
+      - "src/Microservices/CMSService/**"
+      - "src/Application/**"
+      - "src/Share/**"
+      - "src/Core/**"
 jobs:
 
   build:
@@ -20,17 +23,11 @@ jobs:
 
     - name: Build the Docker image
       run: |
-        docker build -f ./src/Http.API/Dockerfile -t dusi-api:latest ./
-        docker build -f ./src/Microservices/TaskService/Dockerfile -t dusi-task:latest ./
         docker build -f ./src/Microservices/CMSService/Dockerfile -t dusi-cms:latest ./
 
     - name: docker tag & push
       run: |
-        docker tag dusi-api:latest ghcr.io/aterdev/dusi-api:latest
-        docker tag dusi-task:latest ghcr.io/aterdev/dusi-task:latest
         docker tag dusi-cms:latest ghcr.io/aterdev/dusi-cms:latest
         
-        docker push ghcr.io/aterdev/dusi-api:latest
-        docker push ghcr.io/aterdev/dusi-task:latest
         docker push ghcr.io/aterdev/dusi-cms:latest
 

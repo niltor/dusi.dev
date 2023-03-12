@@ -1,0 +1,32 @@
+name: Update API Service
+on:
+  push:
+    branches: [ "prod" ]
+    paths:
+      - "src/Http.API/**"
+      - "src/Application/**"
+      - "src/Share/**"
+      - "src/Core/**"
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Docker Login
+      uses: docker/login-action@v2.1.0
+      with: 
+        registry: ghcr.io
+        username: niltor
+        password: ${{ vars.PAT }}
+
+    - name: Build the Docker image
+      run: |
+        docker build -f ./src/Http.API/Dockerfile -t dusi-api:latest ./
+
+    - name: docker tag & push
+      run: |
+        docker tag dusi-api:latest ghcr.io/aterdev/dusi-api:latest
+        
+        docker push ghcr.io/aterdev/dusi-api:latest

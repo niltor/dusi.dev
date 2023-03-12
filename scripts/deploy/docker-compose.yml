@@ -5,7 +5,7 @@ networks:
 
 services:
   redis:
-    image: redis:7-alpine,
+    image: redis:7-alpine
     networks:
       - dusi
     ports:
@@ -14,7 +14,8 @@ services:
   api:
     image: ghcr.io/aterdev/dusi-api:latest
     environment:
-      - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
+      - ConnectionStrings__Default=${ASPNETCORE_CONNECTIONSTRINGS}
+    restart: always
     networks:
       - dusi
     ports:
@@ -40,7 +41,8 @@ services:
   task:
     image: ghcr.io/aterdev/dusi-task:latest
     environment:
-      - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
+      - ConnectionStrings__Default=${ASPNETCORE_CONNECTIONSTRINGS}
+    restart: always
     networks:
       - dusi
     ports:
@@ -66,7 +68,8 @@ services:
   cms:
     image: ghcr.io/aterdev/dusi-cms:latest
     environment:
-      - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
+      - ConnectionStrings__Default=${ASPNETCORE_CONNECTIONSTRINGS}
+    restart: always
     networks:
       - dusi
     ports:
