@@ -3,18 +3,12 @@ networks:
   dusi:
 
 services:
-  placement:
-    image: "daprio/dapr"
-    command: ["./placement", "-port", "50000", "-log-level", "debug"]
-    ports:
-      - "50000:50000"
+  redis:
+    image: redis:7-alpine
     networks:
       - dusi
-
-  zipkin:
-    image: openzipkin/zipkin-slim:latest
     ports:
-      - "5411:9411"
+      - "6379:6379"
 
   api:
     image: dusi-api:latest
@@ -38,16 +32,16 @@ services:
         "./daprd",
         "-app-id","api",
         "-app-port","80",
-        "-placement-host-address","placement:50000",
+        "-log-level", "debug",
         "-components-path","/components",
-        "-enable-api-logging","true",
         "-config", "/dusi-config.yaml"
       ]
     volumes:
       - "./scripts/components/:/components"
-      - "./scripts/dusi-config.yaml:/dusi-confg.yaml"
+      - "./scripts/dusi-config.yaml:/dusi-config.yaml"
 
     depends_on:
+      - redis
       - api
     network_mode: "service:api"
 
@@ -78,6 +72,7 @@ services:
     volumes:
       - "./scripts/components/:/components"
     depends_on:
+      - redis
       - task
     network_mode: "service:task"
 
@@ -94,8 +89,7 @@ services:
       - dusi
     ports:
       - "50004:50001"
-      - "5202:80"
-      - "443" 
+      - "5202:443" 
 
   cms-dapr:
     image: "daprio/daprd:edge"
@@ -104,17 +98,17 @@ services:
         "./daprd",
         "-app-id","cms",
         "-app-port","443",
-        "-app-ssl","true",
         "-app-protocol","grpc",
-        "-placement-host-address","placement:50000",
+        "-app-ssl","true",
+        "-log-level", "debug",
         "-components-path","/components",
-        "-enable-api-logging","true",
         "-config", "/dusi-config.yaml"
       ]
     volumes:
       - "./scripts/components/:/components"
-      - "./scripts/dusi-config.yaml:/dusi-confg.yaml"
+      - "./scripts/dusi-config.yaml:/dusi-config.yaml"
     depends_on:
+      - redis
       - cms
     network_mode: "service:cms"
 
