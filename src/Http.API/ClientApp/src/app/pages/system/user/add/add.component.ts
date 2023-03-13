@@ -1,13 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SystemUserService } from 'src/app/share/services/system-user.service';
-import { SystemUser } from 'src/app/share/models/system-user/system-user.model';
-import { SystemUserAddDto } from 'src/app/share/models/system-user/system-user-add-dto.model';
+import { SystemUserService } from 'src/app/share/admin/services/system-user.service';
+import { SystemUser } from 'src/app/share/admin/models/system-user/system-user.model';
+import { SystemUserAddDto } from 'src/app/share/admin/models/system-user/system-user-add-dto.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
-import { Sex } from 'src/app/share/models/enum/sex.model';
+import { Sex } from 'src/app/share/admin/models/enum/sex.model';
 
 @Component({
     selector: 'app-add',

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { EntityLibraryService } from 'src/app/share/services/entity-library.service';
+import { EntityLibraryService } from 'src/app/share/admin/services/entity-library.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EntityLibrary } from 'src/app/share/models/entity-library/entity-library.model';
+import { EntityLibrary } from 'src/app/share/admin/models/entity-library/entity-library.model';
 import { Location } from '@angular/common';
 
 @Component({

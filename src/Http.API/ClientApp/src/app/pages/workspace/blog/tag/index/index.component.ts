@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TagsService } from 'src/app/share/services/tags.service';
+import { TagsService } from 'src/app/share/client/services/tags.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
-import { TagsItemDto } from 'src/app/share/models/tags/tags-item-dto.model';
-import { TagsFilterDto } from 'src/app/share/models/tags/tags-filter-dto.model';
+import { TagsItemDto } from 'src/app/share/client/models/tags/tags-item-dto.model';
+import { TagsFilterDto } from 'src/app/share/client/models/tags/tags-filter-dto.model';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';

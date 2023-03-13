@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/share/services/user.service';
+import { UserService } from 'src/app/share/admin/services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'src/app/share/models/user/user.model';
+import { User } from 'src/app/share/admin/models/user/user.model';
 import { Location } from '@angular/common';
 
 @Component({

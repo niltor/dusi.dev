@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SystemUserService } from 'src/app/share/services/system-user.service';
+import { SystemUserService } from 'src/app/share/admin/services/system-user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SystemUser } from 'src/app/share/models/system-user/system-user.model';
+import { SystemUser } from 'src/app/share/admin/models/system-user/system-user.model';
 import { Location } from '@angular/common';
 
 @Component({

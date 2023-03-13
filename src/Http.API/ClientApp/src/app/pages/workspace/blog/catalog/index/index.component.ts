@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CatalogService } from 'src/app/share/services/catalog.service';
+import { CatalogService } from 'src/app/share/client/services/catalog.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
-import { CatalogItemDto } from 'src/app/share/models/catalog/catalog-item-dto.model';
-import { CatalogFilterDto } from 'src/app/share/models/catalog/catalog-filter-dto.model';
+import { CatalogItemDto } from 'src/app/share/client/models/catalog/catalog-item-dto.model';
+import { CatalogFilterDto } from 'src/app/share/client/models/catalog/catalog-filter-dto.model';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';

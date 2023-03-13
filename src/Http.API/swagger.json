@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "dusi.dev",
+    "title": "Admin API",
     "description": "API 文档",
     "version": "v1"
   },
@@ -79,7 +79,7 @@
         }
       }
     },
-    "/api/Blog/filter": {
+    "/api/admin/Blog/filter": {
       "post": {
         "tags": [
           "Blog"
@@ -120,7 +120,7 @@
         }
       }
     },
-    "/api/Blog": {
+    "/api/admin/Blog": {
       "post": {
         "tags": [
           "Blog"
@@ -161,7 +161,7 @@
         }
       }
     },
-    "/api/Catalog/filter": {
+    "/api/admin/Catalog/filter": {
       "post": {
         "tags": [
           "Catalog"
@@ -202,7 +202,7 @@
         }
       }
     },
-    "/api/Catalog": {
+    "/api/admin/Catalog": {
       "post": {
         "tags": [
           "Catalog"
@@ -243,7 +243,7 @@
         }
       }
     },
-    "/api/Catalog/{id}": {
+    "/api/admin/Catalog/{id}": {
       "put": {
         "tags": [
           "Catalog"
@@ -358,7 +358,7 @@
         }
       }
     },
-    "/api/EntityLibrary/filter": {
+    "/api/admin/EntityLibrary/filter": {
       "post": {
         "tags": [
           "EntityLibrary"
@@ -399,7 +399,7 @@
         }
       }
     },
-    "/api/EntityLibrary": {
+    "/api/admin/EntityLibrary": {
       "post": {
         "tags": [
           "EntityLibrary"
@@ -440,7 +440,7 @@
         }
       }
     },
-    "/api/EntityLibrary/{id}": {
+    "/api/admin/EntityLibrary/{id}": {
       "put": {
         "tags": [
           "EntityLibrary"
@@ -555,7 +555,7 @@
         }
       }
     },
-    "/api/EntityMember/filter": {
+    "/api/admin/EntityMember/filter": {
       "post": {
         "tags": [
           "EntityMember"
@@ -596,7 +596,7 @@
         }
       }
     },
-    "/api/EntityMember": {
+    "/api/admin/EntityMember": {
       "post": {
         "tags": [
           "EntityMember"
@@ -637,7 +637,7 @@
         }
       }
     },
-    "/api/EntityMember/{id}": {
+    "/api/admin/EntityMember/{id}": {
       "put": {
         "tags": [
           "EntityMember"
@@ -752,7 +752,7 @@
         }
       }
     },
-    "/api/EntityMemberConstraint/filter": {
+    "/api/admin/EntityMemberConstraint/filter": {
       "post": {
         "tags": [
           "EntityMemberConstraint"
@@ -793,7 +793,7 @@
         }
       }
     },
-    "/api/EntityMemberConstraint": {
+    "/api/admin/EntityMemberConstraint": {
       "post": {
         "tags": [
           "EntityMemberConstraint"
@@ -834,7 +834,7 @@
         }
       }
     },
-    "/api/EntityMemberConstraint/{id}": {
+    "/api/admin/EntityMemberConstraint/{id}": {
       "put": {
         "tags": [
           "EntityMemberConstraint"
@@ -949,7 +949,7 @@
         }
       }
     },
-    "/api/EntityModel/filter": {
+    "/api/admin/EntityModel/filter": {
       "post": {
         "tags": [
           "EntityModel"
@@ -990,7 +990,7 @@
         }
       }
     },
-    "/api/EntityModel": {
+    "/api/admin/EntityModel": {
       "post": {
         "tags": [
           "EntityModel"
@@ -1031,7 +1031,7 @@
         }
       }
     },
-    "/api/EntityModel/{id}": {
+    "/api/admin/EntityModel/{id}": {
       "put": {
         "tags": [
           "EntityModel"
@@ -1146,7 +1146,7 @@
         }
       }
     },
-    "/api/SystemRole/filter": {
+    "/api/admin/SystemRole/filter": {
       "post": {
         "tags": [
           "SystemRole"
@@ -1187,7 +1187,7 @@
         }
       }
     },
-    "/api/SystemRole": {
+    "/api/admin/SystemRole": {
       "post": {
         "tags": [
           "SystemRole"
@@ -1228,7 +1228,7 @@
         }
       }
     },
-    "/api/SystemRole/{id}": {
+    "/api/admin/SystemRole/{id}": {
       "put": {
         "tags": [
           "SystemRole"
@@ -1343,7 +1343,7 @@
         }
       }
     },
-    "/api/SystemUser/filter": {
+    "/api/admin/SystemUser/filter": {
       "post": {
         "tags": [
           "SystemUser"
@@ -1384,7 +1384,7 @@
         }
       }
     },
-    "/api/SystemUser": {
+    "/api/admin/SystemUser": {
       "post": {
         "tags": [
           "SystemUser"
@@ -1425,7 +1425,7 @@
         }
       }
     },
-    "/api/SystemUser/{id}": {
+    "/api/admin/SystemUser/{id}": {
       "put": {
         "tags": [
           "SystemUser"
@@ -1540,7 +1540,7 @@
         }
       }
     },
-    "/api/SystemUser/password": {
+    "/api/admin/SystemUser/password": {
       "put": {
         "tags": [
           "SystemUser"
@@ -1571,7 +1571,7 @@
         }
       }
     },
-    "/api/Tags/filter": {
+    "/api/admin/Tags/filter": {
       "post": {
         "tags": [
           "Tags"
@@ -1612,7 +1612,7 @@
         }
       }
     },
-    "/api/Tags": {
+    "/api/admin/Tags": {
       "post": {
         "tags": [
           "Tags"
@@ -1653,7 +1653,7 @@
         }
       }
     },
-    "/api/Tags/{id}": {
+    "/api/admin/Tags/{id}": {
       "put": {
         "tags": [
           "Tags"
@@ -1761,275 +1761,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Tags"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/User/login": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "summary": "登录获取Token",
-        "operationId": "User_Login",
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthResult"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/User/filter": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "summary": "筛选",
-        "operationId": "User_Filter",
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserFilterDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserFilterDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserFilterDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserItemDtoPageList"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/User": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "summary": "新增",
-        "operationId": "User_Add",
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserAddDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserAddDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserAddDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/User/{id}": {
-      "put": {
-        "tags": [
-          "User"
-        ],
-        "summary": "更新",
-        "operationId": "User_Update",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserUpdateDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserUpdateDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserUpdateDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "summary": "详情",
-        "operationId": "User_GetDetail",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "User"
-        ],
-        "summary": "⚠删除",
-        "operationId": "User_Delete",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/User/password": {
-      "put": {
-        "tags": [
-          "User"
-        ],
-        "summary": "修改密码",
-        "operationId": "User_ChangeMyPassword",
-        "parameters": [
-          {
-            "name": "password",
-            "in": "query",
-            "description": "",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
                 }
               }
             }
@@ -4889,6 +4620,9 @@
             "description": "用户名",
             "nullable": true
           },
+          "userType": {
+            "$ref": "#/components/schemas/UserType"
+          },
           "email": {
             "maxLength": 100,
             "type": "string",
@@ -4946,147 +4680,19 @@
         "additionalProperties": false,
         "description": "用户账户"
       },
-      "UserAddDto": {
-        "type": "object",
-        "properties": {
-          "userName": {
-            "maxLength": 60,
-            "type": "string",
-            "description": "用户名",
-            "nullable": true
-          },
-          "password": {
-            "maxLength": 100,
-            "type": "string",
-            "description": "密码",
-            "nullable": true
-          },
-          "email": {
-            "maxLength": 100,
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": "用户账户添加时请求结构"
-      },
-      "UserFilterDto": {
-        "type": "object",
-        "properties": {
-          "pageIndex": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "pageSize": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orderBy": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "boolean",
-              "nullable": true
-            },
-            "description": "排序",
-            "nullable": true
-          },
-          "userName": {
-            "maxLength": 40,
-            "type": "string",
-            "description": "用户名",
-            "nullable": true
-          },
-          "email": {
-            "maxLength": 100,
-            "type": "string",
-            "nullable": true
-          },
-          "emailConfirmed": {
-            "type": "boolean",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": "用户账户查询筛选"
-      },
-      "UserItemDto": {
-        "type": "object",
-        "properties": {
-          "userName": {
-            "maxLength": 40,
-            "type": "string",
-            "description": "用户名",
-            "nullable": true
-          },
-          "email": {
-            "maxLength": 100,
-            "type": "string",
-            "nullable": true
-          },
-          "emailConfirmed": {
-            "type": "boolean"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "createdTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedTime": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "additionalProperties": false,
-        "description": "用户账户列表元素"
-      },
-      "UserItemDtoPageList": {
-        "type": "object",
-        "properties": {
-          "count": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserItemDto"
-            },
-            "nullable": true
-          },
-          "pageIndex": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "UserUpdateDto": {
-        "type": "object",
-        "properties": {
-          "userName": {
-            "type": "string",
-            "nullable": true
-          },
-          "password": {
-            "type": "string",
-            "description": "密码",
-            "nullable": true
-          },
-          "email": {
-            "maxLength": 100,
-            "type": "string",
-            "nullable": true
-          },
-          "emailConfirmed": {
-            "type": "boolean",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": "用户账户更新时请求结构"
+      "UserType": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "Normal",
+          "Verify",
+          "Member"
+        ]
       }
     }
   },
@@ -5116,10 +4722,6 @@
       "description": "系统用户"
     },
     {
-      "name": "Auth",
-      "description": "系统用户授权登录"
-    },
-    {
       "name": "Catalog",
       "description": "目录"
     },
@@ -5128,8 +4730,8 @@
       "description": "标签"
     },
     {
-      "name": "User",
-      "description": "用户账户"
+      "name": "Auth",
+      "description": "系统用户授权登录"
     }
   ]
 }

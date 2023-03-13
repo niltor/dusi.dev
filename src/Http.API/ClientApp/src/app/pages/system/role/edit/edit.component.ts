@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SystemRole } from 'src/app/share/models/system-role/system-role.model';
-import { SystemRoleService } from 'src/app/share/services/system-role.service';
+import { SystemRole } from 'src/app/share/admin/models/system-role/system-role.model';
+import { SystemRoleService } from 'src/app/share/admin/services/system-role.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SystemRoleUpdateDto } from 'src/app/share/models/system-role/system-role-update-dto.model';
+import { SystemRoleUpdateDto } from 'src/app/share/admin/models/system-role/system-role-update-dto.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';

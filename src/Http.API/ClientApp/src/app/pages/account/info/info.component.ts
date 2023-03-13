@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from 'src/app/auth/login.service';
-import { User } from 'src/app/share/models/user/user.model';
-import { SystemUserService } from 'src/app/share/services/system-user.service';
-import { UserService } from 'src/app/share/services/user.service';
+import { User } from 'src/app/share/client/models/user/user.model';
+import { SystemUserService } from 'src/app/share/admin/services/system-user.service';
+import { UserService } from 'src/app/share/client/services/user.service';
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CatalogService } from 'src/app/share/services/catalog.service';
+import { CatalogService } from 'src/app/share/client/services/catalog.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Catalog } from 'src/app/share/models/catalog/catalog.model';
+import { Catalog } from 'src/app/share/client/models/catalog/catalog.model';
 import { Location } from '@angular/common';
 
 @Component({

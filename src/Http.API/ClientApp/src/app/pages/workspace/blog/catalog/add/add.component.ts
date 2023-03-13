@@ -1,11 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CatalogService } from 'src/app/share/services/catalog.service';
-import { Catalog } from 'src/app/share/models/catalog/catalog.model';
-import { CatalogAddDto } from 'src/app/share/models/catalog/catalog-add-dto.model';
+import { CatalogService } from 'src/app/share/client/services/catalog.service';
+import { CatalogAddDto } from 'src/app/share/client/models/catalog/catalog-add-dto.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 
 @Component({

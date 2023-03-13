@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BlogService } from 'src/app/share/services/blog.service';
+import { BlogService } from 'src/app/share/client/services/blog.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Blog } from 'src/app/share/models/blog/blog.model';
+import { Blog } from 'src/app/share/client/models/blog/blog.model';
 import { Location } from '@angular/common';
 
 @Component({

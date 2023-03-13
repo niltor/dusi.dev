@@ -6,8 +6,10 @@ using Core.Const;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -109,12 +111,19 @@ services.AddHealthChecks();
 // api 接口文档设置
 services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo
+    c.SwaggerDoc("client", new OpenApiInfo
     {
-        Title = "dusi.dev",
+        Title = "Client API",
         Description = "API 文档",
         Version = "v1"
     });
+    c.SwaggerDoc("admin", new OpenApiInfo
+    {
+        Title = "Admin API",
+        Description = "API 文档",
+        Version = "v1"
+    });
+    //c.TagActionsBy(api => api.GroupName + api.ActionDescriptor.DisplayName);
     var xmlFiles = Directory.GetFiles(AppContext.BaseDirectory, "*.xml", SearchOption.TopDirectoryOnly);
     foreach (var item in xmlFiles)
     {
@@ -158,7 +167,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseCors("default");
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/client/swagger.json", name: "client");
+        c.SwaggerEndpoint("/swagger/admin/swagger.json", "admin");
+    });
 }
 else
 {

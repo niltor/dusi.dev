@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'src/app/share/models/user/user.model';
-import { UserService } from 'src/app/share/services/user.service';
+import { User } from 'src/app/share/admin/models/user/user.model';
+import { UserService } from 'src/app/share/admin/services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserUpdateDto } from 'src/app/share/models/user/user-update-dto.model';
+import { UserUpdateDto } from 'src/app/share/admin/models/user/user-update-dto.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';

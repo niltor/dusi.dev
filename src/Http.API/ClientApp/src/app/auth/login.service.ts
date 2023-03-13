@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { AuthResult } from "../share/models/auth/auth-result.model";
+import { AuthResult } from "../share/client/models/auth/auth-result.model";
 // import { AuthResult } from "../share/models/auth/auth-result.model";
 
 @Injectable({ providedIn: 'root' })

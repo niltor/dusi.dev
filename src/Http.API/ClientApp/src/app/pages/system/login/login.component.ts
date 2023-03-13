@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/auth/login.service';
-import { AuthService } from 'src/app/share/services/auth.service';
+import { AuthService } from 'src/app/share/admin/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

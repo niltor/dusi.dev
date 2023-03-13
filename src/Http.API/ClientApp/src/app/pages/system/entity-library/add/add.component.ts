@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { EntityLibraryService } from 'src/app/share/services/entity-library.service';
-import { EntityLibrary } from 'src/app/share/models/entity-library/entity-library.model';
-import { EntityLibraryAddDto } from 'src/app/share/models/entity-library/entity-library-add-dto.model';
+import { EntityLibraryService } from 'src/app/share/admin/services/entity-library.service';
+import { EntityLibrary } from 'src/app/share/admin/models/entity-library/entity-library.model';
+import { EntityLibraryAddDto } from 'src/app/share/admin/models/entity-library/entity-library-add-dto.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';

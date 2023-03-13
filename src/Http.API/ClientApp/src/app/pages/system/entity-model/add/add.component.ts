@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { EntityModelService } from 'src/app/share/services/entity-model.service';
-import { EntityModel } from 'src/app/share/models/entity-model/entity-model.model';
-import { EntityModelAddDto } from 'src/app/share/models/entity-model/entity-model-add-dto.model';
+import { EntityModelService } from 'src/app/share/admin/services/entity-model.service';
+import { EntityModel } from 'src/app/share/admin/models/entity-model/entity-model.model';
+import { EntityModelAddDto } from 'src/app/share/admin/models/entity-model/entity-model-add-dto.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -11,8 +11,8 @@ import * as ClassicEditor from 'ng-ckeditor5-classic';
 import { environment } from 'src/environments/environment';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 // import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { AccessModifier } from 'src/app/share/models/enum/access-modifier.model';
-import { CodeLanguage } from 'src/app/share/models/enum/code-language.model';
+import { AccessModifier } from 'src/app/share/admin/models/enum/access-modifier.model';
+import { CodeLanguage } from 'src/app/share/admin/models/enum/code-language.model';
 
 @Component({
     selector: 'app-add',

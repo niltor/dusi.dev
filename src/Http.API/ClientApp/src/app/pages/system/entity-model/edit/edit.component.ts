@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EntityModel } from 'src/app/share/models/entity-model/entity-model.model';
-import { EntityModelService } from 'src/app/share/services/entity-model.service';
+import { EntityModel } from 'src/app/share/admin/models/entity-model/entity-model.model';
+import { EntityModelService } from 'src/app/share/admin/services/entity-model.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { EntityModelUpdateDto } from 'src/app/share/models/entity-model/entity-model-update-dto.model';
+import { EntityModelUpdateDto } from 'src/app/share/admin/models/entity-model/entity-model-update-dto.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
@@ -11,8 +11,8 @@ import * as ClassicEditor from 'ng-ckeditor5-classic';
 import { environment } from 'src/environments/environment';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 // import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { AccessModifier } from 'src/app/share/models/enum/access-modifier.model';
-import { CodeLanguage } from 'src/app/share/models/enum/code-language.model';
+import { AccessModifier } from 'src/app/share/admin/models/enum/access-modifier.model';
+import { CodeLanguage } from 'src/app/share/admin/models/enum/code-language.model';
 
 @Component({
   selector: 'app-edit',

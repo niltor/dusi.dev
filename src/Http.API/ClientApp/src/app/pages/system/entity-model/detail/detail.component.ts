@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { EntityModelService } from 'src/app/share/services/entity-model.service';
+import { EntityModelService } from 'src/app/share/admin/services/entity-model.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EntityModel } from 'src/app/share/models/entity-model/entity-model.model';
+import { EntityModel } from 'src/app/share/admin/models/entity-model/entity-model.model';
 import { Location } from '@angular/common';
 
 @Component({

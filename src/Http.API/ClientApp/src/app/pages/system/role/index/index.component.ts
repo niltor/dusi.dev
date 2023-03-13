@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SystemRoleService } from 'src/app/share/services/system-role.service';
+import { SystemRoleService } from 'src/app/share/admin/services/system-role.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
-import { SystemRoleItemDto } from 'src/app/share/models/system-role/system-role-item-dto.model';
-import { SystemRoleFilterDto } from 'src/app/share/models/system-role/system-role-filter-dto.model';
+import { SystemRoleItemDto } from 'src/app/share/admin/models/system-role/system-role-item-dto.model';
+import { SystemRoleFilterDto } from 'src/app/share/admin/models/system-role/system-role-filter-dto.model';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';

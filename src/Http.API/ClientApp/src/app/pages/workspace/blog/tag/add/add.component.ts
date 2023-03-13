@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TagsService } from 'src/app/share/services/tags.service';
-import { Tags } from 'src/app/share/models/tags/tags.model';
-import { TagsAddDto } from 'src/app/share/models/tags/tags-add-dto.model';
+import { TagsService } from 'src/app/share/client/services/tags.service';
+import { Tags } from 'src/app/share/client/models/tags/tags.model';
+import { TagsAddDto } from 'src/app/share/client/models/tags/tags-add-dto.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';

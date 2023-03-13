@@ -1,13 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SystemUser } from 'src/app/share/models/system-user/system-user.model';
-import { SystemUserService } from 'src/app/share/services/system-user.service';
+import { SystemUser } from 'src/app/share/admin/models/system-user/system-user.model';
+import { SystemUserService } from 'src/app/share/admin/services/system-user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SystemUserUpdateDto } from 'src/app/share/models/system-user/system-user-update-dto.model';
+import { SystemUserUpdateDto } from 'src/app/share/admin/models/system-user/system-user-update-dto.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
-import { Sex } from 'src/app/share/models/enum/sex.model';
+import { Sex } from 'src/app/share/admin/models/enum/sex.model';
 
 @Component({
   selector: 'app-edit',

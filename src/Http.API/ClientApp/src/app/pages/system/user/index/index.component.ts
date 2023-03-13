@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SystemUserService } from 'src/app/share/services/system-user.service';
+import { SystemUserService } from 'src/app/share/admin/services/system-user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
-import { SystemUserItemDto } from 'src/app/share/models/system-user/system-user-item-dto.model';
-import { SystemUserFilterDto } from 'src/app/share/models/system-user/system-user-filter-dto.model';
+import { SystemUserItemDto } from 'src/app/share/admin/models/system-user/system-user-item-dto.model';
+import { SystemUserFilterDto } from 'src/app/share/admin/models/system-user/system-user-filter-dto.model';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';

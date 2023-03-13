@@ -1,8 +1,8 @@
 using Core.Const;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Share.Models.AuthDtos;
+using Share.Models.BlogDtos;
 using Share.Models.UserDtos;
-namespace Http.API.Controllers;
 
 /// <summary>
 /// 用户账户
@@ -24,65 +24,11 @@ public class UserController : RestControllerBase<IUserManager>
     }
 
     /// <summary>
-    /// 登录获取Token
-    /// </summary>
-    /// <param name="dto"></param>
-    /// <returns></returns>
-    [HttpPost("login")]
-    [AllowAnonymous]
-    public async Task<ActionResult<AuthResult>> LoginAsync(LoginDto dto)
-    {
-        // 查询用户
-        var user = await manager.Query.Db.Where(u => u.UserName.Equals(dto.UserName))
-            .FirstOrDefaultAsync();
-        if (user == null)
-        {
-            return NotFound("不存在该用户");
-        }
-
-        if (HashCrypto.Validate(dto.Password, user.PasswordSalt, user.PasswordHash))
-        {
-            var sign = _config.GetSection("Jwt")["Sign"];
-            var issuer = _config.GetSection("Jwt")["Issuer"];
-            var audience = _config.GetSection("Jwt")["Audience"];
-            //var time = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            //1天后过期
-            if (!string.IsNullOrWhiteSpace(sign) &&
-                !string.IsNullOrWhiteSpace(issuer) &&
-                !string.IsNullOrWhiteSpace(audience))
-            {
-                var jwt = new JwtService(sign, audience, issuer)
-                {
-                    TokenExpires = 60 * 24 * 7,
-                };
-                var token = jwt.GetToken(user.Id.ToString(), new string[] { "User" });
-
-                return new AuthResult
-                {
-                    Id = user.Id,
-                    Roles = new string[] { "User" },
-                    Token = token,
-                    Username = user.UserName
-                };
-            }
-            else
-            {
-                throw new Exception("缺少Jwt配置内容");
-            }
-        }
-        else
-        {
-            return Problem("用户名或密码错误");
-        }
-    }
-
-    /// <summary>
     /// 筛选
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    [Authorize(Const.Admin)]
     public async Task<ActionResult<PageList<UserItemDto>>> FilterAsync(UserFilterDto filter)
     {
         return await manager.FilterAsync(filter);
@@ -129,7 +75,7 @@ public class UserController : RestControllerBase<IUserManager>
         User? user = _user.IsAdmin
             ? await systemUserManager.GetInfoAsUserAsync(id)
             : await manager.FindAsync(id);
-        return (user == null) ? NotFound() : user;
+        return user == null ? NotFound() : user;
     }
 
     /// <summary>
@@ -152,7 +98,6 @@ public class UserController : RestControllerBase<IUserManager>
     /// <returns></returns>
     // [ApiExplorerSettings(IgnoreApi = true)]
     [HttpDelete("{id}")]
-    [Authorize(Const.Admin)]
     public async Task<ActionResult<User?>> DeleteAsync([FromRoute] Guid id)
     {
         // 实现删除逻辑,注意删除权限

@@ -1,17 +1,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Blog } from 'src/app/share/models/blog/blog.model';
-import { BlogService } from 'src/app/share/services/blog.service';
+import { Blog } from 'src/app/share/client/models/blog/blog.model';
+import { BlogService } from 'src/app/share/client/services/blog.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BlogUpdateDto } from 'src/app/share/models/blog/blog-update-dto.model';
+import { BlogUpdateDto } from 'src/app/share/client/models/blog/blog-update-dto.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import * as ClassicEditor from 'ng-ckeditor5-classic';
-import { environment } from 'src/environments/environment';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 // import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { LanguageType } from 'src/app/share/models/enum/language-type.model';
+import { LanguageType } from 'src/app/share/client/models/enum/language-type.model';
 
 @Component({
   selector: 'app-edit',

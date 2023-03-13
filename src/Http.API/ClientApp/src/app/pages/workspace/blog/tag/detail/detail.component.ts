@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TagsService } from 'src/app/share/services/tags.service';
+import { TagsService } from 'src/app/share/client/services/tags.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Tags } from 'src/app/share/models/tags/tags.model';
+import { Tags } from 'src/app/share/client/models/tags/tags.model';
 import { Location } from '@angular/common';
 
 @Component({

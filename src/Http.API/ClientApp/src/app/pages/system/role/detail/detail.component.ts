@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SystemRoleService } from 'src/app/share/services/system-role.service';
+import { SystemRoleService } from 'src/app/share/admin/services/system-role.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SystemRole } from 'src/app/share/models/system-role/system-role.model';
+import { SystemRole } from 'src/app/share/admin/models/system-role/system-role.model';
 import { Location } from '@angular/common';
 
 @Component({
