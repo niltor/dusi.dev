@@ -2,27 +2,27 @@
   <button color="basic" mat-icon-button matTooltip="返回" (click)="back()">
     <mat-icon>arrow_back</mat-icon>
   </button>
-    添加
+  添加
 </mat-toolbar>
 <form class="d-flex" *ngIf="!isLoading" [formGroup]="formGroup" (ngSubmit)="add()">
   <div class="d-flex flex-column w-100">
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input matInput placeholder="Name" formControlName="name" required minlength="" maxlength="50">
-    <mat-error *ngIf="name?.invalid">
-    {{getValidatorMessage('name')}}
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Level</mat-label>
-    <input matInput type="number" placeholder="Level" formControlName="level"  step="1" min="0">
-    <mat-error *ngIf="level?.invalid">
-    {{getValidatorMessage('level')}}
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>名称</mat-label>
+      <input matInput placeholder="名称" formControlName="name" required minlength="" maxlength="50">
+      <mat-error *ngIf="name?.invalid">
+        {{getValidatorMessage('name')}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>父目录</mat-label>
+      <mat-select placeholder="目录" formControlName="parentId" name="item">
+        <mat-option *ngFor="let item of catalogs" [value]="item.id">
+          {{item.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <div class="d-flex mt-1">
       <button class="d-flex flex-column" mat-flat-button color="primary" type="submit">保存</button>
     </div>
   </div>
 </form>
-

@@ -3,6 +3,9 @@ using Share.Models.CatalogDtos;
 
 namespace Application.Manager;
 
+/// <summary>
+/// 目录管理
+/// </summary>
 public class CatalogManager : DomainManagerBase<Catalog, CatalogUpdateDto, CatalogFilterDto, CatalogItemDto>, ICatalogManager
 {
 
@@ -12,17 +15,31 @@ public class CatalogManager : DomainManagerBase<Catalog, CatalogUpdateDto, Catal
         _userContext = userContext;
     }
 
-
     /// <summary>
     /// 创建待添加实体
     /// </summary>
     /// <param name="dto"></param>
     /// <returns></returns>
-    public Task<Catalog> CreateNewEntityAsync(CatalogAddDto dto)
+    public async Task<Catalog> CreateNewEntityAsync(CatalogAddDto dto)
     {
         var entity = dto.MapTo<CatalogAddDto, Catalog>();
-        // TODO:构建实体
-        return Task.FromResult(entity);
+        var user = await _userContext.GetUserAsync();
+        entity.User = user!;
+        if (dto.ParentId != null)
+        {
+            var parent = await GetCurrentAsync(dto.ParentId.Value);
+            if (parent != null)
+            {
+                entity.ParentId = parent?.Id;
+                entity.Parent = parent;
+                entity.Level = (short)(parent.Level + 1);
+            }
+            else
+            {
+                entity.Level = 0;
+            }
+        }
+        return entity;
     }
 
     public override async Task<Catalog> UpdateAsync(Catalog entity, CatalogUpdateDto dto)

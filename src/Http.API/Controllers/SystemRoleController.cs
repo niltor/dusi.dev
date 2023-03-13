@@ -1,5 +1,5 @@
 using Share.Models.SystemRoleDtos;
-namespace Http.API.Infrastructure;
+namespace Http.API.Controllers;
 
 /// <summary>
 /// 角色表
@@ -60,7 +60,7 @@ public class SystemRoleController : RestControllerBase<ISystemRoleManager>
     public async Task<ActionResult<SystemRole?>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
-        return (res == null) ? NotFound() : res;
+        return res == null ? NotFound() : res;
     }
 
     /// <summary>

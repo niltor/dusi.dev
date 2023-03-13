@@ -1,7 +1,7 @@
 
 
 using Share.Models.EntityLibraryDtos;
-namespace Http.API.Infrastructure;
+namespace Http.API.Controllers;
 
 /// <summary>
 /// 实体库

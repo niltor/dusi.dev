@@ -13,34 +13,28 @@
   </mat-toolbar>
 </div>
 <table mat-table [dataSource]="dataSource" style="width: 100%;">
-  <ng-container matColumnDef="translateTitle">
-    <th mat-header-cell *matHeaderCellDef>TranslateTitle</th>
-    <td mat-cell *matCellDef="let element">
-      {{element.translateTitle}}
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="languageType">
-    <th mat-header-cell *matHeaderCellDef>LanguageType</th>
-    <td mat-cell *matCellDef="let element">
-      {{element.languageType}}
-    </td>
-  </ng-container>
   <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef>Title</th>
+    <th mat-header-cell *matHeaderCellDef>标题</th>
     <td mat-cell *matCellDef="let element">
       {{element.title}}
     </td>
   </ng-container>
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef>Description</th>
+  <ng-container matColumnDef="languageType">
+    <th mat-header-cell *matHeaderCellDef>语言</th>
     <td mat-cell *matCellDef="let element">
-      {{element.description}}
+      {{element.languageType}}
     </td>
   </ng-container>
   <ng-container matColumnDef="authors">
-    <th mat-header-cell *matHeaderCellDef>Authors</th>
+    <th mat-header-cell *matHeaderCellDef>作者</th>
     <td mat-cell *matCellDef="let element">
       {{element.authors}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="createdTime">
+    <th mat-header-cell *matHeaderCellDef>发布时间</th>
+    <td mat-cell *matCellDef="let element">
+      {{element.createdTime}}
     </td>
   </ng-container>
 
@@ -62,6 +56,5 @@
   <tr mat-header-row *matHeaderRowDef="columns"></tr>
   <tr mat-row *matRowDef="let row; columns: columns;"></tr>
 </table>
-<mat-paginator [pageSizeOptions]="pageSizeOption"
-[pageIndex]="filter.pageIndex!-1" [pageSize]="filter.pageSize"
-  [length]="total" (page)="getList($event)"showFirstLastButtons></mat-paginator>
+<mat-paginator [pageSizeOptions]="pageSizeOption" [pageIndex]="filter.pageIndex!-1" [pageSize]="filter.pageSize"
+  [length]="total" (page)="getList($event)" showFirstLastButtons></mat-paginator>

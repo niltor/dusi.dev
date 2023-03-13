@@ -1,6 +1,6 @@
 using Core.Const;
 using Share.Models.SystemUserDtos;
-namespace Http.API.Infrastructure;
+namespace Http.API.Controllers;
 
 /// <summary>
 /// 系统用户
@@ -62,7 +62,7 @@ public class SystemUserController : RestControllerBase<ISystemUserManager>
     public async Task<ActionResult<SystemUser?>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
-        return (res == null) ? NotFound() : res;
+        return res == null ? NotFound() : res;
     }
 
 

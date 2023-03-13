@@ -1,5 +1,5 @@
 using Share.Models.EntityModelDtos;
-namespace Http.API.Infrastructure;
+namespace Http.API.Controllers;
 
 /// <summary>
 /// 实体模型类
@@ -60,7 +60,7 @@ public class EntityModelController : RestControllerBase<IEntityModelManager>
     public async Task<ActionResult<EntityModel?>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
-        return (res == null) ? NotFound() : res;
+        return res == null ? NotFound() : res;
     }
 
     /// <summary>

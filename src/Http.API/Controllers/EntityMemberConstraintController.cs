@@ -1,5 +1,5 @@
 using Share.Models.EntityMemberConstraintDtos;
-namespace Http.API.Infrastructure;
+namespace Http.API.Controllers;
 
 /// <summary>
 /// 属性的约束
@@ -60,7 +60,7 @@ public class EntityMemberConstraintController : RestControllerBase<IEntityMember
     public async Task<ActionResult<EntityMemberConstraint?>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
-        return (res == null) ? NotFound() : res;
+        return res == null ? NotFound() : res;
     }
 
     /// <summary>

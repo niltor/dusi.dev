@@ -1,5 +1,5 @@
 using Share.Models.EntityMemberDtos;
-namespace Http.API.Infrastructure;
+namespace Http.API.Controllers;
 
 /// <summary>
 /// 实体属性
@@ -60,7 +60,7 @@ public class EntityMemberController : RestControllerBase<IEntityMemberManager>
     public async Task<ActionResult<EntityMember?>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
-        return (res == null) ? NotFound() : res;
+        return res == null ? NotFound() : res;
     }
 
     /// <summary>

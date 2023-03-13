@@ -14,36 +14,23 @@
 </div>
 <table mat-table [dataSource]="dataSource" style="width: 100%;">
   <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <th mat-header-cell *matHeaderCellDef>名称</th>
     <td mat-cell *matCellDef="let element">
       {{element.name}}
     </td>
   </ng-container>
   <ng-container matColumnDef="level">
-    <th mat-header-cell *matHeaderCellDef>Level</th>
+    <th mat-header-cell *matHeaderCellDef>层级</th>
     <td mat-cell *matCellDef="let element">
       {{element.level}}
     </td>
   </ng-container>
-  <ng-container matColumnDef="parentId">
-    <th mat-header-cell *matHeaderCellDef>ParentId</th>
-    <td mat-cell *matCellDef="let element">
-      {{element.parentId}}
-    </td>
-  </ng-container>
   <ng-container matColumnDef="createdTime">
-    <th mat-header-cell *matHeaderCellDef>CreatedTime</th>
+    <th mat-header-cell *matHeaderCellDef>创建时间</th>
     <td mat-cell *matCellDef="let element">
       {{element.createdTime | date: 'yyy-MM-dd HH:mm:ss'}}
     </td>
   </ng-container>
-  <ng-container matColumnDef="updatedTime">
-    <th mat-header-cell *matHeaderCellDef>UpdatedTime</th>
-    <td mat-cell *matCellDef="let element">
-      {{element.updatedTime | date: 'yyy-MM-dd HH:mm:ss'}}
-    </td>
-  </ng-container>
-
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>操作</th>
     <td mat-cell *matCellDef="let element">

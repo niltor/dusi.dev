@@ -2,6 +2,8 @@ using Dapr.Client;
 using Grpc.BlogService;
 using Share.Models.BlogDtos;
 
+namespace Http.API.Controllers;
+
 [AllowAnonymous]
 public class BlogController : RestControllerBase<IBlogManager>
 {

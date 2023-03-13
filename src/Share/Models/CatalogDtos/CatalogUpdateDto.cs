@@ -11,21 +11,4 @@ public class CatalogUpdateDto
     /// </summary>
     [MaxLength(50)]
     public string Name { get; set; } = default!;
-    /// <summary>
-    /// 层级
-    /// </summary>
-    public short? Level { get; set; }
-    /// <summary>
-    /// 子目录
-    /// </summary>
-    public List<Catalog>? Children { get; set; }
-    /// <summary>
-    /// 父目录
-    /// </summary>
-    public Catalog? Parent { get; set; }
-    public Guid? ParentId { get; set; }
-    public List<Blog>? Blogs { get; set; }
-    public User User { get; set; } = default!;
-    public Guid UserId { get; set; } = default!;
-    
 }
