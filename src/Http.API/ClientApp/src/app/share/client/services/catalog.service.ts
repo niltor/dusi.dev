@@ -22,6 +22,14 @@ export class CatalogService extends BaseService {
   }
 
   /**
+   * 获取树型结构
+   */
+  getTree(): Observable<Catalog[]> {
+    const url = `/api/Catalog/tree`;
+    return this.request<Catalog[]>('get', url);
+  }
+
+  /**
    * 新增
    * @param data CatalogAddDto
    */

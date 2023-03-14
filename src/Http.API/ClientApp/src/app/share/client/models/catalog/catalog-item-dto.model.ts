@@ -13,6 +13,5 @@ export interface CatalogItemDto {
   parentId?: string | null;
   id: string;
   createdTime: Date;
-  updatedTime: Date;
 
 }

@@ -75,4 +75,5 @@ public class CatalogManager : DomainManagerBase<Catalog, CatalogUpdateDto, Catal
         // query = query.Where(q => q.User.Id == _userContext.UserId);
         return await query.FirstOrDefaultAsync();
     }
+
 }

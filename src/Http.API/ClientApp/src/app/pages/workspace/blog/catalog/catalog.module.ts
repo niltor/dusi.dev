@@ -6,6 +6,7 @@ import { IndexComponent } from './index/index.component';
 import { DetailComponent } from './detail/detail.component';
 import { AddComponent } from './add/add.component';
 import { EditComponent } from './edit/edit.component';
+import { ChecklistDatabase } from './index/tree.service';
 
 @NgModule({
   declarations: [IndexComponent, DetailComponent, AddComponent, EditComponent],
@@ -13,6 +14,7 @@ import { EditComponent } from './edit/edit.component';
     ComponentsModule,
     ShareModule,
     CatalogRoutingModule
-  ]
+  ],
+  providers: [ChecklistDatabase]
 })
 export class CatalogModule { }

@@ -36,7 +36,6 @@ public class CatalogController : ClientControllerBase<ICatalogManager>
         return await manager.GetTreeAsync();
     }
 
-
     /// <summary>
     /// 新增
     /// </summary>

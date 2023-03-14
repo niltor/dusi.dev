@@ -12,11 +12,5 @@ export interface CatalogFilterDto {
    * 目录名称
    */
   name?: string | null;
-  /**
-   * 层级
-   */
-  level?: number | null;
-  parentId?: string | null;
-  userId?: string | null;
 
 }

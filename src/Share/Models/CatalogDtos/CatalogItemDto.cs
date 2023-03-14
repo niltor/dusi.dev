@@ -1,4 +1,6 @@
 using Core.Entities.CMS;
+using Core.Models;
+
 namespace Share.Models.CatalogDtos;
 /// <summary>
 /// 目录列表元素
@@ -18,6 +20,4 @@ public class CatalogItemDto
     public Guid? ParentId { get; set; }
     public Guid Id { get; set; } = Guid.NewGuid();
     public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
-    public DateTimeOffset UpdatedTime { get; set; } = DateTimeOffset.UtcNow;
-    
 }
