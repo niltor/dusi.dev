@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using System.Xml.Linq;
 using Mapster;
 
 namespace Core.Utils;
@@ -84,9 +85,17 @@ public static partial class Extensions
         return condition ? source.Where(expression) : source;
     }
 
-    public static IQueryable<TSource> WhereNotNull<TSource>(this IQueryable<TSource> source, object? condition, Expression<Func<TSource, bool>> expression)
+    /// <summary>
+    /// 不为空时执行的条件
+    /// </summary>
+    /// <typeparam name="TSource"></typeparam>
+    /// <param name="source"></param>
+    /// <param name="field">不为空的字段</param>
+    /// <param name="expression">不为空时执行的条件</param>
+    /// <returns></returns>
+    public static IQueryable<TSource> WhereNotNull<TSource>(this IQueryable<TSource> source, object? field, Expression<Func<TSource, bool>> expression)
     {
-        return condition != null ? source.Where(expression) : source;
+        return field != null ? source.Where(expression) : source;
     }
 
     public static IQueryable<TResult> ProjectTo<TResult>(this IQueryable source)
@@ -135,38 +144,32 @@ public static partial class Extensions
     }
 
     /// <summary>
-    /// 将列表转成树型结构
+    /// 列表转成树型结构
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="list"></param>
+    /// <param name="nodes"></param>
     /// <returns></returns>
-    public static List<T>? ToTree<T>(List<T> list) where T : ITreeNode<T>
+    public static List<T> BuildTree<T>(this List<T> nodes) where T : ITreeNode<T>
     {
+        nodes.ForEach(n => { n.Children = null; });
+        var nodeDict = nodes.ToDictionary(n => n.Id);
         var res = new List<T>();
-        // 根结点
-        var rootNodes = list.Where(l => l.ParentId == null).ToList();
-        if (rootNodes == null)
-        {
-            return default;
-        }
-        foreach (var node in rootNodes)
-        {
-            res.Add(node);
-            AddChildren(node, list);
-        }
-        return res;
-    }
 
-    public static void AddChildren<T>(T node, List<T> list) where T : ITreeNode<T>
-    {
-        var child = list.Where(l => l.ParentId == node.Id).ToList();
-        if (child != null)
+        foreach (var node in nodes)
         {
-            node.Children = new List<T>(child);
-            foreach (var item in child)
+            if (node.ParentId == null)
             {
-                AddChildren(item, list);
+                res.Add(node);
+            }
+            else
+            {
+                if (nodeDict[node.ParentId.Value].Children == null)
+                {
+                    nodeDict[node.ParentId.Value].Children = new List<T>();
+                }
+                nodeDict[node.ParentId.Value].Children!.Add(node);
             }
         }
+        return res;
     }
 }

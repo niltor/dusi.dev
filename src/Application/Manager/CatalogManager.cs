@@ -55,6 +55,14 @@ public class CatalogManager : DomainManagerBase<Catalog, CatalogUpdateDto, Catal
         return await Query.FilterAsync<CatalogItemDto>(Queryable, filter.PageIndex, filter.PageSize);
     }
 
+
+    public async Task<List<Catalog>> GetTreeAsync()
+    {
+        var data = await ListAsync(null);
+        var tree = data.BuildTree();
+        return tree;
+    }
+
     /// <summary>
     /// 当前用户所拥有的对象
     /// </summary>
@@ -63,11 +71,8 @@ public class CatalogManager : DomainManagerBase<Catalog, CatalogUpdateDto, Catal
     public async Task<Catalog?> GetOwnedAsync(Guid id)
     {
         var query = Command.Db.Where(q => q.Id == id);
-        if (!_userContext.IsAdmin)
-        {
-            // TODO:属于当前角色的对象
-            // query = query.Where(q => q.User.Id == _userContext.UserId);
-        }
+        // TODO:属于当前角色的对象
+        // query = query.Where(q => q.User.Id == _userContext.UserId);
         return await query.FirstOrDefaultAsync();
     }
 }

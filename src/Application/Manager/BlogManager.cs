@@ -51,8 +51,6 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
         return await Query.FilterAsync<BlogItemDto>(Queryable, filter.PageIndex, filter.PageSize);
     }
 
-
-
     public async Task<List<Guid>?> GetBlogIdsByTagAsync(string tag)
     {
         return await Query.Context.Tags.Where(t => t.Name == tag)

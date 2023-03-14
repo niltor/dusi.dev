@@ -36,4 +36,5 @@ public interface IQueryStore<TId, TEntity>
 
 public interface IQueryStore<TEntity> : IQueryStore<Guid, TEntity>
     where TEntity : EntityBase
-{ }
+{
+}

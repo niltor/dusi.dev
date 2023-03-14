@@ -26,6 +26,18 @@ public class CatalogController : ClientControllerBase<ICatalogManager>
     }
 
     /// <summary>
+    /// 获取树型结构
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("tree")]
+    [AllowAnonymous]
+    public async Task<ActionResult<List<Catalog>>> GetTreeAsync()
+    {
+        return await manager.GetTreeAsync();
+    }
+
+
+    /// <summary>
     /// 新增
     /// </summary>
     /// <param name="form"></param>
