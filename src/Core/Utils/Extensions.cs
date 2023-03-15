@@ -163,11 +163,14 @@ public static partial class Extensions
             }
             else
             {
-                if (nodeDict[node.ParentId.Value].Children == null)
+                if (nodeDict.ContainsKey(node.ParentId.Value))
                 {
-                    nodeDict[node.ParentId.Value].Children = new List<T>();
+                    if (nodeDict[node.ParentId.Value].Children == null)
+                    {
+                        nodeDict[node.ParentId.Value].Children = new List<T>();
+                    }
+                    nodeDict[node.ParentId.Value].Children!.Add(node);
                 }
-                nodeDict[node.ParentId.Value].Children!.Add(node);
             }
         }
         return res;

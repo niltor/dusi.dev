@@ -44,7 +44,6 @@ public class CatalogManager : DomainManagerBase<Catalog, CatalogUpdateDto, Catal
 
     public override async Task<Catalog> UpdateAsync(Catalog entity, CatalogUpdateDto dto)
     {
-        // TODO:根据实际业务更新
         return await base.UpdateAsync(entity, dto);
     }
 

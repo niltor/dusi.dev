@@ -6,6 +6,12 @@
     <span>
       {{node.name}}
     </span>
+    <button mat-icon-button (click)="addNewItem(node)" matTooltip="新增子级">
+      <mat-icon color="primary">add</mat-icon>
+    </button>
+    <button mat-icon-button (click)="openEditDialog(node)" matTooltip="编辑">
+      <mat-icon color="primary">edit</mat-icon>
+    </button>
     <button mat-icon-button (click)="deleteConfirm(node)" [disabled]="isProcessing">
       <mat-icon fontSet="material-icons-outlined" color="accent">delete</mat-icon>
     </button>
@@ -21,16 +27,37 @@
     <button mat-button (click)="saveNode(node, itemValue.value)" [disabled]="isProcessing">确认</button>
   </mat-tree-node>
 
+
+  <!-- 可展开的 -->
   <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-    <button mat-icon-button matTreeNodeToggle [matTreeNodeToggleRecursive]="true"
-      [attr.aria-label]="'Toggle ' + node.name">
+    <button mat-icon-button matTreeNodeToggle [matTreeNodeToggleRecursive]="true">
       <mat-icon class="mat-icon-rtl-mirror">
         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
       </mat-icon>
     </button>
     {{node.name}}
-    <button mat-icon-button (click)="addNewItem(node)">
+    <button mat-icon-button (click)="addNewItem(node)" matTooltip="新增子级">
       <mat-icon color="primary">add</mat-icon>
+    </button>
+    <button mat-icon-button (click)="openEditDialog(node)" matTooltip="编辑">
+      <mat-icon color="primary">edit</mat-icon>
     </button>
   </mat-tree-node>
 </mat-tree>
+
+<ng-template #editDialog>
+  <h2 mat-dialog-title>修改目录名称</h2>
+  <mat-dialog-content>
+    <form [formGroup]="editForm">
+      <mat-form-field appearance="fill">
+        <input matInput placeholder="新名称" formControlName="name" required>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>取消</button>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-button (click)="editCatalog()">确认</button>
+  </mat-dialog-actions>
+
+</ng-template>

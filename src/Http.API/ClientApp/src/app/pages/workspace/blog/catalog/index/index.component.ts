@@ -1,16 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { CatalogService } from 'src/app/share/client/services/catalog.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
 import { ChecklistDatabase, TreeItemFlatNode } from './tree.service';
 import { Catalog } from 'src/app/share/client/models/catalog/catalog.model';
 import { CatalogAddDto } from 'src/app/share/client/models/catalog/catalog-add-dto.model';
-
+import { Observable, of } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CatalogUpdateDto } from 'src/app/share/client/models/catalog/catalog-update-dto.model';
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
@@ -22,13 +24,17 @@ export class IndexComponent implements OnInit {
   isProcessing = false;
   total = 0;
   data: Catalog[] = [];
+  // 当前选择节点
+  currentNode: TreeItemFlatNode | null = null;
+  dialogRef!: MatDialogRef<{}, any>;
+  @ViewChild('editDialog', { static: true })
+  editTmpl!: TemplateRef<{}>;
+  editForm!: FormGroup;
   // 字典映射
   flatNodeMap = new Map<TreeItemFlatNode, Catalog>();
   nestedNodeMap = new Map<Catalog, TreeItemFlatNode>();
-
   treeControl: FlatTreeControl<TreeItemFlatNode>;
   treeFlattener: MatTreeFlattener<Catalog, TreeItemFlatNode>;
-
   dataSource!: MatTreeFlatDataSource<Catalog, TreeItemFlatNode>;
 
   constructor(
@@ -50,18 +56,26 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     this.getList();
+    this.initForm();
+  }
+
+  initForm(): void {
+    this.editForm = new FormGroup({
+      name: new FormControl<string>('', [Validators.required, Validators.maxLength(50)])
+    });
   }
 
   getList(): void {
     this.service.getTree()
       .subscribe(res => {
         if (res) {
+          this.data = res;
           this._database.initialize(res);
           this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
           this._database.dataChange.subscribe(data => {
             this.dataSource.data = data;
           });
-
+          this.treeControl.expandAll();
         }
         this.isLoading = false;
       });
@@ -71,7 +85,9 @@ export class IndexComponent implements OnInit {
 
   isExpandable = (node: TreeItemFlatNode) => node.expandable;
 
-  getChildren = (node: Catalog): Catalog[] => node.children!;
+  getChildren = (node: Catalog): Observable<Catalog[]> => {
+    return of(node.children!);
+  }
 
   hasChild = (_: number, _nodeData: TreeItemFlatNode) => _nodeData.expandable;
 
@@ -79,11 +95,11 @@ export class IndexComponent implements OnInit {
 
   transformer = (node: Catalog, level: number) => {
     const existingNode = this.nestedNodeMap.get(node);
-    const flatNode = existingNode && existingNode.name === node.name ? existingNode : {} as TreeItemFlatNode;
+    const flatNode = existingNode && existingNode.id === node.id ? existingNode : {} as TreeItemFlatNode;
     flatNode.id = node.id;
     flatNode.name = node.name!;
     flatNode.level = level;
-    flatNode.expandable = node.children?.length! > 0 ? true : false;
+    flatNode.expandable = node.children && node.children.length > 0 ? true : false;
     this.flatNodeMap.set(flatNode, node);
     this.nestedNodeMap.set(node, flatNode);
     return flatNode;
@@ -112,18 +128,57 @@ export class IndexComponent implements OnInit {
   addNewItem(node: TreeItemFlatNode) {
     const parentNode = this.flatNodeMap.get(node);
     this._database.insertItem(parentNode!, '');
-    this.treeControl.expand(node);
+
+    // 延时处理
+    if (parentNode?.children) {
+      setTimeout(() => {
+        this.treeControl.expand(node);
+      }, 100);
+    }
+  }
+  openEditDialog(node: TreeItemFlatNode): void {
+    this.currentNode = node;
+    this.editForm.get('name')?.setValue(node.name);
+
+    this.dialogRef = this.dialog.open(this.editTmpl, {
+      minWidth: 300
+    });
+  }
+
+  editCatalog(): void {
+    const data: CatalogUpdateDto = {
+      name: this.editForm.get('name')?.value
+    };
+    console.log(data);
+    
+    if (this.editForm.valid && this.currentNode != null) {
+      this.service.update(this.currentNode?.id!, data)
+        .subscribe({
+          next: (res) => {
+            if (res) {
+              this.getList();
+              this.dialogRef.close();
+            }
+          },
+          error: (error) => {
+            this.snb.open(error.detail);
+          }
+        })
+    } else {
+      this.snb.open('当前节点无效');
+    }
   }
 
   deleteItem(node: TreeItemFlatNode) {
     this.isProcessing = true;
-    this.service.delete(node.id)
+    this.service.delete(node.id!)
       .subscribe({
         next: (res) => {
           if (res) {
             const parentNode = this.flatNodeMap.get(this.getParentNode(node)!);
-            this._database.deleteItem(parentNode!, node.id);
+            this._database.deleteItem(parentNode!, node.id!);
             this.snb.open('删除成功');
+            this.getList();
           } else {
             this.snb.open('删除失败');
           }
@@ -136,7 +191,6 @@ export class IndexComponent implements OnInit {
       });
   }
 
-  /** Save the node to database */
   saveNode(node: TreeItemFlatNode, itemValue: string) {
     this.isProcessing = true;
     const parent = this.getParentNode(node);
@@ -150,6 +204,7 @@ export class IndexComponent implements OnInit {
           if (res) {
             const nestedNode = this.flatNodeMap.get(node);
             this._database.updateItem(nestedNode!, itemValue, res.id);
+            this.getList();
           }
           this.isProcessing = false;
         },
@@ -158,8 +213,6 @@ export class IndexComponent implements OnInit {
           this.isProcessing = false;
         }
       })
-
-
   }
 
   deleteConfirm(item: TreeItemFlatNode): void {
