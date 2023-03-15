@@ -41,13 +41,6 @@ services.AddDataStore();
 services.AddManager();
 services.AddDaprClient();
 
-// redis
-//builder.Services.AddStackExchangeRedisCache(options =>
-//{
-//    options.Configuration = builder.Configuration.GetConnectionString("Redis");
-//    options.InstanceName = builder.Configuration.GetConnectionString("RedisInstanceName");
-//});
-//services.AddSingleton(typeof(RedisService));
 #region OpenTelemetry:log/trace/metric
 var otlpEndpoint = configuration.GetSection("OTLP")
     .GetValue<string>("Endpoint")
@@ -123,7 +116,6 @@ services.AddSwaggerGen(c =>
         Description = "API 文档",
         Version = "v1"
     });
-    //c.TagActionsBy(api => api.GroupName + api.ActionDescriptor.DisplayName);
     var xmlFiles = Directory.GetFiles(AppContext.BaseDirectory, "*.xml", SearchOption.TopDirectoryOnly);
     foreach (var item in xmlFiles)
     {
@@ -133,6 +125,7 @@ services.AddSwaggerGen(c =>
         }
         catch (Exception) { }
     }
+    c.SupportNonNullableReferenceTypes();
     c.DescribeAllParametersInCamelCase();
     c.CustomOperationIds((z) =>
     {

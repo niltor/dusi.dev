@@ -8,6 +8,7 @@ export interface TreeNode<T> {
 }
 
 export interface TreeItemFlatNode {
+    id: string;
     name: string;
     level: number;
     expandable: boolean;
@@ -40,7 +41,6 @@ export class ChecklistDatabase<T extends TreeNode<T>> {
         });
         return res;
     }
-
     insertItem(parent: T, name: string) {
         if (parent.children) {
             parent.children.push({ name: name } as T);
@@ -48,8 +48,18 @@ export class ChecklistDatabase<T extends TreeNode<T>> {
         }
     }
 
-    updateItem(node: T, name: string) {
+    deleteItem(parent: T, id: string) {
+        if (parent.children) {
+            console.log(parent.children);
+
+            parent.children = parent.children.filter(v => v.id != id);
+            this.dataChange.next(this.data);
+        }
+    }
+
+    updateItem(node: T, name: string, id: string) {
         node.name = name;
+        node.id = id;
         this.dataChange.next(this.data);
     }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CatalogService } from 'src/app/share/client/services/catalog.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
-import { CatalogItemDto } from 'src/app/share/client/models/catalog/catalog-item-dto.model';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +9,7 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
 import { ChecklistDatabase, TreeItemFlatNode } from './tree.service';
 import { Catalog } from 'src/app/share/client/models/catalog/catalog.model';
+import { CatalogAddDto } from 'src/app/share/client/models/catalog/catalog-add-dto.model';
 
 @Component({
   selector: 'app-index',
@@ -19,9 +19,9 @@ import { Catalog } from 'src/app/share/client/models/catalog/catalog.model';
 export class IndexComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   isLoading = true;
+  isProcessing = false;
   total = 0;
   data: Catalog[] = [];
-
   // 字典映射
   flatNodeMap = new Map<TreeItemFlatNode, Catalog>();
   nestedNodeMap = new Map<Catalog, TreeItemFlatNode>();
@@ -77,23 +77,19 @@ export class IndexComponent implements OnInit {
 
   hasNoContent = (_: number, _nodeData: TreeItemFlatNode) => _nodeData.name === '';
 
-  /**
-   * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
-   */
   transformer = (node: Catalog, level: number) => {
     const existingNode = this.nestedNodeMap.get(node);
-    const flatNode =
-      existingNode && existingNode.name === node.name ? existingNode : {} as TreeItemFlatNode;
+    const flatNode = existingNode && existingNode.name === node.name ? existingNode : {} as TreeItemFlatNode;
+    flatNode.id = node.id;
     flatNode.name = node.name!;
     flatNode.level = level;
-    flatNode.expandable = !!node.children?.length;
+    flatNode.expandable = node.children?.length! > 0 ? true : false;
     this.flatNodeMap.set(flatNode, node);
     this.nestedNodeMap.set(node, flatNode);
     return flatNode;
   };
 
 
-  /* Get the parent node of a node */
   getParentNode(node: TreeItemFlatNode): TreeItemFlatNode | null {
     const currentLevel = this.getLevel(node);
 
@@ -113,20 +109,60 @@ export class IndexComponent implements OnInit {
     return null;
   }
 
-  /** Select the category so we can insert the new item. */
   addNewItem(node: TreeItemFlatNode) {
     const parentNode = this.flatNodeMap.get(node);
     this._database.insertItem(parentNode!, '');
     this.treeControl.expand(node);
   }
 
-  /** Save the node to database */
-  saveNode(node: TreeItemFlatNode, itemValue: string) {
-    const nestedNode = this.flatNodeMap.get(node);
-    this._database.updateItem(nestedNode!, itemValue);
+  deleteItem(node: TreeItemFlatNode) {
+    this.isProcessing = true;
+    this.service.delete(node.id)
+      .subscribe({
+        next: (res) => {
+          if (res) {
+            const parentNode = this.flatNodeMap.get(this.getParentNode(node)!);
+            this._database.deleteItem(parentNode!, node.id);
+            this.snb.open('删除成功');
+          } else {
+            this.snb.open('删除失败');
+          }
+          this.isProcessing = false;
+        },
+        error: (error) => {
+          this.snb.open(error.detail);
+          this.isProcessing = false;
+        }
+      });
   }
 
-  deleteConfirm(item: Catalog): void {
+  /** Save the node to database */
+  saveNode(node: TreeItemFlatNode, itemValue: string) {
+    this.isProcessing = true;
+    const parent = this.getParentNode(node);
+    let data: CatalogAddDto = {
+      name: itemValue,
+      parentId: parent!.id
+    };
+    this.service.add(data)
+      .subscribe({
+        next: (res) => {
+          if (res) {
+            const nestedNode = this.flatNodeMap.get(node);
+            this._database.updateItem(nestedNode!, itemValue, res.id);
+          }
+          this.isProcessing = false;
+        },
+        error: (error) => {
+          this.snb.open(error.detail);
+          this.isProcessing = false;
+        }
+      })
+
+
+  }
+
+  deleteConfirm(item: TreeItemFlatNode): void {
     const ref = this.dialog.open(ConfirmDialogComponent, {
       hasBackdrop: true,
       disableClose: false,
@@ -138,21 +174,9 @@ export class IndexComponent implements OnInit {
 
     ref.afterClosed().subscribe(res => {
       if (res) {
-        this.delete(item);
+        this.deleteItem(item);
       }
     });
-  }
-  delete(item: Catalog): void {
-    this.service.delete(item.id)
-      .subscribe(res => {
-        if (res) {
-          this.data = this.data.filter(_ => _.id !== item.id);
-          // this.dataSource.data = this.data;
-          this.snb.open('删除成功');
-        } else {
-          this.snb.open('删除失败');
-        }
-      });
   }
 
   /**

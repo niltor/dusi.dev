@@ -30,7 +30,6 @@ public class CatalogController : ClientControllerBase<ICatalogManager>
     /// </summary>
     /// <returns></returns>
     [HttpGet("tree")]
-    [AllowAnonymous]
     public async Task<ActionResult<List<Catalog>>> GetTreeAsync()
     {
         return await manager.GetTreeAsync();
@@ -79,14 +78,11 @@ public class CatalogController : ClientControllerBase<ICatalogManager>
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    // [ApiExplorerSettings(IgnoreApi = true)]
     [HttpDelete("{id}")]
     public async Task<ActionResult<Catalog?>> DeleteAsync([FromRoute] Guid id)
     {
-        // TODO:实现删除逻辑,注意删除权限
         var entity = await manager.GetOwnedAsync(id);
         if (entity == null) return NotFound();
-        return Forbid();
-        // return await manager.DeleteAsync(entity);
+        return await manager.DeleteAsync(entity);
     }
 }

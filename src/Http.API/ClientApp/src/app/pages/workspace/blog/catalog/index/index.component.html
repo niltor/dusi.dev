@@ -1,31 +1,36 @@
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
 
+  <!-- 展开内容 -->
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
     <button mat-icon-button disabled></button>
     <span>
-      {{node.item}}
+      {{node.name}}
     </span>
-
+    <button mat-icon-button (click)="deleteConfirm(node)" [disabled]="isProcessing">
+      <mat-icon fontSet="material-icons-outlined" color="accent">delete</mat-icon>
+    </button>
   </mat-tree-node>
 
   <!-- 新增节点 -->
   <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
     <button mat-icon-button disabled></button>
     <mat-form-field appearance="fill">
-      <mat-label>New item...</mat-label>
-      <input matInput #itemValue placeholder="Ex. Lettuce">
+      <mat-label>新分类</mat-label>
+      <input matInput #itemValue placeholder="分类名称">
     </mat-form-field>
-    <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
+    <button mat-button (click)="saveNode(node, itemValue.value)" [disabled]="isProcessing">确认</button>
   </mat-tree-node>
 
-  <!-- 展开内容 -->
   <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.item">
+    <button mat-icon-button matTreeNodeToggle [matTreeNodeToggleRecursive]="true"
+      [attr.aria-label]="'Toggle ' + node.name">
       <mat-icon class="mat-icon-rtl-mirror">
         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
       </mat-icon>
     </button>
-    {{node.item}}
-    <button mat-icon-button (click)="addNewItem(node)"><mat-icon>add</mat-icon></button>
+    {{node.name}}
+    <button mat-icon-button (click)="addNewItem(node)">
+      <mat-icon color="primary">add</mat-icon>
+    </button>
   </mat-tree-node>
 </mat-tree>

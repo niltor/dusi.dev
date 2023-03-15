@@ -30,7 +30,7 @@ public class CatalogManager : DomainManagerBase<Catalog, CatalogUpdateDto, Catal
             var parent = await GetCurrentAsync(dto.ParentId.Value);
             if (parent != null)
             {
-                entity.ParentId = parent?.Id;
+                entity.ParentId = parent.Id;
                 entity.Parent = parent;
                 entity.Level = (short)(parent.Level + 1);
             }
@@ -71,8 +71,8 @@ public class CatalogManager : DomainManagerBase<Catalog, CatalogUpdateDto, Catal
     public async Task<Catalog?> GetOwnedAsync(Guid id)
     {
         var query = Command.Db.Where(q => q.Id == id);
-        // TODO:属于当前角色的对象
-        // query = query.Where(q => q.User.Id == _userContext.UserId);
+        // 属于当前角色的对象
+        query = query.Where(q => q.User.Id == _userContext.UserId);
         return await query.FirstOrDefaultAsync();
     }
 

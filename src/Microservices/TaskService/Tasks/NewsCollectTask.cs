@@ -48,6 +48,5 @@ public class NewsCollectTask : BackgroundService
         return Task.CompletedTask;
     }
 
-
     public override void Dispose() => _timer?.Dispose();
 }

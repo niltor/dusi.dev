@@ -110,15 +110,13 @@ public class DataStoreContext
     public QuerySet<TEntity> QuerySet<TEntity>() where TEntity : EntityBase
     {
         var typename = typeof(TEntity).Name + "QueryStore";
-        var set = GetSet(typename);
-        if (set == null) throw new ArgumentNullException($"{typename} class object not found");
+        var set = GetSet(typename) ?? throw new ArgumentNullException($"{typename} class object not found");
         return (QuerySet<TEntity>)set;
     }
     public CommandSet<TEntity> CommandSet<TEntity>() where TEntity : EntityBase
     {
         var typename = typeof(TEntity).Name + "CommandStore";
-        var set = GetSet(typename);
-        if (set == null) throw new ArgumentNullException($"{typename} class object not found");
+        var set = GetSet(typename) ?? throw new ArgumentNullException($"{typename} class object not found");
         return (CommandSet<TEntity>)set;
     }
 
