@@ -32,9 +32,9 @@ export class CatalogService extends BaseService {
   /**
    * 获取可选目录
    */
-  getLeaf(): Observable<Map<string, Catalog[]>> {
+  getLeaf(): Observable<Catalog[]> {
     const url = `/api/Catalog/leaf`;
-    return this.request<Map<string, Catalog[]>>('get', url);
+    return this.request<Catalog[]>('get', url);
   }
 
   /**

@@ -22,14 +22,12 @@ export class AddComponent implements OnInit {
   public editorConfig!: CKEditor5.Config;
   public editor: CKEditor5.EditorConstructor = ClassicEditor;
   LanguageType = LanguageType;
-
   formGroup!: FormGroup;
   data = {} as BlogAddDto;
   catalog: Catalog[] = [];
   isLoading = true;
+  isProcessing = false;
   constructor(
-
-    // private authService: OidcSecurityService,
     private service: BlogService,
     private catalogSrv: CatalogService,
     public snb: MatSnackBar,
@@ -48,6 +46,8 @@ export class AddComponent implements OnInit {
   get isPublic() { return this.formGroup.get('isPublic'); }
   get isOriginal() { return this.formGroup.get('isOriginal'); }
   get tags() { return this.formGroup.get('tags'); }
+
+  get catalogId() { return this.formGroup.get('catalogId'); }
 
 
   ngOnInit(): void {
@@ -105,6 +105,7 @@ export class AddComponent implements OnInit {
       isPublic: new FormControl(true, []),
       isOriginal: new FormControl(true, []),
       tags: new FormControl(null, []),
+      catalogId: new FormControl<string>('', [Validators.required])
 
     });
   }
@@ -134,10 +135,10 @@ export class AddComponent implements OnInit {
         return this.isOriginal?.errors?.['required'] ? 'IsOriginal必填' :
           this.isOriginal?.errors?.['minlength'] ? 'IsOriginal长度最少位' :
             this.isOriginal?.errors?.['maxlength'] ? 'IsOriginal长度最多位' : '';
-      case 'tags':
-        return this.tags?.errors?.['required'] ? 'Tags必填' :
-          this.tags?.errors?.['minlength'] ? 'Tags长度最少位' :
-            this.tags?.errors?.['maxlength'] ? 'Tags长度最多位' : '';
+      case 'catalogId':
+        return this.catalogId?.errors?.['required'] ? '分类必填' :
+          this.catalogId?.errors?.['minlength'] ? 'Tags长度最少位' :
+            this.catalogId?.errors?.['maxlength'] ? 'Tags长度最多位' : '';
 
       default:
         return '';
@@ -146,6 +147,7 @@ export class AddComponent implements OnInit {
 
   add(): void {
     if (this.formGroup.valid) {
+      this.isProcessing = true;
       const data = this.formGroup.value as BlogAddDto;
       this.service.add(data)
         .subscribe({
@@ -155,9 +157,12 @@ export class AddComponent implements OnInit {
               // this.dialogRef.close(res);
               this.router.navigate(['../index'], { relativeTo: this.route });
             }
+            this.isProcessing = false;
 
           },
-          error: () => {
+          error: (error) => {
+            this.snb.open(error.detail);
+            this.isProcessing = false;
           }
         });
     }

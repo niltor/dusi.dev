@@ -40,7 +40,7 @@ public class CatalogController : ClientControllerBase<ICatalogManager>
     /// </summary>
     /// <returns></returns>
     [HttpGet("leaf")]
-    public async Task<Dictionary<string, List<Catalog>>> GetLeafAsync()
+    public async Task<List<Catalog>> GetLeafAsync()
     {
         return await manager.GetLeafCatalogsAsync();
     }

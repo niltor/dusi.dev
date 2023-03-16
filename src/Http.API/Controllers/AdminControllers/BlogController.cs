@@ -4,7 +4,9 @@ using Share.Models.BlogDtos;
 
 namespace Http.API.Controllers.AdminControllers;
 
-[AllowAnonymous]
+/// <summary>
+/// 博客
+/// </summary>
 public class BlogController : RestControllerBase<IBlogManager>
 {
     private readonly DaprClient dapr;

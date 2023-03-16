@@ -1,16 +1,16 @@
-using Application.IManager;
-using Core.Utils;
+using Core.Const;
 using Share.Models.BlogDtos;
 
 namespace Application.Manager;
 
 public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto, BlogItemDto>, IBlogManager
 {
-
     private readonly IUserContext _userContext;
-    public BlogManager(DataStoreContext storeContext, IUserContext userContext) : base(storeContext)
+    private readonly ICatalogManager _catalogManager;
+    public BlogManager(DataStoreContext storeContext, IUserContext userContext, ICatalogManager catalogManager) : base(storeContext)
     {
         _userContext = userContext;
+        _catalogManager = catalogManager;
     }
 
     /// <summary>
@@ -18,11 +18,16 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     /// </summary>
     /// <param name="dto"></param>
     /// <returns></returns>
-    public Task<Blog> CreateNewEntityAsync(BlogAddDto dto)
+    public async Task<Blog> CreateNewEntityAsync(BlogAddDto dto)
     {
         var entity = dto.MapTo<BlogAddDto, Blog>();
-        // TODO:构建实体
-        return Task.FromResult(entity);
+        var user = await _userContext.GetUserAsync() ?? throw new Exception(ErrorMsg.NotFoundUser);
+        var catalog = await _catalogManager.GetCurrentAsync(dto.CatalogId) ?? throw new Exception("不存在的目录");
+
+        entity.User = user;
+        entity.Catalog = catalog;
+        entity.Authors = user.UserName;
+        return entity;
     }
 
     public override async Task<Blog> UpdateAsync(Blog entity, BlogUpdateDto dto)

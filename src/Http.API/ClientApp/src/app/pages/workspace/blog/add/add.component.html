@@ -7,28 +7,45 @@
 <form class="d-flex" *ngIf="!isLoading" [formGroup]="formGroup" (ngSubmit)="add()">
   <div class="d-flex flex-column w-100">
     <mat-form-field>
-      <mat-label>Title</mat-label>
+      <mat-label>标题</mat-label>
       <input matInput placeholder="Title" formControlName="title" required minlength="" maxlength="100">
       <mat-error *ngIf="title?.invalid">
         {{getValidatorMessage('title')}}
       </mat-error>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>LanguageType</mat-label>
-      <mat-select formControlName="languageType">
-        <mat-option *ngFor="let item of LanguageType | toKeyValue" [value]="item.value">
-          {{item.key}}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="languageType?.invalid">
-        {{getValidatorMessage('languageType')}}
-      </mat-error>
-    </mat-form-field>
 
+    <div class="d-flex w-100">
+      <mat-form-field>
+        <mat-label>语言</mat-label>
+        <mat-select formControlName="languageType">
+          <mat-option *ngFor="let item of LanguageType | toKeyValue" [value]="item.value">
+            {{item.key}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="languageType?.invalid">
+          {{getValidatorMessage('languageType')}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="ms-2">
+        <mat-label>选择分类</mat-label>
+        <mat-select placeholder="选择分类" formControlName="catalogId" required="">
+          <mat-option *ngFor="let item of catalog" [value]="item.id">
+            {{item.name}}
+            <span *ngIf="item.parent">
+              ({{item.parent.name}})
+            </span>
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="languageType?.invalid">
+          {{getValidatorMessage('catalogId')}}
+        </mat-error>
+      </mat-form-field>
+    </div>
     <mat-form-field>
-      <mat-label>Description</mat-label>
-      <textarea matInput placeholder="Description" formControlName="description" minlength="" maxlength="300"
-        cols="5"></textarea>
+      <mat-label>描述</mat-label>
+      <textarea matInput placeholder="概要内容" formControlName="description" minlength="" maxlength="300"
+        rows="4"></textarea>
       <mat-error *ngIf="description?.invalid">
         {{getValidatorMessage('description')}}
       </mat-error>

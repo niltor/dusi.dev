@@ -70,7 +70,7 @@ public class CatalogManager : DomainManagerBase<Catalog, CatalogUpdateDto, Catal
     /// 获取叶结点目录
     /// </summary>
     /// <returns></returns>
-    public async Task<Dictionary<string, List<Catalog>>> GetLeafCatalogsAsync()
+    public async Task<List<Catalog>> GetLeafCatalogsAsync()
     {
         var parentIds = await Query.Db
             .Select(s => s.ParentId)
@@ -79,12 +79,7 @@ public class CatalogManager : DomainManagerBase<Catalog, CatalogUpdateDto, Catal
         var source = await Query.Db.Where(c => !parentIds.Contains(c.Id))
             .Include(c => c.Parent)
             .ToListAsync();
-
-        var group = source.GroupBy(c => c.Parent!.Id)
-            .ToDictionary(k => k.First().Parent!.Name, v => v.ToList());
-
-        return group;
-
+        return source;
     }
 
     /// <summary>

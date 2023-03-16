@@ -8,6 +8,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
+import { LanguageType } from 'src/app/share/client/models/enum/language-type.model';
 
 @Component({
   selector: 'app-index',
@@ -16,10 +17,11 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class IndexComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  LanguageType = LanguageType;
   isLoading = true;
   total = 0;
   data: BlogItemDto[] = [];
-  columns: string[] = ['title', 'languageType', 'authors', 'createdTime','actions'];
+  columns: string[] = ['title', 'languageType', 'authors', 'createdTime', 'actions'];
   dataSource!: MatTableDataSource<BlogItemDto>;
   filter: BlogFilterDto;
   pageSizeOption = [12, 20, 50];

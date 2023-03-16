@@ -6,7 +6,9 @@ using Share.Models.TagsDtos;
 
 namespace Http.API.Controllers;
 
-[AllowAnonymous]
+/// <summary>
+/// 博客
+/// </summary>
 public class BlogController : ClientControllerBase<IBlogManager>
 {
     private readonly DaprClient dapr;
@@ -48,11 +50,10 @@ public class BlogController : ClientControllerBase<IBlogManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<string>> AddAsync(BlogAddDto form)
+    public async Task<ActionResult<Blog>> AddAsync(BlogAddDto form)
     {
-        var reply = await dapr.InvokeMethodGrpcAsync<AddRequest, BlogReply>("cms", "add", new AddRequest { Name = "222" });
-
-        return reply.Title;
+        var entity = await manager.CreateNewEntityAsync(form);
+        return await manager.AddAsync(entity);
     }
 
     /// <summary>
