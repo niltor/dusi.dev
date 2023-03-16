@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { CatalogService } from 'src/app/share/client/services/catalog.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FlatTreeControl } from '@angular/cdk/tree';
@@ -29,7 +29,10 @@ export class IndexComponent implements OnInit {
   dialogRef!: MatDialogRef<{}, any>;
   @ViewChild('editDialog', { static: true })
   editTmpl!: TemplateRef<{}>;
+  @ViewChild('addDialog', { static: true })
+  addTmpl!: TemplateRef<{}>;
   editForm!: FormGroup;
+  addForm!: FormGroup;
   // 字典映射
   flatNodeMap = new Map<TreeItemFlatNode, Catalog>();
   nestedNodeMap = new Map<Catalog, TreeItemFlatNode>();
@@ -61,6 +64,10 @@ export class IndexComponent implements OnInit {
 
   initForm(): void {
     this.editForm = new FormGroup({
+      name: new FormControl<string>('', [Validators.required, Validators.maxLength(50)])
+    });
+
+    this.addForm = new FormGroup({
       name: new FormControl<string>('', [Validators.required, Validators.maxLength(50)])
     });
   }
@@ -144,13 +151,45 @@ export class IndexComponent implements OnInit {
       minWidth: 300
     });
   }
+  openAddRootDialog(): void {
+    this.dialogRef = this.dialog.open(this.addTmpl, {
+      minWidth: 300
+    });
+  }
+
+  addRootCatalog(): void {
+    this.isProcessing = true;
+    if (this.addForm.valid) {
+      const data: CatalogAddDto = {
+        name: this.addForm.get('name')?.value,
+        parentId: null
+      }
+      this.service.add(data)
+        .subscribe({
+          next: (res) => {
+            if (res) {
+              this.snb.open('添加成功');
+              this.dialogRef.close();
+              this.getList();
+            } else {
+              this.snb.open('添加失败');
+            }
+            this.isProcessing = false;
+          },
+          error: (error) => {
+            this.snb.open(error.detail);
+            this.isProcessing = false;
+          }
+        });
+    }
+  }
 
   editCatalog(): void {
     const data: CatalogUpdateDto = {
       name: this.editForm.get('name')?.value
     };
     console.log(data);
-    
+
     if (this.editForm.valid && this.currentNode != null) {
       this.service.update(this.currentNode?.id!, data)
         .subscribe({

@@ -1,5 +1,10 @@
+<mat-toolbar>
+  <button mat-flat-button color="primary" (click)="openAddRootDialog()">
+    <mat-icon>add</mat-icon>
+    添加根目录
+  </button>
+</mat-toolbar>
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-
   <!-- 展开内容 -->
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
     <button mat-icon-button disabled></button>
@@ -58,6 +63,22 @@
     <button mat-button mat-dialog-close>取消</button>
     <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
     <button mat-button (click)="editCatalog()">确认</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<ng-template #addDialog>
+  <h2 mat-dialog-title>添加根目录</h2>
+  <mat-dialog-content>
+    <form [formGroup]="addForm">
+      <mat-form-field appearance="fill">
+        <input matInput placeholder="名称" formControlName="name" required>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>取消</button>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-button (click)="addRootCatalog()">确认</button>
   </mat-dialog-actions>
 
 </ng-template>
