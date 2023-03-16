@@ -36,6 +36,16 @@ public class CatalogController : ClientControllerBase<ICatalogManager>
     }
 
     /// <summary>
+    /// 获取可选目录
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("leaf")]
+    public async Task<Dictionary<string, List<Catalog>>> GetLeafAsync()
+    {
+        return await manager.GetLeafCatalogsAsync();
+    }
+
+    /// <summary>
     /// 新增
     /// </summary>
     /// <param name="form"></param>

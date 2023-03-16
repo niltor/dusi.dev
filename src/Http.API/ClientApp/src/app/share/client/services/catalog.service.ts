@@ -30,6 +30,14 @@ export class CatalogService extends BaseService {
   }
 
   /**
+   * 获取可选目录
+   */
+  getLeaf(): Observable<Map<string, Catalog[]>> {
+    const url = `/api/Catalog/leaf`;
+    return this.request<Map<string, Catalog[]>>('get', url);
+  }
+
+  /**
    * 新增
    * @param data CatalogAddDto
    */

@@ -10,6 +10,8 @@ import * as ClassicEditor from 'ng-ckeditor5-classic';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 // import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { LanguageType } from 'src/app/share/client/models/enum/language-type.model';
+import { Catalog } from 'src/app/share/admin/models/catalog.model';
+import { CatalogService } from 'src/app/share/client/services/catalog.service';
 
 @Component({
   selector: 'app-add',
@@ -23,11 +25,13 @@ export class AddComponent implements OnInit {
 
   formGroup!: FormGroup;
   data = {} as BlogAddDto;
+  catalog: Catalog[] = [];
   isLoading = true;
   constructor(
 
     // private authService: OidcSecurityService,
     private service: BlogService,
+    private catalogSrv: CatalogService,
     public snb: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
@@ -49,9 +53,31 @@ export class AddComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.initEditor();
+    this.getCatalogs();
     // TODO:获取其他相关数据后设置加载状态
-    this.isLoading = false;
   }
+
+  getCatalogs(): void {
+    this.catalogSrv.getLeaf()
+      .subscribe({
+        next: (res) => {
+          if (res) {
+
+            console.log(res);
+
+            this.catalog = res;
+          } else {
+
+          }
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.snb.open(error.detail);
+          this.isLoading = false;
+        }
+      });
+  }
+
   initEditor(): void {
     this.editorConfig = {
       // placeholder: '请添加图文信息提供证据，也可以直接从Word文档中复制',

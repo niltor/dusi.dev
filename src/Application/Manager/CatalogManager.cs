@@ -55,11 +55,36 @@ public class CatalogManager : DomainManagerBase<Catalog, CatalogUpdateDto, Catal
     }
 
 
+    /// <summary>
+    /// 获取树型目录
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<Catalog>> GetTreeAsync()
     {
         var data = await ListAsync(null);
         var tree = data.BuildTree();
         return tree;
+    }
+
+    /// <summary>
+    /// 获取叶结点目录
+    /// </summary>
+    /// <returns></returns>
+    public async Task<Dictionary<string, List<Catalog>>> GetLeafCatalogsAsync()
+    {
+        var parentIds = await Query.Db
+            .Select(s => s.ParentId)
+            .ToListAsync();
+
+        var source = await Query.Db.Where(c => !parentIds.Contains(c.Id))
+            .Include(c => c.Parent)
+            .ToListAsync();
+
+        var group = source.GroupBy(c => c.Parent!.Id)
+            .ToDictionary(k => k.First().Parent!.Name, v => v.ToList());
+
+        return group;
+
     }
 
     /// <summary>

@@ -20,5 +20,6 @@ public interface ICatalogManager : IDomainManager<Catalog, CatalogUpdateDto, Cat
     /// <returns></returns>
     Task<Catalog> CreateNewEntityAsync(CatalogAddDto dto);
     Task<List<Catalog>> GetTreeAsync();
+    Task<Dictionary<string, List<Catalog>>> GetLeafCatalogsAsync();
     // TODO: 定义业务方法
 }
