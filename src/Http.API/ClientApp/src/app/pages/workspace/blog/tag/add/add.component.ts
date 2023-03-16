@@ -1,29 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TagsService } from 'src/app/share/client/services/tags.service';
-import { Tags } from 'src/app/share/client/models/tags/tags.model';
 import { TagsAddDto } from 'src/app/share/client/models/tags/tags-add-dto.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
-export const CommonColors = ["#001F3F",
-  "#0074D9",
-  "#7FDBFF",
-  "#39CCCC",
-  "#3D9970",
-  "#2ECC40",
-  "#01FF70",
-  "#FFDC00",
-  "#FF851B",
-  "#FF4136",
-  "#85144B",
-  "#F012BE",
-  "#B10DC9",
-  "#111111",
-  "#AAAAAA",
-  "#DDDDDD"]
-
+import { CommonColors } from 'src/app/share/const';
 
 @Component({
   selector: 'app-add',

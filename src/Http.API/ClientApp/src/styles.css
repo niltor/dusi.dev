@@ -54,3 +54,7 @@ img {
     background-color: #2359be;
     color: white;
 }
+
+.v-middle {
+    vertical-align: middle;
+}

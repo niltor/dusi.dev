@@ -2,25 +2,34 @@
   <button color="basic" mat-icon-button matTooltip="返回" (click)="back()">
     <mat-icon>arrow_back</mat-icon>
   </button>
-    编辑
+  编辑
 </mat-toolbar>
 <form class="d-flex" *ngIf="!isLoading" [formGroup]="formGroup" (ngSubmit)="edit()">
   <div class="d-flex flex-column w-100">
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input matInput placeholder="Name" formControlName="name"  minlength="" maxlength="50">
-    <mat-error *ngIf="name?.invalid">
-    {{getValidatorMessage('name')}}
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Color</mat-label>
-    <input matInput placeholder="Color" formControlName="color"  minlength="" maxlength="20">
-    <mat-error *ngIf="color?.invalid">
-    {{getValidatorMessage('color')}}
-    </mat-error>
-  </mat-form-field>
-
+    <mat-form-field>
+      <mat-label>标签名称</mat-label>
+      <input matInput placeholder="标签名称" formControlName="name" minlength="" maxlength="50">
+      <mat-error *ngIf="name?.invalid">
+        {{getValidatorMessage('name')}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>颜色</mat-label>
+      <mat-select placeholder="Color" formControlName="color">
+        <mat-option [value]="color" *ngFor="let color of colors">
+          <mat-icon [style]="{color}">circle</mat-icon>
+          <span [style]="{color}">
+            {{color}}
+          </span>
+        </mat-option>
+        <mat-select-trigger>
+          <mat-icon matSuffix [style]="{color:color?.value}">circle</mat-icon>
+        </mat-select-trigger>
+      </mat-select>
+      <mat-error *ngIf="name?.invalid">
+        {{getValidatorMessage('color')}}
+      </mat-error>
+    </mat-form-field>
     <div class="d-flex mt-1">
       <button class="d-flex flex-column" mat-flat-button color="primary" type="submit">保存</button>
     </div>

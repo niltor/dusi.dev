@@ -7,6 +7,7 @@ import { TagsUpdateDto } from 'src/app/share/client/models/tags/tags-update-dto.
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
+import { CommonColors } from 'src/app/share/const';
 
 @Component({
   selector: 'app-edit',
@@ -19,6 +20,8 @@ export class EditComponent implements OnInit {
   isLoading = true;
   data = {} as Tags;
   updateData = {} as TagsUpdateDto;
+  colors = CommonColors;
+  
   formGroup!: FormGroup;
     constructor(
     
