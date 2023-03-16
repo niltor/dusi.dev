@@ -5,7 +5,7 @@ export interface UserItemDto {
   /**
    * 用户名
    */
-  userName?: string | null;
+  userName: string;
   email?: string | null;
   emailConfirmed: boolean;
   id: string;

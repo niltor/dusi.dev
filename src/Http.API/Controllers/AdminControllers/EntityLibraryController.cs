@@ -1,15 +1,15 @@
-using Share.Models.EntityMemberConstraintDtos;
-namespace Http.API.Controllers;
+using Share.Models.EntityLibraryDtos;
+namespace Http.API.Controllers.AdminControllers;
 
 /// <summary>
-/// 属性的约束
+/// 实体库
 /// </summary>
-public class EntityMemberConstraintController : RestControllerBase<IEntityMemberConstraintManager>
+public class EntityLibraryController : RestControllerBase<IEntityLibraryManager>
 {
-    public EntityMemberConstraintController(
+    public EntityLibraryController(
         IUserContext user,
-        ILogger<EntityMemberConstraintController> logger,
-        IEntityMemberConstraintManager manager
+        ILogger<EntityLibraryController> logger,
+        IEntityLibraryManager manager
         ) : base(manager, user, logger)
     {
     }
@@ -20,7 +20,7 @@ public class EntityMemberConstraintController : RestControllerBase<IEntityMember
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async Task<ActionResult<PageList<EntityMemberConstraintItemDto>>> FilterAsync(EntityMemberConstraintFilterDto filter)
+    public async Task<ActionResult<PageList<EntityLibraryItemDto>>> FilterAsync(EntityLibraryFilterDto filter)
     {
         return await manager.FilterAsync(filter);
     }
@@ -31,9 +31,9 @@ public class EntityMemberConstraintController : RestControllerBase<IEntityMember
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<EntityMemberConstraint>> AddAsync(EntityMemberConstraintAddDto form)
+    public async Task<ActionResult<EntityLibrary>> AddAsync(EntityLibraryAddDto form)
     {
-        var entity = form.MapTo<EntityMemberConstraintAddDto, EntityMemberConstraint>();
+        var entity = form.MapTo<EntityLibraryAddDto, EntityLibrary>();
         return await manager.AddAsync(entity);
     }
 
@@ -44,7 +44,7 @@ public class EntityMemberConstraintController : RestControllerBase<IEntityMember
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<EntityMemberConstraint?>> UpdateAsync([FromRoute] Guid id, EntityMemberConstraintUpdateDto form)
+    public async Task<ActionResult<EntityLibrary?>> UpdateAsync([FromRoute] Guid id, EntityLibraryUpdateDto form)
     {
         var current = await manager.GetCurrentAsync(id);
         if (current == null) return NotFound();
@@ -57,7 +57,7 @@ public class EntityMemberConstraintController : RestControllerBase<IEntityMember
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<EntityMemberConstraint?>> GetDetailAsync([FromRoute] Guid id)
+    public async Task<ActionResult<EntityLibrary?>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
         return res == null ? NotFound() : res;
@@ -70,7 +70,7 @@ public class EntityMemberConstraintController : RestControllerBase<IEntityMember
     /// <returns></returns>
     // [ApiExplorerSettings(IgnoreApi = true)]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<EntityMemberConstraint?>> DeleteAsync([FromRoute] Guid id)
+    public async Task<ActionResult<EntityLibrary?>> DeleteAsync([FromRoute] Guid id)
     {
         var entity = await manager.GetCurrentAsync(id);
         if (entity == null) return NotFound();

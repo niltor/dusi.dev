@@ -1,15 +1,15 @@
-using Share.Models.CatalogDtos;
-namespace Http.API.Controllers.ClientControllers;
+using Share.Models.EntityModelDtos;
+namespace Http.API.Controllers.AdminControllers;
 
 /// <summary>
-/// 目录
+/// 实体模型类
 /// </summary>
-public class CatalogController : ClientControllerBase<ICatalogManager>
+public class EntityModelController : RestControllerBase<IEntityModelManager>
 {
-    public CatalogController(
+    public EntityModelController(
         IUserContext user,
-        ILogger<CatalogController> logger,
-        ICatalogManager manager
+        ILogger<EntityModelController> logger,
+        IEntityModelManager manager
         ) : base(manager, user, logger)
     {
     }
@@ -20,19 +20,9 @@ public class CatalogController : ClientControllerBase<ICatalogManager>
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async Task<ActionResult<PageList<CatalogItemDto>>> FilterAsync(CatalogFilterDto filter)
+    public async Task<ActionResult<PageList<EntityModelItemDto>>> FilterAsync(EntityModelFilterDto filter)
     {
         return await manager.FilterAsync(filter);
-    }
-
-    /// <summary>
-    /// 获取树型结构
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet("tree")]
-    public async Task<ActionResult<List<Catalog>>> GetTreeAsync()
-    {
-        return await manager.GetTreeAsync();
     }
 
     /// <summary>
@@ -41,9 +31,9 @@ public class CatalogController : ClientControllerBase<ICatalogManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<Catalog>> AddAsync(CatalogAddDto form)
+    public async Task<ActionResult<EntityModel>> AddAsync(EntityModelAddDto form)
     {
-        var entity = await manager.CreateNewEntityAsync(form);
+        var entity = form.MapTo<EntityModelAddDto, EntityModel>();
         return await manager.AddAsync(entity);
     }
 
@@ -54,9 +44,9 @@ public class CatalogController : ClientControllerBase<ICatalogManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<Catalog?>> UpdateAsync([FromRoute] Guid id, CatalogUpdateDto form)
+    public async Task<ActionResult<EntityModel?>> UpdateAsync([FromRoute] Guid id, EntityModelUpdateDto form)
     {
-        var current = await manager.GetOwnedAsync(id);
+        var current = await manager.GetCurrentAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -67,7 +57,7 @@ public class CatalogController : ClientControllerBase<ICatalogManager>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<Catalog?>> GetDetailAsync([FromRoute] Guid id)
+    public async Task<ActionResult<EntityModel?>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
         return res == null ? NotFound() : res;
@@ -78,10 +68,11 @@ public class CatalogController : ClientControllerBase<ICatalogManager>
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
+    // [ApiExplorerSettings(IgnoreApi = true)]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Catalog?>> DeleteAsync([FromRoute] Guid id)
+    public async Task<ActionResult<EntityModel?>> DeleteAsync([FromRoute] Guid id)
     {
-        var entity = await manager.GetOwnedAsync(id);
+        var entity = await manager.GetCurrentAsync(id);
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity);
     }

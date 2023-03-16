@@ -5,7 +5,7 @@ export interface TagsItemDto {
   /**
    * 标签名称
    */
-  name?: string | null;
+  name: string;
   /**
    * 标签颜色
    */

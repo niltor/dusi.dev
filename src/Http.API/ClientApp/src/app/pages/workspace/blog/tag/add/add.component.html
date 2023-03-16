@@ -7,8 +7,8 @@
 <form class="d-flex" *ngIf="!isLoading" [formGroup]="formGroup" (ngSubmit)="add()">
   <div class="d-flex flex-column w-100">
     <mat-form-field>
-      <mat-label>Name</mat-label>
-      <input matInput placeholder="Name" formControlName="name" required minlength="" maxlength="50">
+      <mat-label>标签名称</mat-label>
+      <input matInput placeholder="标签名称" formControlName="name" required minlength="" maxlength="50">
       <mat-error *ngIf="name?.invalid">
         {{getValidatorMessage('name')}}
       </mat-error>

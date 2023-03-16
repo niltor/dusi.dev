@@ -14,15 +14,15 @@ export interface SystemUser {
   /**
    * 用户名
    */
-  userName?: string | null;
+  userName: string;
   /**
    * 真实姓名
    */
   realName?: string | null;
   email?: string | null;
   emailConfirmed: boolean;
-  passwordHash?: string | null;
-  passwordSalt?: string | null;
+  passwordHash: string;
+  passwordSalt: string;
   phoneNumber?: string | null;
   phoneNumberConfirmed: boolean;
   twoFactorEnabled: boolean;

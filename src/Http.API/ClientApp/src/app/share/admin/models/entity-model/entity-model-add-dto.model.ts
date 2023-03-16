@@ -10,11 +10,11 @@ export interface EntityModelAddDto {
   /**
    * 实体类名
    */
-  name?: string | null;
+  name: string;
   /**
    * 实体注释内容
    */
-  comment?: string | null;
+  comment: string;
   /**
    * 访问修饰符
    */
@@ -30,7 +30,7 @@ export interface EntityModelAddDto {
   /**
    * 语言版本
    */
-  languageVersion?: string | null;
+  languageVersion: string;
   /**
    * 实体模型类
    */

@@ -7,7 +7,7 @@ export interface EntityLibraryUpdateDto {
   /**
    * 库名称
    */
-  name?: string | null;
+  name: string;
   /**
    * 库描述
    */

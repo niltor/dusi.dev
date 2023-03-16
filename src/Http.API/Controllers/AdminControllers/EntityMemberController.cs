@@ -1,17 +1,15 @@
-using Core.Const;
-using Share.Models.SystemUserDtos;
-namespace Http.API.Controllers;
+using Share.Models.EntityMemberDtos;
+namespace Http.API.Controllers.AdminControllers;
 
 /// <summary>
-/// 系统用户
+/// 实体属性
 /// </summary>
-[Authorize(Const.Admin)]
-public class SystemUserController : RestControllerBase<ISystemUserManager>
+public class EntityMemberController : RestControllerBase<IEntityMemberManager>
 {
-    public SystemUserController(
+    public EntityMemberController(
         IUserContext user,
-        ILogger<SystemUserController> logger,
-        ISystemUserManager manager
+        ILogger<EntityMemberController> logger,
+        IEntityMemberManager manager
         ) : base(manager, user, logger)
     {
     }
@@ -22,7 +20,7 @@ public class SystemUserController : RestControllerBase<ISystemUserManager>
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async Task<ActionResult<PageList<SystemUserItemDto>>> FilterAsync(SystemUserFilterDto filter)
+    public async Task<ActionResult<PageList<EntityMemberItemDto>>> FilterAsync(EntityMemberFilterDto filter)
     {
         return await manager.FilterAsync(filter);
     }
@@ -33,9 +31,9 @@ public class SystemUserController : RestControllerBase<ISystemUserManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<SystemUser>> AddAsync(SystemUserAddDto form)
+    public async Task<ActionResult<EntityMember>> AddAsync(EntityMemberAddDto form)
     {
-        var entity = form.MapTo<SystemUserAddDto, SystemUser>();
+        var entity = form.MapTo<EntityMemberAddDto, EntityMember>();
         return await manager.AddAsync(entity);
     }
 
@@ -46,7 +44,7 @@ public class SystemUserController : RestControllerBase<ISystemUserManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<SystemUser?>> UpdateAsync([FromRoute] Guid id, SystemUserUpdateDto form)
+    public async Task<ActionResult<EntityMember?>> UpdateAsync([FromRoute] Guid id, EntityMemberUpdateDto form)
     {
         var current = await manager.GetCurrentAsync(id);
         if (current == null) return NotFound();
@@ -59,24 +57,10 @@ public class SystemUserController : RestControllerBase<ISystemUserManager>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<SystemUser?>> GetDetailAsync([FromRoute] Guid id)
+    public async Task<ActionResult<EntityMember?>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
         return res == null ? NotFound() : res;
-    }
-
-
-    /// <summary>
-    /// 修改密码
-    /// </summary>
-    /// <param name="password"></param>
-    /// <returns></returns>
-    [HttpPut("password")]
-    public async Task<ActionResult<bool>> ChangeMyPassword(string password)
-    {
-        var user = await manager.GetCurrentAsync(_user.UserId!.Value);
-        if (user == null) return NotFound("未找到该用户");
-        return await manager.ChangePasswordAsync(user, password);
     }
 
     /// <summary>
@@ -86,7 +70,7 @@ public class SystemUserController : RestControllerBase<ISystemUserManager>
     /// <returns></returns>
     // [ApiExplorerSettings(IgnoreApi = true)]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<SystemUser?>> DeleteAsync([FromRoute] Guid id)
+    public async Task<ActionResult<EntityMember?>> DeleteAsync([FromRoute] Guid id)
     {
         var entity = await manager.GetCurrentAsync(id);
         if (entity == null) return NotFound();

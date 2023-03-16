@@ -18,12 +18,12 @@ export interface User {
   /**
    * 用户名
    */
-  userName?: string | null;
+  userName: string;
   userType?: UserType | null;
   email?: string | null;
   emailConfirmed: boolean;
-  passwordHash?: string | null;
-  passwordSalt?: string | null;
+  passwordHash: string;
+  passwordSalt: string;
   entityLibraries?: EntityLibrary[] | null;
   entityModels?: EntityModel[] | null;
   blogs?: Blog[] | null;

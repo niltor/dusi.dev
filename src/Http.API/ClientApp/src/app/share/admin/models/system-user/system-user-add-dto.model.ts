@@ -6,7 +6,7 @@ export interface SystemUserAddDto {
   /**
    * 用户名
    */
-  userName?: string | null;
+  userName: string;
   /**
    * 真实姓名
    */

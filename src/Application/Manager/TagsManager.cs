@@ -12,7 +12,6 @@ public class TagsManager : DomainManagerBase<Tags, TagsUpdateDto, TagsFilterDto,
         _userContext = userContext;
     }
 
-
     /// <summary>
     /// 创建待添加实体
     /// </summary>
@@ -46,11 +45,7 @@ public class TagsManager : DomainManagerBase<Tags, TagsUpdateDto, TagsFilterDto,
     public async Task<Tags?> GetOwnedAsync(Guid id)
     {
         var query = Command.Db.Where(q => q.Id == id);
-        if (!_userContext.IsAdmin)
-        {
-            // TODO:属于当前角色的对象
-            // query = query.Where(q => q.User.Id == _userContext.UserId);
-        }
+        query = query.Where(q => q.User.Id == _userContext.UserId);
         return await query.FirstOrDefaultAsync();
     }
 }

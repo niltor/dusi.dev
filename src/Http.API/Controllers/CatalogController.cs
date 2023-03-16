@@ -1,15 +1,15 @@
-using Share.Models.SystemRoleDtos;
+using Share.Models.CatalogDtos;
 namespace Http.API.Controllers;
 
 /// <summary>
-/// 角色表
+/// 目录
 /// </summary>
-public class SystemRoleController : RestControllerBase<ISystemRoleManager>
+public class CatalogController : ClientControllerBase<ICatalogManager>
 {
-    public SystemRoleController(
+    public CatalogController(
         IUserContext user,
-        ILogger<SystemRoleController> logger,
-        ISystemRoleManager manager
+        ILogger<CatalogController> logger,
+        ICatalogManager manager
         ) : base(manager, user, logger)
     {
     }
@@ -20,9 +20,19 @@ public class SystemRoleController : RestControllerBase<ISystemRoleManager>
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async Task<ActionResult<PageList<SystemRoleItemDto>>> FilterAsync(SystemRoleFilterDto filter)
+    public async Task<ActionResult<PageList<CatalogItemDto>>> FilterAsync(CatalogFilterDto filter)
     {
         return await manager.FilterAsync(filter);
+    }
+
+    /// <summary>
+    /// 获取树型结构
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("tree")]
+    public async Task<ActionResult<List<Catalog>>> GetTreeAsync()
+    {
+        return await manager.GetTreeAsync();
     }
 
     /// <summary>
@@ -31,9 +41,9 @@ public class SystemRoleController : RestControllerBase<ISystemRoleManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<SystemRole>> AddAsync(SystemRoleAddDto form)
+    public async Task<ActionResult<Catalog>> AddAsync(CatalogAddDto form)
     {
-        var entity = form.MapTo<SystemRoleAddDto, SystemRole>();
+        var entity = await manager.CreateNewEntityAsync(form);
         return await manager.AddAsync(entity);
     }
 
@@ -44,9 +54,9 @@ public class SystemRoleController : RestControllerBase<ISystemRoleManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<SystemRole?>> UpdateAsync([FromRoute] Guid id, SystemRoleUpdateDto form)
+    public async Task<ActionResult<Catalog?>> UpdateAsync([FromRoute] Guid id, CatalogUpdateDto form)
     {
-        var current = await manager.GetCurrentAsync(id);
+        var current = await manager.GetOwnedAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -57,7 +67,7 @@ public class SystemRoleController : RestControllerBase<ISystemRoleManager>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<SystemRole?>> GetDetailAsync([FromRoute] Guid id)
+    public async Task<ActionResult<Catalog?>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
         return res == null ? NotFound() : res;
@@ -68,11 +78,10 @@ public class SystemRoleController : RestControllerBase<ISystemRoleManager>
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    // [ApiExplorerSettings(IgnoreApi = true)]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<SystemRole?>> DeleteAsync([FromRoute] Guid id)
+    public async Task<ActionResult<Catalog?>> DeleteAsync([FromRoute] Guid id)
     {
-        var entity = await manager.GetCurrentAsync(id);
+        var entity = await manager.GetOwnedAsync(id);
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity);
     }

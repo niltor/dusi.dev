@@ -1,17 +1,15 @@
-
-
-using Share.Models.EntityLibraryDtos;
-namespace Http.API.Controllers;
+using Share.Models.SystemRoleDtos;
+namespace Http.API.Controllers.AdminControllers;
 
 /// <summary>
-/// 实体库
+/// 角色表
 /// </summary>
-public class EntityLibraryController : RestControllerBase<IEntityLibraryManager>
+public class SystemRoleController : RestControllerBase<ISystemRoleManager>
 {
-    public EntityLibraryController(
+    public SystemRoleController(
         IUserContext user,
-        ILogger<EntityLibraryController> logger,
-        IEntityLibraryManager manager
+        ILogger<SystemRoleController> logger,
+        ISystemRoleManager manager
         ) : base(manager, user, logger)
     {
     }
@@ -22,7 +20,7 @@ public class EntityLibraryController : RestControllerBase<IEntityLibraryManager>
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async Task<ActionResult<PageList<EntityLibraryItemDto>>> FilterAsync(EntityLibraryFilterDto filter)
+    public async Task<ActionResult<PageList<SystemRoleItemDto>>> FilterAsync(SystemRoleFilterDto filter)
     {
         return await manager.FilterAsync(filter);
     }
@@ -33,9 +31,9 @@ public class EntityLibraryController : RestControllerBase<IEntityLibraryManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<EntityLibrary>> AddAsync(EntityLibraryAddDto form)
+    public async Task<ActionResult<SystemRole>> AddAsync(SystemRoleAddDto form)
     {
-        var entity = form.MapTo<EntityLibraryAddDto, EntityLibrary>();
+        var entity = form.MapTo<SystemRoleAddDto, SystemRole>();
         return await manager.AddAsync(entity);
     }
 
@@ -46,7 +44,7 @@ public class EntityLibraryController : RestControllerBase<IEntityLibraryManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<EntityLibrary?>> UpdateAsync([FromRoute] Guid id, EntityLibraryUpdateDto form)
+    public async Task<ActionResult<SystemRole?>> UpdateAsync([FromRoute] Guid id, SystemRoleUpdateDto form)
     {
         var current = await manager.GetCurrentAsync(id);
         if (current == null) return NotFound();
@@ -59,10 +57,10 @@ public class EntityLibraryController : RestControllerBase<IEntityLibraryManager>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<EntityLibrary?>> GetDetailAsync([FromRoute] Guid id)
+    public async Task<ActionResult<SystemRole?>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
-        return (res == null) ? NotFound() : res;
+        return res == null ? NotFound() : res;
     }
 
     /// <summary>
@@ -72,7 +70,7 @@ public class EntityLibraryController : RestControllerBase<IEntityLibraryManager>
     /// <returns></returns>
     // [ApiExplorerSettings(IgnoreApi = true)]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<EntityLibrary?>> DeleteAsync([FromRoute] Guid id)
+    public async Task<ActionResult<SystemRole?>> DeleteAsync([FromRoute] Guid id)
     {
         var entity = await manager.GetCurrentAsync(id);
         if (entity == null) return NotFound();

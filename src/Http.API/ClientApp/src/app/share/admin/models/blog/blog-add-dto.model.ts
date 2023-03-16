@@ -7,7 +7,7 @@ export interface BlogAddDto {
   /**
    * 标题
    */
-  title?: string | null;
+  title: string;
   /**
    * 描述
    */
@@ -15,7 +15,7 @@ export interface BlogAddDto {
   /**
    * 内容
    */
-  content?: string | null;
+  content: string;
   /**
    * 是否公开
    */

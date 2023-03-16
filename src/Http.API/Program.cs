@@ -1,5 +1,6 @@
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using Application;
 using Application.Implement;
 using Core.Const;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -42,10 +43,10 @@ services.AddDaprClient();
 var otlpEndpoint = configuration.GetSection("OTLP")
     .GetValue<string>("Endpoint")
     ?? "http://localhost:4317";
-//services.AddOpenTelemetry("dusi", opt =>
-//{
-//    opt.Endpoint = new Uri(otlpEndpoint);
-//});
+services.AddOpenTelemetry("dusi", opt =>
+{
+    opt.Endpoint = new Uri(otlpEndpoint);
+});
 
 #endregion
 #region 接口相关内容:jwt/授权/cors

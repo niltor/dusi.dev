@@ -5,7 +5,7 @@ export interface CatalogAddDto {
   /**
    * 目录名称
    */
-  name?: string | null;
+  name: string;
   parentId?: string | null;
 
 }

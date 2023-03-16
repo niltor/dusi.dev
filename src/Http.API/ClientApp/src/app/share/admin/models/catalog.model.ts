@@ -14,7 +14,7 @@ export interface Catalog {
   /**
    * 目录名称
    */
-  name?: string | null;
+  name: string;
   /**
    * 层级
    */

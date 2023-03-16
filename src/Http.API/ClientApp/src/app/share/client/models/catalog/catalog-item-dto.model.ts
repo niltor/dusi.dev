@@ -5,7 +5,7 @@ export interface CatalogItemDto {
   /**
    * 目录名称
    */
-  name?: string | null;
+  name: string;
   /**
    * 层级
    */

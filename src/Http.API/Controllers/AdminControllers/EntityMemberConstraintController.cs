@@ -1,15 +1,15 @@
-using Share.Models.TagsDtos;
-namespace Http.API.Controllers.ClientControllers;
+using Share.Models.EntityMemberConstraintDtos;
+namespace Http.API.Controllers.AdminControllers;
 
 /// <summary>
-/// 标签
+/// 属性的约束
 /// </summary>
-public class TagsController : ClientControllerBase<ITagsManager>
+public class EntityMemberConstraintController : RestControllerBase<IEntityMemberConstraintManager>
 {
-    public TagsController(
+    public EntityMemberConstraintController(
         IUserContext user,
-        ILogger<TagsController> logger,
-        ITagsManager manager
+        ILogger<EntityMemberConstraintController> logger,
+        IEntityMemberConstraintManager manager
         ) : base(manager, user, logger)
     {
     }
@@ -20,7 +20,7 @@ public class TagsController : ClientControllerBase<ITagsManager>
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async Task<ActionResult<PageList<TagsItemDto>>> FilterAsync(TagsFilterDto filter)
+    public async Task<ActionResult<PageList<EntityMemberConstraintItemDto>>> FilterAsync(EntityMemberConstraintFilterDto filter)
     {
         return await manager.FilterAsync(filter);
     }
@@ -31,9 +31,9 @@ public class TagsController : ClientControllerBase<ITagsManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<Tags>> AddAsync(TagsAddDto form)
+    public async Task<ActionResult<EntityMemberConstraint>> AddAsync(EntityMemberConstraintAddDto form)
     {
-        var entity = await manager.CreateNewEntityAsync(form);
+        var entity = form.MapTo<EntityMemberConstraintAddDto, EntityMemberConstraint>();
         return await manager.AddAsync(entity);
     }
 
@@ -44,9 +44,9 @@ public class TagsController : ClientControllerBase<ITagsManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<Tags?>> UpdateAsync([FromRoute] Guid id, TagsUpdateDto form)
+    public async Task<ActionResult<EntityMemberConstraint?>> UpdateAsync([FromRoute] Guid id, EntityMemberConstraintUpdateDto form)
     {
-        var current = await manager.GetOwnedAsync(id);
+        var current = await manager.GetCurrentAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -57,7 +57,7 @@ public class TagsController : ClientControllerBase<ITagsManager>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<Tags?>> GetDetailAsync([FromRoute] Guid id)
+    public async Task<ActionResult<EntityMemberConstraint?>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
         return res == null ? NotFound() : res;
@@ -70,12 +70,10 @@ public class TagsController : ClientControllerBase<ITagsManager>
     /// <returns></returns>
     // [ApiExplorerSettings(IgnoreApi = true)]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Tags?>> DeleteAsync([FromRoute] Guid id)
+    public async Task<ActionResult<EntityMemberConstraint?>> DeleteAsync([FromRoute] Guid id)
     {
-        // TODO:实现删除逻辑,注意删除权限
-        var entity = await manager.GetOwnedAsync(id);
+        var entity = await manager.GetCurrentAsync(id);
         if (entity == null) return NotFound();
-        return Forbid();
-        // return await manager.DeleteAsync(entity);
+        return await manager.DeleteAsync(entity);
     }
 }

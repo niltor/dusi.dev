@@ -16,7 +16,7 @@ export interface Blog {
   /**
    * 标题
    */
-  title?: string | null;
+  title: string;
   /**
    * 描述
    */
@@ -24,11 +24,11 @@ export interface Blog {
   /**
    * 内容
    */
-  content?: string | null;
+  content: string;
   /**
    * 作者
    */
-  authors?: string | null;
+  authors: string;
   /**
    * 标题
    */

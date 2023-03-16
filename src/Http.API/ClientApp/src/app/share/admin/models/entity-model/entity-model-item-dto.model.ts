@@ -7,11 +7,11 @@ export interface EntityModelItemDto {
   /**
    * 实体类名
    */
-  name?: string | null;
+  name: string;
   /**
    * 实体注释内容
    */
-  comment?: string | null;
+  comment: string;
   /**
    * 访问修饰符
    */
@@ -23,7 +23,7 @@ export interface EntityModelItemDto {
   /**
    * 语言版本
    */
-  languageVersion?: string | null;
+  languageVersion: string;
   id: string;
   createdTime: Date;
   updatedTime: Date;

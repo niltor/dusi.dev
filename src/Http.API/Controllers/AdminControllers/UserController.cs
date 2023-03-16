@@ -1,13 +1,11 @@
-using Core.Const;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Share.Models.AuthDtos;
 using Share.Models.UserDtos;
-namespace Http.API.Controllers.ClientControllers;
+
+namespace Http.API.Controllers.AdminControllers;
 
 /// <summary>
 /// 用户账户
 /// </summary>
-public class UserController : ClientControllerBase<IUserManager>
+public class UserController : RestControllerBase<IUserManager>
 {
     private readonly IConfiguration _config;
     private readonly ISystemUserManager systemUserManager;
@@ -24,57 +22,14 @@ public class UserController : ClientControllerBase<IUserManager>
     }
 
     /// <summary>
-    /// 登录获取Token
+    /// 筛选
     /// </summary>
-    /// <param name="dto"></param>
+    /// <param name="filter"></param>
     /// <returns></returns>
-    [HttpPost("login")]
-    [AllowAnonymous]
-    public async Task<ActionResult<AuthResult>> LoginAsync(LoginDto dto)
+    [HttpPost("filter")]
+    public async Task<ActionResult<PageList<UserItemDto>>> FilterAsync(UserFilterDto filter)
     {
-        // 查询用户
-        var user = await manager.Query.Db.Where(u => u.UserName.Equals(dto.UserName))
-            .FirstOrDefaultAsync();
-        if (user == null)
-        {
-            return NotFound("不存在该用户");
-        }
-
-        if (HashCrypto.Validate(dto.Password, user.PasswordSalt, user.PasswordHash))
-        {
-            var sign = _config.GetSection("Jwt")["Sign"];
-            var issuer = _config.GetSection("Jwt")["Issuer"];
-            var audience = _config.GetSection("Jwt")["Audience"];
-            //var time = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            //1天后过期
-            if (!string.IsNullOrWhiteSpace(sign) &&
-                !string.IsNullOrWhiteSpace(issuer) &&
-                !string.IsNullOrWhiteSpace(audience))
-            {
-                var jwt = new JwtService(sign, audience, issuer)
-                {
-                    TokenExpires = 60 * 24 * 7,
-                };
-                var roles = new string[] { Const.User, user.UserType.ToString() };
-                var token = jwt.GetToken(user.Id.ToString(), roles);
-
-                return new AuthResult
-                {
-                    Id = user.Id,
-                    Roles = roles,
-                    Token = token,
-                    Username = user.UserName
-                };
-            }
-            else
-            {
-                throw new Exception("缺少Jwt配置内容");
-            }
-        }
-        else
-        {
-            return Problem("用户名或密码错误");
-        }
+        return await manager.FilterAsync(filter);
     }
 
     /// <summary>
@@ -83,7 +38,7 @@ public class UserController : ClientControllerBase<IUserManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<User>> SignUpAsync(UserAddDto form)
+    public async Task<ActionResult<User>> AddAsync(UserAddDto form)
     {
         if (await manager.FindAsync<User>(u => u.UserName == form.UserName) != null)
         {

@@ -5,11 +5,11 @@ export interface UserAddDto {
   /**
    * 用户名
    */
-  userName?: string | null;
+  userName: string;
   /**
    * 密码
    */
-  password?: string | null;
+  password: string;
   email?: string | null;
 
 }

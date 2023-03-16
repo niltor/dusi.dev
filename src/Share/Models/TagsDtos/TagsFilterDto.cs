@@ -17,5 +17,4 @@ public class TagsFilterDto : FilterBase
     [MaxLength(20)]
     public string? Color { get; set; }
     public Guid? UserId { get; set; }
-    
 }

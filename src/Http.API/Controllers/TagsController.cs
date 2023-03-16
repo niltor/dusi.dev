@@ -1,15 +1,15 @@
-using Share.Models.EntityMemberDtos;
+using Share.Models.TagsDtos;
 namespace Http.API.Controllers;
 
 /// <summary>
-/// 实体属性
+/// 标签
 /// </summary>
-public class EntityMemberController : RestControllerBase<IEntityMemberManager>
+public class TagsController : ClientControllerBase<ITagsManager>
 {
-    public EntityMemberController(
+    public TagsController(
         IUserContext user,
-        ILogger<EntityMemberController> logger,
-        IEntityMemberManager manager
+        ILogger<TagsController> logger,
+        ITagsManager manager
         ) : base(manager, user, logger)
     {
     }
@@ -20,7 +20,7 @@ public class EntityMemberController : RestControllerBase<IEntityMemberManager>
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async Task<ActionResult<PageList<EntityMemberItemDto>>> FilterAsync(EntityMemberFilterDto filter)
+    public async Task<ActionResult<PageList<TagsItemDto>>> FilterAsync(TagsFilterDto filter)
     {
         return await manager.FilterAsync(filter);
     }
@@ -31,9 +31,9 @@ public class EntityMemberController : RestControllerBase<IEntityMemberManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<EntityMember>> AddAsync(EntityMemberAddDto form)
+    public async Task<ActionResult<Tags>> AddAsync(TagsAddDto form)
     {
-        var entity = form.MapTo<EntityMemberAddDto, EntityMember>();
+        var entity = await manager.CreateNewEntityAsync(form);
         return await manager.AddAsync(entity);
     }
 
@@ -44,9 +44,9 @@ public class EntityMemberController : RestControllerBase<IEntityMemberManager>
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<EntityMember?>> UpdateAsync([FromRoute] Guid id, EntityMemberUpdateDto form)
+    public async Task<ActionResult<Tags?>> UpdateAsync([FromRoute] Guid id, TagsUpdateDto form)
     {
-        var current = await manager.GetCurrentAsync(id);
+        var current = await manager.GetOwnedAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -57,7 +57,7 @@ public class EntityMemberController : RestControllerBase<IEntityMemberManager>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<EntityMember?>> GetDetailAsync([FromRoute] Guid id)
+    public async Task<ActionResult<Tags?>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
         return res == null ? NotFound() : res;
@@ -70,10 +70,12 @@ public class EntityMemberController : RestControllerBase<IEntityMemberManager>
     /// <returns></returns>
     // [ApiExplorerSettings(IgnoreApi = true)]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<EntityMember?>> DeleteAsync([FromRoute] Guid id)
+    public async Task<ActionResult<Tags?>> DeleteAsync([FromRoute] Guid id)
     {
-        var entity = await manager.GetCurrentAsync(id);
+        // TODO:实现删除逻辑,注意删除权限
+        var entity = await manager.GetOwnedAsync(id);
         if (entity == null) return NotFound();
-        return await manager.DeleteAsync(entity);
+        return Forbid();
+        // return await manager.DeleteAsync(entity);
     }
 }

@@ -9,11 +9,11 @@ export interface EntityMemberUpdateDto {
   /**
    * 属性名
    */
-  name?: string | null;
+  name: string;
   /**
    * 属性注释内容
    */
-  comment?: string | null;
+  comment: string;
   /**
    * 默认值，根据类型推断
    */

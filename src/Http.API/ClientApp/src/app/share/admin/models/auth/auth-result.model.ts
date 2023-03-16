@@ -3,11 +3,11 @@ export interface AuthResult {
   /**
    * 用户名
    */
-  username?: string | null;
-  roles?: string[] | null;
+  username: string;
+  roles: string[];
   /**
    * token
    */
-  token?: string | null;
+  token: string;
 
 }

@@ -12,7 +12,7 @@ export interface BlogItemDto {
   /**
    * 标题
    */
-  title?: string | null;
+  title: string;
   /**
    * 描述
    */
@@ -20,7 +20,7 @@ export interface BlogItemDto {
   /**
    * 作者
    */
-  authors?: string | null;
+  authors: string;
   id: string;
   createdTime: Date;
   updatedTime: Date;

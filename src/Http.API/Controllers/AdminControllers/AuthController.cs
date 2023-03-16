@@ -3,12 +3,13 @@ using Http.API.Infrastructure;
 using Share.Models.AuthDtos;
 using Share.Models.BlogDtos;
 
-namespace Http.API.Controllers;
+namespace Http.API.Controllers.AdminControllers;
 
 /// <summary>
 /// 系统用户授权登录
 /// </summary>
 [AllowAnonymous]
+[Route("api/admin/[controller]")]
 public class AuthController : RestControllerBase
 {
     private readonly SystemUserQueryStore _store;
@@ -60,7 +61,7 @@ public class AuthController : RestControllerBase
                 {
                     TokenExpires = 60 * 24 * 7,
                 };
-                var token = jwt.GetToken(user.Id.ToString(),roles ?? new string[] { "Unknown" });
+                var token = jwt.GetToken(user.Id.ToString(), roles ?? new string[] { "Unknown" });
                 // 登录状态存储到Redis
                 //await _redis.SetValueAsync("login" + user.Id.ToString(), true, 60 * 24 * 7);
 
