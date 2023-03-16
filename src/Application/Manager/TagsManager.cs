@@ -1,4 +1,5 @@
 using Application.IManager;
+using Core.Const;
 using Share.Models.TagsDtos;
 
 namespace Application.Manager;
@@ -17,11 +18,12 @@ public class TagsManager : DomainManagerBase<Tags, TagsUpdateDto, TagsFilterDto,
     /// </summary>
     /// <param name="dto"></param>
     /// <returns></returns>
-    public Task<Tags> CreateNewEntityAsync(TagsAddDto dto)
+    public async Task<Tags> CreateNewEntityAsync(TagsAddDto dto)
     {
         var entity = dto.MapTo<TagsAddDto, Tags>();
-        // TODO:构建实体
-        return Task.FromResult(entity);
+        var user = await _userContext.GetUserAsync() ?? throw new Exception(ErrorMsg.NotFoundUser);
+        entity.User = user!;
+        return entity;
     }
 
     public override async Task<Tags> UpdateAsync(Tags entity, TagsUpdateDto dto)
