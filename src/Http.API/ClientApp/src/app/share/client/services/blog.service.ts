@@ -8,7 +8,7 @@ import { BlogItemDtoPageList } from '../models/blog/blog-item-dto-page-list.mode
 import { Blog } from '../models/blog/blog.model';
 
 /**
- * Blog
+ * 博客
  */
 @Injectable({ providedIn: 'root' })
 export class BlogService extends BaseService {
@@ -53,9 +53,9 @@ export class BlogService extends BaseService {
    * 新增
    * @param data BlogAddDto
    */
-  add(data: BlogAddDto): Observable<string> {
+  add(data: BlogAddDto): Observable<Blog> {
     const url = `/api/Blog`;
-    return this.request<string>('post', url, data);
+    return this.request<Blog>('post', url, data);
   }
 
 }

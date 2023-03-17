@@ -7,15 +7,6 @@ namespace Share.Models.BlogDtos;
 public class BlogUpdateDto
 {
     /// <summary>
-    /// 标题
-    /// </summary>
-    public string? TranslateTitle { get; set; }
-    /// <summary>
-    /// 翻译内容
-    /// </summary>
-    [MaxLength(12000)]
-    public string? TranslateContent { get; set; }
-    /// <summary>
     /// 语言类型
     /// </summary>
     public LanguageType? LanguageType { get; set; }
@@ -39,14 +30,13 @@ public class BlogUpdateDto
     /// </summary>
     public bool? IsPublic { get; set; }
     /// <summary>
-    /// 作者
-    /// </summary>
-    [MaxLength(200)]
-    public string? Authors { get; set; }
-    /// <summary>
     /// 所属目录
     /// </summary>
     public Guid? CatalogId { get; set; }
+    /// <summary>
+    /// 是否原创
+    /// </summary>
+    public bool? IsOriginal { get; set; }
     /// <summary>
     /// 标签
     /// </summary>

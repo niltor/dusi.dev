@@ -60,7 +60,6 @@ export class AddComponent implements OnInit {
     this.initForm();
     this.initEditor();
 
-    
     forkJoin([this.getCatalogs(), this.getTags()])
       .subscribe(_ => {
         this.isLoading = false;

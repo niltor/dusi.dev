@@ -3,14 +3,6 @@ import { LanguageType } from '../enum/language-type.model';
  * 博客更新时请求结构
  */
 export interface BlogUpdateDto {
-  /**
-   * 标题
-   */
-  translateTitle?: string | null;
-  /**
-   * 翻译内容
-   */
-  translateContent?: string | null;
   languageType?: LanguageType | null;
   /**
    * 标题
@@ -29,13 +21,13 @@ export interface BlogUpdateDto {
    */
   isPublic?: boolean | null;
   /**
-   * 作者
-   */
-  authors?: string | null;
-  /**
    * 所属目录
    */
   catalogId?: string | null;
+  /**
+   * 是否原创
+   */
+  isOriginal?: boolean | null;
   /**
    * 标签
    */

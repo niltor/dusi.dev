@@ -12,6 +12,9 @@ import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 import { LanguageType } from 'src/app/share/client/models/enum/language-type.model';
 import { Catalog } from 'src/app/share/client/models/catalog/catalog.model';
 import { CatalogService } from 'src/app/share/client/services/catalog.service';
+import { TagsItemDto } from 'src/app/share/client/models/tags/tags-item-dto.model';
+import { forkJoin, lastValueFrom } from 'rxjs';
+import { TagsService } from 'src/app/share/client/services/tags.service';
 
 @Component({
   selector: 'app-edit',
@@ -27,6 +30,7 @@ export class EditComponent implements OnInit {
   isLoading = true;
   data = {} as Blog;
   catalog: Catalog[] = [];
+  allTags: TagsItemDto[] = [];
   updateData = {} as BlogUpdateDto;
   formGroup!: FormGroup;
   constructor(
@@ -34,6 +38,7 @@ export class EditComponent implements OnInit {
     // private authService: OidcSecurityService,
     private service: BlogService,
     private catalogSrv: CatalogService,
+    private tagSrv: TagsService,
     private snb: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
@@ -59,12 +64,12 @@ export class EditComponent implements OnInit {
   get catalogId() { return this.formGroup.get('catalogId'); }
 
   ngOnInit(): void {
-    this.getDetail();
-    this.getCatalogs();
-    this.initEditor();
-
-    // TODO:等待数据加载完成
-    // this.isLoading = false;
+    forkJoin([this.getDetail(), this.getTags(), this.getCatalogs()])
+      .subscribe(_ => {
+        this.initForm();
+        this.initEditor();
+        this.isLoading = false;
+      });
   }
   initEditor(): void {
     this.editorConfig = {
@@ -84,33 +89,27 @@ export class EditComponent implements OnInit {
       editor.ui.getEditableElement()
     );
   }
-  getDetail(): void {
-    this.service.getDetail(this.id)
-      .subscribe(res => {
-        this.data = res;
-        this.initForm();
-        this.isLoading = false;
-      }, error => {
-        this.snb.open(error);
-      })
+  async getDetail(): Promise<void> {
+    const res = await lastValueFrom(this.service.getDetail(this.id));
+    if (res) {
+      this.data = res;
+    }
   }
 
-  getCatalogs(): void {
-    this.catalogSrv.getLeaf()
-      .subscribe({
-        next: (res) => {
-          if (res) {
-            this.catalog = res;
-          } else {
+  async getTags(): Promise<void> {
+    let res = await lastValueFrom(this.tagSrv.filter({
+      pageIndex: 1, pageSize: 99
+    }));
+    if (res) {
+      this.allTags = res.data!;
+    }
+  }
 
-          }
-          this.isLoading = false;
-        },
-        error: (error) => {
-          this.snb.open(error.detail);
-          this.isLoading = false;
-        }
-      });
+  async getCatalogs(): Promise<void> {
+    const res = await lastValueFrom(this.catalogSrv.getLeaf());
+    if (res) {
+      this.catalog = res;
+    }
   }
 
   initForm(): void {
