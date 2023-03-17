@@ -34,8 +34,7 @@ public class TagsManager : DomainManagerBase<Tags, TagsUpdateDto, TagsFilterDto,
 
     public override async Task<PageList<TagsItemDto>> FilterAsync(TagsFilterDto filter)
     {
-        // TODO:根据实际业务构建筛选条件
-        // if ... Queryable = ...
+        Queryable = Queryable.Where(q => q.User.Id == _userContext.UserId);
         return await Query.FilterAsync<TagsItemDto>(Queryable, filter.PageIndex, filter.PageSize);
     }
 

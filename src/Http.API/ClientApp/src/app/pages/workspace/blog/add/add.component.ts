@@ -12,6 +12,10 @@ import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 import { LanguageType } from 'src/app/share/client/models/enum/language-type.model';
 import { Catalog } from 'src/app/share/admin/models/catalog.model';
 import { CatalogService } from 'src/app/share/client/services/catalog.service';
+import { TagsService } from 'src/app/share/client/services/tags.service';
+import { forkJoin, lastValueFrom } from 'rxjs';
+import { Tags } from 'src/app/share/client/models/tags/tags.model';
+import { TagsItemDto } from 'src/app/share/client/models/tags/tags-item-dto.model';
 
 @Component({
   selector: 'app-add',
@@ -24,12 +28,15 @@ export class AddComponent implements OnInit {
   LanguageType = LanguageType;
   formGroup!: FormGroup;
   data = {} as BlogAddDto;
-  catalog: Catalog[] = [];
+  catalogs: Catalog[] = [];
+  allTags: TagsItemDto[] = [];
+
   isLoading = true;
   isProcessing = false;
   constructor(
     private service: BlogService,
     private catalogSrv: CatalogService,
+    private tagSrv: TagsService,
     public snb: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
@@ -52,29 +59,28 @@ export class AddComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.initEditor();
-    this.getCatalogs();
-    // TODO:获取其他相关数据后设置加载状态
+
+    
+    forkJoin([this.getCatalogs(), this.getTags()])
+      .subscribe(_ => {
+        this.isLoading = false;
+      });
   }
 
-  getCatalogs(): void {
-    this.catalogSrv.getLeaf()
-      .subscribe({
-        next: (res) => {
-          if (res) {
+  async getCatalogs(): Promise<void> {
+    const res = await lastValueFrom(this.catalogSrv.getLeaf());
+    if (res) {
+      this.catalogs = res;
+    }
+  }
 
-            console.log(res);
-
-            this.catalog = res;
-          } else {
-
-          }
-          this.isLoading = false;
-        },
-        error: (error) => {
-          this.snb.open(error.detail);
-          this.isLoading = false;
-        }
-      });
+  async getTags(): Promise<void> {
+    let res = await lastValueFrom(this.tagSrv.filter({
+      pageIndex: 1, pageSize: 99
+    }));
+    if (res) {
+      this.allTags = res.data!;
+    }
   }
 
   initEditor(): void {
