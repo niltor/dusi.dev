@@ -8,7 +8,7 @@
   <div class="d-flex flex-column w-100">
     <mat-form-field>
       <mat-label>标题</mat-label>
-      <input matInput placeholder="Title" formControlName="title" required minlength="" maxlength="100">
+      <input matInput placeholder="标题" formControlName="title" required minlength="" maxlength="100">
       <mat-error *ngIf="title?.invalid">
         {{getValidatorMessage('title')}}
       </mat-error>

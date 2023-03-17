@@ -46,7 +46,6 @@ export class AddComponent implements OnInit {
   get isPublic() { return this.formGroup.get('isPublic'); }
   get isOriginal() { return this.formGroup.get('isOriginal'); }
   get tags() { return this.formGroup.get('tags'); }
-
   get catalogId() { return this.formGroup.get('catalogId'); }
 
 
@@ -139,7 +138,6 @@ export class AddComponent implements OnInit {
         return this.catalogId?.errors?.['required'] ? '分类必填' :
           this.catalogId?.errors?.['minlength'] ? 'Tags长度最少位' :
             this.catalogId?.errors?.['maxlength'] ? 'Tags长度最多位' : '';
-
       default:
         return '';
     }

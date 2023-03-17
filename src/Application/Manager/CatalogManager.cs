@@ -8,7 +8,6 @@ namespace Application.Manager;
 /// </summary>
 public class CatalogManager : DomainManagerBase<Catalog, CatalogUpdateDto, CatalogFilterDto, CatalogItemDto>, ICatalogManager
 {
-
     private readonly IUserContext _userContext;
     public CatalogManager(DataStoreContext storeContext, IUserContext userContext) : base(storeContext)
     {
@@ -53,7 +52,6 @@ public class CatalogManager : DomainManagerBase<Catalog, CatalogUpdateDto, Catal
         // if ... Queryable = ...
         return await Query.FilterAsync<CatalogItemDto>(Queryable, filter.PageIndex, filter.PageSize);
     }
-
 
     /// <summary>
     /// 获取树型目录

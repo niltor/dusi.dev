@@ -30,6 +30,13 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
         return entity;
     }
 
+    public override Task<Blog?> FindAsync(Guid id)
+    {
+        return Queryable.Include(b => b.User)
+            .Include(b => b.Catalog)
+            .SingleOrDefaultAsync(b => b.Id == id);
+    }
+
     public override async Task<Blog> UpdateAsync(Blog entity, BlogUpdateDto dto)
     {
         // TODO:根据实际业务更新

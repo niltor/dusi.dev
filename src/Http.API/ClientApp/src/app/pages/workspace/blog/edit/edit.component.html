@@ -2,47 +2,59 @@
   <button color="basic" mat-icon-button matTooltip="返回" (click)="back()">
     <mat-icon>arrow_back</mat-icon>
   </button>
-    编辑
+  编辑
 </mat-toolbar>
 <form class="d-flex" *ngIf="!isLoading" [formGroup]="formGroup" (ngSubmit)="edit()">
   <div class="d-flex flex-column w-100">
- <ckeditor [editor]="editor" [config]="editorConfig" formControlName="translateContent" (ready)="onReady($event)">
-    </ckeditor><mat-form-field>
-  <mat-label>LanguageType</mat-label>
-  <mat-select formControlName="languageType">
-    <mat-option *ngFor="let item of LanguageType | toKeyValue" [value]="item.value">
-      {{item.key}}
-    </mat-option>
-  </mat-select>
-  <mat-error *ngIf="languageType?.invalid">
-    {{getValidatorMessage('languageType')}}
-  </mat-error>
-</mat-form-field>  <mat-form-field>
-    <mat-label>Title</mat-label>
-    <input matInput placeholder="Title" formControlName="title"  minlength="" maxlength="100">
-    <mat-error *ngIf="title?.invalid">
-    {{getValidatorMessage('title')}}
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Description</mat-label>
-    <textarea matInput placeholder="Description" formControlName="description"  minlength="" maxlength="300"
-      cols="5"></textarea>
-    <mat-error *ngIf="description?.invalid">
-    {{getValidatorMessage('description')}}
-    </mat-error>
-  </mat-form-field>
- <ckeditor [editor]="editor" [config]="editorConfig" formControlName="content" (ready)="onReady($event)">
-    </ckeditor>    <mat-slide-toggle color="primary" formControlName="isPublic">IsPublic</mat-slide-toggle>
-  <mat-form-field>
-    <mat-label>Authors</mat-label>
-    <textarea matInput placeholder="Authors" formControlName="authors"  minlength="" maxlength="200"
-      cols="5"></textarea>
-    <mat-error *ngIf="authors?.invalid">
-    {{getValidatorMessage('authors')}}
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>标题</mat-label>
+      <input matInput placeholder="标题" formControlName="title" minlength="" maxlength="100">
+      <mat-error *ngIf="title?.invalid">
+        {{getValidatorMessage('title')}}
+      </mat-error>
+    </mat-form-field>
+    <div class="d-flex w-100">
+      <mat-form-field>
+        <mat-label>语言</mat-label>
+        <mat-select formControlName="languageType">
+          <mat-option *ngFor="let item of LanguageType | toKeyValue" [value]="item.value">
+            {{item.key}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="languageType?.invalid">
+          {{getValidatorMessage('languageType')}}
+        </mat-error>
+      </mat-form-field>
 
+      <mat-form-field class="ms-2">
+        <mat-label>选择分类</mat-label>
+        <mat-select placeholder="选择分类" formControlName="catalogId" required="">
+          <mat-option *ngFor="let item of catalog" [value]="item.id">
+            {{item.name}}
+            <span *ngIf="item.parent">
+              ({{item.parent.name}})
+            </span>
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="languageType?.invalid">
+          {{getValidatorMessage('catalogId')}}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <mat-label>描述</mat-label>
+      <textarea matInput placeholder="Description" formControlName="description" minlength="" maxlength="300"
+        rows="4"></textarea>
+      <mat-error *ngIf="description?.invalid">
+        {{getValidatorMessage('description')}}
+      </mat-error>
+    </mat-form-field>
+    <ckeditor [editor]="editor" [config]="editorConfig" formControlName="content" (ready)="onReady($event)">
+    </ckeditor>
+    <div class="d-flex my-1 py-3 g-1">
+      <mat-slide-toggle color="primary" formControlName="isPublic">是否公开</mat-slide-toggle>
+      <mat-slide-toggle class="ms-3" color="primary" formControlName="isOriginal">是否原创</mat-slide-toggle>
+    </div>
     <div class="d-flex mt-1">
       <button class="d-flex flex-column" mat-flat-button color="primary" type="submit">保存</button>
     </div>
