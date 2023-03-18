@@ -43,7 +43,7 @@
       
       <mat-form-field class="ms-2" style="width:400px">
         <mat-label>选择标签</mat-label>
-        <mat-select placeholder="标签" multiple>
+        <mat-select placeholder="标签" multiple formControlName="tagIds">
           <mat-option *ngFor="let tag of allTags" [value]="tag.id">{{tag.name}}</mat-option>
         </mat-select>
       </mat-form-field>

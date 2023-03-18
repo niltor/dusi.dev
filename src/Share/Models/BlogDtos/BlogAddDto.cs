@@ -42,6 +42,6 @@ public class BlogAddDto
     /// <summary>
     /// 标签
     /// </summary>
-    public List<string>? Tags { get; set; }
+    public List<Guid>? TagIds { get; set; }
 
 }

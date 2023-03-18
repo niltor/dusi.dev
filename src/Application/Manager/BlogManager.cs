@@ -1,4 +1,5 @@
 using Core.Const;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Share.Models.BlogDtos;
 
 namespace Application.Manager;
@@ -7,10 +8,13 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
 {
     private readonly IUserContext _userContext;
     private readonly ICatalogManager _catalogManager;
-    public BlogManager(DataStoreContext storeContext, IUserContext userContext, ICatalogManager catalogManager) : base(storeContext)
+    private readonly ITagsManager _tagsManager;
+
+    public BlogManager(DataStoreContext storeContext, IUserContext userContext, ICatalogManager catalogManager, ITagsManager tagsManager) : base(storeContext)
     {
         _userContext = userContext;
         _catalogManager = catalogManager;
+        _tagsManager = tagsManager;
     }
 
     /// <summary>
@@ -24,6 +28,16 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
         var user = await _userContext.GetUserAsync() ?? throw new Exception(ErrorMsg.NotFoundUser);
         var catalog = await _catalogManager.GetCurrentAsync(dto.CatalogId) ?? throw new Exception("不存在的目录");
 
+        if (dto.TagIds != null && dto.TagIds.Any())
+        {
+            var tags = await _tagsManager.Command.Db.Where(t => dto.TagIds.Contains(t.Id)).ToListAsync();
+
+            if (tags != null)
+            {
+                entity.Tags = tags;
+            }
+        }
+
         entity.User = user;
         entity.Catalog = catalog;
         entity.Authors = user.UserName;
@@ -33,13 +47,33 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     public override Task<Blog?> FindAsync(Guid id)
     {
         return Queryable.Include(b => b.User)
+            .Include(b => b.Tags)
             .Include(b => b.Catalog)
             .SingleOrDefaultAsync(b => b.Id == id);
     }
 
     public override async Task<Blog> UpdateAsync(Blog entity, BlogUpdateDto dto)
     {
-        // TODO:根据实际业务更新
+        if (dto.CatalogId != null)
+        {
+            // 修改了所属目录
+            if (entity.Catalog.Id != dto.CatalogId)
+            {
+                var catalog = await _catalogManager.GetCurrentAsync(dto.CatalogId.Value) ?? throw new Exception("不存在的目录");
+                entity.Catalog = catalog;
+            }
+        }
+        // 处理tagids
+        if (dto.TagIds != null && dto.TagIds.Any())
+        {
+            entity.Tags = null;
+
+            var tags = await _tagsManager.Command.Db.Where(t => dto.TagIds.Contains(t.Id)).ToListAsync();
+            if (tags != null)
+            {
+                entity.Tags = tags;
+            }
+        }
         return await base.UpdateAsync(entity, dto);
     }
 
@@ -80,11 +114,11 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     public async Task<Blog?> GetOwnedAsync(Guid id)
     {
         var query = Command.Db.Where(q => q.Id == id);
-        if (!_userContext.IsAdmin)
-        {
-            // TODO:属于当前角色的对象
-            // query = query.Where(q => q.User.Id == _userContext.UserId);
-        }
+
+        query = query.Where(q => q.User.Id == _userContext.UserId)
+            .Include(b => b.Tags)
+            .Include(b => b.Catalog);
+
         return await query.FirstOrDefaultAsync();
     }
 }

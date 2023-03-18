@@ -52,7 +52,7 @@ export class AddComponent implements OnInit {
   get content() { return this.formGroup.get('content'); }
   get isPublic() { return this.formGroup.get('isPublic'); }
   get isOriginal() { return this.formGroup.get('isOriginal'); }
-  get tags() { return this.formGroup.get('tags'); }
+  get tagIds() { return this.formGroup.get('tagIds'); }
   get catalogId() { return this.formGroup.get('catalogId'); }
 
 
@@ -108,7 +108,7 @@ export class AddComponent implements OnInit {
       content: new FormControl(null, [Validators.required, Validators.maxLength(10000)]),
       isPublic: new FormControl(true, []),
       isOriginal: new FormControl(true, []),
-      tags: new FormControl(null, []),
+      tagIds: new FormControl(null, []),
       catalogId: new FormControl<string>('', [Validators.required])
 
     });

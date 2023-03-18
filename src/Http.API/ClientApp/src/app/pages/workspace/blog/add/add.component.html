@@ -44,12 +44,12 @@
 
       <mat-form-field class="ms-2" style="width:400px">
         <mat-label>选择标签</mat-label>
-        <mat-select placeholder="标签" multiple>
+        <mat-select placeholder="标签" multiple formControlName="tagIds">
           <mat-option *ngFor="let tag of allTags" [value]="tag.id">{{tag.name}}</mat-option>
         </mat-select>
       </mat-form-field>
-
     </div>
+
     <mat-form-field>
       <mat-label>描述</mat-label>
       <textarea matInput placeholder="概要内容" formControlName="description" minlength="" maxlength="300"
@@ -60,7 +60,6 @@
     </mat-form-field>
     <ckeditor [editor]="editor" [config]="editorConfig" formControlName="content" (ready)="onReady($event)">
     </ckeditor>
-
 
     <div class="d-flex my-1 py-3 g-1">
       <mat-slide-toggle color="primary" formControlName="isPublic">是否公开</mat-slide-toggle>

@@ -31,6 +31,7 @@ export class EditComponent implements OnInit {
   data = {} as Blog;
   catalog: Catalog[] = [];
   allTags: TagsItemDto[] = [];
+  selectedTagIds: string[] = [];
   updateData = {} as BlogUpdateDto;
   formGroup!: FormGroup;
   constructor(
@@ -60,7 +61,7 @@ export class EditComponent implements OnInit {
   get content() { return this.formGroup.get('content'); }
   get isPublic() { return this.formGroup.get('isPublic'); }
   get isOriginal() { return this.formGroup.get('isOriginal'); }
-  get tags() { return this.formGroup.get('tags'); }
+  get tagIds() { return this.formGroup.get('tagIds'); }
   get catalogId() { return this.formGroup.get('catalogId'); }
 
   ngOnInit(): void {
@@ -93,6 +94,9 @@ export class EditComponent implements OnInit {
     const res = await lastValueFrom(this.service.getDetail(this.id));
     if (res) {
       this.data = res;
+      if (res.tags) {
+        this.selectedTagIds = res.tags.map(t => t.id);
+      }
     }
   }
 
@@ -120,7 +124,7 @@ export class EditComponent implements OnInit {
       content: new FormControl(this.data.content, [Validators.maxLength(10000)]),
       isPublic: new FormControl(this.data.isPublic, []),
       isOriginal: new FormControl(this.data.isOriginal, []),
-      tags: new FormControl(this.data.tags, []),
+      tagIds: new FormControl(this.selectedTagIds, []),
       catalogId: new FormControl<string>(this.data.catalog?.id!, [Validators.required])
     });
   }
