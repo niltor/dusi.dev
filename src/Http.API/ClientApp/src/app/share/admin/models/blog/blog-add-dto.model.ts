@@ -31,6 +31,6 @@ export interface BlogAddDto {
   /**
    * 标签
    */
-  tags?: string[] | null;
+  tagIds?: string[] | null;
 
 }

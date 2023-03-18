@@ -13,6 +13,7 @@ public class DataStoreContext
     public QuerySet<SystemRole> SystemRoleQuery { get; init; }
     public QuerySet<SystemUser> SystemUserQuery { get; init; }
     public QuerySet<Tags> TagsQuery { get; init; }
+    public QuerySet<ThirdNews> ThirdNewsQuery { get; init; }
     public QuerySet<User> UserQuery { get; init; }
     public CommandSet<Blog> BlogCommand { get; init; }
     public CommandSet<Catalog> CatalogCommand { get; init; }
@@ -23,6 +24,7 @@ public class DataStoreContext
     public CommandSet<SystemRole> SystemRoleCommand { get; init; }
     public CommandSet<SystemUser> SystemUserCommand { get; init; }
     public CommandSet<Tags> TagsCommand { get; init; }
+    public CommandSet<ThirdNews> ThirdNewsCommand { get; init; }
     public CommandSet<User> UserCommand { get; init; }
 
 
@@ -41,6 +43,7 @@ public class DataStoreContext
         SystemRoleQueryStore systemRoleQuery,
         SystemUserQueryStore systemUserQuery,
         TagsQueryStore tagsQuery,
+        ThirdNewsQueryStore thirdNewsQuery,
         UserQueryStore userQuery,
         BlogCommandStore blogCommand,
         CatalogCommandStore catalogCommand,
@@ -51,6 +54,7 @@ public class DataStoreContext
         SystemRoleCommandStore systemRoleCommand,
         SystemUserCommandStore systemUserCommand,
         TagsCommandStore tagsCommand,
+        ThirdNewsCommandStore thirdNewsCommand,
         UserCommandStore userCommand,
 
         QueryDbContext queryDbContext,
@@ -77,6 +81,8 @@ public class DataStoreContext
         AddCache(SystemUserQuery);
         TagsQuery = tagsQuery;
         AddCache(TagsQuery);
+        ThirdNewsQuery = thirdNewsQuery;
+        AddCache(ThirdNewsQuery);
         UserQuery = userQuery;
         AddCache(UserQuery);
         BlogCommand = blogCommand;
@@ -97,6 +103,8 @@ public class DataStoreContext
         AddCache(SystemUserCommand);
         TagsCommand = tagsCommand;
         AddCache(TagsCommand);
+        ThirdNewsCommand = thirdNewsCommand;
+        AddCache(ThirdNewsCommand);
         UserCommand = userCommand;
         AddCache(UserCommand);
 
@@ -110,13 +118,15 @@ public class DataStoreContext
     public QuerySet<TEntity> QuerySet<TEntity>() where TEntity : EntityBase
     {
         var typename = typeof(TEntity).Name + "QueryStore";
-        var set = GetSet(typename) ?? throw new ArgumentNullException($"{typename} class object not found");
+        var set = GetSet(typename);
+        if (set == null) throw new ArgumentNullException($"{typename} class object not found");
         return (QuerySet<TEntity>)set;
     }
     public CommandSet<TEntity> CommandSet<TEntity>() where TEntity : EntityBase
     {
         var typename = typeof(TEntity).Name + "CommandStore";
-        var set = GetSet(typename) ?? throw new ArgumentNullException($"{typename} class object not found");
+        var set = GetSet(typename);
+        if (set == null) throw new ArgumentNullException($"{typename} class object not found");
         return (CommandSet<TEntity>)set;
     }
 

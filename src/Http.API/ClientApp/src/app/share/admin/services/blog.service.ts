@@ -6,7 +6,7 @@ import { BlogAddDto } from '../models/blog/blog-add-dto.model';
 import { BlogItemDtoPageList } from '../models/blog/blog-item-dto-page-list.model';
 
 /**
- * Blog
+ * 博客
  */
 @Injectable({ providedIn: 'root' })
 export class BlogService extends BaseService {

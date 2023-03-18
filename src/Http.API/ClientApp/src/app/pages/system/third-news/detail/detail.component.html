@@ -1,0 +1,40 @@
+<mat-toolbar>
+  <button color="basic" mat-icon-button matTooltip="返回" (click)="back()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <button color="primary" mat-icon-button matTooltip="编辑" (click)="edit()">
+    <mat-icon>edit</mat-icon>
+  </button>
+</mat-toolbar>
+<div *ngIf="!isLoading" class="d-flex">
+  <mat-card class="w-100">
+    <!-- <mat-card-header>
+      <div mat-card-avatar class=""></div>
+      <mat-card-title></mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header> -->
+    <!-- <img mat-card-image src="" alt=""> -->
+    <mat-card-content>
+      <p><strong>AuthorName</strong><br> <span class="text-primary">{{data.authorName}}</span></p>
+      <p><strong>AuthorAvatar</strong><br> <span class="text-primary">{{data.authorAvatar}}</span></p>
+      <p><strong>Title</strong><br> <span class="text-primary">{{data.title}}</span></p>
+      <p><strong>Url</strong><br> <span class="text-primary">{{data.url}}</span></p>
+      <p><strong>ThumbnailUrl</strong><br> <span class="text-primary">{{data.thumbnailUrl}}</span></p>
+      <p><strong>Provider</strong><br> <span class="text-primary">{{data.provider}}</span></p>
+      <p><strong>DatePublished</strong><br> <span class="text-primary">{{data.datePublished|date:'yyyy-MM-dd HH:mm:ss'}}</span></p>
+      <p><strong>Category</strong><br> <span class="text-primary">{{data.category}}</span></p>
+      <p><strong>IdentityId</strong><br> <span class="text-primary">{{data.identityId}}</span></p>
+      <p><strong>Type</strong><br> <span class="text-primary">{{data.type}}</span></p>
+      <p><strong>NewsType</strong><br> <span class="text-primary">{{data.newsType}}</span></p>
+      <p><strong>TechType</strong><br> <span class="text-primary">{{data.techType}}</span></p>
+      <p><strong>Id</strong><br> <span class="text-primary">{{data.id}}</span></p>
+      <p><strong>CreatedTime</strong><br> <span class="text-primary">{{data.createdTime|date:'yyyy-MM-dd HH:mm:ss'}}</span></p>
+      <p><strong>UpdatedTime</strong><br> <span class="text-primary">{{data.updatedTime|date:'yyyy-MM-dd HH:mm:ss'}}</span></p>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <!-- <button mat-button></button>
+      <button mat-button></button> -->
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -66,7 +66,8 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
         // 处理tagids
         if (dto.TagIds != null && dto.TagIds.Any())
         {
-            entity.Tags = null;
+            // TODO: 会往返进行多次删除
+            //entity.Tags = null;
 
             var tags = await _tagsManager.Command.Db.Where(t => dto.TagIds.Contains(t.Id)).ToListAsync();
             if (tags != null)

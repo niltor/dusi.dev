@@ -5,12 +5,14 @@ import { HomeRoutingModule } from './home-routing.module';
 import { LoginComponent } from './login/login.component';
 import { IndexComponent } from './index/index.component';
 import { ShareModule } from 'src/app/share/share.module';
+import { NewsComponent } from './news/news.component';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    IndexComponent
+    IndexComponent,
+    NewsComponent
   ],
   imports: [
     ShareModule,

@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 namespace Core.Entities.CMS;
 
+/// <summary>
+/// 第三方资讯
+/// </summary>
 [Index(nameof(AuthorName))]
 [Index(nameof(Title))]
 [Index(nameof(Provider))]
@@ -20,7 +23,7 @@ public class ThirdNews : EntityBase
     public string? AuthorAvatar { get; set; }
 
     [MaxLength(200)]
-    public string Title
+    public required string Title
     {
         get => _title ?? string.Empty;
         set => _title = value != null && value.Length > 200 ? value[..200] : value;
@@ -64,7 +67,30 @@ public class ThirdNews : EntityBase
     public NewsType NewsType { get; set; } = NewsType.Default;
     public List<NewsTags>? NewsTags { get; set; }
     public TechType TechType { get; set; } = TechType.Default;
+    /// <summary>
+    /// 第三方资讯状态
+    /// </summary>
+    public NewsStatus NewsStatus { get; set; }
 
+}
+
+/// <summary>
+/// 第三方资讯状态
+/// </summary>
+public enum NewsStatus
+{
+    /// <summary>
+    /// 默认状态
+    /// </summary>
+    Default,
+    /// <summary>
+    /// 公开
+    /// </summary>
+    Public,
+    /// <summary>
+    /// 内部
+    /// </summary>
+    Internal,
 }
 
 public enum TechType

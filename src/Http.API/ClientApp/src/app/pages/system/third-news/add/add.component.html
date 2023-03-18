@@ -1,0 +1,117 @@
+<mat-toolbar fxLayoutGap="4px">
+  <button color="basic" mat-icon-button matTooltip="返回" (click)="back()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+    添加
+</mat-toolbar>
+<form class="d-flex" *ngIf="!isLoading" [formGroup]="formGroup" (ngSubmit)="add()">
+  <div class="d-flex flex-column w-100">
+  <mat-form-field>
+    <mat-label>AuthorName</mat-label>
+    <input matInput placeholder="AuthorName" formControlName="authorName"  minlength="" maxlength="100">
+    <mat-error *ngIf="authorName?.invalid">
+    {{getValidatorMessage('authorName')}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>AuthorAvatar</mat-label>
+    <textarea matInput placeholder="AuthorAvatar" formControlName="authorAvatar"  minlength="" maxlength="300"
+      cols="5"></textarea>
+    <mat-error *ngIf="authorAvatar?.invalid">
+    {{getValidatorMessage('authorAvatar')}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Title</mat-label>
+    <textarea matInput placeholder="Title" formControlName="title"  minlength="" maxlength="200"
+      cols="5"></textarea>
+    <mat-error *ngIf="title?.invalid">
+    {{getValidatorMessage('title')}}
+    </mat-error>
+  </mat-form-field>
+ <ckeditor [editor]="editor" [config]="editorConfig" formControlName="description" (ready)="onReady($event)">
+    </ckeditor>
+  <mat-form-field>
+    <mat-label>Url</mat-label>
+    <textarea matInput placeholder="Url" formControlName="url"  minlength="" maxlength="300"
+      cols="5"></textarea>
+    <mat-error *ngIf="url?.invalid">
+    {{getValidatorMessage('url')}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>ThumbnailUrl</mat-label>
+    <textarea matInput placeholder="ThumbnailUrl" formControlName="thumbnailUrl"  minlength="" maxlength="300"
+      cols="5"></textarea>
+    <mat-error *ngIf="thumbnailUrl?.invalid">
+    {{getValidatorMessage('thumbnailUrl')}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Provider</mat-label>
+    <input matInput placeholder="Provider" formControlName="provider"  minlength="" maxlength="50">
+    <mat-error *ngIf="provider?.invalid">
+    {{getValidatorMessage('provider')}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>DatePublished</mat-label>
+    <input matInput [matDatepicker]="datePublishedPicker" placeholder="DatePublished" formControlName="datePublished">
+    <mat-datepicker-toggle matSuffix [for]="datePublishedPicker"></mat-datepicker-toggle>
+    <mat-datepicker #datePublishedPicker startView="multi-year"></mat-datepicker>
+    <mat-error *ngIf="datePublished?.invalid">
+    {{getValidatorMessage('datePublished')}}
+    </mat-error>
+  </mat-form-field> <ckeditor [editor]="editor" [config]="editorConfig" formControlName="content" (ready)="onReady($event)">
+    </ckeditor>
+  <mat-form-field>
+    <mat-label>Category</mat-label>
+    <input matInput placeholder="Category" formControlName="category"  minlength="" maxlength="50">
+    <mat-error *ngIf="category?.invalid">
+    {{getValidatorMessage('category')}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>IdentityId</mat-label>
+    <input matInput placeholder="IdentityId" formControlName="identityId"  minlength="" maxlength="50">
+    <mat-error *ngIf="identityId?.invalid">
+    {{getValidatorMessage('identityId')}}
+    </mat-error>
+  </mat-form-field>
+<mat-form-field>
+  <mat-label>Type</mat-label>
+  <mat-select formControlName="type">
+    <mat-option *ngFor="let item of NewsSource | toKeyValue" [value]="item.value">
+      {{item.key}}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="type?.invalid">
+    {{getValidatorMessage('type')}}
+  </mat-error>
+</mat-form-field><mat-form-field>
+  <mat-label>NewsType</mat-label>
+  <mat-select formControlName="newsType">
+    <mat-option *ngFor="let item of NewsType | toKeyValue" [value]="item.value">
+      {{item.key}}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="newsType?.invalid">
+    {{getValidatorMessage('newsType')}}
+  </mat-error>
+</mat-form-field><mat-form-field>
+  <mat-label>TechType</mat-label>
+  <mat-select formControlName="techType">
+    <mat-option *ngFor="let item of TechType | toKeyValue" [value]="item.value">
+      {{item.key}}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="techType?.invalid">
+    {{getValidatorMessage('techType')}}
+  </mat-error>
+</mat-form-field>
+    <div class="d-flex mt-1">
+      <button class="d-flex flex-column" mat-flat-button color="primary" type="submit">保存</button>
+    </div>
+  </div>
+</form>
+

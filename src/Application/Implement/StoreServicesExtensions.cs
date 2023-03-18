@@ -14,6 +14,7 @@ public static class StoreServicesExtensions
         services.AddScoped(typeof(SystemRoleQueryStore));
         services.AddScoped(typeof(SystemUserQueryStore));
         services.AddScoped(typeof(TagsQueryStore));
+        services.AddScoped(typeof(ThirdNewsQueryStore));
         services.AddScoped(typeof(UserQueryStore));
         services.AddScoped(typeof(BlogCommandStore));
         services.AddScoped(typeof(CatalogCommandStore));
@@ -24,6 +25,7 @@ public static class StoreServicesExtensions
         services.AddScoped(typeof(SystemRoleCommandStore));
         services.AddScoped(typeof(SystemUserCommandStore));
         services.AddScoped(typeof(TagsCommandStore));
+        services.AddScoped(typeof(ThirdNewsCommandStore));
         services.AddScoped(typeof(UserCommandStore));
 
     }
@@ -41,6 +43,7 @@ public static class StoreServicesExtensions
         services.AddScoped<ISystemRoleManager, SystemRoleManager>();
         services.AddScoped<ISystemUserManager, SystemUserManager>();
         services.AddScoped<ITagsManager, TagsManager>();
+        services.AddScoped<IThirdNewsManager, ThirdNewsManager>();
         services.AddScoped<IUserManager, UserManager>();
 
     }
