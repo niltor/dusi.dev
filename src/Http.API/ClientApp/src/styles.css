@@ -39,6 +39,14 @@ img {
     background-color: white;
 }
 
+.gap-1 {
+    gap: 8px;
+}
+
+.gap-2 {
+    gap: 16px;
+}
+
 .text-center {
     text-align: center;
 }

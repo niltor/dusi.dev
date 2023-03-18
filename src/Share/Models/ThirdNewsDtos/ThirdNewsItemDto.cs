@@ -19,7 +19,6 @@ public class ThirdNewsItemDto
     public DateTimeOffset? DatePublished { get; set; }
     [MaxLength(50)]
     public string? Category { get; set; }
-
     /// <summary>
     /// ธลาช
     /// </summary>

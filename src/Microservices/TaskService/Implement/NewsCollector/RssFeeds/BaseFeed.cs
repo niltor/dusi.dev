@@ -80,9 +80,9 @@ public class BaseFeed
 
                             if (!string.IsNullOrEmpty(description))
                             {
-                                if (description.Length > 999)
+                                if (description.Length > 5000)
                                 {
-                                    description = description[..999];
+                                    description = description[..5000];
                                 }
                             }
                             var content = x.Element(Content)?.Value;
