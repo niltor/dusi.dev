@@ -6,6 +6,7 @@ import { BlogUpdateDto } from '../models/blog/blog-update-dto.model';
 import { BlogAddDto } from '../models/blog/blog-add-dto.model';
 import { BlogItemDtoPageList } from '../models/blog/blog-item-dto-page-list.model';
 import { Blog } from '../models/blog/blog.model';
+import { UploadResult } from '../models/blog/upload-result.model';
 
 /**
  * 博客
@@ -56,6 +57,15 @@ export class BlogService extends BaseService {
   add(data: BlogAddDto): Observable<Blog> {
     const url = `/api/Blog`;
     return this.request<Blog>('post', url, data);
+  }
+
+  /**
+   * 上传图片
+   * @param data FormData
+   */
+  uploadImg(data: FormData): Observable<UploadResult> {
+    const url = `/api/Blog/upload`;
+    return this.request<UploadResult>('post', url, data);
   }
 
 }

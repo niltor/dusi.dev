@@ -9,14 +9,17 @@ namespace Http.API.Controllers;
 public class BlogController : ClientControllerBase<IBlogManager>
 {
     private readonly DaprClient dapr;
+    private readonly StorageService storageService;
 
     public BlogController(
         IUserContext user,
         ILogger<BlogController> logger,
         IBlogManager manager,
-        DaprClient dapr) : base(manager, user, logger)
+        DaprClient dapr,
+        StorageService storageService) : base(manager, user, logger)
     {
         this.dapr = dapr;
+        this.storageService = storageService;
     }
 
     /// <summary>
@@ -66,6 +69,57 @@ public class BlogController : ClientControllerBase<IBlogManager>
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
+
+    /// <summary>
+    /// 上传图片
+    /// </summary>
+    /// <param name="upload"></param>
+    /// <returns></returns>
+    [HttpPost("upload")]
+    [RequestSizeLimit(1024 * 1024 * 1)]
+    public async Task<ActionResult<UploadResult>> UploadImgAsync(IFormFile upload)
+    {
+        if (upload == null)
+        {
+            return Problem("没有上传的文件", title: "业务错误");
+        }
+        //获取静态资源文件根目录
+        if (upload.Length > 0)
+        {
+            string fileExt = Path.GetExtension(upload.FileName).ToLowerInvariant();
+            long fileSize = upload.Length; //获得文件大小，以字节为单位
+            //判断后缀是否是图片
+            string[] permittedExtensions = new string[] { ".jpeg", ".jpg", ".png", ".bmp", ".svg", ".webp" };
+
+            if (fileExt == null)
+            {
+                return Problem("上传的文件没有后缀");
+            }
+            if (!permittedExtensions.Contains(fileExt))
+            {
+                return Problem("不支持的图片格式");
+            }
+            if (fileSize > 1024 * 1024 * 1) //M
+            {
+                //上传的文件不能大于1M
+                return Problem("上传的图片应小于1M");
+            }
+
+            string fileName = HashCrypto.Md5FileHash(upload.OpenReadStream());
+            var blobPath = Path.Combine("images", DateTime.UtcNow.ToString("yyyy-MM-dd"), fileName + fileExt);
+
+            // 上传云存储
+            var url = await storageService.UploadAsync(upload.OpenReadStream(), blobPath);
+
+            return new UploadResult()
+            {
+                FilePath = url,
+                Url = url,
+            };
+        }
+        return Problem("文件不正确", title: "业务错误");
+    }
+
 
     /// <summary>
     /// ⚠删除

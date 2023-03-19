@@ -6,8 +6,10 @@ using Core.Const;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Share.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,8 +35,11 @@ services.AddDbContextPool<CommandDbContext>(option =>
     });
 });
 
-services.AddGrpc();
+// 注入选项及自定义服务
+services.Configure<AzureOption>(configuration.GetSection("Azure"));
+services.AddSingleton<StorageService>();
 
+services.AddGrpc();
 services.AddDataStore();
 services.AddManager();
 services.AddDaprClient();
@@ -194,7 +199,6 @@ app.UseExceptionHandler(handler =>
 });
 
 app.UseHealthChecks("/health");
-
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

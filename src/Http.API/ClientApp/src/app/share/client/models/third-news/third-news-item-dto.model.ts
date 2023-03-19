@@ -10,6 +10,10 @@ export interface ThirdNewsItemDto {
   provider?: string | null;
   datePublished?: Date | null;
   category?: string | null;
+  /**
+   * 概要
+   */
+  description?: string | null;
   identityId?: string | null;
   type?: NewsSource | null;
   newsType?: NewsType | null;
@@ -17,6 +21,5 @@ export interface ThirdNewsItemDto {
   id: string;
   createdTime: Date;
   updatedTime: Date;
-  description?: string | null;
 
 }

@@ -2,6 +2,7 @@ import { NewsSource } from '../enum/news-source.model';
 import { NewsType } from '../enum/news-type.model';
 import { NewsTags } from '../news-tags.model';
 import { TechType } from '../enum/tech-type.model';
+import { NewsStatus } from '../enum/news-status.model';
 /**
  * 第三方资讯
  */
@@ -28,5 +29,9 @@ export interface ThirdNews {
   newsType?: NewsType | null;
   newsTags?: NewsTags[] | null;
   techType?: TechType | null;
+  /**
+   * 第三方资讯状态
+   */
+  newsStatus?: NewsStatus | null;
 
 }

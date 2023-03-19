@@ -84,9 +84,9 @@ export class AddComponent implements OnInit {
 
   initEditor(): void {
     this.editorConfig = {
-      // placeholder: '请添加图文信息提供证据，也可以直接从Word文档中复制',
+      placeholder: '请添加图文信息提供证据，也可以直接从Word文档中复制',
       simpleUpload: {
-        uploadUrl: '',// set your api url like:environment.uploadEditorFileUrl,
+        uploadUrl: '/api/Blog/upload',
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem("accessToken")
         }
