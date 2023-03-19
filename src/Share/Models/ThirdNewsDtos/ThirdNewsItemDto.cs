@@ -30,6 +30,8 @@ public class ThirdNewsItemDto
     public NewsSource Type { get; set; } = NewsSource.News;
     public NewsType NewsType { get; set; } = NewsType.Default;
     public TechType TechType { get; set; } = TechType.Default;
+    public NewsStatus NewsStatus { get; set; }
+
     public Guid Id { get; set; } = Guid.NewGuid();
     public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset UpdatedTime { get; set; } = DateTimeOffset.UtcNow;

@@ -51,6 +51,18 @@ public class ThirdNewsController : RestControllerBase<IThirdNewsManager>
         return await manager.UpdateAsync(current, form);
     }
 
+
+    /// <summary>
+    /// 批量操作
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <returns></returns>
+    [HttpPut("batchUpdate")]
+    public async Task<ActionResult<bool>> BatchUpdateAsync(ThirdNewsBatchUpdateDto dto)
+    {
+        return await manager.BatchUpdateAsync(dto);
+    }
+
     /// <summary>
     /// 详情
     /// </summary>
@@ -72,10 +84,8 @@ public class ThirdNewsController : RestControllerBase<IThirdNewsManager>
     [HttpDelete("{id}")]
     public async Task<ActionResult<ThirdNews?>> DeleteAsync([FromRoute] Guid id)
     {
-        // TODO:实现删除逻辑,注意删除权限
         var entity = await manager.GetOwnedAsync(id);
         if (entity == null) return NotFound();
-        return Forbid();
-        // return await manager.DeleteAsync(entity);
+        return await manager.DeleteAsync(entity);
     }
 }

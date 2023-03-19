@@ -1,5 +1,6 @@
 using Application.IManager;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Share.Models;
 using Share.Models.ThirdNewsDtos;
 
 namespace Application.Manager;
@@ -51,6 +52,39 @@ public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto,
     }
 
     /// <summary>
+    /// 批量操作
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <returns></returns>
+    public async Task<bool> BatchUpdateAsync(ThirdNewsBatchUpdateDto dto)
+    {
+        var query = Command.Db.Where(n => dto.Ids.Contains(n.Id)).AsQueryable();
+        // 删除
+        if (dto.IsDelete != null && dto.IsDelete == true)
+        {
+            return await query.ExecuteDeleteAsync() > 0;
+        }
+        // 标记
+        if (dto.TechType != null)
+        {
+            return await query.ExecuteUpdateAsync(p => p
+                .SetProperty(n => n.TechType, dto.TechType)
+                .SetProperty(n => n.NewsStatus, NewsStatus.Public)) > 0;
+        }
+        if (dto.NewsType != null)
+        {
+            return await query.ExecuteUpdateAsync(p => p
+                .SetProperty(n => n.NewsType, dto.NewsType)) > 0;
+        }
+        if (dto.NewsStatus != null)
+        {
+            return await query.ExecuteUpdateAsync(p => p
+                .SetProperty(n => n.NewsStatus, dto.NewsStatus)) > 0;
+        }
+        return false;
+    }
+
+    /// <summary>
     /// 当前用户所拥有的对象
     /// </summary>
     /// <param name="id"></param>
@@ -58,8 +92,6 @@ public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto,
     public async Task<ThirdNews?> GetOwnedAsync(Guid id)
     {
         var query = Command.Db.Where(q => q.Id == id);
-        // TODO:获取用户所属的对象
-        // query = query.Where(q => q.User.Id == _userContext.UserId);
         return await query.FirstOrDefaultAsync();
     }
 }

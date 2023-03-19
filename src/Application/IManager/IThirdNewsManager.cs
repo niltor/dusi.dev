@@ -19,4 +19,5 @@ public interface IThirdNewsManager : IDomainManager<ThirdNews, ThirdNewsUpdateDt
     /// <param name="dto"></param>
     /// <returns></returns>
     Task<ThirdNews> CreateNewEntityAsync(ThirdNewsAddDto dto);
+    Task<bool> BatchUpdateAsync(ThirdNewsBatchUpdateDto dto);
 }

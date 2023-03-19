@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ThirdNewsFilterDto } from '../models/third-news/third-news-filter-dto.model';
 import { ThirdNewsAddDto } from '../models/third-news/third-news-add-dto.model';
 import { ThirdNewsUpdateDto } from '../models/third-news/third-news-update-dto.model';
+import { ThirdNewsBatchUpdateDto } from '../models/third-news/third-news-batch-update-dto.model';
 import { ThirdNewsItemDtoPageList } from '../models/third-news/third-news-item-dto-page-list.model';
 import { ThirdNews } from '../models/third-news/third-news.model';
 
@@ -56,6 +57,15 @@ export class ThirdNewsService extends BaseService {
   delete(id: string): Observable<ThirdNews> {
     const url = `/api/admin/ThirdNews/${id}`;
     return this.request<ThirdNews>('delete', url);
+  }
+
+  /**
+   * 批量操作
+   * @param data ThirdNewsBatchUpdateDto
+   */
+  batchUpdate(data: ThirdNewsBatchUpdateDto): Observable<boolean> {
+    const url = `/api/admin/ThirdNews/batchUpdate`;
+    return this.request<boolean>('put', url, data);
   }
 
 }
