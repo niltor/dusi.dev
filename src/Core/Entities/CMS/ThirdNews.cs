@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel;
+using Microsoft.EntityFrameworkCore;
 namespace Core.Entities.CMS;
 
 /// <summary>
@@ -81,15 +82,18 @@ public enum NewsStatus
 {
     /// <summary>
     /// 默认状态
-    /// </summary>
+    /// </summary> 
+    [Description("默认状态")]
     Default,
     /// <summary>
     /// 公开
-    /// </summary>
+    /// </summary> 
+    [Description("公开")]
     Public,
     /// <summary>
     /// 内部
-    /// </summary>
+    /// </summary> 
+    [Description("内部")]
     Internal,
 }
 
@@ -99,14 +103,17 @@ public enum TechType
     /// <summary>
     /// 常规资讯
     /// </summary>
+    [Description("常规资讯")]
     Normal,
     /// <summary>
     /// 发布或更新
     /// </summary>
+    [Description("发布或更新")]
     Publish,
     /// <summary>
     /// 关注内容
     /// </summary>
+    [Description("关注内容")]
     Focus
 }
 
@@ -124,18 +131,22 @@ public enum NewsType
     /// <summary>
     /// 大公司
     /// </summary>
+    [Description("大公司")]
     Company,
     /// <summary>
     /// 开源
     /// </summary>
+    [Description("开源")]
     OpenSource,
     /// <summary>
     /// 语言及框架
     /// </summary>
+    [Description("语言及框架")]
     LanguageAndFramework,
     /// <summary>
     /// 数据和AI
     /// </summary>
+    [Description("数据和AI")]
     DataAndAI,
     Else
 }

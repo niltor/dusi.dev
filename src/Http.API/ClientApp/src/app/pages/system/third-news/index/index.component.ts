@@ -12,6 +12,7 @@ import { FormGroup } from '@angular/forms';
 import { TechType } from 'src/app/share/admin/models/enum/tech-type.model';
 import { NewsType } from 'src/app/share/admin/models/enum/news-type.model';
 import { SelectionModel } from '@angular/cdk/collections';
+import { DetailComponent } from '../detail/detail.component';
 
 @Component({
   selector: 'app-index',
@@ -25,11 +26,12 @@ export class IndexComponent implements OnInit {
   isLoading = true;
   total = 0;
   data: ThirdNewsItemDto[] = [];
+  previewNews: ThirdNewsItemDto | null = null;
   columns: string[] = ['select', 'title', 'authorName', 'newsType', 'techType', 'actions'];
   dataSource!: MatTableDataSource<ThirdNewsItemDto>;
   dialogRef!: MatDialogRef<{}, any>;
-  @ViewChild('myDialog', { static: true })
-  myTmpl!: TemplateRef<{}>;
+  @ViewChild('previewDialog', { static: true })
+  previewTmpl!: TemplateRef<{}>;
 
   mydialogForm!: FormGroup;
   filter: ThirdNewsFilterDto;
@@ -91,6 +93,12 @@ export class IndexComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id}`;
   }
 
+  preview(data: ThirdNewsItemDto): void {
+    this.previewNews = data;
+    this.dialogRef = this.dialog.open(this.previewTmpl, {
+
+    });
+  }
   deleteConfirm(item: ThirdNewsItemDto): void {
     const ref = this.dialog.open(ConfirmDialogComponent, {
       hasBackdrop: true,

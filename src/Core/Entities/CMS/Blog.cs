@@ -1,4 +1,6 @@
-﻿namespace Core.Entities.CMS;
+﻿using System.ComponentModel;
+
+namespace Core.Entities.CMS;
 /// <summary>
 /// 博客
 /// </summary>
@@ -39,9 +41,11 @@ public enum LanguageType
     /// <summary>
     /// 中文
     /// </summary>
+    [Description("中文")]
     CN,
     /// <summary>
     /// 英文
     /// </summary>
+    [Description("英文")]
     EN
 }
