@@ -1,18 +1,16 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EntityModel } from 'src/app/share/admin/models/entity-model/entity-model.model';
-import { EntityModelService } from 'src/app/share/admin/services/entity-model.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { EntityModelUpdateDto } from 'src/app/share/admin/models/entity-model/entity-model-update-dto.model';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Location } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {EntityModel} from 'src/app/share/admin/models/entity-model/entity-model.model';
+import {EntityModelService} from 'src/app/share/admin/services/entity-model.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {EntityModelUpdateDto} from 'src/app/share/admin/models/entity-model/entity-model-update-dto.model';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Location} from '@angular/common';
 import * as ClassicEditor from 'ng-ckeditor5-classic';
-import { environment } from 'src/environments/environment';
-import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
+import {CKEditor5} from '@ckeditor/ckeditor5-angular';
 // import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { AccessModifier } from 'src/app/share/admin/models/enum/access-modifier.model';
-import { CodeLanguage } from 'src/app/share/admin/models/enum/code-language.model';
+import {AccessModifier} from 'src/app/share/admin/models/enum/access-modifier.model';
+import {CodeLanguage} from 'src/app/share/admin/models/enum/code-language.model';
 
 @Component({
   selector: 'app-edit',
@@ -23,15 +21,15 @@ export class EditComponent implements OnInit {
   public editorConfig!: CKEditor5.Config;
   public editor: CKEditor5.EditorConstructor = ClassicEditor;
   AccessModifier = AccessModifier;
-CodeLanguage = CodeLanguage;
+  CodeLanguage = CodeLanguage;
 
   id!: string;
   isLoading = true;
   data = {} as EntityModel;
   updateData = {} as EntityModelUpdateDto;
   formGroup!: FormGroup;
-    constructor(
-    
+
+  constructor(
     // private authService: OidcSecurityService,
     private service: EntityModelService,
     private snb: MatSnackBar,
@@ -49,12 +47,29 @@ CodeLanguage = CodeLanguage;
     }
   }
 
-    get name() { return this.formGroup.get('name'); }
-    get comment() { return this.formGroup.get('comment'); }
-    get accessModifier() { return this.formGroup.get('accessModifier'); }
-    get codeContent() { return this.formGroup.get('codeContent'); }
-    get codeLanguage() { return this.formGroup.get('codeLanguage'); }
-    get languageVersion() { return this.formGroup.get('languageVersion'); }
+  get name() {
+    return this.formGroup.get('name');
+  }
+
+  get comment() {
+    return this.formGroup.get('comment');
+  }
+
+  get accessModifier() {
+    return this.formGroup.get('accessModifier');
+  }
+
+  get codeContent() {
+    return this.formGroup.get('codeContent');
+  }
+
+  get codeLanguage() {
+    return this.formGroup.get('codeLanguage');
+  }
+
+  get languageVersion() {
+    return this.formGroup.get('languageVersion');
+  }
 
 
   ngOnInit(): void {
@@ -63,11 +78,12 @@ CodeLanguage = CodeLanguage;
     // TODO:等待数据加载完成
     // this.isLoading = false;
   }
-    initEditor(): void {
+
+  initEditor(): void {
     this.editorConfig = {
       // placeholder: '请添加图文信息提供证据，也可以直接从Word文档中复制',
       simpleUpload: {
-        uploadUrl: environment.uploadEditorFileUrl,
+        uploadUrl: '',
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem("accessToken")
         }
@@ -75,12 +91,14 @@ CodeLanguage = CodeLanguage;
       language: 'zh-cn'
     };
   }
+
   onReady(editor: any) {
     editor.ui.getEditableElement().parentElement.insertBefore(
       editor.ui.view.toolbar.element,
       editor.ui.getEditableElement()
     );
   }
+
   getDetail(): void {
     this.service.getDetail(this.id)
       .subscribe(res => {
@@ -103,6 +121,7 @@ CodeLanguage = CodeLanguage;
 
     });
   }
+
   getValidatorMessage(type: string): string {
     switch (type) {
       case 'name':
@@ -134,14 +153,15 @@ CodeLanguage = CodeLanguage;
         return '';
     }
   }
+
   edit(): void {
-    if(this.formGroup.valid) {
+    if (this.formGroup.valid) {
       this.updateData = this.formGroup.value as EntityModelUpdateDto;
       this.service.update(this.id, this.updateData)
         .subscribe(res => {
           this.snb.open('修改成功');
-           // this.dialogRef.close(res);
-          this.router.navigate(['../../index'],{relativeTo: this.route});
+          // this.dialogRef.close(res);
+          this.router.navigate(['../../index'], {relativeTo: this.route});
         });
     }
   }
