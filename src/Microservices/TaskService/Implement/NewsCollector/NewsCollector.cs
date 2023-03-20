@@ -46,7 +46,8 @@ public class NewsCollector
             {
                 Category = news.Categories,
                 Description = news.Description,
-                Provider = news.Author,
+                Provider = news.Provider ?? news.Author,
+                AuthorName = news.Author,
                 Title = news.Title,
                 Url = news.Link,
                 ThumbnailUrl = news.ThumbUrl,
@@ -62,7 +63,9 @@ public class NewsCollector
     public async Task AddThirdNewsAsync(List<ThirdNews> list)
     {
         var result = new List<ThirdNews>(list);
-        var news = await _context.ThirdNews.OrderByDescending(n => n.DatePublished)
+        var news = await _context.ThirdNews
+            .IgnoreQueryFilters()
+            .OrderByDescending(n => n.DatePublished)
             .Where(n => n.Type == NewsSource.News)
             .Take(50).ToListAsync();
 

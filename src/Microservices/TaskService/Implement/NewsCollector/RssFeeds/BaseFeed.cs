@@ -24,6 +24,7 @@ public class BaseFeed
     /// xml root名称
     /// </summary>
     protected string RootName { get; set; } = "channel";
+    protected string Provider { get; set; }
     /// <summary>
     /// xml item 名称
     /// </summary>
@@ -43,9 +44,10 @@ public class BaseFeed
     protected HttpClient httpClient = new();
 
     private readonly ILogger _logger;
-    public BaseFeed(ILogger logger)
+    public BaseFeed(ILogger logger, string provider)
     {
         _logger = logger;
+        Provider = provider;
     }
 
     /// <summary>

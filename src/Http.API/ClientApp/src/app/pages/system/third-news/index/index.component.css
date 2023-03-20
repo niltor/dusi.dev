@@ -1,0 +1,8 @@
+.notMarked {
+    font-weight: bold;
+}
+
+.marked {
+    color: rgb(15, 107, 194);
+    font-weight: bold;
+}

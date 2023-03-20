@@ -6,7 +6,7 @@ namespace TaskService.Implement.NewsCollector.RssFeeds;
 
 public class MicrosoftFeed : BaseFeed
 {
-    public MicrosoftFeed(ILogger<MicrosoftFeed> logger) : base(logger)
+    public MicrosoftFeed(ILogger<MicrosoftFeed> logger) : base(logger, "MS")
     {
         Urls = new string[]
         {

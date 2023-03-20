@@ -1,19 +1,19 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {ThirdNewsService} from 'src/app/share/admin/services/third-news.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ConfirmDialogComponent} from 'src/app/components/confirm-dialog/confirm-dialog.component';
-import {ThirdNewsItemDto} from 'src/app/share/admin/models/third-news/third-news-item-dto.model';
-import {ThirdNewsFilterDto} from 'src/app/share/admin/models/third-news/third-news-filter-dto.model';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {FormGroup} from '@angular/forms';
-import {TechType} from 'src/app/share/admin/models/enum/tech-type.model';
-import {NewsType} from 'src/app/share/admin/models/enum/news-type.model';
-import {SelectionModel} from '@angular/cdk/collections';
-import {ThirdNewsBatchUpdateDto} from "../../../../share/admin/models/third-news/third-news-batch-update-dto.model";
-import {NewsStatus} from 'src/app/share/admin/models/enum/news-status.model';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ThirdNewsService } from 'src/app/share/admin/services/third-news.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
+import { ThirdNewsItemDto } from 'src/app/share/admin/models/third-news/third-news-item-dto.model';
+import { ThirdNewsFilterDto } from 'src/app/share/admin/models/third-news/third-news-filter-dto.model';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { FormGroup } from '@angular/forms';
+import { TechType } from 'src/app/share/admin/models/enum/tech-type.model';
+import { NewsType } from 'src/app/share/admin/models/enum/news-type.model';
+import { SelectionModel } from '@angular/cdk/collections';
+import { ThirdNewsBatchUpdateDto } from "../../../../share/admin/models/third-news/third-news-batch-update-dto.model";
+import { NewsStatus } from 'src/app/share/admin/models/enum/news-status.model';
 
 @Component({
   selector: 'app-index',
@@ -24,7 +24,7 @@ export class IndexComponent implements OnInit {
   NewsType = NewsType;
   TechType = TechType;
   NewsStatus = NewsStatus;
-  @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   isLoading = true;
   total = 0;
   data: ThirdNewsItemDto[] = [];
@@ -32,14 +32,13 @@ export class IndexComponent implements OnInit {
   columns: string[] = ['select', 'title', 'newsType', 'techType', 'actions'];
   dataSource!: MatTableDataSource<ThirdNewsItemDto>;
   dialogRef!: MatDialogRef<{}, any>;
-  @ViewChild('previewDialog', {static: true})
+  @ViewChild('previewDialog', { static: true })
   previewTmpl!: TemplateRef<{}>;
 
   mydialogForm!: FormGroup;
   filter: ThirdNewsFilterDto;
   selection = new SelectionModel<ThirdNewsItemDto>(true, []);
-
-  pageSizeOption = [12, 20, 50];
+  pageSizeOption = [20, 50];
 
   constructor(
     private service: ThirdNewsService,
@@ -51,7 +50,7 @@ export class IndexComponent implements OnInit {
 
     this.filter = {
       pageIndex: 1,
-      pageSize: 12
+      pageSize: this.pageSizeOption[0]
     };
   }
 
@@ -212,7 +211,7 @@ export class IndexComponent implements OnInit {
    * 编辑
    */
   edit(id: string): void {
-    this.router.navigate(['../edit/' + id], {relativeTo: this.route});
+    this.router.navigate(['../edit/' + id], { relativeTo: this.route });
   }
 
 }

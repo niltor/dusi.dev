@@ -12,4 +12,8 @@ public class Rss
     public DateTime LastUpdateTime { get; set; }
     public string? Content { get; set; }
     public string? ThumbUrl { get; set; }
+    /// <summary>
+    /// À´Ô´
+    /// </summary>
+    public string? Provider { get; set; }
 }

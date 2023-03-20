@@ -5,7 +5,7 @@ namespace TaskService.Implement.NewsCollector.RssFeeds;
 public class InfoWorldFeed : BaseFeed
 {
 
-    public InfoWorldFeed(ILogger<InfoWorldFeed> logger) : base(logger)
+    public InfoWorldFeed(ILogger<InfoWorldFeed> logger) : base(logger,"InfoWorld")
     {
         Urls = new string[]
         {

@@ -113,7 +113,7 @@ public enum TechType
     /// <summary>
     /// 关注内容
     /// </summary>
-    [Description("关注内容")]
+    [Description("重点关注")]
     Focus
 }
 
@@ -146,7 +146,13 @@ public enum NewsType
     /// <summary>
     /// 数据和AI
     /// </summary>
-    [Description("数据和AI")]
+    [Description("大数据和AI")]
     DataAndAI,
+    /// <summary>
+    /// DevOps
+    /// </summary>
+    [Description("DevOps")]
+    DevOps,
+    [Description("其它")]
     Else
 }

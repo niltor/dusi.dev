@@ -22,6 +22,13 @@ public class ThirdNewsController : RestControllerBase<IThirdNewsManager>
     [HttpPost("filter")]
     public async Task<ActionResult<PageList<ThirdNewsItemDto>>> FilterAsync(ThirdNewsFilterDto filter)
     {
+        filter.OrderBy = new Dictionary<string, bool>
+        {
+            ["NewsType"] = true,
+            ["TechType"] = true,
+            ["CreatedTime"] = false,
+
+        };
         return await manager.FilterAsync(filter);
     }
 

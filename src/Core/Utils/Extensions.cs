@@ -114,31 +114,56 @@ public static partial class Extensions
     {
         IOrderedQueryable<T> orderQuery = default!;
         var parameter = Expression.Parameter(typeof(T), "e");
+        int count = 0;
         foreach (var item in dic)
         {
             var prop = Expression.PropertyOrField(parameter, item.Key);
             var body = Expression.MakeMemberAccess(parameter, prop.Member);
             var selector = Expression.Lambda(body, parameter);
-
             MethodCallExpression expression;
-            if (item.Value)
+
+            if (count > 0)
             {
-                expression = Expression.Call(typeof(Queryable),
-                                          "OrderBy",
-                                          new Type[] { typeof(T), body.Type },
-                                          query.Expression,
-                                          Expression.Quote(selector));
+                if (item.Value)
+                {
+                    expression = Expression.Call(typeof(Queryable),
+                                              "ThenBy",
+                                              new Type[] { typeof(T), body.Type },
+                                              query.Expression,
+                                              Expression.Quote(selector));
+                }
+                else
+                {
+                    expression = Expression.Call(typeof(Queryable),
+                                              "ThenByDescending",
+                                              new Type[] { typeof(T), body.Type },
+                                              query.Expression,
+                                              Expression.Quote(selector));
+                }
             }
             else
             {
-                expression = Expression.Call(typeof(Queryable),
-                                          "OrderByDescending",
-                                          new Type[] { typeof(T), body.Type },
-                                          query.Expression,
-                                          Expression.Quote(selector));
+                if (item.Value)
+                {
+                    expression = Expression.Call(typeof(Queryable),
+                                              "OrderBy",
+                                              new Type[] { typeof(T), body.Type },
+                                              query.Expression,
+                                              Expression.Quote(selector));
+                }
+                else
+                {
+                    expression = Expression.Call(typeof(Queryable),
+                                              "OrderByDescending",
+                                              new Type[] { typeof(T), body.Type },
+                                              query.Expression,
+                                              Expression.Quote(selector));
+                }
             }
+            
             orderQuery = (IOrderedQueryable<T>)query.Provider.CreateQuery<T>(expression);
             query = orderQuery;
+            count++;
         }
         return orderQuery;
     }
