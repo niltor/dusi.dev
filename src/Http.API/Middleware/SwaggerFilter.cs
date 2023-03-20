@@ -17,6 +17,7 @@ public class EnumSchemaFilter : ISchemaFilter
             var name = new OpenApiArray();
             var enumData = new OpenApiArray();
             var fields = context.Type.GetFields();
+
             foreach (var f in fields)
             {
                 if (f.Name != "value__")
@@ -29,9 +30,11 @@ public class EnumSchemaFilter : ISchemaFilter
                         var des = desAttr.ConstructorArguments.FirstOrDefault();
                         if (des.Value != null)
                         {
+
                             enumData.Add(new OpenApiObject()
                             {
                                 ["name"] = new OpenApiString(f.Name),
+                                ["value"] = new OpenApiInteger((int)f.GetRawConstantValue()!),
                                 ["description"] = new OpenApiString(des.Value.ToString())
                             });
                         }

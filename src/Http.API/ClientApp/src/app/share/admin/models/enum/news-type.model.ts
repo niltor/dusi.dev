@@ -4,6 +4,7 @@ export enum NewsType {
   OpenSource = 2,
   LanguageAndFramework = 3,
   DataAndAI = 4,
-  Else = 5,
+  DevOps = 5,
+  Else = 6,
 
 }

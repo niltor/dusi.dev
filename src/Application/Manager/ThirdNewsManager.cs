@@ -74,7 +74,8 @@ public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto,
         if (dto.NewsType != null)
         {
             return await query.ExecuteUpdateAsync(p => p
-                .SetProperty(n => n.NewsType, dto.NewsType)) > 0;
+                .SetProperty(n => n.NewsType, dto.NewsType)
+                .SetProperty(n => n.NewsStatus, NewsStatus.Public)) > 0;
         }
         if (dto.NewsStatus != null)
         {

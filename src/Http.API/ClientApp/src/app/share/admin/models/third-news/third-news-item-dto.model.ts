@@ -1,6 +1,7 @@
 import { NewsSource } from '../enum/news-source.model';
 import { NewsType } from '../enum/news-type.model';
 import { TechType } from '../enum/tech-type.model';
+import { NewsStatus } from '../enum/news-status.model';
 export interface ThirdNewsItemDto {
   authorName?: string | null;
   authorAvatar?: string | null;
@@ -18,6 +19,10 @@ export interface ThirdNewsItemDto {
   type?: NewsSource | null;
   newsType?: NewsType | null;
   techType?: TechType | null;
+  /**
+   * 第三方资讯状态
+   */
+  newsStatus?: NewsStatus | null;
   id: string;
   createdTime: Date;
   updatedTime: Date;

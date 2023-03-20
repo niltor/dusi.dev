@@ -26,8 +26,6 @@ export class EnumPipe implements PipeTransform {
     return result;
   }
 }
-
-
 @Pipe({
   name: 'mapEnum'
 })
