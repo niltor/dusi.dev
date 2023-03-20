@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
 import { HomeRoutingModule } from './home-routing.module';
 import { LoginComponent } from './login/login.component';
 import { IndexComponent } from './index/index.component';
@@ -13,8 +11,7 @@ import { EnumTextPipe } from 'src/app/share/admin/pipe/enum-text.pipe';
   declarations: [
     LoginComponent,
     IndexComponent,
-    NewsComponent,
-    EnumTextPipe
+    NewsComponent
   ],
   imports: [
     ShareModule,

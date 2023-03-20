@@ -45,7 +45,7 @@
     <td mat-cell *matCellDef="let element">
 
       <span [ngClass]="element.newsType==0?'notMarked':'marked'">
-        {{element.newsType|mapEnum:NewsType}}
+        {{element.newsType|enumText:'NewsType'}}
       </span>
 
     </td>
@@ -54,7 +54,7 @@
     <th mat-header-cell *matHeaderCellDef>类型标记</th>
     <td mat-cell *matCellDef="let element">
       <span [ngClass]="element.techType==0?'notMarked':'marked'">
-        {{element.techType|mapEnum:TechType}}
+        {{element.techType|enumText:'TechType'}}
       </span>
     </td>
   </ng-container>

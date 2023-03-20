@@ -1,4 +1,3 @@
-// ���ļ��Զ����ɣ��ᱻ���Ǹ���
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({

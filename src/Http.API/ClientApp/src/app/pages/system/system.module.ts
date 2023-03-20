@@ -10,6 +10,7 @@ import { MemberModule } from './member/member.module';
 import { ThirdNewsModule } from './third-news/third-news.module';
 import { EntityLibraryModule } from './entity-library/entity-library.module';
 import { EntityModelModule } from './entity-model/entity-model.module';
+import { EnumTextPipe } from 'src/app/share/admin/pipe/enum-text.pipe';
 
 @NgModule({
   declarations: [],
@@ -19,10 +20,11 @@ import { EntityModelModule } from './entity-model/entity-model.module';
     SystemRoutingModule,
     RoleModule,
     UserModule,
-    MemberModule,
     ThirdNewsModule,
     EntityLibraryModule,
     EntityModelModule
+  ],
+  exports: [
   ],
   providers: [{
     provide: RouteReuseStrategy,
