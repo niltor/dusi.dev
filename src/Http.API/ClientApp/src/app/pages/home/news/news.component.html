@@ -1,32 +1,36 @@
-<section class="news p-2">
-  <mat-card class="w-100 my-1" *ngFor="let item of news">
-    <mat-card-header>
-      <mat-card-title>
-        <a href="{{item.url}}" target="_blank">
-          {{item.title}}
-        </a>
-      </mat-card-title>
-      <mat-card-subtitle>
-        {{item.authorName}} {{item.provider}} |
-        {{item.datePublished|date:'yyyy-MM-dd HH:mm'}}
-      </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content [innerHTML]="item.description">
-    </mat-card-content>
-    <mat-card-actions>
-      <mat-icon fontSet="material-icons-outlined">label</mat-icon>
-      <mat-chip-listbox *ngIf="item.techType" class="ms-2">
-        <mat-chip color="primary">
-          {{item.techType|enumText:'TechType'}}
-        </mat-chip>
-      </mat-chip-listbox>
-      <mat-chip-listbox *ngIf="item.newsType" class="ms-2">
-        <mat-chip color="primary">
-          {{item.newsType|enumText:'NewsType'}}
-        </mat-chip>
-      </mat-chip-listbox>
-
-
-    </mat-card-actions>
-  </mat-card>
-</section>
+<div class="d-flex">
+  <!-- 资讯 -->
+  <section class="news p-2">
+    <mat-card class="w-100 my-1" *ngFor="let item of news">
+      <mat-card-header>
+        <mat-card-title>
+          <a href="{{item.url}}" target="_blank">
+            {{item.title}}
+          </a>
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{item.authorName}} {{item.provider}} |
+          {{item.datePublished|date:'yyyy-MM-dd HH:mm'}}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content [innerHTML]="item.description">
+      </mat-card-content>
+      <mat-card-actions>
+        <mat-icon fontSet="material-icons-outlined">local_offer</mat-icon>
+        <mat-chip-listbox *ngIf="item.techType" class="ms-2">
+          <mat-chip color="primary">
+            {{item.techType|enumText:'TechType'}}
+          </mat-chip>
+        </mat-chip-listbox>
+        <mat-chip-listbox *ngIf="item.newsType" class="ms-2">
+          <mat-chip color="primary">
+            {{item.newsType|enumText:'NewsType'}}
+          </mat-chip>
+        </mat-chip-listbox>
+      </mat-card-actions>
+    </mat-card>
+  </section>
+  <!-- 推荐内容 -->
+  <section class="sugguest p-2">
+  </section>
+</div>
