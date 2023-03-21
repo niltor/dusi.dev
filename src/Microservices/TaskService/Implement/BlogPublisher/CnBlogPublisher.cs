@@ -1,4 +1,5 @@
 ﻿using Ater.MetaWeBlog;
+using Ater.MetaWeBlog.Models;
 using Ater.MetaWeBlog.Options;
 using Google.Protobuf.WellKnownTypes;
 using TaskService.Implement.PostBlog;
@@ -8,40 +9,23 @@ namespace TaskService.Implement.BlogPublisher;
 public class CnBlogPublisher : BlogPublisher
 {
 
+    private readonly ILogger<CnBlogPublisher> _logger;
+
     public Client Client { get; set; }
 
-    public CnBlogPublisher(string blogid, string username, string pat) : base("")
+    public CnBlogPublisher(string blogid, string username, string pat, ILogger<CnBlogPublisher> logger) : base("")
     {
         var option = new CnBlogsOption(blogid, username, pat);
         Client = new Client(option);
+        _logger = logger;
     }
 
-
-    public override List<Catalog> GetCatalogs()
-    {
-        var res = new List<Catalog>();
-        var catalogs = Client.GetCategories();
-
-        catalogs.ForEach(c =>
-        {
-            var item = new Catalog
-            {
-                Id = c.CategoryID,
-                Title = c.Title,
-            };
-            res.Add(item);
-        });
-        return res;
-    }
-
-    public override bool AddCatalog(Catalog catalog)
-    {
-        return base.AddCatalog(catalog);
-    }
 
     public override bool AddBlog(Blog blog)
     {
         //Client.NewPost()
-        return base.AddBlog(blog);
+        var res = Client.NewPost(blog.Title, blog.Description, blog.Categories, DateTime.Now);
+        _logger.LogInformation("post blog {title} {res}", blog.Title, res);
+        return true;
     }
 }

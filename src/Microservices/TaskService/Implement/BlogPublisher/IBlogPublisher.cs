@@ -60,5 +60,7 @@ public class Catalog
 }
 public class Blog
 {
-
+    public required string Title { get; set; }
+    public required string Description { get; set; }
+    public List<string>? Categories { get; set; }
 }
