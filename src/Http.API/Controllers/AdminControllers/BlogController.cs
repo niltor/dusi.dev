@@ -1,5 +1,4 @@
 using Dapr.Client;
-using Grpc.BlogService;
 using Share.Models.BlogDtos;
 
 namespace Http.API.Controllers.AdminControllers;
@@ -39,9 +38,7 @@ public class BlogController : RestControllerBase<IBlogManager>
     [HttpPost]
     public async Task<ActionResult<string>> AddAsync(BlogAddDto form)
     {
-        var reply = await dapr.InvokeMethodGrpcAsync<AddRequest, BlogReply>("cms", "add", new AddRequest { Name = "222" });
-
-        return reply.Title;
+        return default;
     }
 
 }
