@@ -14,7 +14,7 @@
                Margin="0,20,0,20"
                VerticalOptions="Center"
                HorizontalOptions="Center" />
-        
+
         <Entry Text="{Binding Username}"
                Margin="2,10"
                FontSize="16"
@@ -30,7 +30,7 @@
         <Button Margin="2,10"
                 FontSize="16"
                 Text="登录"
-                Command="{Binding SignInCommand}">
-        </Button>
+                Command="{Binding SignInCommand}" />
+
     </VerticalStackLayout>
 </ContentPage>

@@ -6,6 +6,6 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-		MainPage = new SignInPage();
+		MainPage = new SignInPage(new SignInViewModel());
 	}
 }

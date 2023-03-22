@@ -2,9 +2,10 @@ namespace DusiApp.Views;
 
 public partial class SignInPage : ContentPage
 {
-	public SignInPage()
-	{
-		InitializeComponent();
-	}
+    public SignInPage(SignInViewModel viewModel)
+    {
+        InitializeComponent();
+        BindingContext = viewModel;
+    }
 
 }

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Input;
-
-namespace DusiApp.ViewModels;
+﻿namespace DusiApp.ViewModels;
 
 /// <summary>
 /// 登录时的视图模型
