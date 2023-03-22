@@ -1,22 +1,18 @@
 ﻿using Ater.MetaWeBlog;
-using Ater.MetaWeBlog.Models;
 using Ater.MetaWeBlog.Options;
-using Google.Protobuf.WellKnownTypes;
 using TaskService.Implement.PostBlog;
 
 namespace TaskService.Implement.BlogPublisher;
 
 /// <summary>
-/// 博客园同步
+/// 开源中国同步
 /// </summary>
-public class CnBlogPublisher : BlogPublisher
+public class OsChinaPublisher : BlogPublisher
 {
-
     private readonly ILogger<CnBlogPublisher> _logger;
-
     public Client Client { get; set; }
 
-    public CnBlogPublisher(string blogid, string username, string pat, ILogger<CnBlogPublisher> logger) : base("")
+    public OsChinaPublisher(string blogid, string username, string pat, ILogger<CnBlogPublisher> logger) : base("")
     {
         var option = new CnBlogsOption(blogid, username, pat);
         Client = new Client(option);
@@ -30,3 +26,4 @@ public class CnBlogPublisher : BlogPublisher
         return true;
     }
 }
+
