@@ -12,7 +12,7 @@
 			Icon="iconblank.png"
 			ContentTemplate="{DataTemplate views:MainPage}" />
 		<ShellContent
-			Title="ListDetail"
+			Title="News"
 			Icon="iconlistdetail.png"
 			ContentTemplate="{DataTemplate views:ListDetailPage}" />
 		<ShellContent

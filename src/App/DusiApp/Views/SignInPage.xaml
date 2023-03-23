@@ -24,6 +24,7 @@
         <Entry Text="{Binding Password}"
                Margin="2,10"
                FontSize="16"
+               IsPassword="True"
                Placeholder="密码">
         </Entry>
 

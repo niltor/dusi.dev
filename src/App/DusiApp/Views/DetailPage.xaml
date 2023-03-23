@@ -7,7 +7,7 @@
 			 x:Class="DusiApp.Views.DetailPage"
 			 x:DataType="vm:DetailViewModel">
 	<Grid RowDefinitions="*,Auto">
-		<WebView x:Name="webview" Source="{Binding Source}">
+		<WebView x:Name="webview" Source="{Binding News.Url}">
 			<WebView.Behaviors>
 				<toolkit:EventToCommandBehavior
 					EventName="Navigated"

@@ -1,4 +1,8 @@
-﻿namespace DusiApp.Views;
+﻿using Share.Models.ThirdNewsDtos;
+using Share.Models;
+using System.Net.Http.Json;
+
+namespace DusiApp.Views;
 
 public partial class ListDetailPage : ContentPage
 {
