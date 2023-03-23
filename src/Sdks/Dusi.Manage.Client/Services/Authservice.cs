@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Share.Models.AuthDtos;
 
 namespace Dusi.Manage.Client.Services;
 public class AuthService : BaseService
 {
     public AuthService(HttpClient httpClient) : base(httpClient)
     {
+    }
+
+
+    public async Task<AuthResult?> LoginSyncAsync(LoginDto dto)
+    {
+        return await PostJsonAsync<AuthResult>("", dto);
     }
 }
