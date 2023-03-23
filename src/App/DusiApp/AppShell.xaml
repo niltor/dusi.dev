@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+	x:Class="DusiApp.AppShell"
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:views="clr-namespace:DusiApp.Views"
+	xmlns:local="clr-namespace:DusiApp">
+
+	<TabBar>
+		<ShellContent
+			Title="Main"
+			Icon="iconblank.png"
+			ContentTemplate="{DataTemplate views:MainPage}" />
+		<ShellContent
+			Title="ListDetail"
+			Icon="iconlistdetail.png"
+			ContentTemplate="{DataTemplate views:ListDetailPage}" />
+		<ShellContent
+			Title="Detail"
+			Icon="iconwebview.png"
+			ContentTemplate="{DataTemplate views:DetailPage}" />
+	</TabBar>
+</Shell>
