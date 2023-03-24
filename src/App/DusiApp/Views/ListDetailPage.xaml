@@ -3,17 +3,18 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:vm="clr-namespace:DusiApp.ViewModels"
 			 xmlns:m="clr-namespace:DusiApp.Models"
+             xmlns:share="clr-namespace:Share.Models.ThirdNewsDtos;assembly=Share"
 			 x:Class="DusiApp.Views.ListDetailPage"
 			 x:DataType="vm:ListDetailViewModel">
 	<RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshingCommand}">
 		<CollectionView ItemsSource="{Binding Items}" RemainingItemsThreshold="10" RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
 			<CollectionView.ItemTemplate>
-				<DataTemplate x:DataType="m:SampleItem">
-					<Frame Margin="4" Padding="12">
+                <DataTemplate x:DataType="share:ThirdNewsItemDto">
+					<Frame Margin="4" Padding="8">
 						<Frame.GestureRecognizers>
 							<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ListDetailViewModel}}, Path=GoToDetailsCommand}" CommandParameter="{Binding .}" />
 						</Frame.GestureRecognizers>
-						<Label Text="{Binding Title}" FontSize="Large" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Black}}" />
+						<Label Text="{Binding Title}" FontSize="Medium" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Black}}" />
 					</Frame>
 				</DataTemplate>
 			</CollectionView.ItemTemplate>

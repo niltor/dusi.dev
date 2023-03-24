@@ -1,59 +1,64 @@
-﻿namespace DusiApp.ViewModels;
+﻿using Share.Models.ThirdNewsDtos;
+namespace DusiApp.ViewModels;
 
+
+[QueryProperty(nameof(News), "News")]
 public partial class DetailViewModel : BaseViewModel
 {
-	[ObservableProperty]
-	public string source;
+    [ObservableProperty]
+    public ThirdNewsItemDto news;
 
-	[ObservableProperty]
-	public bool isLoading;
+    [ObservableProperty]
+    public string source;
 
-	public DetailViewModel()
-	{
-		// TODO: Update the default URL
-		Source = "https://baidu.com";
-		IsLoading = true;
-	}
+    [ObservableProperty]
+    public bool isLoading;
 
-	[RelayCommand]
-	private async void WebViewNavigated(WebNavigatedEventArgs e)
-	{
-		IsLoading = false;
+    public DetailViewModel()
+    {
+        Source = string.Empty;
+        IsLoading = true;
+    }
 
-		if (e.Result != WebNavigationResult.Success)
-		{
-			// TODO: handle failed navigation in an appropriate way
-			await Shell.Current.DisplayAlert("Navigation failed", e.Result.ToString(), "OK");
-		}
-	}
+    [RelayCommand]
+    private async void WebViewNavigated(WebNavigatedEventArgs e)
+    {
+        IsLoading = false;
 
-	[RelayCommand]
-	private void NavigateBack(WebView webView)
-	{
-		if (webView.CanGoBack)
-		{
-			webView.GoBack();
-		}
-	}
+        if (e.Result != WebNavigationResult.Success)
+        {
+            // TODO: handle failed navigation in an appropriate way
+            await Shell.Current.DisplayAlert("Navigation failed", e.Result.ToString(), "OK");
+        }
+    }
 
-	[RelayCommand]
-	private void NavigateForward(WebView webView)
-	{
-		if (webView.CanGoForward)
-		{
-			webView.GoForward();
-		}
-	}
+    [RelayCommand]
+    private void NavigateBack(WebView webView)
+    {
+        if (webView.CanGoBack)
+        {
+            webView.GoBack();
+        }
+    }
 
-	[RelayCommand]
-	private void RefreshPage(WebView webView)
-	{
-		webView.Reload();
-	}
+    [RelayCommand]
+    private void NavigateForward(WebView webView)
+    {
+        if (webView.CanGoForward)
+        {
+            webView.GoForward();
+        }
+    }
 
-	[RelayCommand]
-	private async void OpenInBrowser()
-	{
-		await Launcher.OpenAsync(Source);
-	}
+    [RelayCommand]
+    private void RefreshPage(WebView webView)
+    {
+        webView.Reload();
+    }
+
+    [RelayCommand]
+    private async void OpenInBrowser()
+    {
+        await Launcher.OpenAsync(Source);
+    }
 }

@@ -1,12 +1,23 @@
-﻿namespace DusiApp;
+﻿using Android.Views.Animations;
+
+namespace DusiApp;
 
 public partial class AppShell : Shell
 {
-	public AppShell()
-	{
-		InitializeComponent();
+    public AppShell()
+    {
+        InitializeComponent();
+        Routing.RegisterRoute(nameof(ListDetailDetailPage), typeof(ListDetailDetailPage));
+        Routing.RegisterRoute(nameof(DetailPage), typeof(DetailPage));
+    }
 
-		Routing.RegisterRoute(nameof(ListDetailDetailPage), typeof(ListDetailDetailPage));
-
-	}
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        // 未登录，跳转回登录页
+        if (!AppStatusService.IsLogin())
+        {
+            Application.Current.MainPage = new SignInPage(new SignInViewModel());
+        }
+    }
 }

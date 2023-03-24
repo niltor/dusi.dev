@@ -8,4 +8,13 @@ public partial class SignInPage : ContentPage
         BindingContext = viewModel;
     }
 
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        if (AppStatusService.IsLogin())
+        {
+            Application.Current.MainPage = new AppShell();
+        }
+    }
 }
