@@ -69,9 +69,9 @@ services.AddAuthentication(options =>
     {
         throw new Exception("未找到有效的jwt配置");
     }
+
     cfg.TokenValidationParameters = new TokenValidationParameters()
     {
-
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(sign)),
         ValidIssuer = configuration.GetSection("Jwt")["Issuer"],
         ValidAudience = configuration.GetSection("Jwt")["Audience"],

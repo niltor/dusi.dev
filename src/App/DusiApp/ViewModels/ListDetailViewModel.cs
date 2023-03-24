@@ -14,6 +14,7 @@ public partial class ListDetailViewModel : BaseViewModel
 
     public ListDetailViewModel()
     {
+
     }
 
     [RelayCommand]

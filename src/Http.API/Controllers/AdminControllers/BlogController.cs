@@ -38,7 +38,7 @@ public class BlogController : RestControllerBase<IBlogManager>
     [HttpPost]
     public async Task<ActionResult<string>> AddAsync(BlogAddDto form)
     {
-        return default;
+        return default!;
     }
 
 }

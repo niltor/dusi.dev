@@ -1,15 +1,32 @@
-﻿using Share.Models.AuthDtos;
-
+using Share.Models.AuthDtos;
 namespace Dusi.Manage.Client.Services;
+/// <summary>
+/// 系统用户授权登录
+/// </summary>
 public class AuthService : BaseService
 {
     public AuthService(HttpClient httpClient) : base(httpClient)
     {
+
+    }
+    /// <summary>
+    /// 登录获取Token
+    /// </summary>
+    /// <param name="data">LoginDto</param>
+    /// <returns></returns>
+    public async Task<AuthResult?> Login(LoginDto data) {
+        var url = $"/api/admin/Auth";
+        return await PostJsonAsync<AuthResult?>(url, data);
     }
 
-
-    public async Task<AuthResult?> LoginSyncAsync(LoginDto dto)
-    {
-        return await PostJsonAsync<AuthResult>("", dto);
+    /// <summary>
+    /// 退出
+    /// </summary>
+    /// <param name="id">string </param>
+    /// <returns></returns>
+    public async Task<bool?> Logout(string id) {
+        var url = $"/api/admin/Auth/{id}";
+        return await GetJsonAsync<bool?>(url);
     }
+
 }
