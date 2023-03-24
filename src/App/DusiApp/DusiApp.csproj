@@ -46,7 +46,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Share\Share.csproj" />
+	  <ProjectReference Include="..\..\Sdks\Dusi.Manage.Client\Dusi.Manage.Client.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

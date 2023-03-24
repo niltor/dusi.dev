@@ -14,8 +14,9 @@ public class EntityMemberService : BaseService
     /// </summary>
     /// <param name="data">EntityMemberFilterDto</param>
     /// <returns></returns>
-    public async Task<PageList<EntityMemberItemDto>?> Filter(EntityMemberFilterDto data) {
-        var url = $"/api/admin/EntityMember/filter";
+    public async Task<PageList<EntityMemberItemDto>?> FilterAsync(EntityMemberFilterDto data)
+    {
+        string url = $"/api/admin/EntityMember/filter";
         return await PostJsonAsync<PageList<EntityMemberItemDto>?>(url, data);
     }
 
@@ -24,8 +25,9 @@ public class EntityMemberService : BaseService
     /// </summary>
     /// <param name="data">EntityMemberAddDto</param>
     /// <returns></returns>
-    public async Task<EntityMember?> Add(EntityMemberAddDto data) {
-        var url = $"/api/admin/EntityMember";
+    public async Task<EntityMember?> AddAsync(EntityMemberAddDto data)
+    {
+        string url = $"/api/admin/EntityMember";
         return await PostJsonAsync<EntityMember?>(url, data);
     }
 
@@ -35,8 +37,9 @@ public class EntityMemberService : BaseService
     /// <param name="id"> </param>
     /// <param name="data">EntityMemberUpdateDto</param>
     /// <returns></returns>
-    public async Task<EntityMember?> Update(string id, EntityMemberUpdateDto data) {
-        var url = $"/api/admin/EntityMember/{id}";
+    public async Task<EntityMember?> UpdateAsync(string id, EntityMemberUpdateDto data)
+    {
+        string url = $"/api/admin/EntityMember/{id}";
         return await PutJsonAsync<EntityMember?>(url, data);
     }
 
@@ -45,8 +48,9 @@ public class EntityMemberService : BaseService
     /// </summary>
     /// <param name="id"> </param>
     /// <returns></returns>
-    public async Task<EntityMember?> GetDetail(string id) {
-        var url = $"/api/admin/EntityMember/{id}";
+    public async Task<EntityMember?> GetDetailAsync(string id)
+    {
+        string url = $"/api/admin/EntityMember/{id}";
         return await GetJsonAsync<EntityMember?>(url);
     }
 
@@ -55,8 +59,9 @@ public class EntityMemberService : BaseService
     /// </summary>
     /// <param name="id"> </param>
     /// <returns></returns>
-    public async Task<EntityMember?> Delete(string id) {
-        var url = $"/api/admin/EntityMember/{id}";
+    public async Task<EntityMember?> DeleteAsync(string id)
+    {
+        string url = $"/api/admin/EntityMember/{id}";
         return await DeleteJsonAsync<EntityMember?>(url);
     }
 

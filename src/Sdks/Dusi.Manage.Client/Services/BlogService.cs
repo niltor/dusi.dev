@@ -14,8 +14,9 @@ public class BlogService : BaseService
     /// </summary>
     /// <param name="data">BlogFilterDto</param>
     /// <returns></returns>
-    public async Task<PageList<BlogItemDto>?> Filter(BlogFilterDto data) {
-        var url = $"/api/admin/Blog/filter";
+    public async Task<PageList<BlogItemDto>?> FilterAsync(BlogFilterDto data)
+    {
+        string url = $"/api/admin/Blog/filter";
         return await PostJsonAsync<PageList<BlogItemDto>?>(url, data);
     }
 
@@ -24,8 +25,9 @@ public class BlogService : BaseService
     /// </summary>
     /// <param name="data">BlogAddDto</param>
     /// <returns></returns>
-    public async Task<string?> Add(BlogAddDto data) {
-        var url = $"/api/admin/Blog";
+    public async Task<string?> AddAsync(BlogAddDto data)
+    {
+        string url = $"/api/admin/Blog";
         return await PostJsonAsync<string?>(url, data);
     }
 

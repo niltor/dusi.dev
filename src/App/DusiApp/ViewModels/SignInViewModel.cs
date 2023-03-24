@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using Dusi.Manage.Client;
 using Share.Models.AuthDtos;
 
 namespace DusiApp.ViewModels;
@@ -16,40 +17,33 @@ public partial class SignInViewModel : BaseViewModel
 
     public SignInViewModel()
     {
-
     }
 
     [RelayCommand]
     private async void SignIn()
     {
+        var auth = ApiService.AdminClient.Auth;
 
-        var httpclient = new HttpClient()
-        {
-            Timeout = TimeSpan.FromSeconds(5)
-        };
         var data = new LoginDto
         {
             UserName = Username,
             Password = Password,
         };
-        var res = await httpclient.PostAsJsonAsync("http://10.0.2.2:5002/api/admin/auth", data);
 
-        var resStr = await res.Content.ReadAsStringAsync();
-
-        if (res.IsSuccessStatusCode)
+        var res = await auth.LoginAsync(data);
+        if (res != null)
         {
-            var resData = await res.Content.ReadFromJsonAsync<AuthResult>();
-
+            ApiService.AdminClient.SetToken(res.Token);
             // 保存token
-            Preferences.Default.Set("AccessToken", resData.Token);
-            Preferences.Default.Set("Username", resData.Username);
+            Preferences.Default.Set("AccessToken", res.Token);
+            Preferences.Default.Set("Username", res.Username);
             // 跳转页面
             Application.Current.MainPage = new AppShell();
         }
         else
         {
             // TODO:提示错误内容
-            await Application.Current.MainPage.DisplayAlert("错误", "登录失败", "确定");
+            await Application.Current.MainPage.DisplayAlert("错误", auth.ErrorMsg.Detail, "确定");
         }
     }
 

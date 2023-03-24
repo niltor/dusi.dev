@@ -14,8 +14,9 @@ public class EntityLibraryService : BaseService
     /// </summary>
     /// <param name="data">EntityLibraryFilterDto</param>
     /// <returns></returns>
-    public async Task<PageList<EntityLibraryItemDto>?> Filter(EntityLibraryFilterDto data) {
-        var url = $"/api/admin/EntityLibrary/filter";
+    public async Task<PageList<EntityLibraryItemDto>?> FilterAsync(EntityLibraryFilterDto data)
+    {
+        string url = $"/api/admin/EntityLibrary/filter";
         return await PostJsonAsync<PageList<EntityLibraryItemDto>?>(url, data);
     }
 
@@ -24,8 +25,9 @@ public class EntityLibraryService : BaseService
     /// </summary>
     /// <param name="data">EntityLibraryAddDto</param>
     /// <returns></returns>
-    public async Task<EntityLibrary?> Add(EntityLibraryAddDto data) {
-        var url = $"/api/admin/EntityLibrary";
+    public async Task<EntityLibrary?> AddAsync(EntityLibraryAddDto data)
+    {
+        string url = $"/api/admin/EntityLibrary";
         return await PostJsonAsync<EntityLibrary?>(url, data);
     }
 
@@ -35,8 +37,9 @@ public class EntityLibraryService : BaseService
     /// <param name="id"> </param>
     /// <param name="data">EntityLibraryUpdateDto</param>
     /// <returns></returns>
-    public async Task<EntityLibrary?> Update(string id, EntityLibraryUpdateDto data) {
-        var url = $"/api/admin/EntityLibrary/{id}";
+    public async Task<EntityLibrary?> UpdateAsync(string id, EntityLibraryUpdateDto data)
+    {
+        string url = $"/api/admin/EntityLibrary/{id}";
         return await PutJsonAsync<EntityLibrary?>(url, data);
     }
 
@@ -45,8 +48,9 @@ public class EntityLibraryService : BaseService
     /// </summary>
     /// <param name="id"> </param>
     /// <returns></returns>
-    public async Task<EntityLibrary?> GetDetail(string id) {
-        var url = $"/api/admin/EntityLibrary/{id}";
+    public async Task<EntityLibrary?> GetDetailAsync(string id)
+    {
+        string url = $"/api/admin/EntityLibrary/{id}";
         return await GetJsonAsync<EntityLibrary?>(url);
     }
 
@@ -55,8 +59,9 @@ public class EntityLibraryService : BaseService
     /// </summary>
     /// <param name="id"> </param>
     /// <returns></returns>
-    public async Task<EntityLibrary?> Delete(string id) {
-        var url = $"/api/admin/EntityLibrary/{id}";
+    public async Task<EntityLibrary?> DeleteAsync(string id)
+    {
+        string url = $"/api/admin/EntityLibrary/{id}";
         return await DeleteJsonAsync<EntityLibrary?>(url);
     }
 

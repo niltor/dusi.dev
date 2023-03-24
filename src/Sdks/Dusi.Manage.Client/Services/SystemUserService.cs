@@ -14,8 +14,9 @@ public class SystemUserService : BaseService
     /// </summary>
     /// <param name="data">SystemUserFilterDto</param>
     /// <returns></returns>
-    public async Task<PageList<SystemUserItemDto>?> Filter(SystemUserFilterDto data) {
-        var url = $"/api/admin/SystemUser/filter";
+    public async Task<PageList<SystemUserItemDto>?> FilterAsync(SystemUserFilterDto data)
+    {
+        string url = $"/api/admin/SystemUser/filter";
         return await PostJsonAsync<PageList<SystemUserItemDto>?>(url, data);
     }
 
@@ -24,8 +25,9 @@ public class SystemUserService : BaseService
     /// </summary>
     /// <param name="data">SystemUserAddDto</param>
     /// <returns></returns>
-    public async Task<SystemUser?> Add(SystemUserAddDto data) {
-        var url = $"/api/admin/SystemUser";
+    public async Task<SystemUser?> AddAsync(SystemUserAddDto data)
+    {
+        string url = $"/api/admin/SystemUser";
         return await PostJsonAsync<SystemUser?>(url, data);
     }
 
@@ -35,8 +37,9 @@ public class SystemUserService : BaseService
     /// <param name="id"> </param>
     /// <param name="data">SystemUserUpdateDto</param>
     /// <returns></returns>
-    public async Task<SystemUser?> Update(string id, SystemUserUpdateDto data) {
-        var url = $"/api/admin/SystemUser/{id}";
+    public async Task<SystemUser?> UpdateAsync(string id, SystemUserUpdateDto data)
+    {
+        string url = $"/api/admin/SystemUser/{id}";
         return await PutJsonAsync<SystemUser?>(url, data);
     }
 
@@ -45,8 +48,9 @@ public class SystemUserService : BaseService
     /// </summary>
     /// <param name="id"> </param>
     /// <returns></returns>
-    public async Task<SystemUser?> GetDetail(string id) {
-        var url = $"/api/admin/SystemUser/{id}";
+    public async Task<SystemUser?> GetDetailAsync(string id)
+    {
+        string url = $"/api/admin/SystemUser/{id}";
         return await GetJsonAsync<SystemUser?>(url);
     }
 
@@ -55,8 +59,9 @@ public class SystemUserService : BaseService
     /// </summary>
     /// <param name="id"> </param>
     /// <returns></returns>
-    public async Task<SystemUser?> Delete(string id) {
-        var url = $"/api/admin/SystemUser/{id}";
+    public async Task<SystemUser?> DeleteAsync(string id)
+    {
+        string url = $"/api/admin/SystemUser/{id}";
         return await DeleteJsonAsync<SystemUser?>(url);
     }
 
@@ -65,8 +70,9 @@ public class SystemUserService : BaseService
     /// </summary>
     /// <param name="password"> </param>
     /// <returns></returns>
-    public async Task<bool?> ChangeMyPassword(string? password) {
-        var url = $"/api/admin/SystemUser/password?password={password}";
+    public async Task<bool?> ChangeMyPasswordAsync(string? password)
+    {
+        string url = $"/api/admin/SystemUser/password?password={password}";
         return await PutJsonAsync<bool?>(url);
     }
 

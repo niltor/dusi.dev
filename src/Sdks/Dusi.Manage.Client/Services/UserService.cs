@@ -14,8 +14,9 @@ public class UserService : BaseService
     /// </summary>
     /// <param name="data">UserFilterDto</param>
     /// <returns></returns>
-    public async Task<PageList<UserItemDto>?> Filter(UserFilterDto data) {
-        var url = $"/api/admin/User/filter";
+    public async Task<PageList<UserItemDto>?> FilterAsync(UserFilterDto data)
+    {
+        string url = $"/api/admin/User/filter";
         return await PostJsonAsync<PageList<UserItemDto>?>(url, data);
     }
 
@@ -24,8 +25,9 @@ public class UserService : BaseService
     /// </summary>
     /// <param name="data">UserAddDto</param>
     /// <returns></returns>
-    public async Task<User?> Add(UserAddDto data) {
-        var url = $"/api/admin/User";
+    public async Task<User?> AddAsync(UserAddDto data)
+    {
+        string url = $"/api/admin/User";
         return await PostJsonAsync<User?>(url, data);
     }
 
@@ -35,8 +37,9 @@ public class UserService : BaseService
     /// <param name="id"> </param>
     /// <param name="data">UserUpdateDto</param>
     /// <returns></returns>
-    public async Task<User?> Update(string id, UserUpdateDto data) {
-        var url = $"/api/admin/User/{id}";
+    public async Task<User?> UpdateAsync(string id, UserUpdateDto data)
+    {
+        string url = $"/api/admin/User/{id}";
         return await PutJsonAsync<User?>(url, data);
     }
 
@@ -45,8 +48,9 @@ public class UserService : BaseService
     /// </summary>
     /// <param name="id"> </param>
     /// <returns></returns>
-    public async Task<User?> GetDetail(string id) {
-        var url = $"/api/admin/User/{id}";
+    public async Task<User?> GetDetailAsync(string id)
+    {
+        string url = $"/api/admin/User/{id}";
         return await GetJsonAsync<User?>(url);
     }
 
@@ -55,8 +59,9 @@ public class UserService : BaseService
     /// </summary>
     /// <param name="id"> </param>
     /// <returns></returns>
-    public async Task<User?> Delete(string id) {
-        var url = $"/api/admin/User/{id}";
+    public async Task<User?> DeleteAsync(string id)
+    {
+        string url = $"/api/admin/User/{id}";
         return await DeleteJsonAsync<User?>(url);
     }
 
@@ -65,8 +70,9 @@ public class UserService : BaseService
     /// </summary>
     /// <param name="password"> </param>
     /// <returns></returns>
-    public async Task<bool?> ChangeMyPassword(string? password) {
-        var url = $"/api/admin/User/password?password={password}";
+    public async Task<bool?> ChangeMyPasswordAsync(string? password)
+    {
+        string url = $"/api/admin/User/password?password={password}";
         return await PutJsonAsync<bool?>(url);
     }
 

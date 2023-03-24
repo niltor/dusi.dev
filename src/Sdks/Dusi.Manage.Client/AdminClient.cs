@@ -10,24 +10,26 @@ public class AdminClient
     public ErrorResult? ErrorMsg { get; set; } = null;
 
     #region api services
-    public AuthService AuthService { get; init; }
-    public BlogService BlogService { get; init; }
-    public EntityLibraryService EntityLibraryService { get; init; }
-    public EntityMemberService EntityMemberService { get; init; }
-    public EntityMemberConstraintService EntityMemberConstraintService { get; init; }
-    public EntityModelService EntityModelService { get; init; }
-    public SystemRoleService SystemRoleService { get; init; }
-    public SystemUserService SystemUserService { get; init; }
-    public ThirdNewsService ThirdNewsService { get; init; }
-    public UserService UserService { get; init; }
+    public AuthService Auth { get; init; }
+    public BlogService Blog { get; init; }
+    public EntityLibraryService EntityLibrary { get; init; }
+    public EntityMemberService EntityMember { get; init; }
+    public EntityMemberConstraintService EntityMemberConstraint { get; init; }
+    public EntityModelService EntityModel { get; init; }
+    public SystemRoleService SystemRole { get; init; }
+    public SystemUserService SystemUser { get; init; }
+    public ThirdNewsService ThirdNews { get; init; }
+    public UserService User { get; init; }
 
     #endregion
 
-    public AdminClient()
+    public AdminClient(string? baseUrl = null)
     {
+        BaseUrl = baseUrl ?? "";
         Http = new HttpClient()
         {
             BaseAddress = new Uri(BaseUrl),
+            Timeout = TimeSpan.FromSeconds(10)
         };
         JsonSerializerOptions = new JsonSerializerOptions()
         {
@@ -36,23 +38,29 @@ public class AdminClient
         };
 
         #region api services
-        AuthService = new AuthService(Http);
-        BlogService = new BlogService(Http);
-        EntityLibraryService = new EntityLibraryService(Http);
-        EntityMemberService = new EntityMemberService(Http);
-        EntityMemberConstraintService = new EntityMemberConstraintService(Http);
-        EntityModelService = new EntityModelService(Http);
-        SystemRoleService = new SystemRoleService(Http);
-        SystemUserService = new SystemUserService(Http);
-        ThirdNewsService = new ThirdNewsService(Http);
-        UserService = new UserService(Http);
+        Auth = new AuthService(Http);
+        Blog = new BlogService(Http);
+        EntityLibrary = new EntityLibraryService(Http);
+        EntityMember = new EntityMemberService(Http);
+        EntityMemberConstraint = new EntityMemberConstraintService(Http);
+        EntityModel = new EntityModelService(Http);
+        SystemRole = new SystemRoleService(Http);
+        SystemUser = new SystemUserService(Http);
+        ThirdNews = new ThirdNewsService(Http);
+        User = new UserService(Http);
 
         #endregion
     }
 
+    public void SetToken(string token)
+    {
+
+        _ = Http.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
+    }
+
     public void SetBaseUrl(string url)
     {
-        this.BaseUrl = url;
+        BaseUrl = url;
     }
 
 }

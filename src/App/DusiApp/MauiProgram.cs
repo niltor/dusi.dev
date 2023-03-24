@@ -1,4 +1,6 @@
-﻿namespace DusiApp;
+﻿using Dusi.Manage.Client;
+
+namespace DusiApp;
 
 public static class MauiProgram
 {
@@ -23,7 +25,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<SignInViewModel>();
         builder.Services.AddSingleton<SignInPage>();
 
-        builder.Services.AddTransient<SampleDataService>();
 
         builder.Services.AddTransient<ListDetailDetailViewModel>();
         builder.Services.AddTransient<ListDetailDetailPage>();
@@ -33,6 +34,7 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<DetailViewModel>();
         builder.Services.AddSingleton<DetailPage>();
+
 
         return builder.Build();
     }

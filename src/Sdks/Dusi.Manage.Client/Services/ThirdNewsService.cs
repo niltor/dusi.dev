@@ -1,4 +1,3 @@
-using Core.Entities.CMS;
 using Share.Models.ThirdNewsDtos;
 namespace Dusi.Manage.Client.Services;
 /// <summary>
@@ -15,8 +14,9 @@ public class ThirdNewsService : BaseService
     /// </summary>
     /// <param name="data">ThirdNewsFilterDto</param>
     /// <returns></returns>
-    public async Task<PageList<ThirdNewsItemDto>?> Filter(ThirdNewsFilterDto data) {
-        var url = $"/api/admin/ThirdNews/filter";
+    public async Task<PageList<ThirdNewsItemDto>?> FilterAsync(ThirdNewsFilterDto data)
+    {
+        string url = $"/api/admin/ThirdNews/filter";
         return await PostJsonAsync<PageList<ThirdNewsItemDto>?>(url, data);
     }
 
@@ -25,8 +25,9 @@ public class ThirdNewsService : BaseService
     /// </summary>
     /// <param name="data">ThirdNewsAddDto</param>
     /// <returns></returns>
-    public async Task<ThirdNews?> Add(ThirdNewsAddDto data) {
-        var url = $"/api/admin/ThirdNews";
+    public async Task<ThirdNews?> AddAsync(ThirdNewsAddDto data)
+    {
+        string url = $"/api/admin/ThirdNews";
         return await PostJsonAsync<ThirdNews?>(url, data);
     }
 
@@ -36,8 +37,9 @@ public class ThirdNewsService : BaseService
     /// <param name="id"> </param>
     /// <param name="data">ThirdNewsUpdateDto</param>
     /// <returns></returns>
-    public async Task<ThirdNews?> Update(string id, ThirdNewsUpdateDto data) {
-        var url = $"/api/admin/ThirdNews/{id}";
+    public async Task<ThirdNews?> UpdateAsync(string id, ThirdNewsUpdateDto data)
+    {
+        string url = $"/api/admin/ThirdNews/{id}";
         return await PutJsonAsync<ThirdNews?>(url, data);
     }
 
@@ -46,8 +48,9 @@ public class ThirdNewsService : BaseService
     /// </summary>
     /// <param name="id"> </param>
     /// <returns></returns>
-    public async Task<ThirdNews?> GetDetail(string id) {
-        var url = $"/api/admin/ThirdNews/{id}";
+    public async Task<ThirdNews?> GetDetailAsync(string id)
+    {
+        string url = $"/api/admin/ThirdNews/{id}";
         return await GetJsonAsync<ThirdNews?>(url);
     }
 
@@ -56,8 +59,9 @@ public class ThirdNewsService : BaseService
     /// </summary>
     /// <param name="id"> </param>
     /// <returns></returns>
-    public async Task<ThirdNews?> Delete(string id) {
-        var url = $"/api/admin/ThirdNews/{id}";
+    public async Task<ThirdNews?> DeleteAsync(string id)
+    {
+        string url = $"/api/admin/ThirdNews/{id}";
         return await DeleteJsonAsync<ThirdNews?>(url);
     }
 
@@ -66,8 +70,9 @@ public class ThirdNewsService : BaseService
     /// </summary>
     /// <param name="data">ThirdNewsBatchUpdateDto</param>
     /// <returns></returns>
-    public async Task<bool?> BatchUpdate(ThirdNewsBatchUpdateDto data) {
-        var url = $"/api/admin/ThirdNews/batchUpdate";
+    public async Task<bool?> BatchUpdateAsync(ThirdNewsBatchUpdateDto data)
+    {
+        string url = $"/api/admin/ThirdNews/batchUpdate";
         return await PutJsonAsync<bool?>(url, data);
     }
 

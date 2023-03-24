@@ -14,8 +14,9 @@ public class AuthService : BaseService
     /// </summary>
     /// <param name="data">LoginDto</param>
     /// <returns></returns>
-    public async Task<AuthResult?> Login(LoginDto data) {
-        var url = $"/api/admin/Auth";
+    public async Task<AuthResult?> LoginAsync(LoginDto data)
+    {
+        string url = $"/api/admin/Auth";
         return await PostJsonAsync<AuthResult?>(url, data);
     }
 
@@ -24,8 +25,9 @@ public class AuthService : BaseService
     /// </summary>
     /// <param name="id">string </param>
     /// <returns></returns>
-    public async Task<bool?> Logout(string id) {
-        var url = $"/api/admin/Auth/{id}";
+    public async Task<bool?> LogoutAsync(string id)
+    {
+        string url = $"/api/admin/Auth/{id}";
         return await GetJsonAsync<bool?>(url);
     }
 

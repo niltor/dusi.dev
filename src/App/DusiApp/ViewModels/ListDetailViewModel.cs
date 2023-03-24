@@ -49,23 +49,18 @@ public partial class ListDetailViewModel : BaseViewModel
     /// <returns></returns>
     public async Task<List<ThirdNewsItemDto>> GetNewsAsync()
     {
-        // TODO:改写调用sdk
+        var news = ApiService.AdminClient.ThirdNews;
+
         var data = new ThirdNewsFilterDto()
         {
             PageIndex = 1,
             PageSize = 100,
         };
 
-        var token = Preferences.Default.Get("AccessToken", string.Empty);
-        using var http = new HttpClient();
-        http.Timeout = TimeSpan.FromSeconds(5);
-        http.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "bearer " + token);
-        var res = await http.PostAsJsonAsync("http://10.0.2.2:5002/api/admin/thirdNews/filter", data);
-
-        if (res.IsSuccessStatusCode)
+        var res = await news.FilterAsync(data);
+        if (res != null)
         {
-            var resData = await res.Content.ReadFromJsonAsync<PageList<ThirdNewsItemDto>>();
-            return resData.Data;
+            return res.Data;
         }
         return new List<ThirdNewsItemDto>();
     }
@@ -73,11 +68,6 @@ public partial class ListDetailViewModel : BaseViewModel
     [RelayCommand]
     private async void GoToDetails(ThirdNewsItemDto item)
     {
-        //await Shell.Current.GoToAsync(nameof(ListDetailDetailPage), true, new Dictionary<string, object>
-        //{
-        //    { "Item", item }
-        //});
-
         await Shell.Current.GoToAsync(nameof(DetailPage), true, new Dictionary<string, object>
         {
             { "News", item }
