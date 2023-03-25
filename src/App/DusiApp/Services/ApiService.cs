@@ -7,8 +7,6 @@ public static class ApiService
     public readonly static AdminClient AdminClient = new("http://10.0.2.2:5002/", new InterceptHttpHandler());
 }
 
-
-
 /// <summary>
 /// httpclient 拦截
 /// </summary>

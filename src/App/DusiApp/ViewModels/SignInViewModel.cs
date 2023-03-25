@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using CommunityToolkit.Maui.Alerts;
 using Dusi.Manage.Client;
 using Share.Models.AuthDtos;
 
@@ -37,13 +38,15 @@ public partial class SignInViewModel : BaseViewModel
             // 保存token
             Preferences.Default.Set("AccessToken", res.Token);
             Preferences.Default.Set("Username", res.Username);
+
+
+            Toast.Make("登录成功");
             // 跳转页面
             Application.Current.MainPage = new AppShell();
         }
         else
         {
-            // TODO:提示错误内容
-            await Application.Current.MainPage.DisplayAlert("错误", auth.ErrorMsg.Detail, "确定");
+            Toast.Make("用户名或密码错误");
         }
     }
 

@@ -40,7 +40,9 @@ public partial class ListDetailViewModel : BaseViewModel
 
     public async Task LoadDataAsync()
     {
-        Items = new ObservableCollection<ThirdNewsItemDto>(await GetNewsAsync());
+
+        var data = await GetNewsAsync();
+        Items = new ObservableCollection<ThirdNewsItemDto>(data);
     }
 
     /// <summary>
