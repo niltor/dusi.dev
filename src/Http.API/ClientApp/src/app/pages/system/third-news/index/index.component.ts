@@ -29,7 +29,7 @@ export class IndexComponent implements OnInit {
   total = 0;
   data: ThirdNewsItemDto[] = [];
   previewNews: ThirdNewsItemDto | null = null;
-  columns: string[] = ['select', 'title', 'newsType', 'techType', 'actions'];
+  columns: string[] = ['select', 'title', 'datetime','newsType', 'techType', 'actions'];
   dataSource!: MatTableDataSource<ThirdNewsItemDto>;
   dialogRef!: MatDialogRef<{}, any>;
   @ViewChild('previewDialog', { static: true })

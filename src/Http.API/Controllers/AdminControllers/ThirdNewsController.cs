@@ -24,10 +24,9 @@ public class ThirdNewsController : RestControllerBase<IThirdNewsManager>
     {
         filter.OrderBy = new Dictionary<string, bool>
         {
+            ["CreatedTime"] = false,
             ["NewsType"] = true,
             ["TechType"] = true,
-            ["CreatedTime"] = false,
-
         };
         return await manager.FilterAsync(filter);
     }
