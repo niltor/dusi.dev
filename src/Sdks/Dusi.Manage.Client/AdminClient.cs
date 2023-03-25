@@ -23,14 +23,22 @@ public class AdminClient
 
     #endregion
 
-    public AdminClient(string? baseUrl = null)
+    public AdminClient(string? baseUrl = null, HttpClientHandler? handler = null)
     {
         BaseUrl = baseUrl ?? "";
-        Http = new HttpClient()
-        {
-            BaseAddress = new Uri(BaseUrl),
-            Timeout = TimeSpan.FromSeconds(10)
-        };
+
+        Http = handler == null ?
+            new HttpClient()
+            {
+                BaseAddress = new Uri(BaseUrl),
+                Timeout = TimeSpan.FromSeconds(10)
+            } :
+            new HttpClient(handler)
+            {
+                BaseAddress = new Uri(BaseUrl),
+                Timeout = TimeSpan.FromSeconds(10)
+            };
+
         JsonSerializerOptions = new JsonSerializerOptions()
         {
             ReferenceHandler = ReferenceHandler.IgnoreCycles,

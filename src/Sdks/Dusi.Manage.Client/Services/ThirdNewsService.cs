@@ -1,3 +1,4 @@
+using Core.Entities.CMS;
 using Share.Models.ThirdNewsDtos;
 namespace Dusi.Manage.Client.Services;
 /// <summary>
