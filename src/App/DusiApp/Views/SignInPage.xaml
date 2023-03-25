@@ -32,7 +32,5 @@
                 FontSize="16"
                 Text="登录"
                 Command="{Binding SignInCommand}" />
-
-        <Label Text="{Binding Token}"/>
     </VerticalStackLayout>
 </ContentPage>

@@ -41,24 +41,24 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="CommunityToolkit.Maui" Version="3.1.0" />
-	  <PackageReference Include="CommunityToolkit.MVVM" Version="8.1.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="3.1.0" />
+		<PackageReference Include="CommunityToolkit.MVVM" Version="8.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Sdks\Dusi.Manage.Client\Dusi.Manage.Client.csproj" />
+		<ProjectReference Include="..\..\Sdks\Dusi.Manage.Client\Dusi.Manage.Client.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\SignInPage.xaml.cs">
-	    <DependentUpon>SignInPage.xaml</DependentUpon>
-	  </Compile>
+		<Compile Update="Views\SignInPage.xaml.cs">
+			<DependentUpon>SignInPage.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\SignInPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<MauiXaml Update="Views\SignInPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 
 	<PropertyGroup Label="MauiAppAccelerator">
@@ -68,14 +68,14 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
-	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
-	  <EnableLLVM>True</EnableLLVM>
-	  <AndroidKeyStore>False</AndroidKeyStore>
+		<AndroidPackageFormat>apk</AndroidPackageFormat>
+		<EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+		<AndroidKeyStore>False</AndroidKeyStore>
+		<AndroidEnableProfiledAot>True</AndroidEnableProfiledAot>
+		<PublishTrimmed>True</PublishTrimmed>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
-	  <AndroidKeyStore>False</AndroidKeyStore>
+		<AndroidKeyStore>False</AndroidKeyStore>
 	</PropertyGroup>
-
 </Project>

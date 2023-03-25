@@ -47,10 +47,11 @@ public partial class DetailViewModel : BaseViewModel
     {
         var options = new string[]
         {
-            "默认","大公司", "开源", "语言及框架", "AI与大数据", "DevOps", "其它"
+            "默认", "大公司", "开源", "语言及框架", "AI与大数据", "DevOps", "其它"
         };
         string action = await AppShell.Current.DisplayActionSheet("设置分类", "取消", null, options);
 
+        if (action == "取消") { return; }
         var index = options.ToList().IndexOf(action);
         // 请求
         var data = new ThirdNewsBatchUpdateDto
@@ -79,6 +80,7 @@ public partial class DetailViewModel : BaseViewModel
         var options = new string[] { "默认", "资讯", "发布及更新", "关注" };
         string action = await AppShell.Current.DisplayActionSheet("设置分类", "取消", null, options);
 
+        if (action == "取消") { return; }
         var index = options.ToList().IndexOf(action);
         var data = new ThirdNewsBatchUpdateDto
         {
