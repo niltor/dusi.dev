@@ -13,11 +13,12 @@ public partial class AppShell : Shell
 
     protected override void OnAppearing()
     {
-        base.OnAppearing();
         // 未登录，跳转回登录页
         if (!AppStatusService.IsLogin())
         {
             Application.Current.MainPage = new SignInPage(new SignInViewModel());
+        
         }
+        base.OnAppearing();
     }
 }

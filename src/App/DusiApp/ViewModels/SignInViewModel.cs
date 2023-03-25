@@ -16,8 +16,13 @@ public partial class SignInViewModel : BaseViewModel
     [ObservableProperty]
     public string password;
 
+    [ObservableProperty]
+    public string token;
+
     public SignInViewModel()
     {
+
+        Token = Preferences.Default.Get(Const.AccessToken, string.Empty);
     }
 
     [RelayCommand]
@@ -36,17 +41,16 @@ public partial class SignInViewModel : BaseViewModel
         {
             ApiService.AdminClient.SetToken(res.Token);
             // 保存token
-            Preferences.Default.Set("AccessToken", res.Token);
-            Preferences.Default.Set("Username", res.Username);
+            Preferences.Default.Set(Const.AccessToken, res.Token);
+            Preferences.Default.Set(Const.UserName, res.Username);
 
-
-            Toast.Make("登录成功");
+            await Toast.Make("登录成功").Show();
             // 跳转页面
             Application.Current.MainPage = new AppShell();
         }
         else
         {
-            Toast.Make("用户名或密码错误");
+            await Toast.Make("用户名或密码错误").Show();
         }
     }
 

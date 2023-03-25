@@ -1,6 +1,5 @@
-﻿using Share.Models;
-using System.Net.Http.Json;
-using Share.Models.ThirdNewsDtos;
+﻿using Share.Models.ThirdNewsDtos;
+using CommunityToolkit.Maui.Alerts;
 
 namespace DusiApp.ViewModels;
 
@@ -63,6 +62,10 @@ public partial class ListDetailViewModel : BaseViewModel
         if (res != null)
         {
             return res.Data;
+        }
+        else
+        {
+            _ = Toast.Make(news.ErrorMsg.Detail ?? "").Show();
         }
         return new List<ThirdNewsItemDto>();
     }

@@ -14,7 +14,7 @@ public static class AppStatusService
     /// <returns></returns>
     public static bool IsLogin()
     {
-        var token = Preferences.Default.Get("AccessToken", string.Empty);
+        var token = Preferences.Default.Get(Const.AccessToken, string.Empty);
         return !string.IsNullOrWhiteSpace(token);
     }
 }

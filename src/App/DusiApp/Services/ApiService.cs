@@ -4,7 +4,7 @@ using Dusi.Manage.Client;
 namespace DusiApp.Services;
 public static class ApiService
 {
-    public readonly static AdminClient AdminClient = new("http://10.0.2.2:5002/", new InterceptHttpHandler());
+    public readonly static AdminClient AdminClient = new("https://dusi.dev/", new InterceptHttpHandler());
 }
 
 /// <summary>
@@ -27,12 +27,12 @@ public class InterceptHttpHandler : HttpClientHandler
                 Preferences.Default.Set(Const.UserName, string.Empty);
                 Application.Current.MainPage = new SignInPage(new SignInViewModel());
             }
-
             return res;
+
         }
-        catch (TaskCanceledException)
+        catch (Exception ex)
         {
-            await Toast.Make("请求超时，请稍候重试", CommunityToolkit.Maui.Core.ToastDuration.Short).Show();
+            await Toast.Make("请求错误，请稍候重试," + ex.Message).Show();
             return res;
         }
     }

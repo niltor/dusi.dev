@@ -5,4 +5,15 @@
 			 x:Class="DusiApp.Views.MainPage"
 			 x:DataType="vm:MainViewModel">
 
+
+    <VerticalStackLayout
+        Margin="0,40,0,0">
+
+        <Label Text="{Binding Username}"/>
+        <Label Text="{Binding Token}" />
+
+        <Button Text="退出" 
+                Command="{Binding LogoutCommand}"/>
+
+    </VerticalStackLayout>
 </ContentPage>

@@ -31,12 +31,12 @@ public class AdminClient
             new HttpClient()
             {
                 BaseAddress = new Uri(BaseUrl),
-                Timeout = TimeSpan.FromSeconds(10)
+                Timeout = TimeSpan.FromSeconds(30)
             } :
             new HttpClient(handler)
             {
                 BaseAddress = new Uri(BaseUrl),
-                Timeout = TimeSpan.FromSeconds(10)
+                Timeout = TimeSpan.FromSeconds(30)
             };
 
         JsonSerializerOptions = new JsonSerializerOptions()
@@ -62,8 +62,8 @@ public class AdminClient
 
     public void SetToken(string token)
     {
-
-        _ = Http.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
+        Http.DefaultRequestHeaders.Clear();
+        Http.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
     }
 
     public void SetBaseUrl(string url)
