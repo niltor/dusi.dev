@@ -38,8 +38,8 @@ public class RssHelper
         list = await osChinaFeed.GetBlogsAsync(6);
         result.AddRange(list);
 
-        list = await infoWorldFeed.GetBlogsAsync(5);
-        result.AddRange(list);
+        //list = await infoWorldFeed.GetBlogsAsync(5);
+        //result.AddRange(list);
 
         // 过滤旧数据
         result = result.Where(r => r.CreateTime >= DateTime.Now.AddDays(-1)).ToList();
