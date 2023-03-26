@@ -50,6 +50,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Views\NewsListPage.xaml.cs">
+		  <DependentUpon>NewsListPage.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\SignInPage.xaml.cs">
 			<DependentUpon>SignInPage.xaml</DependentUpon>
 		</Compile>

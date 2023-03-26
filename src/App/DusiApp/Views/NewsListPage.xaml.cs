@@ -4,11 +4,11 @@ using System.Net.Http.Json;
 
 namespace DusiApp.Views;
 
-public partial class ListDetailPage : ContentPage
+public partial class NewsListPage: ContentPage
 {
-	ListDetailViewModel ViewModel;
+	NewsListViewModel ViewModel;
 
-	public ListDetailPage(ListDetailViewModel viewModel)
+	public NewsListPage(NewsListViewModel viewModel)
 	{
 		InitializeComponent();
 

@@ -14,7 +14,7 @@
 		<ShellContent
 			Title="News"
 			Icon="iconlistdetail.png"
-			ContentTemplate="{DataTemplate views:ListDetailPage}" />
+			ContentTemplate="{DataTemplate views:NewsListPage}" />
 		<ShellContent
 			Title="Detail"
 			Icon="iconwebview.png"

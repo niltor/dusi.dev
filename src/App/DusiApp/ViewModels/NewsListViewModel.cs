@@ -3,7 +3,7 @@ using CommunityToolkit.Maui.Alerts;
 
 namespace DusiApp.ViewModels;
 
-public partial class ListDetailViewModel : BaseViewModel
+public partial class NewsListViewModel : BaseViewModel
 {
     [ObservableProperty]
     bool isRefreshing;
@@ -11,7 +11,7 @@ public partial class ListDetailViewModel : BaseViewModel
     [ObservableProperty]
     ObservableCollection<ThirdNewsItemDto> items;
 
-    public ListDetailViewModel()
+    public NewsListViewModel()
     {
 
     }
