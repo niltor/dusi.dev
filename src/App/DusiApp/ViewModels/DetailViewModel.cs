@@ -4,8 +4,6 @@ using Dusi.Manage.Client;
 using Share.Models.ThirdNewsDtos;
 namespace DusiApp.ViewModels;
 
-
-[QueryProperty(nameof(News), "News")]
 public partial class DetailViewModel : BaseViewModel
 {
     private readonly AdminClient _api;

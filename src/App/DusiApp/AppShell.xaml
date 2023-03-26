@@ -7,17 +7,18 @@
 	xmlns:local="clr-namespace:DusiApp">
 
 	<TabBar>
-		<ShellContent
-			Title="Main"
-			Icon="iconblank.png"
+        <ShellContent
+            Title="待审核"
+            Icon="fact_check.svg"	
+            ContentTemplate="{DataTemplate views:NewsListPage}" />
+        <ShellContent
+			Title="资讯"
+			Icon="newspaper.svg"
 			ContentTemplate="{DataTemplate views:MainPage}" />
 		<ShellContent
-			Title="News"
-			Icon="iconlistdetail.png"
-			ContentTemplate="{DataTemplate views:NewsListPage}" />
-		<ShellContent
-			Title="Detail"
-			Icon="iconwebview.png"
-			ContentTemplate="{DataTemplate views:DetailPage}" />
+			Title="设置"
+			Icon="settings.svg"
+			ContentTemplate="{DataTemplate views:SettingPage}" />
 	</TabBar>
+    
 </Shell>

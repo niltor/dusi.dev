@@ -13,14 +13,4 @@ public partial class MainViewModel : BaseViewModel
         Username = Preferences.Default.Get(Const.UserName, string.Empty);
     }
 
-    /// <summary>
-    /// 退出
-    /// </summary>
-    [RelayCommand]
-    private void Logout()
-    {
-        Preferences.Default.Set(Const.AccessToken, string.Empty);
-        Preferences.Default.Set(Const.UserName, string.Empty);
-        Application.Current.MainPage = new SignInPage(new SignInViewModel());
-    }
 }

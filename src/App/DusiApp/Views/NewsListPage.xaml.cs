@@ -4,21 +4,22 @@ using System.Net.Http.Json;
 
 namespace DusiApp.Views;
 
-public partial class NewsListPage: ContentPage
+public partial class NewsListPage : ContentPage
 {
-	NewsListViewModel ViewModel;
+    NewsListViewModel ViewModel;
 
-	public NewsListPage(NewsListViewModel viewModel)
-	{
-		InitializeComponent();
+    public NewsListPage(NewsListViewModel viewModel)
+    {
+        InitializeComponent();
+        BindingContext = ViewModel = viewModel;
 
-		BindingContext = ViewModel = viewModel;
-	}
+    }
 
-	protected override async void OnNavigatedTo(NavigatedToEventArgs args)
-	{
-		base.OnNavigatedTo(args);
+    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        await ViewModel.LoadDataAsync();
 
-		await ViewModel.LoadDataAsync();
-	}
+        base.OnNavigatedTo(args);
+
+    }
 }

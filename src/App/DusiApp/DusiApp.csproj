@@ -41,6 +41,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\fact_check_black_24dp.svg" />
+	  <None Remove="Resources\Images\fact_check_black_48dp.svg" />
+	  <None Remove="Resources\Images\newspaper_black_24dp.svg" />
+	  <None Remove="Resources\Images\newspaper_black_48dp.svg" />
+	  <None Remove="Resources\Images\settings_black_24dp.svg" />
+	  <None Remove="Resources\Images\settings_black_48dp.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="3.1.0" />
 		<PackageReference Include="CommunityToolkit.MVVM" Version="8.1.0" />
 	</ItemGroup>
@@ -50,6 +59,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Views\DetailPage.xaml.cs">
+		  <DependentUpon>DetailPage.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\NewsListPage.xaml.cs">
 		  <DependentUpon>NewsListPage.xaml</DependentUpon>
 		</Compile>
@@ -59,6 +71,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<MauiXaml Update="Views\SettingPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\SignInPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
