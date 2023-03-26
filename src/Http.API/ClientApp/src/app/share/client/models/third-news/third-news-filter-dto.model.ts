@@ -15,11 +15,15 @@ export interface ThirdNewsFilterDto {
   type?: NewsSource | null;
   newsType?: NewsType | null;
   techType?: TechType | null;
-  startDate?: Date | null;
-  endDate?: Date | null;
   /**
    * 第三方资讯状态
    */
   newsStatus?: NewsStatus | null;
+  startDate?: Date | null;
+  endDate?: Date | null;
+  /**
+   * 是否被分类
+   */
+  isClassified?: boolean | null;
 
 }

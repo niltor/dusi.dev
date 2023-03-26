@@ -1,4 +1,4 @@
-<div class="d-flex">
+<div class="d-flex" *ngIf="!isLoading">
   <!-- 资讯 -->
   <section class="news p-2">
     <mat-card class="w-100 my-1" *ngFor="let item of news">
@@ -32,5 +32,7 @@
   </section>
   <!-- 推荐内容 -->
   <section class="sugguest p-2">
+
+
   </section>
 </div>

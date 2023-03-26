@@ -20,4 +20,5 @@ public interface IThirdNewsManager : IDomainManager<ThirdNews, ThirdNewsUpdateDt
     /// <returns></returns>
     Task<ThirdNews> CreateNewEntityAsync(ThirdNewsAddDto dto);
     Task<bool> BatchUpdateAsync(ThirdNewsBatchUpdateDto dto);
+    ThirdNewsOptionsDto GetEnumOptions();
 }

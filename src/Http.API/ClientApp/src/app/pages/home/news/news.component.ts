@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ThirdNewsFilterDto } from 'src/app/share/client/models/third-news/third-news-filter-dto.model';
 import { ThirdNewsItemDto } from 'src/app/share/client/models/third-news/third-news-item-dto.model';
+import { ThirdNewsOptionsDto } from 'src/app/share/client/models/third-news/third-news-options-dto.model';
 import { ThirdNewsService } from 'src/app/share/client/services/third-news.service';
 
 
@@ -11,10 +12,10 @@ import { ThirdNewsService } from 'src/app/share/client/services/third-news.servi
   styleUrls: ['./news.component.css']
 })
 export class NewsComponent {
-
+  isLoading = true;
   news: ThirdNewsItemDto[] = [];
+  options: ThirdNewsOptionsDto | null = null;
   filter: ThirdNewsFilterDto;
-
   pageIndex = 1;
   count = 0;
 
@@ -29,6 +30,7 @@ export class NewsComponent {
   }
 
   ngOnInit(): void {
+    this.getOptions();
     this.getNews();
   }
 
@@ -42,11 +44,27 @@ export class NewsComponent {
           } else {
 
           }
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.snb.open(error.detail);
+          this.isLoading = false;
+        }
+      });
+  }
+
+  getOptions(): void {
+    this.service.getEnumOptions()
+      .subscribe({
+        next: (res) => {
+          if (res) {
+            this.options = res;
+          } else {
+          }
         },
         error: (error) => {
           this.snb.open(error.detail);
         }
       });
   }
-
 }

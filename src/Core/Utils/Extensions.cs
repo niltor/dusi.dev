@@ -160,7 +160,7 @@ public static partial class Extensions
                                               Expression.Quote(selector));
                 }
             }
-            
+
             orderQuery = (IOrderedQueryable<T>)query.Provider.CreateQuery<T>(expression);
             query = orderQuery;
             count++;

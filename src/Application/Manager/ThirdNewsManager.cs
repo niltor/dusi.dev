@@ -1,4 +1,5 @@
 using Application.IManager;
+using Core.Utils;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Share.Models;
 using Share.Models.ThirdNewsDtos;
@@ -114,4 +115,19 @@ public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto,
         var query = Command.Db.Where(q => q.Id == id);
         return await query.FirstOrDefaultAsync();
     }
+
+    /// <summary>
+    /// 获取枚举选项
+    /// </summary>
+    /// <returns></returns>
+    public ThirdNewsOptionsDto GetEnumOptions()
+    {
+        var res = new ThirdNewsOptionsDto
+        {
+            TechType = EnumHelper.ToList(typeof(TechType)),
+            NewsType = EnumHelper.ToList(typeof(NewsType))
+        };
+        return res;
+    }
+
 }

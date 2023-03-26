@@ -31,6 +31,18 @@ public class ThirdNewsController : ClientControllerBase<IThirdNewsManager>
 
 
     /// <summary>
+    /// 获取枚举选项
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("enumOptions")]
+    public ActionResult<ThirdNewsOptionsDto> GetEnumOptions()
+    {
+        var res = manager.GetEnumOptions();
+        return Ok(res);
+    }
+
+
+    /// <summary>
     /// 详情
     /// </summary>
     /// <param name="id"></param>
