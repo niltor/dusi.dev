@@ -24,7 +24,7 @@ export class NewsComponent {
   ) {
     this.filter = {
       pageIndex: 1,
-      pageSize: 20
+      pageSize: 100
     }
   }
 

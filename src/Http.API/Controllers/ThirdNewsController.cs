@@ -23,6 +23,9 @@ public class ThirdNewsController : ClientControllerBase<IThirdNewsManager>
     public async Task<ActionResult<PageList<ThirdNewsItemDto>>> FilterAsync(ThirdNewsFilterDto filter)
     {
         filter.NewsStatus = NewsStatus.Public;
+        filter.StartDate = DateTimeOffset.UtcNow.AddDays(-10);
+        filter.EndDate = DateTimeOffset.UtcNow;
+        filter.IsClassified = true;
         return await manager.FilterAsync(filter);
     }
 

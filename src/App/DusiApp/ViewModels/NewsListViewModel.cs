@@ -56,6 +56,7 @@ public partial class NewsListViewModel : BaseViewModel
         {
             PageIndex = 1,
             PageSize = 100,
+            IsClassified = false
         };
 
         var res = await news.FilterAsync(data);

@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './pages/system/login/login.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'index', pathMatch: 'full' },
+    { path: '', redirectTo: 'news', pathMatch: 'full' },
     { path: 'index', redirectTo: 'index', pathMatch: 'full' },
     { path: 'account', redirectTo: 'account', pathMatch: 'full' },
     { path: 'login', redirectTo: 'login', pathMatch: 'full' },
