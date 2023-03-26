@@ -1,9 +1,12 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using Core.Entities.CMS;
 using Dusi.Manage.Client;
+using Microsoft.Maui.Controls;
 using Share.Models.ThirdNewsDtos;
 namespace DusiApp.ViewModels;
 
+
+[QueryProperty(nameof(News), "News")]
 public partial class DetailViewModel : BaseViewModel
 {
     private readonly AdminClient _api;

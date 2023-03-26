@@ -1,42 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:conv="clr-namespace:DusiApp.Converters"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:vm="clr-namespace:DusiApp.ViewModels"
-             x:Class="DusiApp.Views.DetailPage"
-             x:DataType="vm:DetailViewModel">
-    <Grid RowDefinitions="*,Auto">
-        <WebView x:Name="webview"
-                 Source="{Binding News.Url}">
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:conv="clr-namespace:DusiApp.Converters"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:DusiApp.ViewModels"
+    x:Class="DusiApp.Views.DetailPage"
+    x:DataType="vm:DetailViewModel"
+    Shell.NavBarIsVisible="False">
+    <Grid
+        RowDefinitions="*,Auto">
+        <WebView
+            x:Name="webview"
+            Source="{Binding News.Url}">
             <WebView.Behaviors>
-                <toolkit:EventToCommandBehavior EventName="Navigated"
-                                                Command="{Binding WebViewNavigatedCommand}">
+                <toolkit:EventToCommandBehavior
+                    EventName="Navigated"
+                    Command="{Binding WebViewNavigatedCommand}">
                     <toolkit:EventToCommandBehavior.EventArgsConverter>
                         <conv:WebNavigatedEventArgsConverter />
                     </toolkit:EventToCommandBehavior.EventArgsConverter>
                 </toolkit:EventToCommandBehavior>
             </WebView.Behaviors>
         </WebView>
-        <ActivityIndicator IsVisible="{Binding IsLoading}"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"
-                           IsRunning="{Binding IsLoading}" />
-        <HorizontalStackLayout BackgroundColor="LightGray"
-                               Padding="4"
-                               Margin="0,4,0,0"
-                               Grid.Row="1"
-                               HorizontalOptions="Center"
-                               Spacing="12">
-
-            <Button Text="分类"
-                    Command="{Binding SetTechTypeCommand}" />
-            <Button Text="标记"
-                    Command="{Binding SetNewsTypeCommand}" />
-            <Button Text="保留"
-                    Command="{Binding SetInnerCommand}" />
-            <Button Text="删除"
-                    Command="{Binding DeleteCommand}" />
+        <ActivityIndicator
+            IsVisible="{Binding IsLoading}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            IsRunning="{Binding IsLoading}" />
+        <HorizontalStackLayout
+            BackgroundColor="LightGray"
+            Padding="4"
+            Margin="0,4,0,0"
+            Grid.Row="1"
+            HorizontalOptions="CenterAndExpand"
+            Spacing="20">
+            <Button
+                FontSize="18"
+                Text="分类"
+                Command="{Binding SetTechTypeCommand}" />
+            <Button
+                FontSize="18"
+                Text="标记"
+                Command="{Binding SetNewsTypeCommand}" />
+            <Button
+                FontSize="18"
+                Text="保留"
+                Command="{Binding SetInnerCommand}" />
+            <Button
+                FontSize="18"
+                Text="删除"
+                BackgroundColor="DarkRed"
+                Command="{Binding DeleteCommand}" />
         </HorizontalStackLayout>
     </Grid>
 </ContentPage>

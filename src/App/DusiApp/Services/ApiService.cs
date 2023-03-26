@@ -16,10 +16,11 @@ public class InterceptHttpHandler : HttpClientHandler
         HttpRequestMessage request,
         CancellationToken cancellationToken)
     {
-        var res = await base.SendAsync(request, cancellationToken);
-
+        HttpResponseMessage res = null;
         try
         {
+            res = await base.SendAsync(request, cancellationToken);
+
             // 统一处理401的情况
             if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
