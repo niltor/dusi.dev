@@ -4,7 +4,13 @@
       <div class="d-flex">
         <!-- 筛选 -->
       </div>
-      <div class="d-flex flex-grow-1"></div>
+      <div class="d-flex flex-grow-1 justify-content-center">
+        <mat-button-toggle-group [(ngModel)]="filter.isClassified" (change)="getList()">
+          <mat-button-toggle [value]="null">全部</mat-button-toggle>
+          <mat-button-toggle [value]="false">未分类</mat-button-toggle>
+          <mat-button-toggle [value]="true">已分类</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
       <button mat-flat-button color="primary" matTooltipPosition="right" [routerLink]="['../add']">
         <mat-icon>add</mat-icon>
         添加
@@ -49,7 +55,7 @@
       </span>
     </td>
   </ng-container>
-  
+
   <ng-container matColumnDef="newsType">
     <th mat-header-cell *matHeaderCellDef>分类</th>
     <td mat-cell *matCellDef="let element">

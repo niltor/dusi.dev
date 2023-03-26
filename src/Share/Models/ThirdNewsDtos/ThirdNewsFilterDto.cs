@@ -15,9 +15,13 @@ public class ThirdNewsFilterDto : FilterBase
     public NewsSource? Type { get; set; }
     public NewsType? NewsType { get; set; }
     public TechType? TechType { get; set; }
+    public NewsStatus? NewsStatus { get; set; }
 
     public DateTimeOffset? StartDate { get; set; }
     public DateTimeOffset? EndDate { get; set; }
 
-    public NewsStatus? NewsStatus { get; set; }
+    /// <summary>
+    /// 是否被分类
+    /// </summary>
+    public bool? IsClassified { get; set; }
 }

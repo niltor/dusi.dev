@@ -43,6 +43,25 @@ public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto,
 
         Queryable = Queryable.WhereNotNull(filter.NewsStatus, q => q.NewsStatus == filter.NewsStatus);
 
+        // 未被分类的内容
+        if (filter.IsClassified != null)
+        {
+            if (filter.IsClassified.Value)
+            {
+                Queryable = Queryable.Where(q =>
+                    q.NewsType != NewsType.Default &&
+                    q.TechType != TechType.Default &&
+                    q.NewsStatus != NewsStatus.Default);
+            }
+            else
+            {
+                Queryable = Queryable.Where(q =>
+                    q.NewsType == NewsType.Default ||
+                    q.TechType == TechType.Default ||
+                    q.NewsStatus == NewsStatus.Default);
+            }
+        }
+
         if (filter.StartDate != null && filter.EndDate != null)
         {
             Queryable = Queryable.Where(q => q.DatePublished >= filter.StartDate && q.DatePublished < filter.EndDate);
