@@ -32,7 +32,18 @@
   </section>
   <!-- 推荐内容 -->
   <section class="sugguest p-2">
-
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>分类</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-action-list *ngIf="newsTypeOptions">
+          <button mat-list-item *ngFor="let option of newsTypeOptions" (click)="selectNewsType(option.value)">
+            {{option.description}}
+          </button>
+        </mat-action-list>
+      </mat-card-content>
+    </mat-card>
 
   </section>
 </div>

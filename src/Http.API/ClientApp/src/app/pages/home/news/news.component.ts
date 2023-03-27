@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { EnumDictionary } from 'src/app/share/client/models/enum-dictionary.model';
 import { ThirdNewsFilterDto } from 'src/app/share/client/models/third-news/third-news-filter-dto.model';
 import { ThirdNewsItemDto } from 'src/app/share/client/models/third-news/third-news-item-dto.model';
 import { ThirdNewsOptionsDto } from 'src/app/share/client/models/third-news/third-news-options-dto.model';
@@ -15,6 +16,9 @@ export class NewsComponent {
   isLoading = true;
   news: ThirdNewsItemDto[] = [];
   options: ThirdNewsOptionsDto | null = null;
+  newsTypeOptions: EnumDictionary[] | null = [];
+  techTypeOptions: EnumDictionary[] | null = [];
+
   filter: ThirdNewsFilterDto;
   pageIndex = 1;
   count = 0;
@@ -59,6 +63,8 @@ export class NewsComponent {
         next: (res) => {
           if (res) {
             this.options = res;
+            this.techTypeOptions = res.techType!;
+            this.newsTypeOptions = res.newsType!;
           } else {
           }
         },
@@ -67,4 +73,10 @@ export class NewsComponent {
         }
       });
   }
+
+  selectNewsType(value: number): void {
+    this.filter.newsType = value;
+    this.getNews();
+  }
+
 }

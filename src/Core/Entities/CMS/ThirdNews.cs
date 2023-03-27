@@ -83,7 +83,7 @@ public enum NewsStatus
     /// <summary>
     /// 默认状态
     /// </summary> 
-    [Description("默认状态")]
+    [Description("默认")]
     Default,
     /// <summary>
     /// 公开
@@ -99,11 +99,12 @@ public enum NewsStatus
 
 public enum TechType
 {
+    [Description("未标记")]
     Default,
     /// <summary>
     /// 常规资讯
     /// </summary>
-    [Description("常规资讯")]
+    [Description("资讯")]
     Normal,
     /// <summary>
     /// 发布或更新
@@ -127,16 +128,17 @@ public enum NewsSource
 
 public enum NewsType
 {
+    [Description("未分类")]
     Default,
     /// <summary>
     /// 大公司
     /// </summary>
-    [Description("大公司")]
+    [Description("风向标")]
     Company,
     /// <summary>
     /// 开源
     /// </summary>
-    [Description("开源")]
+    [Description("开源和工具")]
     OpenSource,
     /// <summary>
     /// 语言及框架
@@ -146,12 +148,12 @@ public enum NewsType
     /// <summary>
     /// 数据和AI
     /// </summary>
-    [Description("大数据和AI")]
+    [Description("AI和数据")]
     DataAndAI,
     /// <summary>
     /// DevOps
     /// </summary>
-    [Description("DevOps")]
+    [Description("云与DevOps")]
     DevOps,
     [Description("其它")]
     Else
