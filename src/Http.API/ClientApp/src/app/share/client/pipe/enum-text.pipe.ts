@@ -22,7 +22,7 @@ case 'NewsStatus':
 {
   switch (value)
   {
-    case 0: result = '默认状态'; break;
+    case 0: result = '默认'; break;
     case 1: result = '公开'; break;
     case 2: result = '内部'; break;
     default:  break;
@@ -33,11 +33,12 @@ case 'NewsType':
 {
   switch (value)
   {
-    case 1: result = '大公司'; break;
-    case 2: result = '开源'; break;
+    case 0: result = '未分类'; break;
+    case 1: result = '风向标'; break;
+    case 2: result = '开源和工具'; break;
     case 3: result = '语言及框架'; break;
-    case 4: result = '大数据和AI'; break;
-    case 5: result = 'DevOps'; break;
+    case 4: result = 'AI和数据'; break;
+    case 5: result = '云与DevOps'; break;
     case 6: result = '其它'; break;
     default:  break;
   }
@@ -47,7 +48,8 @@ case 'TechType':
 {
   switch (value)
   {
-    case 1: result = '常规资讯'; break;
+    case 0: result = '未标记'; break;
+    case 1: result = '资讯'; break;
     case 2: result = '发布或更新'; break;
     case 3: result = '重点关注'; break;
     default:  break;
