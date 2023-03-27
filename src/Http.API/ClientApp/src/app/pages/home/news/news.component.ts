@@ -74,7 +74,7 @@ export class NewsComponent {
       });
   }
 
-  selectNewsType(value: number): void {
+  selectNewsType(value: number | null): void {
     this.filter.newsType = value;
     this.getNews();
   }

@@ -3,6 +3,9 @@
  */
 export interface EntityLibraryFilterDto {
   pageIndex: number;
+  /**
+   * 默认最大1000
+   */
   pageSize: number;
   /**
    * 排序

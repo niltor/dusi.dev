@@ -5,6 +5,9 @@ import { CodeLanguage } from '../enum/code-language.model';
  */
 export interface EntityModelFilterDto {
   pageIndex: number;
+  /**
+   * 默认最大1000
+   */
   pageSize: number;
   /**
    * 排序

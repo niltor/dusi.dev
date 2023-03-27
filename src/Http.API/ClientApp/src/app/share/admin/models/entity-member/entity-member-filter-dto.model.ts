@@ -5,6 +5,9 @@ import { MemberType } from '../enum/member-type.model';
  */
 export interface EntityMemberFilterDto {
   pageIndex: number;
+  /**
+   * 默认最大1000
+   */
   pageSize: number;
   /**
    * 排序

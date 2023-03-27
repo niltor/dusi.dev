@@ -4,6 +4,9 @@ import { LanguageType } from '../enum/language-type.model';
  */
 export interface BlogFilterDto {
   pageIndex: number;
+  /**
+   * 默认最大1000
+   */
   pageSize: number;
   /**
    * 排序
