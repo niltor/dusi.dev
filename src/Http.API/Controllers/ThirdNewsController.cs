@@ -20,6 +20,7 @@ public class ThirdNewsController : ClientControllerBase<IThirdNewsManager>
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
+    [AllowAnonymous]
     public async Task<ActionResult<PageList<ThirdNewsItemDto>>> FilterAsync(ThirdNewsFilterDto filter)
     {
         filter.NewsStatus = NewsStatus.Public;
@@ -35,6 +36,7 @@ public class ThirdNewsController : ClientControllerBase<IThirdNewsManager>
     /// </summary>
     /// <returns></returns>
     [HttpGet("enumOptions")]
+    [AllowAnonymous]
     public ActionResult<ThirdNewsOptionsDto> GetEnumOptions()
     {
         var res = manager.GetEnumOptions();
