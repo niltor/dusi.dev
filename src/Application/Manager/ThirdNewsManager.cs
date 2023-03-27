@@ -82,7 +82,8 @@ public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto,
         // 删除
         if (dto.IsDelete != null && dto.IsDelete == true)
         {
-            return await query.ExecuteDeleteAsync() > 0;
+            return await query.ExecuteUpdateAsync(p => p
+               .SetProperty(n => n.IsDeleted, true)) > 0;
         }
         // 标记
         if (dto.TechType != null)
@@ -129,4 +130,5 @@ public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto,
         };
         return res;
     }
+
 }
