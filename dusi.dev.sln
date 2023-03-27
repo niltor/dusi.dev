@@ -51,7 +51,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DusiApp", "src\App\DusiApp\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sdks", "Sdks", "{8E97299E-7C7A-44B7-AA2E-B34E6127AA58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dusi.Manage.Client", "src\Sdks\Dusi.Manage.Client\Dusi.Manage.Client.csproj", "{95F75ADB-57D9-45AF-947A-70D1C265113E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dusi.Manage.Client", "src\Sdks\Dusi.Manage.Client\Dusi.Manage.Client.csproj", "{95F75ADB-57D9-45AF-947A-70D1C265113E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E37BBD2F-A2BC-4941-960A-78CBDEACFB07}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

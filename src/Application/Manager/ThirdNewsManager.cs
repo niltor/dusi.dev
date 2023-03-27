@@ -129,5 +129,4 @@ public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto,
         };
         return res;
     }
-
 }

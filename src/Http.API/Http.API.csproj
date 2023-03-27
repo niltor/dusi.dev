@@ -53,6 +53,10 @@
 		<None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Include="..\..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
+
 	<Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
 		<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
 		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --configuration production" />

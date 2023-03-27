@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using Core.Entities.CMS;
+using Core.Utils;
 using Dusi.Manage.Client;
 using Microsoft.Maui.Controls;
 using Share.Models.ThirdNewsDtos;
@@ -46,10 +47,8 @@ public partial class DetailViewModel : BaseViewModel
     [RelayCommand]
     private async Task SetNewsTypeAsync()
     {
-        var options = new string[]
-        {
-            "默认", "大公司", "开源", "语言及框架", "AI与大数据", "DevOps", "其它"
-        };
+        var newsTypeOptions = EnumHelper.ToList(typeof(NewsType));
+        var options = newsTypeOptions.Select(o => o.Name).ToArray();
         string action = await AppShell.Current.DisplayActionSheet("设置分类", "取消", null, options);
 
         if (action == "取消") { return; }
@@ -78,7 +77,8 @@ public partial class DetailViewModel : BaseViewModel
     [RelayCommand]
     private async Task SetTechTypeAsync()
     {
-        var options = new string[] { "默认", "资讯", "发布及更新", "关注" };
+        var newsTypeOptions = EnumHelper.ToList(typeof(TechType));
+        var options = newsTypeOptions.Select(o => o.Name).ToArray();
         string action = await AppShell.Current.DisplayActionSheet("设置分类", "取消", null, options);
 
         if (action == "取消") { return; }

@@ -5,6 +5,8 @@
     xmlns:vm="clr-namespace:DusiApp.ViewModels"
     xmlns:m="clr-namespace:DusiApp.Models"
     xmlns:share="clr-namespace:Share.Models.ThirdNewsDtos;assembly=Share"
+    xmlns:local="clr-namespace:DusiApp.Converters"
+    xmlns:enum="clr-namespace:Core.Entities.CMS;assembly=Core"
     x:Class="DusiApp.Views.NewsListPage"
     x:DataType="vm:NewsListViewModel"
     Shell.NavBarIsVisible="False">
@@ -40,10 +42,10 @@
                                 Text="{Binding CreatedTime,StringFormat='{0:yyyy-MM-dd HH:mm}'}" />
                             <Label
                                 TextColor="{AppThemeBinding Light={StaticResource Blue100Accent}, Dark={StaticResource Gray100}}"
-                                Text="{Binding NewsType}" />
-
+                                Text="{Binding NewsType, 
+                                        Converter={local:EnumToStringConverter x:TypeArguments=enum:NewsType}}" />
                             <Label
-                                Text="{Binding TechType}"
+                                Text="{Binding TechType,Converter={local:EnumToStringConverter x:TypeArguments=enum:TechType}}"
                                 TextColor="{AppThemeBinding Light={StaticResource Yellow100Accent}, Dark={StaticResource Gray100}}" />
 
                         </HorizontalStackLayout>
