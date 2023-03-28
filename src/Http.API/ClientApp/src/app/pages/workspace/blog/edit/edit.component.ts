@@ -15,6 +15,7 @@ import { CatalogService } from 'src/app/share/client/services/catalog.service';
 import { TagsItemDto } from 'src/app/share/client/models/tags/tags-item-dto.model';
 import { forkJoin, lastValueFrom } from 'rxjs';
 import { TagsService } from 'src/app/share/client/services/tags.service';
+import { BlogType } from 'src/app/share/client/models/enum/blog-type.model';
 
 @Component({
   selector: 'app-edit',
@@ -25,7 +26,7 @@ export class EditComponent implements OnInit {
   public editorConfig!: CKEditor5.Config;
   public editor: CKEditor5.EditorConstructor = ClassicEditor;
   LanguageType = LanguageType;
-
+  BlogType = BlogType;
   id!: string;
   isLoading = true;
   data = {} as Blog;
@@ -63,6 +64,7 @@ export class EditComponent implements OnInit {
   get isOriginal() { return this.formGroup.get('isOriginal'); }
   get tagIds() { return this.formGroup.get('tagIds'); }
   get catalogId() { return this.formGroup.get('catalogId'); }
+  get blogType() { return this.formGroup.get('blogType'); }
 
   ngOnInit(): void {
     forkJoin([this.getDetail(), this.getTags(), this.getCatalogs()])
@@ -125,6 +127,7 @@ export class EditComponent implements OnInit {
       isPublic: new FormControl(this.data.isPublic, []),
       isOriginal: new FormControl(this.data.isOriginal, []),
       tagIds: new FormControl(this.selectedTagIds, []),
+      blogType: new FormControl(0, [Validators.required]),
       catalogId: new FormControl<string>(this.data.catalog?.id!, [Validators.required])
     });
   }
@@ -134,6 +137,10 @@ export class EditComponent implements OnInit {
         return this.languageType?.errors?.['required'] ? 'LanguageType必填' :
           this.languageType?.errors?.['minlength'] ? 'LanguageType长度最少位' :
             this.languageType?.errors?.['maxlength'] ? 'LanguageType长度最多位' : '';
+      case 'blogType':
+        return this.blogType?.errors?.['required'] ? 'BlogType必填' :
+          this.blogType?.errors?.['minlength'] ? 'BlogType长度最少位' :
+            this.blogType?.errors?.['maxlength'] ? 'BlogType长度最多位' : '';
       case 'title':
         return this.title?.errors?.['required'] ? 'Title必填' :
           this.title?.errors?.['minlength'] ? 'Title长度最少位' :

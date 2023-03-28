@@ -27,8 +27,8 @@
       </mat-form-field>
 
       <mat-form-field class="ms-2">
-        <mat-label>选择分类</mat-label>
-        <mat-select placeholder="选择分类" formControlName="catalogId" required="">
+        <mat-label>个人目录</mat-label>
+        <mat-select placeholder="选择个人目录" formControlName="catalogId" required="">
           <mat-option *ngFor="let item of catalog" [value]="item.id">
             {{item.name}}
             <span *ngIf="item.parent">
@@ -40,7 +40,19 @@
           {{getValidatorMessage('catalogId')}}
         </mat-error>
       </mat-form-field>
-      
+
+      <mat-form-field class="ms-2">
+        <mat-label>全站分类</mat-label>
+        <mat-select placeholder="所属分类" formControlName="blogType" required>
+          <mat-option *ngFor="let item of BlogType| toKeyValue" [value]="item.value">
+            {{item.value|enumText:'BlogType'}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="languageType?.invalid">
+          {{getValidatorMessage('catalogId')}}
+        </mat-error>
+      </mat-form-field>
+
       <mat-form-field class="ms-2" style="width:400px">
         <mat-label>选择标签</mat-label>
         <mat-select placeholder="标签" multiple formControlName="tagIds">

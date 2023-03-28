@@ -1,10 +1,10 @@
 export enum BlogType {
-  Default = 0,
-  News = 1,
-  OpenSource = 2,
-  LanguageAndFramework = 3,
-  DataAndAI = 4,
-  CloudAndDevOps = 5,
-  View = 6,
+  News = 0,
+  OpenSource = 1,
+  LanguageAndFramework = 2,
+  DataAndAI = 3,
+  CloudAndDevOps = 4,
+  View = 5,
+  Else = 6,
 
 }

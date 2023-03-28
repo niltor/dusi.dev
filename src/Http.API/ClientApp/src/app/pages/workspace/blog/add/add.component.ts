@@ -4,7 +4,6 @@ import { BlogService } from 'src/app/share/client/services/blog.service';
 import { BlogAddDto } from 'src/app/share/client/models/blog/blog-add-dto.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import * as ClassicEditor from 'ng-ckeditor5-classic';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
@@ -16,6 +15,7 @@ import { TagsService } from 'src/app/share/client/services/tags.service';
 import { forkJoin, lastValueFrom } from 'rxjs';
 import { Tags } from 'src/app/share/client/models/tags/tags.model';
 import { TagsItemDto } from 'src/app/share/client/models/tags/tags-item-dto.model';
+import { BlogType } from 'src/app/share/client/models/enum/blog-type.model';
 
 @Component({
   selector: 'app-add',
@@ -26,6 +26,7 @@ export class AddComponent implements OnInit {
   public editorConfig!: CKEditor5.Config;
   public editor: CKEditor5.EditorConstructor = ClassicEditor;
   LanguageType = LanguageType;
+  BlogType = BlogType;
   formGroup!: FormGroup;
   data = {} as BlogAddDto;
   catalogs: Catalog[] = [];
@@ -54,7 +55,7 @@ export class AddComponent implements OnInit {
   get isOriginal() { return this.formGroup.get('isOriginal'); }
   get tagIds() { return this.formGroup.get('tagIds'); }
   get catalogId() { return this.formGroup.get('catalogId'); }
-
+  get blogType() { return this.formGroup.get('blogType'); }
 
   ngOnInit(): void {
     this.initForm();
@@ -109,6 +110,7 @@ export class AddComponent implements OnInit {
       isPublic: new FormControl(true, []),
       isOriginal: new FormControl(true, []),
       tagIds: new FormControl(null, []),
+      blogType: new FormControl(0, [Validators.required]),
       catalogId: new FormControl<string>('', [Validators.required])
 
     });
@@ -119,6 +121,10 @@ export class AddComponent implements OnInit {
         return this.languageType?.errors?.['required'] ? 'LanguageType必填' :
           this.languageType?.errors?.['minlength'] ? 'LanguageType长度最少位' :
             this.languageType?.errors?.['maxlength'] ? 'LanguageType长度最多位' : '';
+      case 'blogType':
+        return this.blogType?.errors?.['required'] ? 'BlogType必填' :
+          this.blogType?.errors?.['minlength'] ? 'BlogType长度最少位' :
+            this.blogType?.errors?.['maxlength'] ? 'BlogType长度最多位' : '';
       case 'title':
         return this.title?.errors?.['required'] ? 'Title必填' :
           this.title?.errors?.['minlength'] ? 'Title长度最少位' :

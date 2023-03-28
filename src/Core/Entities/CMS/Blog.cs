@@ -24,7 +24,7 @@ public class Blog : TextBase
     /// <summary>
     /// 全站类别
     /// </summary>
-    public BlogType BlogType { get; set; } = BlogType.Default;
+    public BlogType BlogType { get; set; }
 
     /// <summary>
     /// 是否审核
@@ -48,7 +48,6 @@ public class Blog : TextBase
 
 public enum BlogType
 {
-    Default,
     /// <summary>
     /// 资讯
     /// </summary>
@@ -79,7 +78,12 @@ public enum BlogType
     /// 见解与分析
     /// </summary>
     [Description("见解与分析")]
-    View
+    View,
+    /// <summary>
+    /// 其它
+    /// </summary>
+    [Description("其它")]
+    Else
 }
 
 public enum LanguageType
