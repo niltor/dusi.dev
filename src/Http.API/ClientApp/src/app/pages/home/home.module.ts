@@ -5,13 +5,17 @@ import { IndexComponent } from './index/index.component';
 import { ShareModule } from 'src/app/share/share.module';
 import { NewsComponent } from './news/news.component';
 import { EnumTextPipe } from 'src/app/share/admin/pipe/enum-text.pipe';
+import { BlogComponent } from './blog/blog.component';
+import { AboutComponent } from './about/about.component';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
     IndexComponent,
-    NewsComponent
+    NewsComponent,
+    BlogComponent,
+    AboutComponent
   ],
   imports: [
     ShareModule,

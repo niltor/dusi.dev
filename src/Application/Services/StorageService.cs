@@ -15,12 +15,13 @@ public class StorageService
 
     public StorageService(IOptions<AzureOption> option, ILogger<StorageService> logger)
     {
+        _logger = logger;
         this.option = option.Value;
         if (string.IsNullOrWhiteSpace(this.option.BlobConnectionString))
         {
-            throw new ArgumentNullException("BlobConnectionString is null");
+            _logger.LogError("BlobConnectionString is null");
         }
-        _logger = logger;
+
     }
 
     /// <summary>
@@ -31,6 +32,12 @@ public class StorageService
     /// <returns></returns>
     public async Task<string> UploadAsync(Stream stream, string fileName)
     {
+        if (option.BlobConnectionString == null)
+        {
+            _logger.LogError("BlobConnectionString is null");
+            return string.Empty;
+        }
+
         var container = new BlobContainerClient(option.BlobConnectionString, BlobName);
         BlobClient blob = container.GetBlobClient(fileName);
         try
