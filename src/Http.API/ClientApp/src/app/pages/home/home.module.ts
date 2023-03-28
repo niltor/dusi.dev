@@ -7,6 +7,7 @@ import { NewsComponent } from './news/news.component';
 import { EnumTextPipe } from 'src/app/share/admin/pipe/enum-text.pipe';
 import { BlogComponent } from './blog/blog.component';
 import { AboutComponent } from './about/about.component';
+import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { AboutComponent } from './about/about.component';
     IndexComponent,
     NewsComponent,
     BlogComponent,
-    AboutComponent
+    AboutComponent,
+    BlogDetailComponent
   ],
   imports: [
     ShareModule,

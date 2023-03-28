@@ -29,16 +29,4 @@ public class BlogController : RestControllerBase<IBlogManager>
     {
         return await manager.FilterAsync(filter);
     }
-
-    /// <summary>
-    /// 新增
-    /// </summary>
-    /// <param name="form"></param>
-    /// <returns></returns>
-    [HttpPost]
-    public async Task<ActionResult<string>> AddAsync(BlogAddDto form)
-    {
-        return default!;
-    }
-
 }

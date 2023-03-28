@@ -9,7 +9,7 @@ public class ThirdNewsShortDto
     [MaxLength(300)]
     public string? AuthorAvatar { get; set; }
     [MaxLength(200)]
-    public string Title { get; set; }
+    public string Title { get; set; } = default!;
     [MaxLength(300)]
     public string? Url { get; set; }
     [MaxLength(300)]

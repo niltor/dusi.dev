@@ -32,7 +32,7 @@ public partial class NewsListViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task LoadMore()
+    public void LoadMore()
     {
 
     }

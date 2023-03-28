@@ -5,7 +5,9 @@
       <mat-card class="w-100 my-1" *ngFor="let item of blogs">
         <mat-card-header>
           <mat-card-title>
-            {{item.title}}
+            <a [routerLink]="['/blog',item.id]" target="_blank">
+              {{item.title}}
+            </a>
           </mat-card-title>
           <mat-card-subtitle>
             {{item.authors}} |
@@ -14,18 +16,13 @@
         </mat-card-header>
         <mat-card-content [innerHTML]="item.description">
         </mat-card-content>
-        <mat-card-actions>
+        <mat-card-actions *ngIf="item.tags">
           <mat-icon fontSet="material-icons-outlined">local_offer</mat-icon>
-          <!-- <mat-chip-listbox *ngIf="item.techType" class="ms-2">
+          <mat-chip-listbox *ngFor="let tag of item.tags" class="ms-2" matTooltip="标签">
             <mat-chip color="primary">
-              {{item.techType|enumText:'TechType'}}
+              {{tag.name}}
             </mat-chip>
           </mat-chip-listbox>
-          <mat-chip-listbox *ngIf="item.blogsType" class="ms-2">
-            <mat-chip color="primary">
-              {{item.blogsType|enumText:'blogsType'}}
-            </mat-chip>
-          </mat-chip-listbox> -->
         </mat-card-actions>
       </mat-card>
     </ng-container>
