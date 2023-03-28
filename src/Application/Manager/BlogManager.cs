@@ -87,6 +87,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
             .WhereNotNull(filter.Authors, q => q.Authors.Contains(filter.Authors!))
             .WhereNotNull(filter.IsPublic, q => q.IsPublic == filter.IsPublic)
             .WhereNotNull(filter.CatalogId, q => q.Catalog.Id == filter.CatalogId)
+            .WhereNotNull(filter.BlogType, q => q.BlogType == filter.BlogType)
             .WhereNotNull(filter.Date, q => DateOnly.FromDateTime(q.CreatedTime.DateTime) == filter.Date);
         // tag筛选
         if (filter.Tag != null)

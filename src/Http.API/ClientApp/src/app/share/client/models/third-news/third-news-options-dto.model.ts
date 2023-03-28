@@ -1,4 +1,4 @@
-import { EnumDictionary } from '../enum-dictionary.model';
+import { EnumDictionary } from '../blog/enum-dictionary.model';
 /**
  * 枚举类型选项
  */

@@ -1,4 +1,5 @@
 import { LanguageType } from '../enum/language-type.model';
+import { BlogType } from '../enum/blog-type.model';
 /**
  * 博客添加时请求结构
  */
@@ -32,5 +33,6 @@ export interface BlogAddDto {
    * 标签
    */
   tagIds?: string[] | null;
+  blogType?: BlogType | null;
 
 }

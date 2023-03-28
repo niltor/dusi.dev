@@ -5,6 +5,7 @@ import { BlogFilterDto } from '../models/blog/blog-filter-dto.model';
 import { BlogUpdateDto } from '../models/blog/blog-update-dto.model';
 import { BlogAddDto } from '../models/blog/blog-add-dto.model';
 import { BlogItemDtoPageList } from '../models/blog/blog-item-dto-page-list.model';
+import { EnumDictionary } from '../models/blog/enum-dictionary.model';
 import { Blog } from '../models/blog/blog.model';
 import { UploadResult } from '../models/blog/upload-result.model';
 
@@ -20,6 +21,14 @@ export class BlogService extends BaseService {
   filter(data: BlogFilterDto): Observable<BlogItemDtoPageList> {
     const url = `/api/Blog/filter`;
     return this.request<BlogItemDtoPageList>('post', url, data);
+  }
+
+  /**
+   * 获取分类信息
+   */
+  getTypes(): Observable<EnumDictionary[]> {
+    const url = `/api/Blog/types`;
+    return this.request<EnumDictionary[]>('get', url);
   }
 
   /**

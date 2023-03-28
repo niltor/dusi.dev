@@ -3,11 +3,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { BlogFilterDto } from 'src/app/share/client/models/blog/blog-filter-dto.model';
 import { BlogItemDto } from 'src/app/share/client/models/blog/blog-item-dto.model';
 import { EnumDictionary } from 'src/app/share/client/models/enum-dictionary.model';
-import { ThirdNewsFilterDto } from 'src/app/share/client/models/third-news/third-news-filter-dto.model';
-import { ThirdNewsItemDto } from 'src/app/share/client/models/third-news/third-news-item-dto.model';
 import { ThirdNewsOptionsDto } from 'src/app/share/client/models/third-news/third-news-options-dto.model';
 import { BlogService } from 'src/app/share/client/services/blog.service';
-import { ThirdNewsService } from 'src/app/share/client/services/third-news.service';
 
 @Component({
   selector: 'app-blog',
@@ -17,9 +14,7 @@ import { ThirdNewsService } from 'src/app/share/client/services/third-news.servi
 export class BlogComponent {
   isLoading = true;
   blogs: BlogItemDto[] = [];
-  options: ThirdNewsOptionsDto | null = null;
-  newsTypeOptions: EnumDictionary[] | null = [];
-  techTypeOptions: EnumDictionary[] | null = [];
+  typeOptions: EnumDictionary[] | null = null;
 
   filter: BlogFilterDto;
   pageIndex = 1;
@@ -36,7 +31,7 @@ export class BlogComponent {
   }
 
   ngOnInit(): void {
-    this.getOptions();
+    this.getTypes();
     this.getNews();
   }
 
@@ -59,9 +54,24 @@ export class BlogComponent {
       });
   }
 
-  getOptions(): void {
-
+  getTypes(): void {
+    this.service.getTypes()
+      .subscribe({
+        next: (res) => {
+          if (res) {
+            this.typeOptions = res;
+          } else {
+          }
+        },
+        error: (error) => {
+          this.snb.open(error.detail);
+        }
+      });
   }
 
+  selectblogsType(type: number | null): void {
+    this.filter.blogType = type;
+    this.getNews();
+  }
 
 }

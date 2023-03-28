@@ -1,6 +1,7 @@
 import { LanguageType } from '../enum/language-type.model';
 import { Catalog } from '../catalog/catalog.model';
 import { Tags } from '../tags/tags.model';
+import { BlogType } from '../enum/blog-type.model';
 /**
  * 博客列表元素
  */
@@ -26,5 +27,6 @@ export interface BlogItemDto {
    */
   catalog?: Catalog | null;
   tags?: Tags[] | null;
+  blogType?: BlogType | null;
 
 }

@@ -36,5 +36,9 @@ public class BlogFilterDto : FilterBase
     /// 日期
     /// </summary>
     public DateOnly? Date { get; set; }
-    
+
+    /// <summary>
+    /// 分类
+    /// </summary>
+    public BlogType? BlogType { get; set; }
 }

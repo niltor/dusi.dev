@@ -45,14 +45,14 @@
         <mat-card-title>分类</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <!-- <mat-action-list *ngIf="blogsTypeOptions">
+        <mat-action-list *ngIf="typeOptions">
           <button mat-list-item (click)="selectblogsType(null)">
             全部
           </button>
-          <button mat-list-item *ngFor="let option of blogsTypeOptions" (click)="selectblogsType(option.value)">
+          <button mat-list-item *ngFor="let option of typeOptions" (click)="selectblogsType(option.value)">
             {{option.description}}
           </button>
-        </mat-action-list> -->
+        </mat-action-list>
       </mat-card-content>
     </mat-card>
 

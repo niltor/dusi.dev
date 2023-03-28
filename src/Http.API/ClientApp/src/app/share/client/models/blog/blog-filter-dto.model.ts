@@ -1,4 +1,5 @@
 import { LanguageType } from '../enum/language-type.model';
+import { BlogType } from '../enum/blog-type.model';
 /**
  * 博客查询筛选
  */
@@ -37,5 +38,6 @@ export interface BlogFilterDto {
    * 日期
    */
   date?: string | null;
+  blogType?: BlogType | null;
 
 }

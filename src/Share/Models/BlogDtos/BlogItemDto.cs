@@ -34,4 +34,5 @@ public class BlogItemDto
     public Catalog Catalog { get; set; } = default!;
     public List<Tags>? Tags { get; set; }
 
+    public BlogType BlogType { get; set; }
 }
