@@ -25,6 +25,7 @@
     "jest-editor-support": "*",
     "marked": "^4.3.0",
     "ng-ckeditor5-classic": "^13.2.1",
+    "ngx-markdown": "^15.1.2",
     "prismjs": "^1.29.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

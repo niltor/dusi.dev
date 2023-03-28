@@ -1,7 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import './assets/bootstrap-grid.min.css';
+@import 'prismjs/plugins/toolbar/prism-toolbar.css';
 @import './assets/vs-dark-plus.css';
-/* @import 'prismjs/themes/prism-okaidia.min.css'; */
+@import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
+
 
 html,
 body {

@@ -8,6 +8,7 @@ import { EnumTextPipe } from 'src/app/share/admin/pipe/enum-text.pipe';
 import { BlogComponent } from './blog/blog.component';
 import { AboutComponent } from './about/about.component';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 
 @NgModule({
@@ -21,7 +22,9 @@ import { BlogDetailComponent } from './blog-detail/blog-detail.component';
   ],
   imports: [
     ShareModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    MarkdownModule.forRoot(),
+    
   ]
 })
 export class HomeModule { }

@@ -1,45 +1,44 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Blog } from 'src/app/share/client/models/blog/blog.model';
 import { BlogService } from 'src/app/share/client/services/blog.service';
-import { marked } from 'marked';
-import * as prism from 'prismjs';
 
+import 'prismjs/plugins/toolbar/prism-toolbar.min.js';
+import 'prismjs/plugins/show-language/prism-show-language.min.js';
+import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
 import 'prismjs/components/prism-typescript.min.js';
 import 'prismjs/components/prism-css.min.js';
 import 'prismjs/components/prism-javascript.min.js';
 import 'prismjs/components/prism-csharp.min.js';
 import 'prismjs/components/prism-markup.min.js';
 
-
-
+declare var Prism: any;
+const content = '# Title\n \
+  `single row of text`\n \
+  ```csharp\n \
+  public function void Main(string[] args){ \n\
+    Console.WriteLine(""); \n\
+  }\n \
+  ```\n \
+  [link](https://www.google.com)';
 
 @Component({
   selector: 'app-blog-detail',
   templateUrl: './blog-detail.component.html',
   styleUrls: ['./blog-detail.component.css']
 })
-export class BlogDetailComponent {
+export class BlogDetailComponent implements AfterViewInit {
   id!: string;
-  isLoading = true;
+  isLoading = false;
   data = {} as Blog;
+  testContent: string = '';
   constructor(
     private service: BlogService,
     private snb: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
   ) {
-
-    marked.setOptions({
-      highlight: (code, lang) => {
-        if (prism.languages[lang]) {
-          return prism.highlight(code, prism.languages[lang], lang);
-        } else {
-          return code;
-        }
-      },
-    });
 
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -50,7 +49,14 @@ export class BlogDetailComponent {
     }
   }
   ngOnInit(): void {
-    this.getDetail();
+    const code = 'var data = 1;';
+    this.testContent = content;
+  }
+  ngAfterViewInit(): void {
+
+
+
+    // this.getDetail();
   }
   getDetail(): void {
     this.service.getDetail(this.id)
@@ -59,13 +65,6 @@ export class BlogDetailComponent {
           if (res) {
             this.data = res;
             this.isLoading = false;
-            this.data.content = this.renderMarkdown(`# Title
-\`single row of text\`
-\`\`\`csharp
-public function void Main(string[] args){}
-\`\`\`
-[link](https://www.google.com)`);
-
           }
         },
         error: (error) => {
@@ -74,10 +73,4 @@ public function void Main(string[] args){}
       })
   }
 
-  renderMarkdown(text: string): string {
-    let res = marked.parse(text);
-    console.log(res);
-
-    return res;
-  }
 }

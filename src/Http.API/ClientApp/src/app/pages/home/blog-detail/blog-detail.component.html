@@ -1,22 +1,24 @@
 <div *ngIf="!isLoading" class="d-flex container">
-	<mat-card class="w-100">
-		<mat-card-header class="justify-content-center">
-			<mat-card-title class="text-center">
+  <mat-card class="w-100">
+    <mat-card-header class="justify-content-center">
+      <!-- <mat-card-title class="text-center">
 				{{data.title}}
 			</mat-card-title>
 			<mat-card-subtitle>
 				{{data.authors}} | {{data.createdTime|date:'yyyy-MM-dd HH:mm'}}
-			</mat-card-subtitle>
-		</mat-card-header>
-		<!-- <img mat-card-image src="" alt=""> -->
-		<mat-card-content>
-			<h3><strong>内容概要</strong></h3>
-			<p class="text-primary">{{data.description}}</p>
-			<pre [innerHTML]="data.content"></pre>
-		</mat-card-content>
-		<mat-card-actions>
-			<!-- <button mat-button></button>
+			</mat-card-subtitle> -->
+    </mat-card-header>
+    <!-- <img mat-card-image src="" alt=""> -->
+    <mat-card-content>
+      <h3><strong>内容概要</strong></h3>
+      <p class="text-primary">{{data.description}}</p>
+      <!-- <pre [innerHTML]="data.content"></pre> -->
+      <markdown ngPreserveWhitespaces lineNumbers [start]="1" [data]="testContent" [disableSanitizer]="true">
+      </markdown>
+    </mat-card-content>
+    <mat-card-actions>
+      <!-- <button mat-button></button>
       <button mat-button></button> -->
-		</mat-card-actions>
-	</mat-card>
+    </mat-card-actions>
+  </mat-card>
 </div>
