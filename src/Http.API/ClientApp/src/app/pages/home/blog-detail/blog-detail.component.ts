@@ -14,14 +14,6 @@ import 'prismjs/components/prism-csharp.min.js';
 import 'prismjs/components/prism-markup.min.js';
 
 declare var Prism: any;
-const content = '# Title\n \
-  `single row of text`\n \
-  ```csharp\n \
-  public function void Main(string[] args){ \n\
-    Console.WriteLine(""); \n\
-  }\n \
-  ```\n \
-  [link](https://www.google.com)';
 
 @Component({
   selector: 'app-blog-detail',
@@ -49,14 +41,10 @@ export class BlogDetailComponent implements AfterViewInit {
     }
   }
   ngOnInit(): void {
-    const code = 'var data = 1;';
-    this.testContent = content;
+    this.getDetail();
   }
   ngAfterViewInit(): void {
 
-
-
-    // this.getDetail();
   }
   getDetail(): void {
     this.service.getDetail(this.id)
