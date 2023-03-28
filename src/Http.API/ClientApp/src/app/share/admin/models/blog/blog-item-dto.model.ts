@@ -1,13 +1,10 @@
 import { LanguageType } from '../enum/language-type.model';
 import { Catalog } from '../catalog.model';
+import { Tags } from '../tags.model';
 /**
  * 博客列表元素
  */
 export interface BlogItemDto {
-  /**
-   * 标题
-   */
-  translateTitle?: string | null;
   languageType?: LanguageType | null;
   /**
    * 标题
@@ -28,5 +25,6 @@ export interface BlogItemDto {
    * 目录
    */
   catalog?: Catalog | null;
+  tags?: Tags[] | null;
 
 }

@@ -8,7 +8,21 @@ export class EnumTextPipe implements PipeTransform {
   transform(value: unknown, type: string): unknown {
     let result = '';
     switch (type) {
-      case 'LanguageType':
+      case 'BlogType':
+{
+  switch (value)
+  {
+    case 1: result = '资讯'; break;
+    case 2: result = '开源和工具'; break;
+    case 3: result = '语言及框架'; break;
+    case 4: result = 'AI和数据'; break;
+    case 5: result = '云与DevOps'; break;
+    case 6: result = '见解与分析'; break;
+    default:  break;
+  }
+}
+break;
+case 'LanguageType':
 {
   switch (value)
   {
@@ -33,7 +47,6 @@ case 'NewsType':
 {
   switch (value)
   {
-    case 0: result = '未分类'; break;
     case 1: result = '风向标'; break;
     case 2: result = '开源和工具'; break;
     case 3: result = '语言及框架'; break;

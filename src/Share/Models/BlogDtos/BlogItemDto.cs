@@ -7,10 +7,6 @@ namespace Share.Models.BlogDtos;
 public class BlogItemDto
 {
     /// <summary>
-    /// 标题
-    /// </summary>
-    public string? TranslateTitle { get; set; }
-    /// <summary>
     /// 语言类型
     /// </summary>
     public LanguageType LanguageType { get; set; } = LanguageType.CN;
@@ -36,5 +32,6 @@ public class BlogItemDto
     /// 所属目录
     /// </summary>
     public Catalog Catalog { get; set; } = default!;
-    
+    public List<Tags>? Tags { get; set; }
+
 }

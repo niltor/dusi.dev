@@ -108,6 +108,15 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     }
 
     /// <summary>
+    /// 获取分类信息
+    /// </summary>
+    /// <returns></returns>
+    public List<EnumDictionary> GetTypes()
+    {
+        return EnumHelper.ToList(typeof(BlogType));
+    }
+
+    /// <summary>
     /// 当前用户所拥有的对象
     /// </summary>
     /// <param name="id"></param>

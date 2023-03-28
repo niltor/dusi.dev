@@ -128,13 +128,12 @@ public enum NewsSource
 
 public enum NewsType
 {
-    [Description("未分类")]
     Default,
     /// <summary>
-    /// 大公司
+    /// 风向标
     /// </summary>
     [Description("风向标")]
-    Company,
+    News,
     /// <summary>
     /// 开源
     /// </summary>
@@ -154,7 +153,7 @@ public enum NewsType
     /// DevOps
     /// </summary>
     [Description("云与DevOps")]
-    DevOps,
+    CloudAndDevOps,
     [Description("其它")]
     Else
 }

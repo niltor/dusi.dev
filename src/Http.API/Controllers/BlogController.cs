@@ -33,6 +33,17 @@ public class BlogController : ClientControllerBase<IBlogManager>
     {
         return await manager.FilterAsync(filter);
     }
+
+    /// <summary>
+    /// 获取分类信息
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("types")]
+    public List<EnumDictionary> GetTypes()
+    {
+        return manager.GetTypes();
+    }
+
     /// <summary>
     /// 详情
     /// </summary>

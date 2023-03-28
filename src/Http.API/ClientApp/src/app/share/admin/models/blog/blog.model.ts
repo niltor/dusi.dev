@@ -1,4 +1,5 @@
 import { LanguageType } from '../enum/language-type.model';
+import { BlogType } from '../enum/blog-type.model';
 import { User } from '../user/user.model';
 import { Catalog } from '../catalog.model';
 import { Tags } from '../tags.model';
@@ -38,6 +39,11 @@ export interface Blog {
    */
   translateContent?: string | null;
   languageType?: LanguageType | null;
+  blogType?: BlogType | null;
+  /**
+   * 是否审核
+   */
+  isAudit: boolean;
   /**
    * 是否公开
    */

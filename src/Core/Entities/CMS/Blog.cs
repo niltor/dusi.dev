@@ -20,6 +20,16 @@ public class Blog : TextBase
     /// 语言类型
     /// </summary>
     public LanguageType LanguageType { get; set; } = LanguageType.CN;
+
+    /// <summary>
+    /// 全站类别
+    /// </summary>
+    public BlogType BlogType { get; set; } = BlogType.Default;
+
+    /// <summary>
+    /// 是否审核
+    /// </summary>
+    public bool IsAudit { get; set; } = false;
     /// <summary>
     /// 是否公开
     /// </summary>
@@ -34,6 +44,42 @@ public class Blog : TextBase
     /// </summary>
     public required Catalog Catalog { get; set; }
     public List<Tags>? Tags { get; set; }
+}
+
+public enum BlogType
+{
+    Default,
+    /// <summary>
+    /// 资讯
+    /// </summary>
+    [Description("资讯")]
+    News,
+    /// <summary>
+    /// 开源
+    /// </summary>
+    [Description("开源和工具")]
+    OpenSource,
+    /// <summary>
+    /// 语言及框架
+    /// </summary>
+    [Description("语言及框架")]
+    LanguageAndFramework,
+    /// <summary>
+    /// 数据和AI
+    /// </summary>
+    [Description("AI和数据")]
+    DataAndAI,
+    /// <summary>
+    /// DevOps
+    /// </summary>
+    [Description("云与DevOps")]
+    CloudAndDevOps,
+
+    /// <summary>
+    /// 见解与分析
+    /// </summary>
+    [Description("见解与分析")]
+    View
 }
 
 public enum LanguageType

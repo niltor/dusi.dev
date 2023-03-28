@@ -43,4 +43,9 @@ public class BlogAddDto
     /// </summary>
     public List<Guid>? TagIds { get; set; }
 
+    /// <summary>
+    /// 分类
+    /// </summary>
+    public BlogType BlogType { get; set; }
+
 }
