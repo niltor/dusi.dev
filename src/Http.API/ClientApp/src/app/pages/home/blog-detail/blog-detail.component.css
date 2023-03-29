@@ -2,6 +2,13 @@
   max-width: 860px;
 }
 
+.description {
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  color: rgb(31, 31, 31);
+  background-color: rgb(238, 238, 238);
+}
+
 :host ::ng-deep pre {
   border-radius: 5px !important;
 }

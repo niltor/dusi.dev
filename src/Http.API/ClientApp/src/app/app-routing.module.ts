@@ -13,7 +13,6 @@ const routes: Routes = [
         path: 'system',
         loadChildren: () => import('./pages/system/system.module')
             .then(m => m.SystemModule),
-        data: { reuse: true },
     },
     {
         path: 'workspace',

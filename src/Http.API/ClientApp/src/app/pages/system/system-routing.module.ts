@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/auth/auth.guard';
 import { AdminLayoutComponent } from 'src/app/components/admin-layout/admin-layout.component';
+import { CustomRouteReuseStrategy } from 'src/app/custom-route-strategy';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminLayoutComponent,
-    data: { reuse: true },
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
+    data: { reuse: true },
     children:
       [
         // { path: '', pathMatch: 'full', redirectTo: 'resource/index' },
@@ -19,6 +20,10 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [{
+    provide: RouteReuseStrategy,
+    useClass: CustomRouteReuseStrategy
+  }]
 })
 export class SystemRoutingModule { }
