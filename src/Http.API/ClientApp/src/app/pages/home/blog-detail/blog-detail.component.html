@@ -13,7 +13,8 @@
       <h3><strong>内容概要</strong></h3>
       <p class="text-primary">{{data.description}}</p>
       <mat-divider class="mb-2"></mat-divider>
-      <markdown ngPreserveWhitespaces lineNumbers [start]="1" [data]="data.content" [disableSanitizer]="true">
+      <markdown clipboard [clipboardButtonTemplate]="clipboardBtn" lineNumbers [start]="1" [data]="data.content"
+        [disableSanitizer]="true">
       </markdown>
     </mat-card-content>
     <mat-card-actions>
@@ -22,3 +23,18 @@
     </mat-card-actions>
   </mat-card>
 </div>
+
+<ng-template #clipboardBtn>
+  <div class="v-middle">
+    <ng-container *ngIf="isCopied; else elseTemplate">
+      <button mat-button color="primary">已复制</button>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <button mat-icon-button color="primary" (click)="copyCode()">
+        <mat-icon>
+          content_copy
+        </mat-icon>
+      </button>
+    </ng-template>
+  </div>
+</ng-template>

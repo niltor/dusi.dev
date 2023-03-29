@@ -3,7 +3,6 @@
 }
 
 :host ::ng-deep pre {
-
   border-radius: 5px !important;
 }
 

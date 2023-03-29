@@ -4,7 +4,6 @@
 @import './assets/vs-dark-plus.css';
 @import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 
-
 html,
 body {
     height: 100%;
@@ -74,3 +73,4 @@ img {
 .v-middle {
     vertical-align: middle;
 }
+

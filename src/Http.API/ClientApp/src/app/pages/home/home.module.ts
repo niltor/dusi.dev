@@ -7,7 +7,7 @@ import { NewsComponent } from './news/news.component';
 import { BlogComponent } from './blog/blog.component';
 import { AboutComponent } from './about/about.component';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
-import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
+import { ClipboardButtonComponent, ClipboardOptions, MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
 
 
 @NgModule({
@@ -26,9 +26,14 @@ import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
       markedOptions: {
         provide: MarkedOptions,
         useFactory: markedOptionsFactory
-      }
+      },
+      clipboardOptions: {
+        provide: ClipboardOptions,
+        useValue: {
+          buttonComponent: ClipboardButtonComponent,
+        },
+      },
     })
-
   ]
 })
 export class HomeModule { }
@@ -40,7 +45,6 @@ export function markedOptionsFactory(): MarkedOptions {
   renderer.code = (code: string) => {
     return '<code class="inline-code">' + code + '</code>'
   }
-
   return {
     renderer: renderer,
     gfm: true,

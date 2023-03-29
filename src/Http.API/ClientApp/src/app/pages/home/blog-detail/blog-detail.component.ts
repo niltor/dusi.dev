@@ -9,6 +9,7 @@ import 'prismjs/components/prism-typescript.min.js';
 import 'prismjs/components/prism-powershell.min.js';
 import 'prismjs/components/prism-csharp.min.js';
 import 'prismjs/components/prism-markup.min.js';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-blog-detail',
@@ -20,6 +21,7 @@ export class BlogDetailComponent implements AfterViewInit {
   isLoading = false;
   data = {} as Blog;
   testContent: string = '';
+  isCopied = false;
   constructor(
     private service: BlogService,
     private snb: MatSnackBar,
@@ -39,7 +41,6 @@ export class BlogDetailComponent implements AfterViewInit {
     this.getDetail();
   }
   ngAfterViewInit(): void {
-
   }
   getDetail(): void {
     this.service.getDetail(this.id)
@@ -51,9 +52,15 @@ export class BlogDetailComponent implements AfterViewInit {
           }
         },
         error: (error) => {
-          this.snb.open(error);
+          this.snb.open(error.detail);
         }
       })
   }
 
+  copyCode(): void {
+    this.isCopied = true;
+    setTimeout(() => {
+      this.isCopied = false;
+    }, 1500);
+  }
 }
