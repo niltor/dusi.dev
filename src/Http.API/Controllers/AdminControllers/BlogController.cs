@@ -8,15 +8,11 @@ namespace Http.API.Controllers.AdminControllers;
 /// </summary>
 public class BlogController : RestControllerBase<IBlogManager>
 {
-    private readonly DaprClient dapr;
-
     public BlogController(
         IUserContext user,
         ILogger<BlogController> logger,
-        IBlogManager manager,
-        DaprClient dapr) : base(manager, user, logger)
+        IBlogManager manager) : base(manager, user, logger)
     {
-        this.dapr = dapr;
     }
 
     /// <summary>

@@ -44,6 +44,10 @@ public class Blog : TextBase
     /// </summary>
     public required Catalog Catalog { get; set; }
     public List<Tags>? Tags { get; set; }
+    /// <summary>
+    /// 浏览量
+    /// </summary>
+    public int ViewCount { get; set; } = 0;
 }
 
 public enum BlogType

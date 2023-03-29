@@ -1,5 +1,5 @@
+using Application.Services;
 using Core.Const;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Share.Models.BlogDtos;
 
 namespace Application.Manager;
@@ -44,9 +44,12 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
         return entity;
     }
 
-    public override Task<Blog?> FindAsync(Guid id)
+    public override async Task<Blog?> FindAsync(Guid id)
     {
-        return Queryable.Include(b => b.User)
+        // TODO:统计浏览量，存内存，60秒后存入数据库
+
+
+        return await Queryable.Include(b => b.User)
             .Include(b => b.Tags)
             .Include(b => b.Catalog)
             .SingleOrDefaultAsync(b => b.Id == id);
