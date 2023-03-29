@@ -25,3 +25,16 @@
   padding: 2px;
   border-radius: 2px;
 }
+
+:host ::ng-deep table {
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+}
+
+:host ::ng-deep tr>td,
+:host ::ng-deep tr>th {
+  padding: 2px;
+  text-align: center;
+  background-color: aliceblue;
+  border-bottom: 1px solid gray;
+}

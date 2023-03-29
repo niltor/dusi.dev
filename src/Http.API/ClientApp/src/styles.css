@@ -74,3 +74,12 @@ img {
     vertical-align: middle;
 }
 
+blockquote {
+    margin: 2px 8px;
+    border-left: 3px solid #4397db;
+    text-indent: 0.5rem;
+}
+
+blockquote>p {
+    color: rgb(100, 100, 100)
+}

@@ -18,7 +18,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 })
 export class BlogDetailComponent implements AfterViewInit {
   id!: string;
-  isLoading = false;
+  isLoading = true;
   data = {} as Blog;
   testContent: string = '';
   isCopied = false;
