@@ -1,0 +1,28 @@
+.read {
+  max-width: 860px;
+}
+
+:host ::ng-deep pre {
+
+  border-radius: 5px !important;
+}
+
+:host ::ng-deep p {
+  font-size: 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:host ::ng-deep code:not([class]) {
+  font-family: 'Cascadia Code PL', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: rgb(54, 54, 54);
+  padding: 2px;
+  margin: 0 2px;
+  color: #4397db;
+  border-radius: 3px;
+}
+
+.inline-code {
+  background-color: rgb(197, 197, 197);
+  padding: 2px;
+  border-radius: 2px;
+}

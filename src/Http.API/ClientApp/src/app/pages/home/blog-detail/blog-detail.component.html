@@ -1,18 +1,18 @@
 <div *ngIf="!isLoading" class="d-flex container">
-  <mat-card class="w-100">
+  <mat-card class="read">
     <mat-card-header class="justify-content-center">
-      <!-- <mat-card-title class="text-center">
-				{{data.title}}
-			</mat-card-title>
-			<mat-card-subtitle>
-				{{data.authors}} | {{data.createdTime|date:'yyyy-MM-dd HH:mm'}}
-			</mat-card-subtitle> -->
+      <mat-card-title class="text-center">
+        {{data.title}}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{data.authors}} | {{data.createdTime|date:'yyyy-MM-dd HH:mm'}}
+      </mat-card-subtitle>
     </mat-card-header>
     <!-- <img mat-card-image src="" alt=""> -->
     <mat-card-content>
       <h3><strong>内容概要</strong></h3>
       <p class="text-primary">{{data.description}}</p>
-      <!-- <pre [innerHTML]="data.content"></pre> -->
+      <mat-divider class="mb-2"></mat-divider>
       <markdown ngPreserveWhitespaces lineNumbers [start]="1" [data]="data.content" [disableSanitizer]="true">
       </markdown>
     </mat-card-content>

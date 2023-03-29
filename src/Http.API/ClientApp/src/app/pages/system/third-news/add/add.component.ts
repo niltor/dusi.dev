@@ -4,12 +4,7 @@ import { ThirdNewsService } from 'src/app/share/admin/services/third-news.servic
 import { ThirdNewsAddDto } from 'src/app/share/admin/models/third-news/third-news-add-dto.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
-import * as ClassicEditor from 'ng-ckeditor5-classic';
-import { environment } from 'src/environments/environment';
-import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
-// import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { NewsSource } from 'src/app/share/admin/models/enum/news-source.model';
 import { NewsType } from 'src/app/share/admin/models/enum/news-type.model';
 import { TechType } from 'src/app/share/admin/models/enum/tech-type.model';
@@ -20,8 +15,6 @@ import { TechType } from 'src/app/share/admin/models/enum/tech-type.model';
   styleUrls: ['./add.component.css']
 })
 export class AddComponent implements OnInit {
-  public editorConfig!: CKEditor5.Config;
-  public editor: CKEditor5.EditorConstructor = ClassicEditor;
   NewsSource = NewsSource;
   NewsType = NewsType;
   TechType = TechType;
@@ -53,22 +46,10 @@ export class AddComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    this.initEditor();
     // TODO:获取其他相关数据后设置加载状态
     this.isLoading = false;
   }
-  initEditor(): void {
-    this.editorConfig = {
-      // placeholder: '请添加图文信息提供证据，也可以直接从Word文档中复制',
-      simpleUpload: {
-        uploadUrl: '',// set your api url like:environment.uploadEditorFileUrl,
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem("accessToken")
-        }
-      },
-      language: 'zh-cn'
-    };
-  }
+
   onReady(editor: any) {
     editor.ui.getEditableElement().parentElement.insertBefore(
       editor.ui.view.toolbar.element,
@@ -135,7 +116,6 @@ export class AddComponent implements OnInit {
 
           },
           error: () => {
-
           }
         });
     }

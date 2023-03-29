@@ -7,10 +7,6 @@ import { EntityModelUpdateDto } from 'src/app/share/admin/models/entity-model/en
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
-import * as ClassicEditor from 'ng-ckeditor5-classic';
-import { environment } from 'src/environments/environment';
-import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
-// import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { AccessModifier } from 'src/app/share/admin/models/enum/access-modifier.model';
 import { CodeLanguage } from 'src/app/share/admin/models/enum/code-language.model';
 
@@ -20,18 +16,15 @@ import { CodeLanguage } from 'src/app/share/admin/models/enum/code-language.mode
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-  public editorConfig!: CKEditor5.Config;
-  public editor: CKEditor5.EditorConstructor = ClassicEditor;
   AccessModifier = AccessModifier;
-CodeLanguage = CodeLanguage;
-
+  CodeLanguage = CodeLanguage;
   id!: string;
   isLoading = true;
   data = {} as EntityModel;
   updateData = {} as EntityModelUpdateDto;
   formGroup!: FormGroup;
-    constructor(
-    
+  constructor(
+
     // private authService: OidcSecurityService,
     private service: EntityModelService,
     private snb: MatSnackBar,
@@ -49,32 +42,20 @@ CodeLanguage = CodeLanguage;
     }
   }
 
-    get name() { return this.formGroup.get('name'); }
-    get comment() { return this.formGroup.get('comment'); }
-    get accessModifier() { return this.formGroup.get('accessModifier'); }
-    get codeContent() { return this.formGroup.get('codeContent'); }
-    get codeLanguage() { return this.formGroup.get('codeLanguage'); }
-    get languageVersion() { return this.formGroup.get('languageVersion'); }
+  get name() { return this.formGroup.get('name'); }
+  get comment() { return this.formGroup.get('comment'); }
+  get accessModifier() { return this.formGroup.get('accessModifier'); }
+  get codeContent() { return this.formGroup.get('codeContent'); }
+  get codeLanguage() { return this.formGroup.get('codeLanguage'); }
+  get languageVersion() { return this.formGroup.get('languageVersion'); }
 
 
   ngOnInit(): void {
     this.getDetail();
-    this.initEditor();
     // TODO:等待数据加载完成
     // this.isLoading = false;
   }
-    initEditor(): void {
-    this.editorConfig = {
-      // placeholder: '请添加图文信息提供证据，也可以直接从Word文档中复制',
-      simpleUpload: {
-        uploadUrl: '',// set your api url like:environment.uploadEditorFileUrl,
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem("accessToken")
-        }
-      },
-      language: 'zh-cn'
-    };
-  }
+
   onReady(editor: any) {
     editor.ui.getEditableElement().parentElement.insertBefore(
       editor.ui.view.toolbar.element,
@@ -135,18 +116,18 @@ CodeLanguage = CodeLanguage;
     }
   }
   edit(): void {
-    if(this.formGroup.valid) {
+    if (this.formGroup.valid) {
       this.updateData = this.formGroup.value as EntityModelUpdateDto;
       this.service.update(this.id, this.updateData)
         .subscribe({
           next: (res) => {
-            if(res){
+            if (res) {
               this.snb.open('修改成功');
               // this.dialogRef.close(res);
               this.router.navigate(['../../index'], { relativeTo: this.route });
             }
           },
-          error:()=>{
+          error: () => {
           }
         });
     }

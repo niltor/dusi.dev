@@ -6,10 +6,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ThirdNewsUpdateDto } from 'src/app/share/admin/models/third-news/third-news-update-dto.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import * as ClassicEditor from 'ng-ckeditor5-classic';
-import { environment } from 'src/environments/environment';
-import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
-// import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { NewsSource } from 'src/app/share/admin/models/enum/news-source.model';
 import { NewsType } from 'src/app/share/admin/models/enum/news-type.model';
 import { TechType } from 'src/app/share/admin/models/enum/tech-type.model';
@@ -20,19 +16,17 @@ import { TechType } from 'src/app/share/admin/models/enum/tech-type.model';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-  public editorConfig!: CKEditor5.Config;
-  public editor: CKEditor5.EditorConstructor = ClassicEditor;
   NewsSource = NewsSource;
-NewsType = NewsType;
-TechType = TechType;
+  NewsType = NewsType;
+  TechType = TechType;
 
   id!: string;
   isLoading = true;
   data = {} as ThirdNews;
   updateData = {} as ThirdNewsUpdateDto;
   formGroup!: FormGroup;
-    constructor(
-    
+  constructor(
+
     // private authService: OidcSecurityService,
     private service: ThirdNewsService,
     private snb: MatSnackBar,
@@ -51,32 +45,19 @@ TechType = TechType;
   }
 
 
-    get title() { return this.formGroup.get('title'); }
-    get description() { return this.formGroup.get('description'); }
-    get datePublished() { return this.formGroup.get('datePublished'); }
-    get content() { return this.formGroup.get('content'); }
-    get type() { return this.formGroup.get('type'); }
-    get newsType() { return this.formGroup.get('newsType'); }
-    get techType() { return this.formGroup.get('techType'); }
+  get title() { return this.formGroup.get('title'); }
+  get description() { return this.formGroup.get('description'); }
+  get datePublished() { return this.formGroup.get('datePublished'); }
+  get content() { return this.formGroup.get('content'); }
+  get type() { return this.formGroup.get('type'); }
+  get newsType() { return this.formGroup.get('newsType'); }
+  get techType() { return this.formGroup.get('techType'); }
 
 
   ngOnInit(): void {
     this.getDetail();
-    this.initEditor();
     // TODO:等待数据加载完成
     // this.isLoading = false;
-  }
-    initEditor(): void {
-    this.editorConfig = {
-      // placeholder: '请添加图文信息提供证据，也可以直接从Word文档中复制',
-      simpleUpload: {
-        uploadUrl: '',// set your api url like:environment.uploadEditorFileUrl,
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem("accessToken")
-        }
-      },
-      language: 'zh-cn'
-    };
   }
   onReady(editor: any) {
     editor.ui.getEditableElement().parentElement.insertBefore(
@@ -108,7 +89,7 @@ TechType = TechType;
   }
   getValidatorMessage(type: string): string {
     switch (type) {
-    
+
       case 'title':
         return this.title?.errors?.['required'] ? 'Title必填' :
           this.title?.errors?.['minlength'] ? 'Title长度最少位' :
@@ -117,7 +98,7 @@ TechType = TechType;
         return this.description?.errors?.['required'] ? 'Description必填' :
           this.description?.errors?.['minlength'] ? 'Description长度最少位' :
             this.description?.errors?.['maxlength'] ? 'Description长度最多5000位' : '';
-     
+
       case 'datePublished':
         return this.datePublished?.errors?.['required'] ? 'DatePublished必填' :
           this.datePublished?.errors?.['minlength'] ? 'DatePublished长度最少位' :
@@ -144,18 +125,18 @@ TechType = TechType;
     }
   }
   edit(): void {
-    if(this.formGroup.valid) {
+    if (this.formGroup.valid) {
       this.updateData = this.formGroup.value as ThirdNewsUpdateDto;
       this.service.update(this.id, this.updateData)
         .subscribe({
           next: (res) => {
-            if(res){
+            if (res) {
               this.snb.open('修改成功');
               // this.dialogRef.close(res);
               this.router.navigate(['../../index'], { relativeTo: this.route });
             }
           },
-          error:()=>{
+          error: () => {
           }
         });
     }
