@@ -6,9 +6,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { BlogUpdateDto } from 'src/app/share/client/models/blog/blog-update-dto.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import * as ClassicEditor from 'ng-ckeditor5-classic';
-import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
-// import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { LanguageType } from 'src/app/share/client/models/enum/language-type.model';
 import { Catalog } from 'src/app/share/client/models/catalog/catalog.model';
 import { CatalogService } from 'src/app/share/client/services/catalog.service';
@@ -16,6 +13,13 @@ import { TagsItemDto } from 'src/app/share/client/models/tags/tags-item-dto.mode
 import { forkJoin, lastValueFrom } from 'rxjs';
 import { TagsService } from 'src/app/share/client/services/tags.service';
 import { BlogType } from 'src/app/share/client/models/enum/blog-type.model';
+import { MarkdownService } from 'ngx-markdown';
+
+import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
+import 'prismjs/components/prism-typescript.min.js';
+import 'prismjs/components/prism-powershell.min.js';
+import 'prismjs/components/prism-csharp.min.js';
+import 'prismjs/components/prism-markup.min.js';
 
 @Component({
   selector: 'app-edit',
@@ -23,24 +27,24 @@ import { BlogType } from 'src/app/share/client/models/enum/blog-type.model';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-  public editorConfig!: CKEditor5.Config;
-  public editor: CKEditor5.EditorConstructor = ClassicEditor;
   LanguageType = LanguageType;
   BlogType = BlogType;
   id!: string;
   isLoading = true;
+  isPreview = false;
+  isSplitView = false;
   data = {} as Blog;
   catalog: Catalog[] = [];
   allTags: TagsItemDto[] = [];
   selectedTagIds: string[] = [];
   updateData = {} as BlogUpdateDto;
   formGroup!: FormGroup;
+  previewContent: string | null = null;
   constructor(
-
-    // private authService: OidcSecurityService,
     private service: BlogService,
     private catalogSrv: CatalogService,
     private tagSrv: TagsService,
+    private markdownService: MarkdownService,
     private snb: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
@@ -70,27 +74,8 @@ export class EditComponent implements OnInit {
     forkJoin([this.getDetail(), this.getTags(), this.getCatalogs()])
       .subscribe(_ => {
         this.initForm();
-        this.initEditor();
         this.isLoading = false;
       });
-  }
-  initEditor(): void {
-    this.editorConfig = {
-      placeholder: '请添加图文信息提供证据，也可以直接从Word文档中复制',
-      simpleUpload: {
-        uploadUrl: '/api/Blog/upload',
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem("accessToken")
-        }
-      },
-      language: 'zh-cn'
-    };
-  }
-  onReady(editor: any) {
-    editor.ui.getEditableElement().parentElement.insertBefore(
-      editor.ui.view.toolbar.element,
-      editor.ui.getEditableElement()
-    );
   }
   async getDetail(): Promise<void> {
     const res = await lastValueFrom(this.service.getDetail(this.id));
@@ -168,6 +153,18 @@ export class EditComponent implements OnInit {
       default:
         return '';
     }
+  }
+
+  toggleEditor(preview: boolean): void {
+    this.isPreview = preview;
+    this.isSplitView = false;
+    if (preview) {
+      // this.previewContent = this.content?.value;
+      this.markdownService.reload();
+    }
+  }
+  splitView(): void {
+    this.isSplitView = !this.isSplitView;
   }
   edit(): void {
     if (this.formGroup.valid) {

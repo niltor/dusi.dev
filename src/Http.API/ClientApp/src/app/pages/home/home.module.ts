@@ -8,7 +8,7 @@ import { EnumTextPipe } from 'src/app/share/admin/pipe/enum-text.pipe';
 import { BlogComponent } from './blog/blog.component';
 import { AboutComponent } from './about/about.component';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
-import { MarkdownModule } from 'ngx-markdown';
+import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
 
 
 @NgModule({
@@ -23,8 +23,28 @@ import { MarkdownModule } from 'ngx-markdown';
   imports: [
     ShareModule,
     HomeRoutingModule,
-    MarkdownModule.forRoot(),
-    
+    MarkdownModule.forRoot({
+      markedOptions: {
+        provide: MarkedOptions,
+        useFactory: markedOptionsFactory
+      }
+    })
+
   ]
 })
 export class HomeModule { }
+export function markedOptionsFactory(): MarkedOptions {
+  const renderer = new MarkedRenderer();
+  renderer.blockquote = (text: string) => {
+    return '<blockquote class="blockquote"><p>' + text + '</p></blockquote>';
+  };
+
+  return {
+    renderer: renderer,
+    gfm: true,
+    breaks: false,
+    pedantic: false,
+    smartLists: true,
+    smartypants: false,
+  };
+}

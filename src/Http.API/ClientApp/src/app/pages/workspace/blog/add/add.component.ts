@@ -5,17 +5,20 @@ import { BlogAddDto } from 'src/app/share/client/models/blog/blog-add-dto.model'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import * as ClassicEditor from 'ng-ckeditor5-classic';
-import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
-// import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { LanguageType } from 'src/app/share/client/models/enum/language-type.model';
 import { Catalog } from 'src/app/share/admin/models/catalog.model';
 import { CatalogService } from 'src/app/share/client/services/catalog.service';
 import { TagsService } from 'src/app/share/client/services/tags.service';
 import { forkJoin, lastValueFrom } from 'rxjs';
-import { Tags } from 'src/app/share/client/models/tags/tags.model';
 import { TagsItemDto } from 'src/app/share/client/models/tags/tags-item-dto.model';
 import { BlogType } from 'src/app/share/client/models/enum/blog-type.model';
+
+import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
+import 'prismjs/components/prism-typescript.min.js';
+import 'prismjs/components/prism-powershell.min.js';
+import 'prismjs/components/prism-csharp.min.js';
+import 'prismjs/components/prism-markup.min.js';
+import { MarkdownService } from 'ngx-markdown';
 
 @Component({
   selector: 'app-add',
@@ -23,21 +26,21 @@ import { BlogType } from 'src/app/share/client/models/enum/blog-type.model';
   styleUrls: ['./add.component.css']
 })
 export class AddComponent implements OnInit {
-  public editorConfig!: CKEditor5.Config;
-  public editor: CKEditor5.EditorConstructor = ClassicEditor;
   LanguageType = LanguageType;
   BlogType = BlogType;
   formGroup!: FormGroup;
   data = {} as BlogAddDto;
   catalogs: Catalog[] = [];
   allTags: TagsItemDto[] = [];
-
   isLoading = true;
+  isPreview = false;
+  isSplitView = false;
   isProcessing = false;
   constructor(
     private service: BlogService,
     private catalogSrv: CatalogService,
     private tagSrv: TagsService,
+    private markdownService: MarkdownService,
     public snb: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
@@ -59,8 +62,6 @@ export class AddComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    this.initEditor();
-
     forkJoin([this.getCatalogs(), this.getTags()])
       .subscribe(_ => {
         this.isLoading = false;
@@ -83,23 +84,16 @@ export class AddComponent implements OnInit {
     }
   }
 
-  initEditor(): void {
-    this.editorConfig = {
-      placeholder: '请添加图文信息提供证据，也可以直接从Word文档中复制',
-      simpleUpload: {
-        uploadUrl: '/api/Blog/upload',
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem("accessToken")
-        }
-      },
-      language: 'zh-cn'
-    };
+  toggleEditor(preview: boolean): void {
+    this.isPreview = preview;
+    this.isSplitView = false;
+    if (preview) {
+      // this.previewContent = this.content?.value;
+      this.markdownService.reload();
+    }
   }
-  onReady(editor: any) {
-    editor.ui.getEditableElement().parentElement.insertBefore(
-      editor.ui.view.toolbar.element,
-      editor.ui.getEditableElement()
-    );
+  splitView(): void {
+    this.isSplitView = !this.isSplitView;
   }
   initForm(): void {
     this.formGroup = new FormGroup({

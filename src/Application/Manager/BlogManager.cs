@@ -81,7 +81,6 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     public override async Task<PageList<BlogItemDto>> FilterAsync(BlogFilterDto filter)
     {
         // 根据实际业务构建筛选条件
-
         Queryable = Queryable.WhereNotNull(filter.Title, q => q.Title.Contains(filter.Title!))
             .WhereNotNull(filter.LanguageType, q => q.LanguageType == filter.LanguageType)
             .WhereNotNull(filter.Authors, q => q.Authors.Contains(filter.Authors!))

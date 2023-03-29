@@ -9,6 +9,7 @@ import { EditComponent } from './edit/edit.component';
 import { SettingComponent } from './setting/setting.component';
 import { CatalogModule } from './catalog/catalog.module';
 import { TagModule } from './tag/tag.module';
+import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
 
 @NgModule({
   declarations: [IndexComponent, DetailComponent, AddComponent, EditComponent, SettingComponent],
@@ -18,6 +19,28 @@ import { TagModule } from './tag/tag.module';
     BlogRoutingModule,
     CatalogModule,
     TagModule,
+    MarkdownModule.forRoot({
+      markedOptions: {
+        provide: MarkedOptions,
+        useFactory: markedOptionsFactory
+      }
+    })
   ]
 })
 export class BlogModule { }
+
+export function markedOptionsFactory(): MarkedOptions {
+  const renderer = new MarkedRenderer();
+  renderer.blockquote = (text: string) => {
+    return '<blockquote class="blockquote"><p>' + text + '</p></blockquote>';
+  };
+
+  return {
+    renderer: renderer,
+    gfm: true,
+    breaks: false,
+    pedantic: false,
+    smartLists: true,
+    smartypants: false,
+  };
+}
