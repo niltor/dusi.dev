@@ -5,7 +5,7 @@ import { LayoutComponent } from './layout/layout.component';
 
 const routes: Routes = [
   {
-    path: 'workspace',
+    path: '',
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     component: LayoutComponent,

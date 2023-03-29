@@ -10,7 +10,7 @@ import { SettingComponent } from './setting/setting.component';
 
 const routes: Routes = [
   {
-    path: 'workspace',
+    path: '',
     component: LayoutComponent,
     data: { reuse: true },
     canActivate: [AuthGuard],

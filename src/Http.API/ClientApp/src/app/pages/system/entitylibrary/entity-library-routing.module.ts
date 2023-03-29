@@ -9,7 +9,7 @@ import { AdminLayoutComponent } from 'src/app/components/admin-layout/admin-layo
 
 const routes: Routes = [
   {
-    path: 'system',
+    path: '',
     component: AdminLayoutComponent,
     data: {reuse: true},
     canActivate: [AuthGuard],

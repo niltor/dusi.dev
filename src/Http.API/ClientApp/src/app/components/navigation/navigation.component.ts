@@ -11,9 +11,16 @@ export class NavigationComponent implements OnInit {
   opened = true;
   expanded = true;
   @ViewChild(MatAccordion, { static: true }) accordion!: MatAccordion;
-  constructor() { }
+  constructor() {
+    if (this.expanded) {
+      this.accordion?.openAll();
+    } else {
+      this.accordion?.closeAll();
+    }
+  }
 
   ngOnInit(): void {
+
     if (this.expanded) {
       this.accordion?.openAll();
     } else {
@@ -23,5 +30,4 @@ export class NavigationComponent implements OnInit {
   toggle(): void {
     this.opened = !this.opened;
   }
-
 }

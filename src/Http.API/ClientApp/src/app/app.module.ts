@@ -28,9 +28,9 @@ import { MarkdownModule, MarkedOptions, ClipboardOptions, ClipboardButtonCompone
     ComponentsModule,
     ShareModule,
     HomeModule,
-    SystemModule,
+    // SystemModule,
     AccountModule,
-    WorkspaceModule,
+    // WorkspaceModule,
     MarkdownModule.forRoot({
       markedOptions: {
         provide: MarkedOptions,
