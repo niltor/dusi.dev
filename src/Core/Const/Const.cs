@@ -17,6 +17,11 @@ public static class Const
     /// 版本
     /// </summary>
     public const string Version = "Version";
+
+    /// <summary>
+    /// blog浏览 pub主题
+    /// </summary>
+    public const string PubBlogView = "PubBlogView";
 }
 
 /// <summary>

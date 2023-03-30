@@ -46,13 +46,49 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
 
     public override async Task<Blog?> FindAsync(Guid id)
     {
-        // TODO:统计浏览量，存内存，60秒后存入数据库
-
-
-        return await Queryable.Include(b => b.User)
+        var res = await Queryable.Include(b => b.User)
             .Include(b => b.Tags)
             .Include(b => b.Catalog)
             .SingleOrDefaultAsync(b => b.Id == id);
+
+        if (res == null) { return null; }
+
+        // 统计浏览量,使用缓存
+        // 缓存的blog id
+        var blogIds = await DaprFacade.GetStateAsync<HashSet<Guid>?>("blogViewIds");
+        // 初始添加
+        int ttl = 7 * 24 * 60 * 60;
+        if (blogIds == null)
+        {
+            var set = new HashSet<Guid>
+            {
+                id
+            };
+            await DaprFacade.SaveStateAsync("blogViewIds", set, ttl);
+        }
+        else
+        {
+            // 新数据添加后更新到缓存
+            if (blogIds.Add(id))
+            {
+                await DaprFacade.SaveStateAsync("blogViewIds", blogIds, ttl);
+            }
+        }
+        // 数量存缓存
+        var count = await DaprFacade.GetStateAsync<int?>("blogView" + id.ToString());
+        if (count == null)
+        {
+            // 10分钟
+            await DaprFacade.SaveStateAsync("blogView" + id.ToString(), 1, 10 * 60);
+        }
+        else
+        {
+            count++;
+            await DaprFacade.SaveStateAsync("blogView" + id.ToString(), count, 10 * 60);
+        }
+
+        await DaprFacade.PublishAsync(Const.PubBlogView, id);
+        return res;
     }
 
     public override async Task<Blog> UpdateAsync(Blog entity, BlogUpdateDto dto)

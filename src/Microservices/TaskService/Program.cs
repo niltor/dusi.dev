@@ -2,7 +2,7 @@ using TaskService.Implement.NewsCollector;
 using TaskService.Implement.NewsCollector.RssFeeds;
 using TaskService.Tasks;
 
-var builder = Host.CreateApplicationBuilder();
+var builder = WebApplication.CreateBuilder();
 var services = builder.Services;
 var configuration = builder.Configuration;
 
@@ -31,6 +31,7 @@ services.AddSingleton<InfoWorldFeed>();
 services.AddSingleton<RssHelper>();
 services.AddScoped<NewsCollector>();
 services.AddHostedService<NewsCollectTask>();
+services.AddHostedService<UpdateViewCountTask>();
 
 var app = builder.Build();
 
