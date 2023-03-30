@@ -24,7 +24,6 @@ services.AddDbContextPool<CommandDbContext>(option =>
     });
 });
 
-
 services.AddSingleton<MicrosoftFeed>();
 services.AddSingleton<OsChinaFeed>();
 services.AddSingleton<InfoWorldFeed>();
