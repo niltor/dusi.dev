@@ -55,7 +55,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
 
         // 统计浏览量,使用缓存
         // 缓存的blog id
-        var blogIds = await DaprFacade.GetStateAsync<HashSet<Guid>?>("blogViewIds");
+        var blogIds = await DaprFacade.GetStateAsync<HashSet<Guid>?>(AppConst.BlogViewCacheKey);
         // 初始添加
         int ttl = 7 * 24 * 60 * 60;
         if (blogIds == null)
@@ -64,30 +64,30 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
             {
                 id
             };
-            await DaprFacade.SaveStateAsync("blogViewIds", set, ttl);
+            await DaprFacade.SaveStateAsync(AppConst.BlogViewCacheKey, set, ttl);
         }
         else
         {
             // 新数据添加后更新到缓存
             if (blogIds.Add(id))
             {
-                await DaprFacade.SaveStateAsync("blogViewIds", blogIds, ttl);
+                await DaprFacade.SaveStateAsync(AppConst.BlogViewCacheKey, blogIds, ttl);
             }
         }
         // 数量存缓存
-        var count = await DaprFacade.GetStateAsync<int?>("blogView" + id.ToString());
+        var count = await DaprFacade.GetStateAsync<int?>(AppConst.PrefixBlogView + id.ToString());
         if (count == null)
         {
             // 10分钟
-            await DaprFacade.SaveStateAsync("blogView" + id.ToString(), 1, 10 * 60);
+            await DaprFacade.SaveStateAsync(AppConst.PrefixBlogView + id.ToString(), 1, 10 * 60);
         }
         else
         {
             count++;
-            await DaprFacade.SaveStateAsync("blogView" + id.ToString(), count, 10 * 60);
+            await DaprFacade.SaveStateAsync(AppConst.PrefixBlogView + id.ToString(), count, 10 * 60);
         }
 
-        await DaprFacade.PublishAsync(Const.PubBlogView, id);
+        //await DaprFacade.PublishAsync(Const.PubBlogView, id);
         return res;
     }
 

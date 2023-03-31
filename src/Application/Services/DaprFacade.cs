@@ -7,8 +7,6 @@ namespace Application.Services;
 public class DaprFacade
 {
     public static DaprClient Dapr = new DaprClientBuilder().Build();
-    public static string DEFAULT_STATE = "statestore";
-    public static string DEFAULT_PUBSUB = "pubsub";
 
     /// <summary>
     /// 保存状态
@@ -24,7 +22,7 @@ public class DaprFacade
         {
             { "ttlInSeconds", seconds.ToString() }
         };
-        await Dapr.SaveStateAsync(DEFAULT_STATE, key, value, metadata: metadata);
+        await Dapr.SaveStateAsync(AppConst.DefaultStateName, key, value, metadata: metadata);
     }
     public static async Task SaveStateAsync<T>(string store, string key, T value, int seconds)
     {
@@ -43,7 +41,7 @@ public class DaprFacade
     /// <returns></returns>
     public static async Task<T> GetStateAsync<T>(string key)
     {
-        return await Dapr.GetStateAsync<T>(DEFAULT_STATE, key);
+        return await Dapr.GetStateAsync<T>(AppConst.DefaultStateName, key);
     }
     public static async Task<T> GetStateAsync<T>(string stroe, string key)
     {
@@ -53,7 +51,7 @@ public class DaprFacade
 
     public static async Task PublishAsync<T>(string topic, T data)
     {
-        await PublishAsync<T>(DEFAULT_PUBSUB, topic, data);
+        await PublishAsync<T>(AppConst.DefaultPubSubName, topic, data);
     }
 
 

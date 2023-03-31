@@ -31,9 +31,11 @@ services.AddSingleton<RssHelper>();
 services.AddScoped<NewsCollector>();
 services.AddHostedService<NewsCollectTask>();
 services.AddHostedService<UpdateViewCountTask>();
+services.AddHealthChecks();
 
 var app = builder.Build();
 
+app.UseHealthChecks("/health");
 using (app)
 {
     app.Start();

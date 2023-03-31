@@ -1,4 +1,5 @@
-﻿using Application.Services;
+﻿using Application;
+using Application.Services;
 using Microsoft.Extensions.Logging;
 using TaskService.Implement.NewsCollector;
 
@@ -19,15 +20,17 @@ public class UpdateViewCountTask : BackgroundService
         Services = services;
     }
 
-    public override Task StartAsync(CancellationToken stoppingToken)
+    public override async Task StartAsync(CancellationToken stoppingToken)
     {
         _logger.LogInformation("News collection service start.");
-        return Task.CompletedTask;
+        await ExecuteAsync(stoppingToken);
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _timer = new Timer(DoWork, stoppingToken, TimeSpan.Zero, TimeSpan.FromMinutes(5));
+        _timer = new Timer(DoWork, stoppingToken,
+            TimeSpan.FromSeconds(10),
+            TimeSpan.FromMinutes(1));
         return Task.CompletedTask;
     }
 
@@ -41,30 +44,43 @@ public class UpdateViewCountTask : BackgroundService
 
     private async void DoWork(object? state)
     {
-        var blogIds = await DaprFacade.GetStateAsync<HashSet<Guid>?>("blogViewIds");
-
-        // 查询要更新blog id
-        if (blogIds != null && blogIds.Any())
+        try
         {
-            var keys = blogIds.Select(b => "blogView" + b.ToString()).ToList();
-            var ids = await DaprFacade.Dapr.GetBulkStateAsync("statestore", keys, 2);
-
-            using var scope = Services.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<CommandDbContext>();
-
-            // 入库更新
-            foreach (var item in ids)
+            var blogIds = await DaprFacade.GetStateAsync<HashSet<Guid>?>(AppConst.BlogViewCacheKey);
+            // 查询要更新blog id
+            if (blogIds != null && blogIds.Any())
             {
+                var keys = blogIds.Select(b => AppConst.PrefixBlogView + b.ToString()).ToList();
+                var ids = await DaprFacade.Dapr.GetBulkStateAsync(AppConst.DefaultStateName, keys, 2);
 
-                if (int.TryParse(item.Value, out int count))
+                using var scope = Services.CreateScope();
+                var context = scope.ServiceProvider.GetRequiredService<CommandDbContext>();
+
+                // 入库更新
+                var successIds = new List<string>();
+                foreach (var item in ids)
                 {
-                    await context.Blogs
-                        .Where(b => b.Id.ToString() == item.Key)
-                        .ExecuteUpdateAsync(s =>
-                            s.SetProperty(b => b.ViewCount, b => b.ViewCount + count));
 
+                    if (int.TryParse(item.Value, out int count))
+                    {
+                        var resCount = await context.Blogs
+                            .Where(b => b.Id.ToString() == item.Key.Replace(AppConst.PrefixBlogView, ""))
+                            .ExecuteUpdateAsync(s =>
+                                s.SetProperty(b => b.ViewCount, b => b.ViewCount + count));
+
+                        if (resCount > 0)
+                        {
+                            successIds.Add(item.Key);
+                        }
+                    }
                 }
+                // 入库后重置为0
+                await DaprFacade.Dapr.SaveBulkStateAsync(AppConst.DefaultStateName, successIds, default);
             }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("更新浏览数量出错 {0} {1}", ex.Message, ex.StackTrace);
         }
     }
     public override void Dispose() => _timer?.Dispose();

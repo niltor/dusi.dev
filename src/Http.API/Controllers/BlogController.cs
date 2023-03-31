@@ -50,6 +50,7 @@ public class BlogController : ClientControllerBase<IBlogManager>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult<Blog>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);

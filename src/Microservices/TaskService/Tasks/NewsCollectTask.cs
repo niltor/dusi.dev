@@ -17,10 +17,10 @@ public class NewsCollectTask : BackgroundService
     }
 
 
-    public override Task StartAsync(CancellationToken stoppingToken)
+    public override async Task StartAsync(CancellationToken stoppingToken)
     {
         _logger.LogInformation("News collection service start.");
-        return Task.CompletedTask;
+        await ExecuteAsync(stoppingToken);
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
