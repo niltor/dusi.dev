@@ -16,19 +16,15 @@ public class NewsCollectTask : BackgroundService
         Services = services;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        while (!stoppingToken.IsCancellationRequested)
-        {
-            _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-            await Task.Delay(1000, stoppingToken);
-        }
-    }
-
 
     public override Task StartAsync(CancellationToken stoppingToken)
     {
         _logger.LogInformation("News collection service start.");
+        return Task.CompletedTask;
+    }
+
+    protected override Task ExecuteAsync(CancellationToken stoppingToken)
+    {
         _timer = new Timer(DoWork, stoppingToken, TimeSpan.Zero, TimeSpan.FromHours(4));
         return Task.CompletedTask;
     }
@@ -49,4 +45,6 @@ public class NewsCollectTask : BackgroundService
     }
 
     public override void Dispose() => _timer?.Dispose();
+
+
 }
