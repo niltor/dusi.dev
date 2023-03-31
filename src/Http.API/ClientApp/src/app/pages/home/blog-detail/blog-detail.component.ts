@@ -9,7 +9,6 @@ import 'prismjs/components/prism-typescript.min.js';
 import 'prismjs/components/prism-powershell.min.js';
 import 'prismjs/components/prism-csharp.min.js';
 import 'prismjs/components/prism-markup.min.js';
-import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-blog-detail',

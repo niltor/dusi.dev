@@ -6,7 +6,6 @@ using Core.Const;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Share.Options;
@@ -35,11 +34,14 @@ services.AddDbContextPool<CommandDbContext>(option =>
     });
 });
 
+// TODO:临时使用内存缓存
+services.AddDistributedMemoryCache();
+
 // 注入选项及自定义服务
 services.Configure<AzureOption>(configuration.GetSection("Azure"));
 services.AddSingleton<StorageService>();
 
-services.AddGrpc();
+//services.AddGrpc();
 services.AddDataStore();
 services.AddManager();
 services.AddDaprClient();

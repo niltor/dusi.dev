@@ -1,16 +1,13 @@
-﻿using System.Text.Json;
-using Microsoft.Extensions.Caching.Distributed;
+﻿using Microsoft.Extensions.Caching.Distributed;
 namespace Application.Services;
 
 /// <summary>
 /// 简单封装对象的存储和获取
 /// </summary>
-public class RedisService
+public class CacheService
 {
-    public IDistributedCache Cache => _cache;
-
     private readonly IDistributedCache _cache;
-    public RedisService(IDistributedCache cache)
+    public CacheService(IDistributedCache cache)
     {
         _cache = cache;
     }
@@ -20,14 +17,16 @@ public class RedisService
     /// </summary>
     /// <param name="data">值</param>
     /// <param name="key">键</param>
-    /// <param name="minutes">过期时间</param>
+    /// <param name="sliding">相对过期时间</param>
+    /// <param name="expiration">绝对过期时间</param>
     /// <returns></returns>
-    public async Task SetValueAsync(string key, object data, int minutes)
+    public async Task SetValueAsync(string key, object data, int sliding, int expiration)
     {
         var bytes = JsonSerializer.SerializeToUtf8Bytes(data);
-        await _cache.SetAsync(key, bytes, new DistributedCacheEntryOptions
+        await _cache.SetAsync(key, bytes, new DistributedCacheEntryOptions()
         {
-            SlidingExpiration = TimeSpan.FromMinutes(minutes)
+            SlidingExpiration = TimeSpan.FromSeconds(sliding),
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(expiration)
         });
     }
     /// <summary>
