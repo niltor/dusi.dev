@@ -89,7 +89,7 @@ services:
       - dusi
     ports:
       - "50004:50001"
-      - "5202:443" 
+      - "5202:80" 
 
   cms-dapr:
     image: "daprio/daprd:edge"
@@ -97,10 +97,7 @@ services:
       [
         "./daprd",
         "-app-id","cms",
-        "-app-port","443",
-        "-app-protocol","grpc",
-        "-app-ssl","true",
-        "-log-level", "debug",
+        "-app-port","80",
         "-components-path","/components",
         "-config", "/dusi-config.yaml"
       ]

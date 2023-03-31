@@ -72,7 +72,6 @@ services:
     ports:
       - "50004:50001"
       - "5202:80"
-      - "443" 
       
   cms-dapr:
     image: "daprio/daprd:edge"
@@ -80,8 +79,7 @@ services:
       [
         "./daprd",
         "-app-id","cms",
-        "-app-port","443",
-        "-app-protocol","grpc",
+        "-app-port","80",
         "-components-path","/components",
       ]
     volumes:

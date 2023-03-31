@@ -3,20 +3,12 @@ networks:
   dusi:
 
 services:
-  placement:
-    image: "daprio/dapr"
-    command: ["./placement", "-port", "50006"]
-    ports:
-      - "50006:50006"
+  redis:
+    image: redis:7-alpine
     networks:
       - dusi
-
-  redis:
-    image: "redis:7-alpine"
     ports:
       - "6379:6379"
-    networks:
-      - dusi
 
   api:
     image: dusi-api:latest
@@ -24,15 +16,13 @@ services:
       context: .
       dockerfile: src/Http.API/Dockerfile
     environment:
-      - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
+      - "ConnectionStrings__Default=Server=192.168.31.193;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
-    depends_on:
-      - redis
-      - placement
     networks:
       - dusi
     ports:
+      - "50002:50001"
       - "5200:80"
       
   api-dapr:
@@ -40,38 +30,34 @@ services:
     command:
       [
         "./daprd",
-        "-app-id",
-        "api",
-        "-app-port",
-        "5200",
-        "-placement-host-address",
-        "placement:50006",
-        "-dapr-grpc-port",
-        "50002",
-        "-components-path",
-        "/components"
+        "-app-id","api",
+        "-app-port","80",
+        "-log-level", "debug",
+        "-components-path","/components",
+        "-config", "/dusi-config.yaml"
       ]
     volumes:
-      - "./components/:/components"
+      - "./scripts/components/:/components"
+      - "./scripts/dusi-config.yaml:/dusi-config.yaml"
+
     depends_on:
+      - redis
       - api
     network_mode: "service:api"
 
   task:
     image: dusi-task:latest
     environment:
-      - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
+      - "ConnectionStrings__Default=Server=192.168.31.193;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
     build:
       context: .
       dockerfile: src/Microservices/TaskService/Dockerfile
-    depends_on:
-      - redis
-      - placement
     networks:
       - dusi
     ports:
+      - "50003:50001"
       - "5201:80"
       
   task-dapr:
@@ -79,59 +65,47 @@ services:
     command:
       [
         "./daprd",
-        "-app-id",
-        "task",
-        "-app-port",
-        "5201",
-        "-placement-host-address",
-        "placement:50006",
-        "-dapr-grpc-port",
-        "50003",
-        "-components-path",
-        "/components"
+        "-app-id","task",
+        "-app-port","80",
+        "-components-path","/components"
       ]
     volumes:
-      - "./components/:/components"
+      - "./scripts/components/:/components"
     depends_on:
+      - redis
       - task
     network_mode: "service:task"
 
   cms:
     image: dusi-cms:latest
     environment:
-      - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
+      - "ConnectionStrings__Default=Server=192.168.31.193;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_URLS=http://+:80;https://+:443
     build:
       context: .
       dockerfile: src/Microservices/CMSService/Dockerfile
-    depends_on:
-      - redis
-      - placement
     networks:
       - dusi
     ports:
-      - "5202:80"
-      
+      - "50004:50001"
+      - "5202:443" 
+
   cms-dapr:
     image: "daprio/daprd:edge"
     command:
       [
         "./daprd",
-        "-app-id",
-        "cms",
-        "-app-port",
-        "5202",
-        "-placement-host-address",
-        "placement:50006",
-        "-dapr-grpc-port",
-        "50004",
-        "-components-path",
-        "/components"
+        "-app-id","cms",
+        "-app-port","80",
+        "-components-path","/components",
+        "-config", "/dusi-config.yaml"
       ]
     volumes:
-      - "./components/:/components"
+      - "./scripts/components/:/components"
+      - "./scripts/dusi-config.yaml:/dusi-config.yaml"
     depends_on:
+      - redis
       - cms
     network_mode: "service:cms"
 
