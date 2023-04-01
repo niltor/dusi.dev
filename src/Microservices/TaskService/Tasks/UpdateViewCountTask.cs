@@ -1,5 +1,6 @@
 ﻿using Application;
 using Application.Services;
+using Dapr.Client;
 using Microsoft.Extensions.Logging;
 using TaskService.Implement.NewsCollector;
 
@@ -57,10 +58,9 @@ public class UpdateViewCountTask : BackgroundService
                 var context = scope.ServiceProvider.GetRequiredService<CommandDbContext>();
 
                 // 入库更新
-                var successIds = new List<string>();
+                var successIds = new List<SaveStateItem<int>>();
                 foreach (var item in ids)
                 {
-
                     if (int.TryParse(item.Value, out int count))
                     {
                         var resCount = await context.Blogs
@@ -70,7 +70,7 @@ public class UpdateViewCountTask : BackgroundService
 
                         if (resCount > 0)
                         {
-                            successIds.Add(item.Key);
+                            successIds.Add(new SaveStateItem<int>(item.Key,0,""));
                         }
                     }
                 }
