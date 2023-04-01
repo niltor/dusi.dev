@@ -31,7 +31,7 @@ public class UpdateViewCountTask : BackgroundService
     {
         _timer = new Timer(DoWork, stoppingToken,
             TimeSpan.FromSeconds(10),
-            TimeSpan.FromMinutes(1));
+            TimeSpan.FromMinutes(3));
         return Task.CompletedTask;
     }
 

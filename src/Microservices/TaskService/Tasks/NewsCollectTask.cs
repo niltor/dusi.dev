@@ -25,7 +25,7 @@ public class NewsCollectTask : BackgroundService
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _timer = new Timer(DoWork, stoppingToken, TimeSpan.Zero, TimeSpan.FromHours(4));
+        _timer = new Timer(DoWork, stoppingToken, TimeSpan.FromSeconds(10), TimeSpan.FromHours(4));
         return Task.CompletedTask;
     }
 

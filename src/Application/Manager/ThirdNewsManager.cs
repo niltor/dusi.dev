@@ -65,7 +65,7 @@ public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto,
 
         if (filter.StartDate != null && filter.EndDate != null)
         {
-            Queryable = Queryable.Where(q => q.DatePublished >= filter.StartDate && q.DatePublished < filter.EndDate);
+            Queryable = Queryable.Where(q => q.CreatedTime >= filter.StartDate && q.CreatedTime < filter.EndDate);
         }
 
         return await Query.FilterAsync<ThirdNewsItemDto>(Queryable, filter.PageIndex, filter.PageSize, filter.OrderBy);

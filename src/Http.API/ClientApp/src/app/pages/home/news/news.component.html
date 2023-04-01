@@ -1,6 +1,19 @@
 <div class="container d-flex" *ngIf="!isLoading">
   <!-- 资讯 -->
   <section class="news p-2">
+    <!-- 总分类 -->
+    <div class="text-center mb-2">
+      <mat-button-toggle-group [(ngModel)]="filter.techType" (change)="getNews()">
+        <mat-button-toggle [value]="null">
+          全部
+        </mat-button-toggle>
+        <ng-container *ngFor="let option of techTypeOptions">
+          <mat-button-toggle *ngIf="option.value!=0" [value]="option.value">
+            {{option.description}}
+          </mat-button-toggle>
+        </ng-container>
+      </mat-button-toggle-group>
+    </div>
     <ng-container *ngIf="news.length>0; else elseTemplate">
       <mat-card class="w-100 my-1" *ngFor="let item of news">
         <mat-card-header>
@@ -10,7 +23,7 @@
             </a>
           </mat-card-title>
           <mat-card-subtitle>
-            {{item.authorName}} {{item.provider}} |
+            {{item.authorName}} {{item.provider}} &nbsp;&nbsp;
             {{item.datePublished|date:'yyyy-MM-dd HH:mm'}}
           </mat-card-subtitle>
         </mat-card-header>
