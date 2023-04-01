@@ -31,7 +31,8 @@ export class NewsComponent {
       pageIndex: 1,
       pageSize: 100,
       newsType: null,
-      techType: null
+      techType: null,
+      onlyWeek: false
     }
   }
 
@@ -58,7 +59,9 @@ export class NewsComponent {
         }
       });
   }
-
+  onlyWeek(): void {
+    this.filter.onlyWeek = !this.filter.onlyWeek;
+  }
   getOptions(): void {
     this.service.getEnumOptions()
       .subscribe({

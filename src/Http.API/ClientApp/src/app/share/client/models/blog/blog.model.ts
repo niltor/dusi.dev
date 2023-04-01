@@ -61,5 +61,9 @@ export interface Blog {
    */
   catalog?: Catalog | null;
   tags?: Tags[] | null;
+  /**
+   * 浏览量
+   */
+  viewCount: number;
 
 }

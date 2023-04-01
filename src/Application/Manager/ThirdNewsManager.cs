@@ -62,7 +62,16 @@ public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto,
                     q.NewsStatus == NewsStatus.Default);
             }
         }
+        // 仅本周
+        if (filter.OnlyWeek != null && filter.OnlyWeek.Value)
+        {
+            filter.EndDate = DateTimeOffset.UtcNow;
+            var week = Convert.ToInt32(filter.EndDate.Value.DayOfWeek);
+            week = week == 0 ? 7 : week;
+            filter.StartDate = filter.EndDate.Value.AddDays(1 - week);
+        }
 
+        // 时间范围筛选
         if (filter.StartDate != null && filter.EndDate != null)
         {
             Queryable = Queryable.Where(q => q.CreatedTime >= filter.StartDate && q.CreatedTime < filter.EndDate);

@@ -2,7 +2,7 @@
   <!-- 资讯 -->
   <section class="news p-2">
     <!-- 总分类 -->
-    <div class="text-center mb-2">
+    <div class="d-flex mb-2 justify-content-center">
       <mat-button-toggle-group [(ngModel)]="filter.techType" (change)="getNews()">
         <mat-button-toggle [value]="null">
           全部
@@ -13,8 +13,12 @@
           </mat-button-toggle>
         </ng-container>
       </mat-button-toggle-group>
+      <button class="mt-1" mat-icon-button matTooltip="仅看本周" (click)="onlyWeek()"
+        [color]="filter.onlyWeek?'primary':'link'">
+        <mat-icon fontSet="material-icons-outlined">view_week</mat-icon>
+      </button>
     </div>
-    <ng-container *ngIf="news.length>0; else elseTemplate">
+    <ng-container *ngIf=" news.length>0; else elseTemplate">
       <mat-card class="w-100 my-1" *ngFor="let item of news">
         <mat-card-header>
           <mat-card-title>

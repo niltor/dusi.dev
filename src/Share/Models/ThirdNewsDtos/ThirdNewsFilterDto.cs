@@ -21,6 +21,11 @@ public class ThirdNewsFilterDto : FilterBase
     public DateTimeOffset? EndDate { get; set; }
 
     /// <summary>
+    /// 是否本周
+    /// </summary>
+    public bool? OnlyWeek { get; set; }
+
+    /// <summary>
     /// 是否被分类
     /// </summary>
     public bool? IsClassified { get; set; }

@@ -25,6 +25,10 @@ export interface ThirdNewsFilterDto {
   startDate?: Date | null;
   endDate?: Date | null;
   /**
+   * 是否本周
+   */
+  onlyWeek?: boolean | null;
+  /**
    * 是否被分类
    */
   isClassified?: boolean | null;
