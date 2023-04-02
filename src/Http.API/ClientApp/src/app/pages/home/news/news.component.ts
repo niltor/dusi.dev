@@ -4,7 +4,9 @@ import { EnumDictionary } from 'src/app/share/client/models/enum-dictionary.mode
 import { ThirdNewsFilterDto } from 'src/app/share/client/models/third-news/third-news-filter-dto.model';
 import { ThirdNewsItemDto } from 'src/app/share/client/models/third-news/third-news-item-dto.model';
 import { ThirdNewsOptionsDto } from 'src/app/share/client/models/third-news/third-news-options-dto.model';
+import { ThirdVideoItemDto } from 'src/app/share/client/models/third-video/third-video-item-dto.model';
 import { ThirdNewsService } from 'src/app/share/client/services/third-news.service';
+import { ThirdVideoService } from 'src/app/share/client/services/third-video.service';
 
 
 @Component({
@@ -15,6 +17,8 @@ import { ThirdNewsService } from 'src/app/share/client/services/third-news.servi
 export class NewsComponent {
   isLoading = true;
   news: ThirdNewsItemDto[] = [];
+  videos: ThirdVideoItemDto[] = [];
+  latestVideo: ThirdVideoItemDto | null = null;
   options: ThirdNewsOptionsDto | null = null;
   newsTypeOptions: EnumDictionary[] | null = [];
   techTypeOptions: EnumDictionary[] | null = [];
@@ -25,6 +29,7 @@ export class NewsComponent {
 
   constructor(
     private service: ThirdNewsService,
+    private videoSrv: ThirdVideoService,
     private snb: MatSnackBar
   ) {
     this.filter = {
@@ -38,6 +43,7 @@ export class NewsComponent {
 
   ngOnInit(): void {
     this.getOptions();
+    this.getVideos();
     this.getNews();
   }
 
@@ -60,8 +66,25 @@ export class NewsComponent {
         }
       });
   }
-  onlyWeek(): void {
-    this.filter.onlyWeek = !this.filter.onlyWeek;
+
+  getVideos(): void {
+    this.videoSrv.filter({
+      pageIndex: 1,
+      pageSize: 10
+    }).subscribe({
+      next: (res) => {
+        if (res) {
+          this.videos = res.data!;
+          if (res.data && res.data.length > 0) {
+            this.latestVideo = res.data[0];
+          }
+        } else {
+        }
+      },
+      error: (error) => {
+        this.snb.open(error.detail);
+      }
+    });
   }
   getOptions(): void {
     this.service.getEnumOptions()
@@ -79,7 +102,9 @@ export class NewsComponent {
         }
       });
   }
-
+  onlyWeek(): void {
+    this.filter.onlyWeek = !this.filter.onlyWeek;
+  }
   selectNewsType(value: number | null): void {
     this.filter.newsType = value;
     this.getNews();

@@ -1,0 +1,20 @@
+<div class="container p-2">
+  <div class="d-flex justify-content-center" *ngIf="video">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title class="my-1">
+          {{video.title}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{video.description}}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="my-2">
+        <!-- 视频预览 -->
+        <iframe [src]="url" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"
+          width="920px" height="600px">
+        </iframe>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

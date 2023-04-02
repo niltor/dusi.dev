@@ -6,6 +6,7 @@ import { BlogComponent } from './blog/blog.component';
 import { IndexComponent } from './index/index.component';
 import { LoginComponent } from './login/login.component';
 import { NewsComponent } from './news/news.component';
+import { VideoPreviewComponent } from './video-preview/video-preview.component';
 
 const routes: Routes = [
   { path: 'index', component: IndexComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'news', component: NewsComponent },
   { path: 'blog', component: BlogComponent },
   { path: 'blog/:id', component: BlogDetailComponent },
-  { path: 'about', component: AboutComponent }
+  { path: 'about', component: AboutComponent },
+  { path: 'video-preview/:id', component: VideoPreviewComponent }
 ];
 
 @NgModule({
