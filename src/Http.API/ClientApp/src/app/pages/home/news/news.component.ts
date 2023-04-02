@@ -42,6 +42,7 @@ export class NewsComponent {
   }
 
   getNews(): void {
+    this.isLoading = true;
     this.service.filter(this.filter)
       .subscribe({
         next: (res) => {

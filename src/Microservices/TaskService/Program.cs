@@ -1,3 +1,5 @@
+using Application.Services;
+using Share.Options;
 using TaskService.Implement.NewsCollector;
 using TaskService.Implement.NewsCollector.RssFeeds;
 using TaskService.Tasks;
@@ -24,6 +26,9 @@ services.AddDbContextPool<CommandDbContext>(option =>
     });
 });
 
+services.Configure<AzureOption>(configuration.GetSection("Azure"));
+services.AddSingleton<StorageService>();
+
 services.AddSingleton<MicrosoftFeed>();
 services.AddSingleton<OsChinaFeed>();
 services.AddSingleton<InfoWorldFeed>();
@@ -31,6 +36,7 @@ services.AddSingleton<RssHelper>();
 services.AddScoped<NewsCollector>();
 services.AddHostedService<NewsCollectTask>();
 services.AddHostedService<UpdateViewCountTask>();
+services.AddHostedService<GetBiliBiliVideosTask>();
 services.AddHealthChecks();
 
 var app = builder.Build();

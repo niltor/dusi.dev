@@ -1,4 +1,4 @@
-<div class="container d-flex" *ngIf="!isLoading">
+<div class="container d-flex">
   <!-- 资讯 -->
   <section class="news p-2">
     <!-- 总分类 -->
@@ -18,7 +18,12 @@
         <mat-icon fontSet="material-icons-outlined">view_week</mat-icon>
       </button>
     </div>
-    <ng-container *ngIf=" news.length>0; else elseTemplate">
+    <img src="https://i0.hdslb.com/bfs/archive/08e0e79cb5176620307ecff196b48ec4ce0c2635.png@320w_200h_1c_!web-space-index-myvideo.webp" width="320" height="200" alt="">
+
+    <iframe src="//player.bilibili.com/player.html?aid=781936697&bvid=BV1W24y1j7H9&cid=1079227598&page=1" scrolling="no"
+      border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="700px" height="500px"> </iframe>
+    <!-- 资讯内容 -->
+    <ng-container *ngIf="news.length>0 && !isLoading; else elseTemplate">
       <mat-card class="w-100 my-1" *ngFor="let item of news">
         <mat-card-header>
           <mat-card-title>
