@@ -14,6 +14,7 @@ public class DataStoreContext
     public QuerySet<SystemUser> SystemUserQuery { get; init; }
     public QuerySet<Tags> TagsQuery { get; init; }
     public QuerySet<ThirdNews> ThirdNewsQuery { get; init; }
+    public QuerySet<ThirdVideo> ThirdVideoQuery { get; init; }
     public QuerySet<User> UserQuery { get; init; }
     public CommandSet<Blog> BlogCommand { get; init; }
     public CommandSet<Catalog> CatalogCommand { get; init; }
@@ -25,6 +26,7 @@ public class DataStoreContext
     public CommandSet<SystemUser> SystemUserCommand { get; init; }
     public CommandSet<Tags> TagsCommand { get; init; }
     public CommandSet<ThirdNews> ThirdNewsCommand { get; init; }
+    public CommandSet<ThirdVideo> ThirdVideoCommand { get; init; }
     public CommandSet<User> UserCommand { get; init; }
 
 
@@ -44,6 +46,7 @@ public class DataStoreContext
         SystemUserQueryStore systemUserQuery,
         TagsQueryStore tagsQuery,
         ThirdNewsQueryStore thirdNewsQuery,
+        ThirdVideoQueryStore thirdVideoQuery,
         UserQueryStore userQuery,
         BlogCommandStore blogCommand,
         CatalogCommandStore catalogCommand,
@@ -55,6 +58,7 @@ public class DataStoreContext
         SystemUserCommandStore systemUserCommand,
         TagsCommandStore tagsCommand,
         ThirdNewsCommandStore thirdNewsCommand,
+        ThirdVideoCommandStore thirdVideoCommand,
         UserCommandStore userCommand,
 
         QueryDbContext queryDbContext,
@@ -83,6 +87,8 @@ public class DataStoreContext
         AddCache(TagsQuery);
         ThirdNewsQuery = thirdNewsQuery;
         AddCache(ThirdNewsQuery);
+        ThirdVideoQuery = thirdVideoQuery;
+        AddCache(ThirdVideoQuery);
         UserQuery = userQuery;
         AddCache(UserQuery);
         BlogCommand = blogCommand;
@@ -105,6 +111,8 @@ public class DataStoreContext
         AddCache(TagsCommand);
         ThirdNewsCommand = thirdNewsCommand;
         AddCache(ThirdNewsCommand);
+        ThirdVideoCommand = thirdVideoCommand;
+        AddCache(ThirdVideoCommand);
         UserCommand = userCommand;
         AddCache(UserCommand);
 

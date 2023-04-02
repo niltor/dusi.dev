@@ -46,13 +46,19 @@ public class GetBiliBiliVideosTask : BackgroundService
         var videoTask = new GetBilibiliVideo();
         try
         {
+            using var scope = Services.CreateScope();
+            var dbcontext = scope.ServiceProvider.GetRequiredService<CommandDbContext>();
+
             var data = await videoTask.GetLatestVideoAsync();
-            if (data != null)
+            if (data != null && !string.IsNullOrWhiteSpace(data.Identity))
             {
+                // 判断是否重复
+                var exist = dbcontext.ThirdVideos.Any(v => v.Identity == data.Identity);
+                if (exist) { return; }
                 // 处理图片:下载重新上传
                 using (var http = new HttpClient())
                 {
-                    var stream = await http.GetStreamAsync(data.ThumbnailUrl+ "@320w_200h_1c_!web-space-index-myvideo.webp");
+                    var stream = await http.GetStreamAsync(data.ThumbnailUrl + "@320w_200h_1c_!web-space-index-myvideo.webp");
                     var path = Path.Combine("video", "thumbnail");
                     var position = data.ThumbnailUrl?.LastIndexOf("/");
                     if (position is not null and > (-1))
@@ -67,19 +73,14 @@ public class GetBiliBiliVideosTask : BackgroundService
                         }
                     }
                 }
-
                 // 存储入库
-                using var scope = Services.CreateScope();
-                var dbcontext = scope.ServiceProvider.GetRequiredService<CommandDbContext>();
-
                 dbcontext.ThirdVideos.Add(data);
                 await dbcontext.SaveChangesAsync();
             }
         }
         catch (Exception ex)
         {
-
-            _logger.LogError("Get Latest video error:{0},{1}", ex.Message, ex.StackTrace);
+            _logger.LogError("Get Latest video error:{message},{stacktrace}", ex.Message, ex.StackTrace);
         }
     }
 

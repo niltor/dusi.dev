@@ -49,9 +49,9 @@ public class GetBilibiliVideo
                 Title = item["title"]?.GetValue<string>() ?? "",
                 ThumbnailUrl = item["pic"]?.GetValue<string>(),
                 Description = item["description"]?.GetValue<string>(),
-                Source = "bilibili"
+                Source = "bilibili",
+                Identity = item["bvid"]?.GetValue<string>() ?? ""
             };
-
         }
         return default;
     }
