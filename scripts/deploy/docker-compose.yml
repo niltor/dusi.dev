@@ -15,6 +15,7 @@ services:
     image: ghcr.io/aterdev/dusi-api:latest
     environment:
       - ConnectionStrings__Default=${ASPNETCORE_CONNECTIONSTRINGS}
+      - Azure__BlobConnectionString=${AZURE_BLOB_CONNECTIONSTRING}
     restart: always
     networks:
       - dusi
@@ -42,6 +43,7 @@ services:
     image: ghcr.io/aterdev/dusi-task:latest
     environment:
       - ConnectionStrings__Default=${ASPNETCORE_CONNECTIONSTRINGS}
+      - Azure__BlobConnectionString=${AZURE_BLOB_CONNECTIONSTRING}
     restart: always
     networks:
       - dusi
@@ -65,32 +67,31 @@ services:
       - task
     network_mode: "service:task"
 
-  cms:
-    image: ghcr.io/aterdev/dusi-cms:latest
-    environment:
-      - ConnectionStrings__Default=${ASPNETCORE_CONNECTIONSTRINGS}
-    restart: always
-    networks:
-      - dusi
-    ports:
-      - "50004:50001"
-      - "5202:80"
-      - "443" 
+  # cms:
+  #   image: ghcr.io/aterdev/dusi-cms:latest
+  #   environment:
+  #     - ConnectionStrings__Default=${ASPNETCORE_CONNECTIONSTRINGS}
+  #   restart: always
+  #   networks:
+  #     - dusi
+  #   ports:
+  #     - "50004:50001"
+  #     - "5202:80"
+  #     - "443" 
       
-  cms-dapr:
-    image: "daprio/daprd:edge"
-    command:
-      [
-        "./daprd",
-        "-app-id","cms",
-        "-app-port","443",
-        "-app-protocol","grpc",
-        "-components-path","/components",
-      ]
-    volumes:
-      - "./components/:/components"
-    depends_on:
-      - redis
-      - cms
-    network_mode: "service:cms"
-
+  # cms-dapr:
+  #   image: "daprio/daprd:edge"
+  #   command:
+  #     [
+  #       "./daprd",
+  #       "-app-id","cms",
+  #       "-app-port","443",
+  #       "-app-protocol","grpc",
+  #       "-components-path","/components",
+  #     ]
+  #   volumes:
+  #     - "./components/:/components"
+  #   depends_on:
+  #     - redis
+  #     - cms
+  #   network_mode: "service:cms"
