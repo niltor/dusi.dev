@@ -4,9 +4,9 @@ on:
     branches: [ "prod" ]
     paths:
       - "src/Microservices/CMSService/**"
-      - "src/Application/**"
-      - "src/Share/**"
-      - "src/Core/**"
+      # - "src/Application/**"
+      # - "src/Share/**"
+      # - "src/Core/**"
 jobs:
 
   build:
