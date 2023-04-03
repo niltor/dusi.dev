@@ -69,11 +69,11 @@ public class BaseFeed
                     var xmlList = xmlDoc?.Root?.Element(RootName)?.Elements(ItemName);
                     var blogs = xmlList?.Select(x =>
                         {
-                            var createTime = DateTime.Now;
+                            var createTime = DateTimeOffset.UtcNow;
                             var createTimeString = x.Element(PubDate)?.Value;
                             if (!string.IsNullOrEmpty(createTimeString))
                             {
-                                DateTime.TryParse(createTimeString, out createTime);
+                                DateTimeOffset.TryParse(createTimeString, out createTime);
                             }
 
                             var description = x.Element(Description)?.Value;

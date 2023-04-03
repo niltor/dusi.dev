@@ -42,7 +42,6 @@ public class NewsCollector
         var result = new List<ThirdNews>();
         news.ForEach(news =>
         {
-            var date = new DateTimeOffset(news.CreateTime, TimeSpan.FromHours(8));
             var thirdNews = new ThirdNews
             {
                 Category = news.Categories,
@@ -52,7 +51,7 @@ public class NewsCollector
                 Title = news.Title,
                 Url = news.Link,
                 ThumbnailUrl = news.ThumbUrl,
-                DatePublished = date.ToUniversalTime(),
+                DatePublished = news.CreateTime.ToUniversalTime(),
                 Type = NewsSource.News
             };
             result.Add(thirdNews);
