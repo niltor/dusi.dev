@@ -55,8 +55,9 @@ public partial class NewsListViewModel : BaseViewModel
         var data = new ThirdNewsFilterDto()
         {
             PageIndex = 1,
-            PageSize = 100,
-            IsClassified = false
+            PageSize = 50,
+            IsClassified = false,
+            OnlyWeek = true
         };
 
         var res = await news.FilterAsync(data);

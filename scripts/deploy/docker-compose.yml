@@ -62,7 +62,7 @@ services:
       [
         "./daprd",
         "-app-id","task",
-        "-app-portd","80",
+        "-app-port","80",
         "-components-path","/components"
       ]
     volumes:

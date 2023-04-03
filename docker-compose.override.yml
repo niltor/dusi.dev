@@ -33,8 +33,7 @@ services:
         "-app-id","api",
         "-app-port","80",
         "-log-level", "debug",
-        "-components-path","/components",
-        "-config", "/dusi-config.yaml"
+        "-components-path","/components"
       ]
     volumes:
       - "./scripts/components/:/components"
