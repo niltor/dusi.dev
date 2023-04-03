@@ -39,6 +39,7 @@ public class BlogController : ClientControllerBase<IBlogManager>
     /// </summary>
     /// <returns></returns>
     [HttpGet("types")]
+    [AllowAnonymous]
     public List<EnumDictionary> GetTypes()
     {
         return manager.GetTypes();

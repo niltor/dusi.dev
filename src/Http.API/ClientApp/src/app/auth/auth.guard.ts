@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): boolean | UrlTree {
     const url = state.url;
 
-    const publicRoutes = ['/blog', '/index', '/news', '/system/login'];
+    const publicRoutes = ['/blog', '/index', '/news', '/system/login','/video-preview'];
 
     if (this.auth.isAdmin) {
       return true;

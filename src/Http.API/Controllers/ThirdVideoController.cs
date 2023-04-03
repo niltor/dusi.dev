@@ -34,6 +34,7 @@ public class ThirdVideoController : ClientControllerBase<IThirdVideoManager>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult<ThirdVideo?>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
