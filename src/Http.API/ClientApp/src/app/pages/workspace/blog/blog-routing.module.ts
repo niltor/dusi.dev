@@ -12,8 +12,8 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    data: { reuse: true },
     canActivate: [AuthGuard],
+    data: { reuse: true },
     children:
       [
         {

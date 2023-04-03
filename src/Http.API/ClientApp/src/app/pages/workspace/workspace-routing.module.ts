@@ -6,9 +6,10 @@ import { LayoutComponent } from './layout/layout.component';
 const routes: Routes = [
   {
     path: '',
+    component: LayoutComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
-    component: LayoutComponent,
+    data: { reuse: true },
     children: [
       { path: '', redirectTo: 'blog', pathMatch: 'full' }
     ]

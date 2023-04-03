@@ -18,7 +18,6 @@ const routes: Routes = [
         path: 'workspace',
         loadChildren: () => import('./pages/workspace/workspace.module')
             .then(m => m.WorkspaceModule),
-        data: { reuse: true },
     }
 ];
 
