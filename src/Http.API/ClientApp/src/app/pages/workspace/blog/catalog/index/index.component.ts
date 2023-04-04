@@ -174,10 +174,12 @@ export class IndexComponent implements OnInit {
             } else {
               this.snb.open('添加失败');
             }
+            this.addForm.get('name')?.setValue("");
             this.isProcessing = false;
           },
           error: (error) => {
             this.snb.open(error.detail);
+            this.addForm.get('name')?.setValue("");
             this.isProcessing = false;
           }
         });
@@ -185,11 +187,10 @@ export class IndexComponent implements OnInit {
   }
 
   editCatalog(): void {
+    this.isProcessing = true;
     const data: CatalogUpdateDto = {
       name: this.editForm.get('name')?.value
     };
-    console.log(data);
-
     if (this.editForm.valid && this.currentNode != null) {
       this.service.update(this.currentNode?.id!, data)
         .subscribe({
@@ -197,10 +198,12 @@ export class IndexComponent implements OnInit {
             if (res) {
               this.getList();
               this.dialogRef.close();
+              this.isProcessing = false;
             }
           },
           error: (error) => {
             this.snb.open(error.detail);
+            this.isProcessing = false;
           }
         })
     } else {
