@@ -2,7 +2,7 @@
   <!-- 资讯 -->
   <section class="news p-2">
     <!-- 总分类 -->
-    <div class="d-flex mb-2 justify-content-center">
+    <div class=" d-flex mb-2 justify-content-center">
       <mat-button-toggle-group [(ngModel)]="filter.techType" (change)="getNews()">
         <mat-button-toggle [value]="null">
           全部
@@ -51,11 +51,16 @@
       </mat-card>
     </ng-container>
     <ng-template #elseTemplate>
-      <div class="p-2">
-        <h4>
-          暂无内容！
-        </h4>
+      <div class="d-flex text-center justify-content-center mt-2">
+        <mat-spinner mode="indeterminate" *ngIf="isLoading">
+        </mat-spinner>
+        <div class="p-2">
+          <h4>
+            暂无内容！
+          </h4>
+        </div>
       </div>
+
     </ng-template>
   </section>
   <!-- 右边栏 -->

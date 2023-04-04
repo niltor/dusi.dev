@@ -1,6 +1,6 @@
-<div class="container d-flex" *ngIf="!isLoading">
+<div class="container d-flex">
   <!-- 博客 -->
-  <section class="blogs p-2">
+  <section class="blogs p-2" *ngIf="!isLoading">
     <ng-container *ngIf="blogs.length>0; else elseTemplate">
       <mat-card class="w-100 my-1" *ngFor="let item of blogs">
         <mat-card-header>
@@ -27,13 +27,16 @@
       </mat-card>
     </ng-container>
     <ng-template #elseTemplate>
-      <div class="p-2">
-        <h4>
-          暂无内容！
-        </h4>
+      <div class="d-flex text-center justify-content-center mt-2">
+        <mat-spinner mode="indeterminate" *ngIf="isLoading">
+        </mat-spinner>
+        <div class="p-2">
+          <h4>
+            暂无内容！
+          </h4>
+        </div>
       </div>
     </ng-template>
-
   </section>
   <!-- 分类 -->
   <section class="sugguest p-2">
