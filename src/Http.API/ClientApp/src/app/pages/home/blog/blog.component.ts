@@ -3,7 +3,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { BlogFilterDto } from 'src/app/share/client/models/blog/blog-filter-dto.model';
 import { BlogItemDto } from 'src/app/share/client/models/blog/blog-item-dto.model';
 import { EnumDictionary } from 'src/app/share/client/models/enum-dictionary.model';
-import { ThirdNewsOptionsDto } from 'src/app/share/client/models/third-news/third-news-options-dto.model';
 import { BlogService } from 'src/app/share/client/services/blog.service';
 
 @Component({
