@@ -104,6 +104,7 @@ export class NewsComponent {
   }
   onlyWeek(): void {
     this.filter.onlyWeek = !this.filter.onlyWeek;
+    this.getNews();
   }
   selectNewsType(value: number | null): void {
     this.filter.newsType = value;
