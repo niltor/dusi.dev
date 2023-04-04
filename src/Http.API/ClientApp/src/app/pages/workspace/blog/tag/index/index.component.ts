@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { TagsService } from 'src/app/share/client/services/tags.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
@@ -7,18 +7,31 @@ import { TagsFilterDto } from 'src/app/share/client/models/tags/tags-filter-dto.
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { TagsAddDto } from 'src/app/share/client/models/tags/tags-add-dto.model';
+import { MatChipInputEvent, MatChipEditedEvent } from '@angular/material/chips';
+import { COMMA, ENTER } from '@angular/cdk/keycodes'
+import { CommonColors } from 'src/app/share/const';
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+  styleUrls: ['./index.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class IndexComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild('addTagsDialog', { static: true }) addTagTmp!: TemplateRef<any>;
+  dialogRef: MatDialogRef<any, any> | null = null;
+  addOnBlur = true;
+  colors = CommonColors;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
   isLoading = true;
+  isProcessing = false;
   total = 0;
   data: TagsItemDto[] = [];
+  newTags: TagsAddDto[] = [];
+
   columns: string[] = ['name', 'color', 'createdTime', 'actions'];
   dataSource!: MatTableDataSource<TagsItemDto>;
   filter: TagsFilterDto;
@@ -85,46 +98,70 @@ export class IndexComponent implements OnInit {
         }
       });
   }
-
-  /*
   openAddDialog(): void {
-    const ref = this.dialog.open(AddComponent, {
-      hasBackdrop: true,
-      disableClose: false,
-      data: {
-      }
-    });
-    ref.afterClosed().subscribe(res => {
-      if (res) {
-        this.snb.open('添加成功');
-        this.getList();
-      }
+    this.dialogRef = this.dialog.open(this.addTagTmp, {
+      minWidth: 600
     });
   }
-  openDetailDialog(id: string): void {
-    const ref = this.dialog.open(DetailComponent, {
-      hasBackdrop: true,
-      disableClose: false,
-      data: { id }
-    });
-    ref.afterClosed().subscribe(res => {
-      if (res) { }
-    });
+
+  addTags(): void {
+    if (this.newTags && this.newTags.length > 0) {
+      this.newTags.forEach(value => {
+        var randIndex = Math.floor(Math.random() * this.colors.length);
+        value.color = this.colors[randIndex];
+      });
+      this.isProcessing = true;
+      this.service.batchAdd(this.newTags)
+        .subscribe({
+          next: (res) => {
+            if (res) {
+              this.dialogRef?.close();
+              this.snb.open('添加成功' + res + '个标签');
+              this.newTags = [];
+              this.isProcessing = false;
+              this.getList();
+            } else {
+            }
+          },
+          error: (error) => {
+            this.snb.open(error.detail);
+            this.isProcessing = false;
+          }
+        });
+    }
   }
-  
-  openEditDialog(id: string): void {
-    const ref = this.dialog.open(EditComponent, {
-      hasBackdrop: true,
-      disableClose: false,
-      data: { id }
-    });
-    ref.afterClosed().subscribe(res => {
-      if (res) {
-        this.snb.open('修改成功');
-        this.getList();
-      }
-    });
-  }*/
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.newTags.push({ name: value });
+    }
+    event.chipInput!.clear();
+  }
+
+  remove(tag: TagsAddDto): void {
+    const index = this.newTags.indexOf(tag);
+
+    if (index >= 0) {
+      this.newTags.splice(index, 1);
+    }
+  }
+
+  editTag(tag: TagsAddDto, event: MatChipEditedEvent) {
+    const value = event.value.trim();
+
+    // Remove fruit if it no longer has a name
+    if (!value) {
+      this.remove(tag);
+      return;
+    }
+
+    // Edit existing fruit
+    const index = this.newTags.indexOf(tag);
+    if (index >= 0) {
+      this.newTags[index].name = value;
+    }
+  }
 
   /**
    * 编辑

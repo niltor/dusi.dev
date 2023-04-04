@@ -19,7 +19,7 @@ export class EnumTextPipe implements PipeTransform {
     case 4: result = '云与DevOps'; break;
     case 5: result = '见解与分析'; break;
     case 6: result = '其它'; break;
-    default:  break;
+    default: '默认'; break;
   }
 }
 break;
@@ -29,7 +29,7 @@ case 'LanguageType':
   {
     case 0: result = '中文'; break;
     case 1: result = '英文'; break;
-    default:  break;
+    default: '默认'; break;
   }
 }
 break;
@@ -40,7 +40,7 @@ case 'NewsStatus':
     case 0: result = '默认'; break;
     case 1: result = '公开'; break;
     case 2: result = '内部'; break;
-    default:  break;
+    default: '默认'; break;
   }
 }
 break;
@@ -54,7 +54,7 @@ case 'NewsType':
     case 4: result = 'AI和数据'; break;
     case 5: result = '云与DevOps'; break;
     case 6: result = '其它'; break;
-    default:  break;
+    default: '默认'; break;
   }
 }
 break;
@@ -66,7 +66,7 @@ case 'TechType':
     case 1: result = '资讯'; break;
     case 2: result = '发布或更新'; break;
     case 3: result = '重点关注'; break;
-    default:  break;
+    default: '默认'; break;
   }
 }
 break;

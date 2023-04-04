@@ -26,6 +26,33 @@ public class TagsManager : DomainManagerBase<Tags, TagsUpdateDto, TagsFilterDto,
         return entity;
     }
 
+
+    /// <summary>
+    /// 批量添加
+    /// </summary>
+    /// <param name="list"></param>
+    /// <returns></returns>
+    public async Task<int> BatchAddAsync(List<TagsAddDto> list)
+    {
+        // 去重添加
+        var user = await _userContext.GetUserAsync();
+        var currentTagNames = await Query.Db.Where(t => t.User.Id == _userContext.UserId)
+            .Select(t => t.Name).ToListAsync();
+
+        var newTags = list.Distinct()
+            .Where(l => !currentTagNames.Contains(l.Name))
+            .Select(t => new Tags
+            {
+                Name = t.Name,
+                Color = t.Color,
+                User = user!
+            })
+            .ToList();
+
+        Command.Db.AddRange(newTags);
+        return await Command.SaveChangeAsync();
+    }
+
     public override async Task<Tags> UpdateAsync(Tags entity, TagsUpdateDto dto)
     {
         // TODO:根据实际业务更新

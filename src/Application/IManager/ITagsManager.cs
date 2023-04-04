@@ -19,5 +19,6 @@ public interface ITagsManager : IDomainManager<Tags, TagsUpdateDto, TagsFilterDt
     /// <param name="dto"></param>
     /// <returns></returns>
     Task<Tags> CreateNewEntityAsync(TagsAddDto dto);
-	// TODO: 定义业务方法
+    Task<int> BatchAddAsync(List<TagsAddDto> list);
+    // TODO: 定义业务方法
 }

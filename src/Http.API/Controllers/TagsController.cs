@@ -38,6 +38,16 @@ public class TagsController : ClientControllerBase<ITagsManager>
     }
 
     /// <summary>
+    /// 批量新增
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost("batch")]
+    public async Task<ActionResult<int>> BatchAddAsync(List<TagsAddDto> list)
+    {
+        return await manager.BatchAddAsync(list);
+    }
+
+    /// <summary>
     /// 更新
     /// </summary>
     /// <param name="id"></param>

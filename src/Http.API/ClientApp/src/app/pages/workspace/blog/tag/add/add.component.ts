@@ -19,7 +19,6 @@ export class AddComponent implements OnInit {
   isLoading = true;
   colors = CommonColors;
   constructor(
-
     private service: TagsService,
     public snb: MatSnackBar,
     private router: Router,

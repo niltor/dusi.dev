@@ -31,6 +31,15 @@ export class TagsService extends BaseService {
   }
 
   /**
+   * 批量新增
+   * @param data TagsAddDto[]
+   */
+  batchAdd(data: TagsAddDto[]): Observable<number> {
+    const url = `/api/Tags/batch`;
+    return this.request<number>('post', url, data);
+  }
+
+  /**
    * 更新
    * @param id 
    * @param data TagsUpdateDto
