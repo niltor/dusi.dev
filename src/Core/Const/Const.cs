@@ -37,5 +37,9 @@ public static class ErrorMsg
     /// 未找到的资源
     /// </summary>
     public const string NotFoundResource = "未找到的资源!";
+    /// <summary>
+    /// 未找到实体库
+    /// </summary>
+    public const string NotFoundEntityLib = "未找到实体库!";
 
 }

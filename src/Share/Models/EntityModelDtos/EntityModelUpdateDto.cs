@@ -17,10 +17,6 @@ public class EntityModelUpdateDto
     [MaxLength(300)]
     public string? Comment { get; set; }
     /// <summary>
-    /// 访问修饰符
-    /// </summary>
-    public AccessModifier? AccessModifier { get; set; }
-    /// <summary>
     /// 代码内容
     /// </summary>
     [MaxLength(8000)]
@@ -32,23 +28,7 @@ public class EntityModelUpdateDto
     /// <summary>
     /// 语言版本
     /// </summary>
+    [MaxLength(20)]
     public string? LanguageVersion { get; set; }
-    /// <summary>
-    /// 父类
-    /// </summary>
-    public EntityModel? ParentEntity { get; set; }
-    /// <summary>
-    /// 直属子类
-    /// </summary>
-    public List<EntityModel>? ChildrenEntities { get; set; }
-    /// <summary>
-    /// 包含的属性
-    /// </summary>
-    public List<EntityMember>? EntityMembers { get; set; }
-    /// <summary>
-    /// 所属模型库
-    /// </summary>
-    public EntityLibrary? EntityLibrary { get; set; }
     public Guid? EntityLibraryId { get; set; }
-    
 }

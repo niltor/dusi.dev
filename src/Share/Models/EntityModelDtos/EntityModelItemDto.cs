@@ -16,6 +16,13 @@ public class EntityModelItemDto
     /// </summary>
     [MaxLength(300)]
     public string Comment { get; set; } = default!;
+
+    /// <summary>
+    /// 代码内容
+    /// </summary>
+    [MaxLength(8000)]
+    public string? CodeContent { get; set; }
+
     /// <summary>
     /// 访问修饰符
     /// </summary>

@@ -5,8 +5,6 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { RoleModule } from './role/role.module';
 import { UserModule } from './user/user.module';
 import { ThirdNewsModule } from './third-news/third-news.module';
-import { EntityLibraryModule } from './entity-library/entity-library.module';
-import { EntityModelModule } from './entity-model/entity-model.module';
 import { MemberModule } from './member/member.module';
 
 @NgModule({
@@ -18,9 +16,7 @@ import { MemberModule } from './member/member.module';
     RoleModule,
     UserModule,
     MemberModule,
-    ThirdNewsModule,
-    EntityLibraryModule,
-    EntityModelModule
+    ThirdNewsModule
   ],
   exports: [
   ]

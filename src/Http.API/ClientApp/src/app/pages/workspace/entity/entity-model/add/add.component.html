@@ -1,0 +1,98 @@
+<mat-toolbar fxLayoutGap="4px">
+  <button color="basic" mat-icon-button matTooltip="返回" (click)="back()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  添加
+</mat-toolbar>
+<form class="d-flex" *ngIf="!isLoading" [formGroup]="formGroup">
+  <div class="d-flex flex-column w-100">
+    <div class="d-flex gap-1 mt-1">
+      <mat-form-field>
+        <mat-label>名称</mat-label>
+        <input matInput placeholder="Name" formControlName="name" required minlength="" maxlength="60">
+        <mat-error *ngIf="name?.invalid">
+          {{getValidatorMessage('name')}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>语言</mat-label>
+        <mat-select formControlName="codeLanguage" required (selectionChange)="changeLanuage($event)">
+          <mat-option *ngFor="let item of CodeLanguage | toKeyValue" [value]="item.value">
+            {{item.key}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="codeLanguage?.invalid">
+          {{getValidatorMessage('codeLanguage')}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>所属实体库</mat-label>
+        <mat-select placeholder="选择实体库" formControlName="entityLibraryId">
+          <mat-option *ngFor="let item of libs" [value]="item.id">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>语言版本</mat-label>
+        <input matInput type="text" formControlName="languageVersion" maxlength="20">
+        <mat-error *ngIf="codeLanguage?.invalid">
+          {{getValidatorMessage('languageVersion')}}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <mat-label>说明</mat-label>
+      <textarea matInput placeholder="Comment" formControlName="comment" required minlength="" maxlength="300"
+        cols="5"></textarea>
+      <mat-error *ngIf="comment?.invalid">
+        {{getValidatorMessage('comment')}}
+      </mat-error>
+    </mat-form-field>
+    <!-- 编辑器切换 -->
+    <mat-toolbar color="primary">
+      <button mat-icon-button matTooltip="编辑" (click)="toggleEditor(false)">
+        <mat-icon>text_fields</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="预览" (click)="toggleEditor(true)">
+        <mat-icon>preview</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="拆分" (click)="splitView()">
+        <mat-icon>vertical_split</mat-icon></button>
+    </mat-toolbar>
+    <section class="editor">
+      <ng-container *ngIf="isSplitView; else notSplitViewTmpl">
+        <div class="editor row">
+          <!-- 输入框 -->
+          <mat-form-field class="col">
+            <textarea class="editor-content" [cdkTextareaAutosize]="true" matInput placeholder="请使用markdown代码片段"
+              formControlName="codeContent"></textarea>
+          </mat-form-field>
+          <!-- 预览 -->
+          <markdown class="col p-0 editor-content" [data]="codeContent?.value" lineNumbers>
+          </markdown>
+        </div>
+      </ng-container>
+      <ng-template #notSplitViewTmpl>
+        <div class="editor d-flex flex-column">
+          <ng-container *ngIf="isPreview; else elseTemplate">
+            <!-- 预览 -->
+            <markdown class="p-0 editor-content" [data]="codeContent?.value" lineNumbers>
+            </markdown>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <!-- 输入框 -->
+            <mat-form-field>
+              <textarea [cdkTextareaAutosize]="true" class="editor-content" matInput placeholder="请使用markdown代码片段"
+                formControlName="codeContent"></textarea>
+            </mat-form-field>
+          </ng-template>
+        </div>
+      </ng-template>
+    </section>
+    <div class="d-flex mt-1">
+      <button class="d-flex flex-column" mat-flat-button color="primary" [disabled]="isProcessing" (click)="add()">保存</button>
+    </div>
+  </div>
+</form>

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/auth/auth.guard';
-import { IndexComponent } from './entity/entity-model/index/index.component';
-import { LayoutComponent } from './layout/layout.component';
+import { LayoutComponent } from '../layout/layout.component';
+import { IndexComponent } from './entity-model/index/index.component';
 
 const routes: Routes = [
   {
@@ -10,15 +10,13 @@ const routes: Routes = [
     component: LayoutComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
-    data: { reuse: true },
-    children: [
-      { path: '', redirectTo: 'blog', pathMatch: 'full' },
-    ]
+    children: []
   },
+
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class WorkspaceRoutingModule { }
+export class EntityRoutingModule { }

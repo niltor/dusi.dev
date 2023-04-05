@@ -5,6 +5,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { ShareModule } from 'src/app/share/share.module';
 import { BlogModule } from './blog/blog.module';
+import { EntityModule } from './entity/entity.module';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { BlogModule } from './blog/blog.module';
     ShareModule,
     WorkspaceRoutingModule,
     BlogModule,
+    EntityModule,
   ]
 })
 export class WorkspaceModule { }

@@ -11,15 +11,4 @@ public class EntityLibraryFilterDto : FilterBase
     /// </summary>
     [MaxLength(60)]
     public string? Name { get; set; }
-    /// <summary>
-    /// 库描述
-    /// </summary>
-    [MaxLength(200)]
-    public string? Description { get; set; }
-    /// <summary>
-    /// 是否公开
-    /// </summary>
-    public bool? IsPublic { get; set; }
-    public Guid? UserId { get; set; }
-    
 }

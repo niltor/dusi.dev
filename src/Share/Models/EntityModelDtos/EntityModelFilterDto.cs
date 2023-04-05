@@ -11,15 +11,7 @@ public class EntityModelFilterDto : FilterBase
     /// </summary>
     [MaxLength(60)]
     public string? Name { get; set; }
-    /// <summary>
-    /// 实体注释内容
-    /// </summary>
-    [MaxLength(300)]
-    public string? Comment { get; set; }
-    /// <summary>
-    /// 访问修饰符
-    /// </summary>
-    public AccessModifier? AccessModifier { get; set; }
+    
     /// <summary>
     /// 代码语言
     /// </summary>
@@ -28,7 +20,8 @@ public class EntityModelFilterDto : FilterBase
     /// 语言版本
     /// </summary>
     public string? LanguageVersion { get; set; }
-    public Guid? ParentEntityId { get; set; }
+    /// <summary>
+    /// 所属实体库
+    /// </summary>
     public Guid? EntityLibraryId { get; set; }
-    
 }

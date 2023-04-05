@@ -22,6 +22,4 @@ public class EntityLibraryItemDto
     public bool IsPublic { get; set; }
     public Guid Id { get; set; }
     public DateTimeOffset CreatedTime { get; set; }
-    public DateTimeOffset UpdatedTime { get; set; }
-    
 }

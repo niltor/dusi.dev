@@ -24,10 +24,4 @@ public class EntityLibraryAddDto
     /// 包含的实体类
     /// </summary>
     public List<EntityModel>? EntityModels { get; set; }
-    /// <summary>
-    /// 所属用户
-    /// </summary>
-    public required SystemUser User { get; set; }
-    public Guid UserId { get; set; }
-    
 }
