@@ -11,14 +11,12 @@ public class EntityLibraryManager : DomainManagerBase<EntityLibrary, EntityLibra
 
     public override async Task<EntityLibrary> UpdateAsync(EntityLibrary entity, EntityLibraryUpdateDto dto)
     {
-        // TODO:根据实际业务更新
         return await base.UpdateAsync(entity, dto);
     }
 
     public override async Task<PageList<EntityLibraryItemDto>> FilterAsync(EntityLibraryFilterDto filter)
     {
-        // TODO:根据实际业务构建筛选条件
-        // if ... Queryable = ...
+        Queryable = Queryable.WhereNotNull(filter.Name, q => q.Name.StartsWith(filter.Name!));
         return await Query.FilterAsync<EntityLibraryItemDto>(Queryable);
     }
 

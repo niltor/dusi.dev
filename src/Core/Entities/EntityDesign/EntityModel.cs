@@ -2,7 +2,6 @@
 /// <summary>
 /// 实体模型类
 /// </summary>
-[NgPage("system", "entityModel")]
 public class EntityModel : EntityBase
 {
     /// <summary>
@@ -20,7 +19,7 @@ public class EntityModel : EntityBase
     /// <summary>
     /// 访问修饰符
     /// </summary>
-    public required AccessModifier AccessModifier { get; set; } = AccessModifier.Public;
+    public AccessModifier AccessModifier { get; set; } = AccessModifier.Public;
 
     /// <summary>
     /// 代码内容
@@ -36,6 +35,7 @@ public class EntityModel : EntityBase
     /// <summary>
     /// 语言版本
     /// </summary>
+    [MaxLength(20)]
     public string LanguageVersion { get; set; } = "latest";
 
     /// <summary>

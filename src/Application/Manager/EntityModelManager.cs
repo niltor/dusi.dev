@@ -5,21 +5,39 @@ namespace Application.Manager;
 
 public class EntityModelManager : DomainManagerBase<EntityModel, EntityModelUpdateDto, EntityModelFilterDto, EntityModelItemDto>, IEntityModelManager
 {
-    public EntityModelManager(DataStoreContext storeContext) : base(storeContext)
+    private readonly IEntityLibraryManager _libraryManager;
+
+    public EntityModelManager(DataStoreContext storeContext, IEntityLibraryManager libraryManager) : base(storeContext)
     {
+        _libraryManager = libraryManager;
     }
 
     public override async Task<EntityModel> UpdateAsync(EntityModel entity, EntityModelUpdateDto dto)
     {
-        // TODO:根据实际业务更新
+        if (dto.EntityLibraryId != null)
+        {
+            var lib = await _libraryManager.GetCurrentAsync(dto.EntityLibraryId.Value);
+            if (lib != null)
+            {
+                entity.EntityLibrary = lib;
+            }
+        }
         return await base.UpdateAsync(entity, dto);
     }
 
     public override async Task<PageList<EntityModelItemDto>> FilterAsync(EntityModelFilterDto filter)
     {
-        // TODO:根据实际业务构建筛选条件
-        // if ... Queryable = ...
+        Queryable = Queryable.WhereNotNull(filter.Name, q => q.Name.StartsWith(filter.Name!));
+        Queryable = Queryable.WhereNotNull(filter.CodeLanguage, q => q.CodeLanguage == filter.CodeLanguage!);
+        Queryable = Queryable.WhereNotNull(filter.LanguageVersion, q => q.LanguageVersion == filter.LanguageVersion!);
+        Queryable = Queryable.WhereNotNull(filter.EntityLibraryId, q => q.EntityLibrary.Id == filter.EntityLibraryId!);
+
         return await Query.FilterAsync<EntityModelItemDto>(Queryable);
     }
 
+    public override async Task<EntityModel?> FindAsync(Guid id)
+    {
+        return await Query.Db.Include(e => e.EntityLibrary)
+            .SingleOrDefaultAsync(e => e.Id == id);
+    }
 }

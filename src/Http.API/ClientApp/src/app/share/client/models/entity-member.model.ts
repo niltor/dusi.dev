@@ -1,7 +1,7 @@
 import { AccessModifier } from './enum/access-modifier.model';
 import { MemberType } from './enum/member-type.model';
 import { EntityMemberConstraint } from './entity-member-constraint.model';
-import { EntityModel } from './entity-model.model';
+import { EntityModel } from './entity-model/entity-model.model';
 /**
  * 实体属性
  */

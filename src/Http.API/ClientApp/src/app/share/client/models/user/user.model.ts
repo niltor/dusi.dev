@@ -1,6 +1,6 @@
 import { UserType } from '../enum/user-type.model';
-import { EntityLibrary } from '../entity-library.model';
-import { EntityModel } from '../entity-model.model';
+import { EntityLibrary } from '../entity-library/entity-library.model';
+import { EntityModel } from '../entity-model/entity-model.model';
 import { Blog } from '../blog/blog.model';
 import { Catalog } from '../catalog/catalog.model';
 import { Tags } from '../tags/tags.model';

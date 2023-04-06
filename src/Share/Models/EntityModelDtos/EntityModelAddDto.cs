@@ -16,10 +16,7 @@ public class EntityModelAddDto
     /// </summary>
     [MaxLength(300)]
     public required string Comment { get; set; }
-    /// <summary>
-    /// 访问修饰符
-    /// </summary>
-    public required AccessModifier AccessModifier { get; set; } = AccessModifier.Public;
+
     /// <summary>
     /// 代码内容
     /// </summary>
@@ -32,24 +29,11 @@ public class EntityModelAddDto
     /// <summary>
     /// 语言版本
     /// </summary>
+    [MaxLength(20)]
     public string LanguageVersion { get; set; } = "latest";
     /// <summary>
-    /// 父类
+    /// 所属实体库
     /// </summary>
-    public EntityModel? ParentEntity { get; set; }
-    /// <summary>
-    /// 直属子类
-    /// </summary>
-    public List<EntityModel>? ChildrenEntities { get; set; }
-    /// <summary>
-    /// 包含的属性
-    /// </summary>
-    public List<EntityMember>? EntityMembers { get; set; }
-    /// <summary>
-    /// 所属模型库
-    /// </summary>
-    public required EntityLibrary EntityLibrary { get; set; }
-    public Guid ParentEntityId { get; set; }
-    public Guid EntityLibraryId { get; set; }
-    
+    public required Guid EntityLibraryId { get; set; }
+
 }
