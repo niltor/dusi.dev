@@ -1,5 +1,9 @@
 <div class="container d-flex">
   <!-- 博客 -->
+  <div class="d-flex text-center justify-content-center mt-2">
+    <mat-spinner mode="indeterminate" *ngIf="isLoading">
+    </mat-spinner>
+  </div>
   <section class="blogs p-2" *ngIf="!isLoading">
     <ng-container *ngIf="blogs.length>0; else elseTemplate">
       <mat-card class="w-100 my-1" *ngFor="let item of blogs">
@@ -27,14 +31,10 @@
       </mat-card>
     </ng-container>
     <ng-template #elseTemplate>
-      <div class="d-flex text-center justify-content-center mt-2">
-        <mat-spinner mode="indeterminate" *ngIf="isLoading">
-        </mat-spinner>
-        <div class="p-2">
-          <h4>
-            暂无内容！
-          </h4>
-        </div>
+      <div class="p-2">
+        <h4>
+          暂无内容！
+        </h4>
       </div>
     </ng-template>
   </section>
