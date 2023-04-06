@@ -49,13 +49,24 @@ export class IndexComponent implements OnInit {
       this.filter.pageSize = event.pageSize;
     }
     this.service.filter(this.filter)
-      .subscribe(res => {
-        if (res.data) {
-          this.data = res.data;
-          this.total = res.count;
-          this.dataSource = new MatTableDataSource<BlogItemDto>(this.data);
+      .subscribe({
+        next: (res) => {
+          if (res) {
+            if (res.data) {
+              this.data = res.data;
+              this.total = res.count;
+              this.dataSource = new MatTableDataSource<BlogItemDto>(this.data);
+            }
+          } else {
+            this.snb.open('');
+          }
+        },
+        error: (error) => {
+          this.snb.open(error.detail);
+        },
+        complete: () => {
+          this.isLoading = false;
         }
-        this.isLoading = false;
       });
   }
 
