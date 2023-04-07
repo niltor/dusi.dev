@@ -73,24 +73,32 @@ export class EditComponent implements OnInit {
       },
       error: (error) => {
         this.snb.open(error.detail);
-      },
-      complete: () => {
-        this.isLoading = false;
       }
     });
   }
   getDetail(): void {
     this.service.getDetail(this.id)
-      .subscribe(res => {
-        this.data = res;
-        this.initForm();
-        this.isLoading = false;
-      }, error => {
-        this.snb.open(error);
-      })
+      .subscribe({
+        next: (res) => {
+          if (res) {
+            this.data = res;
+            this.initForm();
+          } else {
+            this.snb.open('');
+          }
+        },
+        error: (error) => {
+          this.snb.open(error.detail);
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      });
   }
 
   initForm(): void {
+    console.log(this.data.name);
+
     this.formGroup = new FormGroup({
       name: new FormControl(this.data.name, [Validators.maxLength(60)]),
       comment: new FormControl(this.data.comment, [Validators.maxLength(300)]),

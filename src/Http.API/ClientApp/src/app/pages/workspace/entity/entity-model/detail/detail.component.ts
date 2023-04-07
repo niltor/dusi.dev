@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { EntityModelService } from 'src/app/share/admin/services/entity-model.service';
+import { EntityModelService } from 'src/app/share/client/services/entity-model.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EntityModel } from 'src/app/share/admin/models/entity-model/entity-model.model';
+import { EntityModel } from 'src/app/share/client/models/entity-model/entity-model.model';
 import { Location } from '@angular/common';
 
 @Component({
@@ -36,12 +36,12 @@ export class DetailComponent implements OnInit {
     this.service.getDetail(this.id)
       .subscribe({
         next: (res) => {
-          if(res) {
+          if (res) {
             this.data = res;
-              this.isLoading = false;
-            }
+            this.isLoading = false;
+          }
         },
-        error:(error) => {
+        error: (error) => {
           this.snb.open(error);
         }
       })

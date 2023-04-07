@@ -1,4 +1,4 @@
-using Core.Entities;
+﻿using Core.Entities;
 namespace Share.Models.SystemRoleDtos;
 /// <summary>
 /// 角色添加时请求结构
@@ -13,6 +13,7 @@ public class SystemRoleAddDto
     /// <summary>
     /// 角色名，系统标识
     /// </summary>
+    [MaxLength(100)]
     public string NameValue { get; set; } = default!;
     /// <summary>
     /// 是否系统内置,系统内置不可删除
