@@ -45,6 +45,8 @@ public class SystemUser : EntityBase
 
     public ICollection<SystemRole>? SystemRoles { get; set; }
 
+    public List<SystemLogs>? SystemLogs { get; set; }
+
     /// <summary>
     /// 性别
     /// </summary>
