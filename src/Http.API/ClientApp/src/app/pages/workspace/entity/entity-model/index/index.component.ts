@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { EntityModelService } from 'src/app/share/client/services/entity-model.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
@@ -7,7 +7,7 @@ import { EntityModelFilterDto } from 'src/app/share/client/models/entity-model/e
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CodeLanguage } from 'src/app/share/client/models/enum/code-language.model';
 
 @Component({
@@ -18,10 +18,14 @@ import { CodeLanguage } from 'src/app/share/client/models/enum/code-language.mod
 export class IndexComponent implements OnInit {
   CodeLanguage = CodeLanguage;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild('previewDialog', { static: true }) previewTmpl!: TemplateRef<any>;
+  dialogRef: MatDialogRef<any> | null = null;
   isLoading = true;
   isProcessing = false;
   total = 0;
+  isCopied = false;
   data: EntityModelItemDto[] = [];
+  previewItem: EntityModelItemDto | null = null;
   columns: string[] = ['name', 'comment', 'codeLanguage', 'languageVersion', 'actions'];
   dataSource!: MatTableDataSource<EntityModelItemDto>;
   filter: EntityModelFilterDto;
@@ -89,45 +93,18 @@ export class IndexComponent implements OnInit {
       });
   }
 
-  /*
-  openAddDialog(): void {
-    const ref = this.dialog.open(AddComponent, {
-      hasBackdrop: true,
-      disableClose: false,
-      data: {
-      }
-    });
-    ref.afterClosed().subscribe(res => {
-      if (res) {
-        this.snb.open('添加成功');
-        this.getList();
-      }
+  openPreview(item: EntityModelItemDto): void {
+    this.previewItem = item;
+    this.dialogRef = this.dialog.open(this.previewTmpl, {
+      minWidth: 600
     });
   }
-  openDetailDialog(id: string): void {
-    const ref = this.dialog.open(DetailComponent, {
-      hasBackdrop: true,
-      disableClose: false,
-      data: { id }
-    });
-    ref.afterClosed().subscribe(res => {
-      if (res) { }
-    });
+  copyCode(): void {
+    this.isCopied = true;
+    setTimeout(() => {
+      this.isCopied = false;
+    }, 1500);
   }
-  
-  openEditDialog(id: string): void {
-    const ref = this.dialog.open(EditComponent, {
-      hasBackdrop: true,
-      disableClose: false,
-      data: { id }
-    });
-    ref.afterClosed().subscribe(res => {
-      if (res) {
-        this.snb.open('修改成功');
-        this.getList();
-      }
-    });
-  }*/
 
   /**
    * 编辑
