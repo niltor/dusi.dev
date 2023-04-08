@@ -10,6 +10,7 @@ public class EntityModelFilterDto : FilterBase
     /// 实体类名
     /// </summary>
     [MaxLength(60)]
+    [MinLength(2)]
     public string? Name { get; set; }
     
     /// <summary>

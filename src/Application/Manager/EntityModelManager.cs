@@ -27,7 +27,7 @@ public class EntityModelManager : DomainManagerBase<EntityModel, EntityModelUpda
 
     public override async Task<PageList<EntityModelItemDto>> FilterAsync(EntityModelFilterDto filter)
     {
-        Queryable = Queryable.WhereNotNull(filter.Name, q => q.Name.StartsWith(filter.Name!));
+        Queryable = Queryable.WhereNotNull(filter.Name, q => q.Name.Contains(filter.Name!) || q.Comment.Contains(filter.Name!));
         Queryable = Queryable.WhereNotNull(filter.CodeLanguage, q => q.CodeLanguage == filter.CodeLanguage!);
         Queryable = Queryable.WhereNotNull(filter.LanguageVersion, q => q.LanguageVersion == filter.LanguageVersion!);
         Queryable = Queryable.WhereNotNull(filter.EntityLibraryId, q => q.EntityLibrary.Id == filter.EntityLibraryId!);
