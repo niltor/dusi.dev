@@ -43,8 +43,8 @@
       </mat-form-field>
     </div>
     <mat-form-field>
-      <mat-label>说明</mat-label>
-      <textarea matInput placeholder="Comment" formControlName="comment" required minlength="" maxlength="300"
+      <mat-label>描述</mat-label>
+      <textarea matInput placeholder="实体描述<300个字符" formControlName="comment" required minlength="" maxlength="300"
         cols="5"></textarea>
       <mat-error *ngIf="comment?.invalid">
         {{getValidatorMessage('comment')}}
@@ -66,8 +66,8 @@
         <div class="editor row mx-0">
           <!-- 输入框 -->
           <mat-form-field class="col">
-            <textarea class="editor-content" [cdkTextareaAutosize]="true" matInput placeholder="请使用markdown语法编写代码片段,如```csharp ```"
-              formControlName="codeContent"></textarea>
+            <textarea class="editor-content" [cdkTextareaAutosize]="true" matInput
+              placeholder="请使用markdown语法编写代码片段,如```csharp ```" formControlName="codeContent"></textarea>
           </mat-form-field>
           <!-- 预览 -->
           <markdown class="col p-0 editor-content" [data]="codeContent?.value" lineNumbers>

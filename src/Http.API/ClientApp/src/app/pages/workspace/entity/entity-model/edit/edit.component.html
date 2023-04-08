@@ -43,8 +43,8 @@
       </mat-form-field>
     </div>
     <mat-form-field>
-      <mat-label>说明</mat-label>
-      <textarea matInput placeholder="Comment" formControlName="comment" required minlength="" maxlength="300"
+      <mat-label>描述</mat-label>
+      <textarea matInput placeholder="实体描述<300个字符" formControlName="comment" required minlength="" maxlength="300"
         cols="5"></textarea>
       <mat-error *ngIf="comment?.invalid">
         {{getValidatorMessage('comment')}}
