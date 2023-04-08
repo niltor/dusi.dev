@@ -5,11 +5,11 @@ public class RssHelper
 {
     private readonly MicrosoftFeed microsoftFeed;
     private readonly OsChinaFeed osChinaFeed;
-    private readonly InfoWorldFeed infoWorldFeed;
+    private readonly InfoQFeed infoQFeed;
 
-    public RssHelper(InfoWorldFeed infoWorldFeed, OsChinaFeed osChinaFeed, MicrosoftFeed microsoftFeed)
+    public RssHelper(InfoQFeed infoQFeed, OsChinaFeed osChinaFeed, MicrosoftFeed microsoftFeed)
     {
-        this.infoWorldFeed = infoWorldFeed;
+        this.infoQFeed = infoQFeed;
         this.osChinaFeed = osChinaFeed;
         this.microsoftFeed = microsoftFeed;
     }
@@ -38,8 +38,8 @@ public class RssHelper
         list = await osChinaFeed.GetBlogsAsync(6);
         result.AddRange(list);
 
-        //list = await infoWorldFeed.GetBlogsAsync(5);
-        //result.AddRange(list);
+        list = await infoQFeed.GetBlogsAsync(5);
+        result.AddRange(list);
 
         // 过滤旧数据
         result = result.Where(r => r.CreateTime >= DateTime.Now.AddDays(-1)).ToList();

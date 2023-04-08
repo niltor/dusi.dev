@@ -31,7 +31,7 @@ services.AddSingleton<StorageService>();
 
 services.AddSingleton<MicrosoftFeed>();
 services.AddSingleton<OsChinaFeed>();
-services.AddSingleton<InfoWorldFeed>();
+services.AddSingleton<InfoQFeed>();
 services.AddSingleton<RssHelper>();
 services.AddScoped<NewsCollector>();
 services.AddHostedService<NewsCollectTask>();
