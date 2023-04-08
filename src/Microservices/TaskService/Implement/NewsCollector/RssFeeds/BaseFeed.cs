@@ -103,7 +103,8 @@ public class BaseFeed
                                 Link = x.Element(Link)?.Value,
                                 Categories = GetCategories(x),
                                 LastUpdateTime = createTime,
-                                ThumbUrl = GetThumb(x.Element("guid"))
+                                ThumbUrl = GetThumb(x.Element("guid")),
+                                Provider = Provider
                             };
                         })
                         .Take(number)
