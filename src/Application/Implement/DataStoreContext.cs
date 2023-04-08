@@ -1,3 +1,6 @@
+using Core.Entities;
+using Core.Entities.CMS;
+using Core.Entities.EntityDesign;
 namespace Application.Implement;
 public class DataStoreContext
 {
@@ -10,6 +13,7 @@ public class DataStoreContext
     public QuerySet<EntityMemberConstraint> EntityMemberConstraintQuery { get; init; }
     public QuerySet<EntityMember> EntityMemberQuery { get; init; }
     public QuerySet<EntityModel> EntityModelQuery { get; init; }
+    public QuerySet<SystemLogs> SystemLogsQuery { get; init; }
     public QuerySet<SystemRole> SystemRoleQuery { get; init; }
     public QuerySet<SystemUser> SystemUserQuery { get; init; }
     public QuerySet<Tags> TagsQuery { get; init; }
@@ -22,6 +26,7 @@ public class DataStoreContext
     public CommandSet<EntityMember> EntityMemberCommand { get; init; }
     public CommandSet<EntityMemberConstraint> EntityMemberConstraintCommand { get; init; }
     public CommandSet<EntityModel> EntityModelCommand { get; init; }
+    public CommandSet<SystemLogs> SystemLogsCommand { get; init; }
     public CommandSet<SystemRole> SystemRoleCommand { get; init; }
     public CommandSet<SystemUser> SystemUserCommand { get; init; }
     public CommandSet<Tags> TagsCommand { get; init; }
@@ -42,6 +47,7 @@ public class DataStoreContext
         EntityMemberConstraintQueryStore entityMemberConstraintQuery,
         EntityMemberQueryStore entityMemberQuery,
         EntityModelQueryStore entityModelQuery,
+        SystemLogsQueryStore systemLogsQuery,
         SystemRoleQueryStore systemRoleQuery,
         SystemUserQueryStore systemUserQuery,
         TagsQueryStore tagsQuery,
@@ -54,6 +60,7 @@ public class DataStoreContext
         EntityMemberCommandStore entityMemberCommand,
         EntityMemberConstraintCommandStore entityMemberConstraintCommand,
         EntityModelCommandStore entityModelCommand,
+        SystemLogsCommandStore systemLogsCommand,
         SystemRoleCommandStore systemRoleCommand,
         SystemUserCommandStore systemUserCommand,
         TagsCommandStore tagsCommand,
@@ -79,6 +86,8 @@ public class DataStoreContext
         AddCache(EntityMemberQuery);
         EntityModelQuery = entityModelQuery;
         AddCache(EntityModelQuery);
+        SystemLogsQuery = systemLogsQuery;
+        AddCache(SystemLogsQuery);
         SystemRoleQuery = systemRoleQuery;
         AddCache(SystemRoleQuery);
         SystemUserQuery = systemUserQuery;
@@ -103,6 +112,8 @@ public class DataStoreContext
         AddCache(EntityMemberConstraintCommand);
         EntityModelCommand = entityModelCommand;
         AddCache(EntityModelCommand);
+        SystemLogsCommand = systemLogsCommand;
+        AddCache(SystemLogsCommand);
         SystemRoleCommand = systemRoleCommand;
         AddCache(SystemRoleCommand);
         SystemUserCommand = systemUserCommand;
