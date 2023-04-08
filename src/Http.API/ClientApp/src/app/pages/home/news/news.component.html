@@ -18,50 +18,53 @@
         <mat-icon fontSet="material-icons-outlined">view_week</mat-icon>
       </button>
     </div>
-
+    <div class="d-flex text-center justify-content-center mt-2" *ngIf="isLoading">
+      <mat-spinner mode="indeterminate">
+      </mat-spinner>
+    </div>
     <!-- 资讯内容 -->
-    <ng-container *ngIf="news.length>0 && !isLoading; else elseTemplate">
-      <mat-card class="w-100 my-1" *ngFor="let item of news">
-        <mat-card-header>
-          <mat-card-title>
-            <a href="{{item.url}}" target="_blank">
-              {{item.title}}
-            </a>
-          </mat-card-title>
-          <mat-card-subtitle>
-            {{item.authorName}} {{item.provider}} &nbsp;&nbsp;
-            {{item.datePublished|date:'yyyy-MM-dd HH:mm'}}
-          </mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content [innerHTML]="item.description">
-        </mat-card-content>
-        <mat-card-actions>
-          <mat-icon fontSet="material-icons-outlined">local_offer</mat-icon>
-          <mat-chip-listbox *ngIf="item.techType" class="ms-2">
-            <mat-chip color="primary">
-              {{item.techType|enumText:'TechType'}}
-            </mat-chip>
-          </mat-chip-listbox>
-          <mat-chip-listbox *ngIf="item.newsType" class="ms-2">
-            <mat-chip color="primary">
-              {{item.newsType|enumText:'NewsType'}}
-            </mat-chip>
-          </mat-chip-listbox>
-        </mat-card-actions>
-      </mat-card>
-    </ng-container>
-    <ng-template #elseTemplate>
-      <div class="d-flex text-center justify-content-center mt-2">
-        <mat-spinner mode="indeterminate" *ngIf="isLoading">
-        </mat-spinner>
-        <div class="p-2">
-          <h4>
-            暂无内容！
-          </h4>
+    <section *ngIf="!isLoading">
+      <ng-container *ngIf="news.length>0; else elseTemplate">
+        <mat-card class="w-100 my-1" *ngFor="let item of news">
+          <mat-card-header>
+            <mat-card-title>
+              <a href="{{item.url}}" target="_blank">
+                {{item.title}}
+              </a>
+            </mat-card-title>
+            <mat-card-subtitle>
+              {{item.authorName}} {{item.provider}} &nbsp;&nbsp;
+              {{item.datePublished|date:'yyyy-MM-dd HH:mm'}}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content [innerHTML]="item.description">
+          </mat-card-content>
+          <mat-card-actions>
+            <mat-icon fontSet="material-icons-outlined">local_offer</mat-icon>
+            <mat-chip-listbox *ngIf="item.techType" class="ms-2">
+              <mat-chip color="primary">
+                {{item.techType|enumText:'TechType'}}
+              </mat-chip>
+            </mat-chip-listbox>
+            <mat-chip-listbox *ngIf="item.newsType" class="ms-2">
+              <mat-chip color="primary">
+                {{item.newsType|enumText:'NewsType'}}
+              </mat-chip>
+            </mat-chip-listbox>
+          </mat-card-actions>
+        </mat-card>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <div class="d-flex text-center justify-content-center mt-2">
+          <div class="p-2">
+            <h4>
+              暂无内容！
+            </h4>
+          </div>
         </div>
-      </div>
+      </ng-template>
+    </section>
 
-    </ng-template>
   </section>
   <!-- 右边栏 -->
   <section class="sugguest p-2">

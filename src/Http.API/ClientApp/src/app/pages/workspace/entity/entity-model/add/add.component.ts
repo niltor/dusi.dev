@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EntityModelService } from 'src/app/share/client/services/entity-model.service';
-import { EntityModel } from 'src/app/share/client/models/entity-model/entity-model.model';
 import { EntityModelAddDto } from 'src/app/share/client/models/entity-model/entity-model-add-dto.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -78,7 +77,7 @@ export class AddComponent implements OnInit {
     this.formGroup = new FormGroup({
       name: new FormControl(null, [Validators.required, Validators.maxLength(60)]),
       comment: new FormControl(null, [Validators.required, Validators.maxLength(300)]),
-      codeContent: new FormControl('```csharp\n```', [Validators.maxLength(8000)]),
+      codeContent: new FormControl('```csharp\n\n```', [Validators.maxLength(8000)]),
       codeLanguage: new FormControl(CodeLanguage.Csharp, [Validators.required]),
       languageVersion: new FormControl('latest', [Validators.maxLength(20)]),
       entityLibraryId: new FormControl(null, [Validators.required]),
