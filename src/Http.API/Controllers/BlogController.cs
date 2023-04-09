@@ -1,3 +1,5 @@
+using System.Reflection.Metadata.Ecma335;
+using Core.Const;
 using Dapr.Client;
 using Share.Models.BlogDtos;
 
@@ -10,16 +12,20 @@ public class BlogController : ClientControllerBase<IBlogManager>
 {
     private readonly DaprClient dapr;
     private readonly StorageService storageService;
+    private readonly ICatalogManager _catalogManager;
 
     public BlogController(
         IUserContext user,
         ILogger<BlogController> logger,
         IBlogManager manager,
         DaprClient dapr,
-        StorageService storageService) : base(manager, user, logger)
+        StorageService storageService,
+        ITagsManager tagsManager,
+        ICatalogManager catalogManager) : base(manager, user, logger)
     {
         this.dapr = dapr;
         this.storageService = storageService;
+        _catalogManager = catalogManager;
     }
 
     /// <summary>
@@ -66,7 +72,13 @@ public class BlogController : ClientControllerBase<IBlogManager>
     [HttpPost]
     public async Task<ActionResult<Blog>> AddAsync(BlogAddDto form)
     {
-        var entity = await manager.CreateNewEntityAsync(form);
+        var user = await _user.GetUserAsync();
+        if (user == null) return NotFound(ErrorMsg.NotFoundUser);
+
+        var catalog = await _catalogManager.GetCurrentAsync(form.CatalogId);
+        if (catalog == null) return NotFound("不存在的目录");
+
+        var entity = await manager.CreateNewEntityAsync(form, user, catalog);
         return await manager.AddAsync(entity);
     }
 

@@ -21,17 +21,16 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     /// 创建待添加实体
     /// </summary>
     /// <param name="dto"></param>
+    /// <param name="user"></param>
+    /// <param name="catalog"></param>
     /// <returns></returns>
-    public async Task<Blog> CreateNewEntityAsync(BlogAddDto dto)
+    public async Task<Blog> CreateNewEntityAsync(BlogAddDto dto, User user, Catalog catalog)
     {
         var entity = dto.MapTo<BlogAddDto, Blog>();
-        var user = await _userContext.GetUserAsync() ?? throw new Exception(ErrorMsg.NotFoundUser);
-        var catalog = await _catalogManager.GetCurrentAsync(dto.CatalogId) ?? throw new Exception("不存在的目录");
 
         if (dto.TagIds != null && dto.TagIds.Any())
         {
             var tags = await _tagsManager.Command.Db.Where(t => dto.TagIds.Contains(t.Id)).ToListAsync();
-
             if (tags != null)
             {
                 entity.Tags = tags;

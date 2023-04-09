@@ -13,12 +13,8 @@ public interface IBlogManager : IDomainManager<Blog, BlogUpdateDto, BlogFilterDt
     /// <returns></returns>
     Task<Blog?> GetOwnedAsync(Guid id);
 
-    /// <summary>
-    /// 创建待添加实体
-    /// </summary>
-    /// <param name="dto"></param>
-    /// <returns></returns>
-    Task<Blog> CreateNewEntityAsync(BlogAddDto dto);
     List<EnumDictionary> GetTypes();
+
+    Task<Blog> CreateNewEntityAsync(BlogAddDto dto, User user, Catalog catalog);
     // TODO: 定义业务方法
 }
