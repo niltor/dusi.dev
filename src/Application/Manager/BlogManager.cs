@@ -100,15 +100,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
 
     public override async Task<Blog> UpdateAsync(Blog entity, BlogUpdateDto dto)
     {
-        if (dto.CatalogId != null)
-        {
-            // 修改了所属目录
-            if (entity.Catalog.Id != dto.CatalogId)
-            {
-                var catalog = await _catalogManager.GetCurrentAsync(dto.CatalogId.Value) ?? throw new Exception("不存在的目录");
-                entity.Catalog = catalog;
-            }
-        }
+  
         // 处理tagids
         if (dto.TagIds != null && dto.TagIds.Any())
         {

@@ -1,7 +1,7 @@
-using System.Reflection.Metadata.Ecma335;
 using Core.Const;
 using Dapr.Client;
 using Share.Models.BlogDtos;
+using static Grpc.Core.Metadata;
 
 namespace Http.API.Controllers;
 
@@ -10,7 +10,6 @@ namespace Http.API.Controllers;
 /// </summary>
 public class BlogController : ClientControllerBase<IBlogManager>
 {
-    private readonly DaprClient dapr;
     private readonly StorageService storageService;
     private readonly ICatalogManager _catalogManager;
 
@@ -18,12 +17,9 @@ public class BlogController : ClientControllerBase<IBlogManager>
         IUserContext user,
         ILogger<BlogController> logger,
         IBlogManager manager,
-        DaprClient dapr,
         StorageService storageService,
-        ITagsManager tagsManager,
         ICatalogManager catalogManager) : base(manager, user, logger)
     {
-        this.dapr = dapr;
         this.storageService = storageService;
         _catalogManager = catalogManager;
     }
@@ -92,7 +88,18 @@ public class BlogController : ClientControllerBase<IBlogManager>
     public async Task<ActionResult<Blog?>> UpdateAsync([FromRoute] Guid id, BlogUpdateDto form)
     {
         var current = await manager.GetOwnedAsync(id);
-        if (current == null) return NotFound();
+        if (current == null) return NotFound(ErrorMsg.NotFoundResource);
+
+        if (form.CatalogId != null)
+        {
+            // 修改了所属目录
+            if (current.Catalog.Id != form.CatalogId)
+            {
+                var catalog = await _catalogManager.GetCurrentAsync(form.CatalogId.Value);
+                if (catalog == null) return NotFound("不存在的目录");
+                current.Catalog = catalog;
+            }
+        }
         return await manager.UpdateAsync(current, form);
     }
 
