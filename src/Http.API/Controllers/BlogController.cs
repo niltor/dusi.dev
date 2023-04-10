@@ -1,5 +1,4 @@
 using Core.Const;
-using Dapr.Client;
 using Share.Models.BlogDtos;
 using static Grpc.Core.Metadata;
 
@@ -63,18 +62,17 @@ public class BlogController : ClientControllerBase<IBlogManager>
     /// <summary>
     /// 新增
     /// </summary>
-    /// <param name="form"></param>
+    /// <param name="dto"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<Blog>> AddAsync(BlogAddDto form)
+    public async Task<ActionResult<Blog>> AddAsync(BlogAddDto dto)
     {
-        var user = await _user.GetUserAsync();
-        if (user == null) return NotFound(ErrorMsg.NotFoundUser);
+        if (!await _user.ExistAsync())
+            return NotFound(ErrorMsg.NotFoundUser);
 
-        var catalog = await _catalogManager.GetCurrentAsync(form.CatalogId);
-        if (catalog == null) return NotFound("不存在的目录");
-
-        var entity = await manager.CreateNewEntityAsync(form, user, catalog);
+        if (!await _catalogManager.ExistAsync(dto.CatalogId))
+            return NotFound("不存在的目录");
+        var entity = await manager.CreateNewEntityAsync(dto);
         return await manager.AddAsync(entity);
     }
 
@@ -82,25 +80,25 @@ public class BlogController : ClientControllerBase<IBlogManager>
     /// 更新
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="form"></param>
+    /// <param name="dto"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<Blog?>> UpdateAsync([FromRoute] Guid id, BlogUpdateDto form)
+    public async Task<ActionResult<Blog?>> UpdateAsync([FromRoute] Guid id, BlogUpdateDto dto)
     {
         var current = await manager.GetOwnedAsync(id);
         if (current == null) return NotFound(ErrorMsg.NotFoundResource);
 
-        if (form.CatalogId != null)
+        if (dto.CatalogId != null)
         {
             // 修改了所属目录
-            if (current.Catalog.Id != form.CatalogId)
+            if (current.Catalog.Id != dto.CatalogId)
             {
-                var catalog = await _catalogManager.GetCurrentAsync(form.CatalogId.Value);
+                var catalog = await _catalogManager.GetCurrentAsync(dto.CatalogId.Value);
                 if (catalog == null) return NotFound("不存在的目录");
                 current.Catalog = catalog;
             }
         }
-        return await manager.UpdateAsync(current, form);
+        return await manager.UpdateAsync(current, dto);
     }
 
     /// <summary>

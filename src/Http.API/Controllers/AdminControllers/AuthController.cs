@@ -8,6 +8,7 @@ namespace Http.API.Controllers.AdminControllers;
 /// </summary>
 [AllowAnonymous]
 [Route("api/admin/[controller]")]
+[ApiExplorerSettings(GroupName = "admin")]
 public class AuthController : RestControllerBase
 {
     private readonly SystemUserQueryStore _store;

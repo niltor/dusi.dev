@@ -15,6 +15,6 @@ public interface IBlogManager : IDomainManager<Blog, BlogUpdateDto, BlogFilterDt
 
     List<EnumDictionary> GetTypes();
 
-    Task<Blog> CreateNewEntityAsync(BlogAddDto dto, User user, Catalog catalog);
+    Task<Blog> CreateNewEntityAsync(BlogAddDto dto);
     // TODO: 定义业务方法
 }

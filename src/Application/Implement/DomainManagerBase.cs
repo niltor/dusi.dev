@@ -67,13 +67,6 @@ public class DomainManagerBase<TEntity, TUpdate, TFilter, TItem> : IDomainManage
         return res;
     }
 
-    [Obsolete("use GetCurrentAsync")]
-    public virtual async Task<TEntity?> GetCurrent(Guid id, params string[]? navigations)
-    {
-        return await Command.FindAsync(e => e.Id == id, navigations);
-    }
-
-
     public virtual async Task<TEntity> UpdateAsync(TEntity entity, TUpdate dto)
     {
         _ = entity.Merge(dto, false);
@@ -95,34 +88,24 @@ public class DomainManagerBase<TEntity, TUpdate, TFilter, TItem> : IDomainManage
         return await Query.FindAsync(q => q.Id == id);
     }
 
-    public async Task<TDto?> FindAsync<TDto>(Expression<Func<TEntity, bool>>? whereExp) where TDto : class
-    {
-        return await Query.FindAsync<TDto>(whereExp);
-    }
-
     /// <summary>
-    /// 条件查询列表
+    /// Query条件查询列表
     /// </summary>
-    /// <typeparam name="TDto">返回类型</typeparam>
     /// <param name="whereExp"></param>
     /// <returns></returns>
-    public async Task<List<TDto>> ListAsync<TDto>(Expression<Func<TEntity, bool>>? whereExp) where TDto : class
-    {
-        return await Query.ListAsync<TDto>(whereExp);
-    }
-
-    public async Task<List<TEntity>> ListAsync(Expression<Func<TEntity, bool>>? whereExp)
+    public virtual async Task<List<TEntity>> ListAsync(Expression<Func<TEntity, bool>>? whereExp)
     {
         return await Query.ListAsync(whereExp);
     }
 
     /// <summary>
-    /// 获取当前查询构造对象
+    /// 是否存在
     /// </summary>
+    /// <param name="id">主键id</param>
     /// <returns></returns>
-    public IQueryable<TEntity> GetQueryable()
+    public async Task<bool> ExistAsync(Guid id)
     {
-        return Query._query;
+        return await Query.Db.AnyAsync(q => q.Id == id);
     }
 
     /// <summary>
@@ -133,6 +116,21 @@ public class DomainManagerBase<TEntity, TUpdate, TFilter, TItem> : IDomainManage
     public virtual async Task<PageList<TItem>> FilterAsync(TFilter filter)
     {
         return await Query.FilterAsync<TItem>(Queryable, filter.PageIndex, filter.PageSize, filter.OrderBy);
+    }
+    public async Task<TDto?> FindAsync<TDto>(Expression<Func<TEntity, bool>>? whereExp) where TDto : class
+    {
+        return await Query.FindAsync<TDto>(whereExp);
+    }
+
+    /// <summary>
+    /// Query条件查询列表
+    /// </summary>
+    /// <typeparam name="TDto">返回类型</typeparam>
+    /// <param name="whereExp"></param>
+    /// <returns></returns>
+    public async Task<List<TDto>> ListAsync<TDto>(Expression<Func<TEntity, bool>>? whereExp) where TDto : class
+    {
+        return await Query.ListAsync<TDto>(whereExp);
     }
 
 }

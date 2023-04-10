@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities.CMS;
 /// <summary>
@@ -38,11 +39,16 @@ public class Blog : TextBase
     /// 是否原创
     /// </summary>
     public bool IsOriginal { get; set; }
+
+    [ForeignKey(nameof(UserId))]
     public required User User { get; set; }
+    public Guid UserId { get; set; }
     /// <summary>
     /// 所属目录
     /// </summary>
+    [ForeignKey(nameof(CatalogId))]
     public required Catalog Catalog { get; set; }
+    public Guid CatalogId { get; set; }
     public List<Tags>? Tags { get; set; }
     /// <summary>
     /// 浏览量

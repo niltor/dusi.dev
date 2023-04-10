@@ -1,5 +1,6 @@
 using Application.Services;
 using Core.Const;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Share.Models.BlogDtos;
 
 namespace Application.Manager;
@@ -21,10 +22,8 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     /// 创建待添加实体
     /// </summary>
     /// <param name="dto"></param>
-    /// <param name="user"></param>
-    /// <param name="catalog"></param>
     /// <returns></returns>
-    public async Task<Blog> CreateNewEntityAsync(BlogAddDto dto, User user, Catalog catalog)
+    public async Task<Blog> CreateNewEntityAsync(BlogAddDto dto)
     {
         var entity = dto.MapTo<BlogAddDto, Blog>();
 
@@ -37,9 +36,9 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
             }
         }
 
-        entity.User = user;
-        entity.Catalog = catalog;
-        entity.Authors = user.UserName;
+        entity.UserId = _userContext.UserId!.Value;
+        entity.CatalogId = dto.CatalogId;
+        entity.Authors = _userContext.Username!;
         return entity;
     }
 
@@ -100,7 +99,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
 
     public override async Task<Blog> UpdateAsync(Blog entity, BlogUpdateDto dto)
     {
-  
+
         // 处理tagids
         if (dto.TagIds != null && dto.TagIds.Any())
         {

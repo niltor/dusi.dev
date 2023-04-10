@@ -109,6 +109,29 @@ services.AddHealthChecks();
 // api 接口文档设置
 services.AddSwaggerGen(c =>
 {
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter a valid token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
     c.SwaggerDoc("client", new OpenApiInfo
     {
         Title = "Client API",
@@ -191,7 +214,7 @@ app.UseExceptionHandler(handler =>
         {
             Title = "异常错误",
             Source = exception?.Source,
-            Detail = exception?.Message,
+            Detail = exception?.Message + exception?.InnerException?.Message,
             StackTrace = exception?.StackTrace,
             Status = 500,
             TraceId = context.TraceIdentifier
