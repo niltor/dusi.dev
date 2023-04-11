@@ -32,7 +32,7 @@ public class BlogUpdateDto
     /// <summary>
     /// 所属目录
     /// </summary>
-    public Guid? CatalogId { get; set; }
+    public Guid CatalogId { get; set; }
     /// <summary>
     /// 是否原创
     /// </summary>

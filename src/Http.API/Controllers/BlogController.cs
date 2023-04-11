@@ -88,15 +88,12 @@ public class BlogController : ClientControllerBase<IBlogManager>
         var current = await manager.GetOwnedAsync(id);
         if (current == null) return NotFound(ErrorMsg.NotFoundResource);
 
-        if (dto.CatalogId != null)
+        // 修改了所属目录
+        if (current.Catalog.Id != dto.CatalogId)
         {
-            // 修改了所属目录
-            if (current.Catalog.Id != dto.CatalogId)
-            {
-                var catalog = await _catalogManager.GetCurrentAsync(dto.CatalogId.Value);
-                if (catalog == null) return NotFound("不存在的目录");
-                current.Catalog = catalog;
-            }
+            var catalog = await _catalogManager.GetCurrentAsync(dto.CatalogId);
+            if (catalog == null) return NotFound("不存在的目录");
+            current.Catalog = catalog;
         }
         return await manager.UpdateAsync(current, dto);
     }

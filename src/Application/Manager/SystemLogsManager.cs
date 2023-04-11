@@ -7,8 +7,11 @@ public class SystemLogsManager : DomainManagerBase<SystemLogs, SystemLogsUpdateD
 {
 
     private readonly IUserContext _userContext;
-    public SystemLogsManager(DataStoreContext storeContext, IUserContext userContext) : base(storeContext)
+    public SystemLogsManager(
+        DataStoreContext storeContext, 
+        IUserContext userContext) : base(storeContext)
     {
+
         _userContext = userContext;
     }
 
@@ -20,21 +23,28 @@ public class SystemLogsManager : DomainManagerBase<SystemLogs, SystemLogsUpdateD
     public Task<SystemLogs> CreateNewEntityAsync(SystemLogsAddDto dto)
     {
         var entity = dto.MapTo<SystemLogsAddDto, SystemLogs>();
-        // 构建实体
+        Command.Db.Entry(entity).Property("SystemUserId").CurrentValue = dto.SystemUserId;
+        // or entity.SystemUserId = dto.SystemUserId;
+        // other required props
         return Task.FromResult(entity);
     }
 
     public override async Task<SystemLogs> UpdateAsync(SystemLogs entity, SystemLogsUpdateDto dto)
     {
-        // 根据实际业务更新
-        return await base.UpdateAsync(entity, dto);
+      return await base.UpdateAsync(entity, dto);
     }
 
     public override async Task<PageList<SystemLogsItemDto>> FilterAsync(SystemLogsFilterDto filter)
     {
-        // TODO:根据实际业务构建筛选条件
-        // example: Queryable = Queryable.WhereNotNull(filter.field, q => q.field = filter.field);
-        return await Query.FilterAsync<SystemLogsItemDto>(Queryable, filter.PageIndex, filter.PageSize);
+
+        Queryable = Queryable
+            .WhereNotNull(filter.ActionUserName, q => q.ActionUserName == filter.ActionUserName)
+            .WhereNotNull(filter.TargetName, q => q.TargetName == filter.TargetName)
+            .WhereNotNull(filter.ActionType, q => q.ActionType == filter.ActionType)
+            .WhereNotNull(filter.SystemUserId, q => q.SystemUser.Id == filter.SystemUserId);
+
+        // TODO: other filter conditions
+        return await Query.FilterAsync<SystemLogsItemDto>(Queryable, filter.PageIndex, filter.PageSize, filter.OrderBy);
     }
 
     /// <summary>
@@ -49,4 +59,5 @@ public class SystemLogsManager : DomainManagerBase<SystemLogs, SystemLogsUpdateD
         // query = query.Where(q => q.User.Id == _userContext.UserId);
         return await query.FirstOrDefaultAsync();
     }
+
 }

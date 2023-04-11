@@ -36,8 +36,12 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
             }
         }
 
-        entity.UserId = _userContext.UserId!.Value;
-        entity.CatalogId = dto.CatalogId;
+        Command.Db.Entry(entity).Property("CatalogId").CurrentValue = dto.CatalogId;
+        // or entity.CatalogId = dto.CatalogId;
+
+        Command.Db.Entry(entity).Property("UserId").CurrentValue = _userContext.UserId!.Value;
+        // or entity.UserId = _userContext.UserId!.Value;
+
         entity.Authors = _userContext.Username!;
         return entity;
     }
@@ -99,13 +103,9 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
 
     public override async Task<Blog> UpdateAsync(Blog entity, BlogUpdateDto dto)
     {
-
         // 处理tagids
         if (dto.TagIds != null && dto.TagIds.Any())
         {
-            // TODO: 会往返进行多次删除
-            //entity.Tags = null;
-
             var tags = await _tagsManager.Command.Db.Where(t => dto.TagIds.Contains(t.Id)).ToListAsync();
             if (tags != null)
             {
@@ -118,6 +118,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     public override async Task<PageList<BlogItemDto>> FilterAsync(BlogFilterDto filter)
     {
         // 根据实际业务构建筛选条件
+
         Queryable = Queryable.WhereNotNull(filter.Title, q => q.Title.Contains(filter.Title!))
             .WhereNotNull(filter.LanguageType, q => q.LanguageType == filter.LanguageType)
             .WhereNotNull(filter.Authors, q => q.Authors.Contains(filter.Authors!))
@@ -132,7 +133,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
             Queryable = Queryable.WhereNotNull(blogIds, b => blogIds!.Contains(b.Id));
         }
 
-        return await Query.FilterAsync<BlogItemDto>(Queryable, filter.PageIndex, filter.PageSize);
+        return await Query.FilterAsync<BlogItemDto>(Queryable, filter.PageIndex, filter.PageSize, filter.OrderBy);
     }
 
     public async Task<List<Guid>?> GetBlogIdsByTagAsync(string tag)
