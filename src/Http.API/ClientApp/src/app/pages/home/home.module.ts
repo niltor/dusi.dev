@@ -9,6 +9,7 @@ import { AboutComponent } from './about/about.component';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { VideoPreviewComponent } from './video-preview/video-preview.component';
+import { EntityComponent } from './entity/entity.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { VideoPreviewComponent } from './video-preview/video-preview.component';
     BlogComponent,
     AboutComponent,
     BlogDetailComponent,
-    VideoPreviewComponent
+    VideoPreviewComponent,
+    EntityComponent
   ],
   imports: [
     ShareModule,

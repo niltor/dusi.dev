@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="p-2 row g-0" *ngIf="!isLoading">
+    <!-- 组导航 -->
+    <div class="col col-auto p-1 me-1" style="border-bottom: 1px #eee;min-width: 160px;">
+      <h3 class="ml-1 mt-1 mb-0">
+        <strong>资源组</strong>
+      </h3>
+      <mat-action-list>
+        <button mat-list-item (click)="choseLibrary(null)">全部</button>
+        <button mat-list-item *ngFor="let library of libraries" (click)="choseLibrary(library.id)">
+          {{library.name }}
+        </button>
+      </mat-action-list>
+    </div>
+    <!-- table列表 -->
+    <div class="col">
+      <mat-form-field class="w-100">
+        <mat-label>实体搜索</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="搜索您要找的实体" #input>
+      </mat-form-field>
+      <table mat-table [dataSource]="dataSource" style="width: 100%;">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>名称</th>
+          <td mat-cell *matCellDef="let element">
+            {{element.name}}
+            <button mat-icon-button color="link" (click)="openPreviewDialog(element)" matTooltip="预览代码">
+              <mat-icon>pages</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="codeLanguage">
+          <th mat-header-cell *matHeaderCellDef>语言</th>
+          <td mat-cell *matCellDef="let element">
+            {{CodeLanguage[element.codeLanguage]}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="comment">
+          <th mat-header-cell *matHeaderCellDef>说明</th>
+          <td mat-cell *matCellDef="let element">
+            {{element.comment}}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="pageSizeOption" [pageIndex]="filter.pageIndex!-1" [pageSize]="filter.pageSize"
+        [length]="total" (page)="getList($event)" showFirstLastButtons></mat-paginator>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #previewDialog>
+  <h2 mat-dialog-title>
+    {{previewItem?.name}}
+  </h2>
+  <mat-dialog-content>
+    <markdown clipboard [clipboardButtonTemplate]="clipboardBtn" lineNumbers [start]="1"
+      [data]="previewItem?.codeContent"></markdown>
+  </mat-dialog-content>
+</ng-template>
+
+
+<ng-template #clipboardBtn>
+  <div class="v-middle" style="margin-top: -6px;">
+    <ng-container *ngIf="isCopied; else elseTemplate">
+      <button mat-button color="primary">已复制</button>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <button mat-icon-button color="primary" (click)="copyCode()">
+        <mat-icon>
+          content_copy
+        </mat-icon>
+      </button>
+    </ng-template>
+  </div>
+</ng-template>
