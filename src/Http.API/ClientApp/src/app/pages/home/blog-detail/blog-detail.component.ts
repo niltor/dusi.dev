@@ -10,6 +10,7 @@ import 'prismjs/components/prism-powershell.min.js';
 import 'prismjs/components/prism-csharp.min.js';
 import 'prismjs/components/prism-markup.min.js';
 import 'prismjs/components/prism-yaml.min.js';
+import 'prismjs/components/prism-docker.min.js';
 
 @Component({
   selector: 'app-blog-detail',
