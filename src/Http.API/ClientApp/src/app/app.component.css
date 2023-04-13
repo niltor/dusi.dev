@@ -1,0 +1,17 @@
+.footer {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(37, 37, 122);
+  position: fixed;
+  bottom: 0;
+  padding: 0.5rem;
+  width: 100%;
+  font-family: 'Cascadia Code','Lucida Sans', 'Lucida Sans Regular';
+}
+
+.des {
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  color: #f0f0f0;
+  text-shadow: 1px 1px 1px 1px #333;
+}
