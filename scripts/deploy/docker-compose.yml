@@ -33,6 +33,7 @@ services:
         "./daprd",
         "-app-id","api",
         "-app-port","80",
+        "-log-level", "debug",
         "-components-path","/components"
       ]
     volumes:
@@ -63,6 +64,7 @@ services:
         "./daprd",
         "-app-id","task",
         "-app-port","80",
+        "-log-level", "debug",
         "-components-path","/components"
       ]
     volumes:

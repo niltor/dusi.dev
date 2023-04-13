@@ -23,7 +23,7 @@ public class UpdateViewCountTask : BackgroundService
 
     public override async Task StartAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("News collection service start.");
+        _logger.LogInformation("UpdateViewCountTask service start.");
         await ExecuteAsync(stoppingToken);
     }
 
@@ -31,7 +31,7 @@ public class UpdateViewCountTask : BackgroundService
     {
         _timer = new Timer(DoWork, stoppingToken,
             TimeSpan.FromSeconds(10),
-            TimeSpan.FromMinutes(3));
+            TimeSpan.FromMinutes(1));
         return Task.CompletedTask;
     }
 
@@ -70,7 +70,7 @@ public class UpdateViewCountTask : BackgroundService
 
                         if (resCount > 0)
                         {
-                            successIds.Add(new SaveStateItem<int>(item.Key,0,""));
+                            successIds.Add(new SaveStateItem<int>(item.Key, 0, ""));
                         }
                     }
                 }
@@ -80,7 +80,7 @@ public class UpdateViewCountTask : BackgroundService
         }
         catch (Exception ex)
         {
-            _logger.LogError("更新浏览数量出错 {0} {1}", ex.Message, ex.StackTrace);
+            _logger.LogError("更新浏览数量出错 {message} {stack}", ex.Message + ex.InnerException, ex.StackTrace);
         }
     }
     public override void Dispose() => _timer?.Dispose();
