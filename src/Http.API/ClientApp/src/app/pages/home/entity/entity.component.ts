@@ -102,7 +102,8 @@ export class EntityComponent {
   openPreviewDialog(item: EntityModelItemDto): void {
     this.previewItem = item;
     this.dialogRef = this.dialog.open(this.addTmpl, {
-      minWidth: 600
+      minWidth: 650,
+      minHeight: 300
     });
   }
   copyCode(): void {
