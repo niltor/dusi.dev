@@ -6,9 +6,9 @@ spec:
   type: pubsub.redis
   version: v1
   metadata:
-    - name: redisHost
-      value: redis:6379
-    - name: redisPassword
-      value: ""
-    - name: redisMaxRetries
-      value: 5
+  - name: redisHost
+    value: redis:6379
+  - name: redisPassword
+    value: ""
+  - name: redisMaxRetries
+    value: 5
