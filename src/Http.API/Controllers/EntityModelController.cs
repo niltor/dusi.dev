@@ -24,12 +24,11 @@ public class EntityModelController : ClientControllerBase<IEntityModelManager>
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
+    [AllowAnonymous]
     public async Task<ActionResult<PageList<EntityModelItemDto>>> FilterAsync(EntityModelFilterDto filter)
     {
         return await manager.FilterAsync(filter);
     }
-
-
 
     /// <summary>
     /// 新增
