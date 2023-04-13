@@ -36,12 +36,8 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
             }
         }
 
-        Command.Db.Entry(entity).Property("CatalogId").CurrentValue = dto.CatalogId;
-        // or entity.CatalogId = dto.CatalogId;
-
-        Command.Db.Entry(entity).Property("UserId").CurrentValue = _userContext.UserId!.Value;
-        // or entity.UserId = _userContext.UserId!.Value;
-
+        entity.CatalogId = dto.CatalogId;
+        entity.UserId = _userContext.UserId!.Value;
         entity.Authors = _userContext.Username!;
         return entity;
     }
