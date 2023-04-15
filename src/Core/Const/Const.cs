@@ -8,6 +8,7 @@ public static class Const
     /// 管理员policy
     /// </summary>
     public const string Admin = "Admin";
+    public const string AdminUser = "AdminUser";
     /// <summary>
     /// 普通用户policy
     /// </summary>
