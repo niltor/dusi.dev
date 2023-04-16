@@ -9,6 +9,7 @@ using TaskService.Implement.NewsCollector;
 using TaskService.Implement.NewsCollector.RssFeeds;
 using TaskService.Implement.PostBlog;
 using TaskService.Tasks;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder();
 var services = builder.Services;
@@ -32,6 +33,20 @@ services.AddDbContextPool<CommandDbContext>(option =>
     });
 });
 // ÅäÖÃ
+var azAppConfigConnection = builder.Configuration["AppConfig"];
+if (!string.IsNullOrEmpty(azAppConfigConnection))
+{
+    builder.Configuration.AddAzureAppConfiguration(options =>
+    {
+        options.Connect(azAppConfigConnection)
+        .ConfigureRefresh(refresh =>
+        {
+            refresh.Register("ConfigVersion", refreshAll: true);
+        });
+    });
+}
+builder.Services.AddAzureAppConfiguration();
+
 services.Configure<AzureOption>(configuration.GetSection("Azure"));
 services.Configure<MetaWeblogOption>(configuration.GetSection("Options:Cnblog"));
 
@@ -54,6 +69,7 @@ services.AddHealthChecks();
 services.AddControllers().AddDapr();
 
 var app = builder.Build();
+app.UseAzureAppConfiguration();
 
 app.UseHealthChecks("/health");
 
