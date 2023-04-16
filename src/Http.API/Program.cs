@@ -16,6 +16,22 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 services.AddHttpContextAccessor();
+
+
+// 配置
+var azAppConfigConnection = builder.Configuration["AppConfig"];
+if (!string.IsNullOrEmpty(azAppConfigConnection))
+{
+    builder.Configuration.AddAzureAppConfiguration(options =>
+    {
+        options.Connect(azAppConfigConnection)
+            .ConfigureRefresh(refresh =>
+            {
+                refresh.Register("ConfigVersion", refreshAll: true);
+            });
+    });
+}
+builder.Services.AddAzureAppConfiguration();
 // database sql
 string? connectionString = configuration.GetConnectionString("Default");
 services.AddDbContextPool<QueryDbContext>(option =>
@@ -37,20 +53,6 @@ services.AddDbContextPool<CommandDbContext>(option =>
 
 // TODO:临时使用内存缓存
 services.AddDistributedMemoryCache();
-// 配置
-var azAppConfigConnection = builder.Configuration["AppConfig"];
-if (!string.IsNullOrEmpty(azAppConfigConnection))
-{
-    builder.Configuration.AddAzureAppConfiguration(options =>
-    {
-        options.Connect(azAppConfigConnection)
-        .ConfigureRefresh(refresh =>
-        {
-            refresh.Register("ConfigVersion", refreshAll: true);
-        });
-    });
-}
-services.AddAzureAppConfiguration();
 
 services.Configure<AzureOption>(configuration.GetSection("Azure"));
 
@@ -199,6 +201,7 @@ services.AddControllersWithViews()
     });
 
 
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -241,7 +244,6 @@ app.UseExceptionHandler(handler =>
 });
 
 app.UseHealthChecks("/health");
-app.UseAzureAppConfiguration();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
