@@ -21,7 +21,6 @@ public class StorageService
         {
             _logger.LogError("BlobConnectionString is null");
         }
-
     }
 
     /// <summary>

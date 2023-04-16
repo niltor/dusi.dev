@@ -23,6 +23,7 @@ public static class Const
     /// blog浏览 pub主题
     /// </summary>
     public const string PubBlogView = "PubBlogView";
+    public const string PubNewBlog = "PubNewBlog";
 }
 
 /// <summary>

@@ -42,6 +42,13 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
         return entity;
     }
 
+    public override async Task<Blog> AddAsync(Blog entity)
+    {
+        // 发送同步消息
+        await DaprFacade.PublishAsync(Const.PubNewBlog, entity.Id);
+        return await base.AddAsync(entity);
+    }
+
     public override async Task<Blog?> FindAsync(Guid id)
     {
         var res = await Queryable.Include(b => b.User)
