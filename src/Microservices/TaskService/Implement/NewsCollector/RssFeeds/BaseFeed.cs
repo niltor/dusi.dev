@@ -48,6 +48,7 @@ public class BaseFeed
     {
         _logger = logger;
         Provider = provider;
+
     }
 
     /// <summary>
@@ -62,6 +63,7 @@ public class BaseFeed
         {
             try
             {
+                httpClient.DefaultRequestHeaders.Clear();
                 var xmlString = await httpClient.GetStringAsync(url);
                 if (!string.IsNullOrEmpty(xmlString))
                 {

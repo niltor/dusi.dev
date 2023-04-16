@@ -6,7 +6,7 @@ public class InfoQFeed : BaseFeed
     {
         Urls = new string[]
         {
-                "https://feed.infoq.com/",
+                "https://feed.infoq.com",
         };
     }
 

@@ -1,15 +1,13 @@
-using Application.IManager;
 using Application.Implement;
-using Application.Manager;
 using Application.Services;
-using Ater.MetaWeBlog.Options;
 using Share.Options;
 using TaskService.Implement.BlogPublisher;
 using TaskService.Implement.NewsCollector;
 using TaskService.Implement.NewsCollector.RssFeeds;
 using TaskService.Implement.PostBlog;
 using TaskService.Tasks;
-using Azure.Identity;
+
+Console.OutputEncoding = Encoding.UTF8;
 
 var builder = WebApplication.CreateBuilder();
 var services = builder.Services;

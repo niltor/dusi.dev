@@ -22,12 +22,12 @@ public class NewsCollector
     {
         try
         {
-            _logger.LogInformation("===Start=== Collect news");
+            _logger.LogInformation("⚡ Collect news");
             var list = await GetThirdNewsAsync();
-            _logger.LogInformation("===Result=== collect news: {couont}", list.Count);
-            _logger.LogInformation("===Start=== Add news");
+            _logger.LogInformation("🔚 collect news: {couont}", list.Count);
+            _logger.LogInformation("⚡ Add news");
             await AddThirdNewsAsync(list);
-            _logger.LogInformation("===Result=== finish!");
+            _logger.LogInformation("🔚 finish!");
         }
         catch (Exception ex)
         {
@@ -69,7 +69,7 @@ public class NewsCollector
             .Where(n => n.Type == NewsSource.News)
             .Take(50).ToListAsync();
 
-        _logger.LogInformation("today total news: {count}", list.Count);
+        _logger.LogInformation("📰 Total news: {count}", list.Count);
 
         foreach (var item in list)
         {
@@ -78,7 +78,7 @@ public class NewsCollector
                 result.Remove(item);
             }
         }
-        _logger.LogInformation("added news: {count}", result.Count);
+        _logger.LogInformation("🆕 added news: {count}", result.Count);
 
         if (result.Count > 0)
         {
