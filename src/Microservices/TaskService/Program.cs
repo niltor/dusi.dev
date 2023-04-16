@@ -15,6 +15,21 @@ var builder = WebApplication.CreateBuilder();
 var services = builder.Services;
 var configuration = builder.Configuration;
 
+// ÅäÖÃ
+var azAppConfigConnection = builder.Configuration["AppConfig"];
+if (!string.IsNullOrEmpty(azAppConfigConnection))
+{
+    builder.Configuration.AddAzureAppConfiguration(options =>
+    {
+        options.Connect(azAppConfigConnection)
+        .ConfigureRefresh(refresh =>
+        {
+            refresh.Register("ConfigVersion", refreshAll: true);
+        });
+    });
+}
+services.AddAzureAppConfiguration();
+
 string? connectionString = configuration.GetConnectionString("Default");
 services.AddDbContextPool<QueryDbContext>(option =>
 {
@@ -32,20 +47,7 @@ services.AddDbContextPool<CommandDbContext>(option =>
         _ = sql.CommandTimeout(10);
     });
 });
-// ÅäÖÃ
-var azAppConfigConnection = builder.Configuration["AppConfig"];
-if (!string.IsNullOrEmpty(azAppConfigConnection))
-{
-    builder.Configuration.AddAzureAppConfiguration(options =>
-    {
-        options.Connect(azAppConfigConnection)
-        .ConfigureRefresh(refresh =>
-        {
-            refresh.Register("ConfigVersion", refreshAll: true);
-        });
-    });
-}
-builder.Services.AddAzureAppConfiguration();
+
 
 services.Configure<AzureOption>(configuration.GetSection("Azure"));
 services.Configure<MetaWeblogOption>(configuration.GetSection("Options:Cnblog"));
@@ -69,7 +71,7 @@ services.AddHealthChecks();
 services.AddControllers().AddDapr();
 
 var app = builder.Build();
-app.UseAzureAppConfiguration();
+//app.UseAzureAppConfiguration();
 
 app.UseHealthChecks("/health");
 
