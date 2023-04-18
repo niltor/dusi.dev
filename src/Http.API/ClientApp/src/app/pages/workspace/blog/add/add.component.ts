@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BlogService } from 'src/app/share/client/services/blog.service';
 import { BlogAddDto } from 'src/app/share/client/models/blog/blog-add-dto.model';
@@ -25,7 +25,8 @@ import { MarkdownService } from 'ngx-markdown';
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
-  styleUrls: ['./add.component.css']
+  styleUrls: ['./add.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AddComponent implements OnInit {
   LanguageType = LanguageType;
@@ -38,6 +39,8 @@ export class AddComponent implements OnInit {
   isPreview = false;
   isSplitView = false;
   isProcessing = false;
+  isUploading = false;
+  insertImg = '';
   constructor(
     private service: BlogService,
     private catalogSrv: CatalogService,
@@ -148,6 +151,28 @@ export class AddComponent implements OnInit {
       default:
         return '';
     }
+  }
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    let dataForm = new FormData();
+    dataForm.append('upload', file);
+    this.isUploading = true;
+    this.service.uploadImg(dataForm)
+      .subscribe({
+        next: (res) => {
+          if (res) {
+            this.insertImg = `![image](${res.url!})`;
+            this.content?.setValue(this.content?.value + '\n' + this.insertImg);
+          } else {
+            this.snb.open('');
+          }
+        },
+        error: (error) => {
+          this.snb.open(error.detail);
+          this.isUploading = true;
+        },
+        complete: () => { this.isUploading = false; }
+      });
   }
 
   add(): void {

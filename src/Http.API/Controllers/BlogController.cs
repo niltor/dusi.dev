@@ -1,6 +1,5 @@
 using Core.Const;
 using Share.Models.BlogDtos;
-using static Grpc.Core.Metadata;
 
 namespace Http.API.Controllers;
 
@@ -32,6 +31,7 @@ public class BlogController : ClientControllerBase<IBlogManager>
     [AllowAnonymous]
     public async Task<ActionResult<PageList<BlogItemDto>>> FilterAsync(BlogFilterDto filter)
     {
+        filter.IsPublic = true;
         return await manager.FilterAsync(filter);
     }
 

@@ -80,7 +80,13 @@
           <mat-icon>preview</mat-icon>
         </button>
         <button mat-icon-button matTooltip="拆分" (click)="splitView()">
-          <mat-icon>vertical_split</mat-icon></button>
+          <mat-icon>vertical_split</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="上传图片" (click)="fileInput.click()" type="button" [disabled]="isUploading">
+          <mat-icon>🖼️</mat-icon>
+        </button>
+
+        <input #fileInput type="file" style="display: none;" (change)="onFileChange($event)">
       </mat-toolbar>
       <ng-container *ngIf="isSplitView; else notSplitViewTmpl">
         <div class="editor row">
