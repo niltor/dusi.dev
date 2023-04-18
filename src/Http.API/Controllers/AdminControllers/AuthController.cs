@@ -96,4 +96,5 @@ public class AuthController : RestControllerBase
         //await _redis.Cache.RemoveAsync(id.ToString());
         return await Task.FromResult(true);
     }
+
 }

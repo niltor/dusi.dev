@@ -155,4 +155,21 @@ public class UserController : ClientControllerBase<IUserManager>
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity, false);
     }
+
+
+    /// <summary>
+    /// 测试ip
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("testIP")]
+    [AllowAnonymous]
+    public ActionResult<string> GetIPInfo()
+    {
+        var forward = this.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+        var orign = this.Request.Headers["X-Original-For"].FirstOrDefault();
+        var realIP = this.Request.Headers["X-Real-IP"].FirstOrDefault();
+        var remoteIP = this.Request.HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString();
+
+        return $@"forward:{forward}; readIP:{realIP}; remoteIP:{remoteIP}; origin:{orign}";
+    }
 }
