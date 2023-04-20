@@ -45,7 +45,10 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     public override async Task<Blog> AddAsync(Blog entity)
     {
         // 发送同步消息
-        await DaprFacade.PublishAsync(Const.PubNewBlog, entity.Id);
+        if (entity.IsPublic)
+        {
+            _ = DaprFacade.PublishAsync(Const.PubNewBlog, entity.Id);
+        }
         return await base.AddAsync(entity);
     }
 
