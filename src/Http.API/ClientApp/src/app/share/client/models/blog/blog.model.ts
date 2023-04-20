@@ -56,10 +56,12 @@ export interface Blog {
    * 用户账户
    */
   user?: User | null;
+  userId: string;
   /**
    * 目录
    */
   catalog?: Catalog | null;
+  catalogId: string;
   tags?: Tags[] | null;
   /**
    * 浏览量

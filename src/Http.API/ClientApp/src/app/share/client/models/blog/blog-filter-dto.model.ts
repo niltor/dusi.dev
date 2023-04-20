@@ -39,5 +39,6 @@ export interface BlogFilterDto {
    */
   date?: string | null;
   blogType?: BlogType | null;
+  userId?: string | null;
 
 }

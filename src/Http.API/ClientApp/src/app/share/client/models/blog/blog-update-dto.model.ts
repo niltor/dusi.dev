@@ -24,7 +24,7 @@ export interface BlogUpdateDto {
   /**
    * 所属目录
    */
-  catalogId?: string | null;
+  catalogId: string;
   /**
    * 是否原创
    */

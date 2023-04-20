@@ -41,4 +41,5 @@ public class BlogFilterDto : FilterBase
     /// 分类
     /// </summary>
     public BlogType? BlogType { get; set; }
+    public Guid? UserId { get; set; }
 }

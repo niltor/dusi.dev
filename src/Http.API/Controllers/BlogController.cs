@@ -28,10 +28,23 @@ public class BlogController : ClientControllerBase<IBlogManager>
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
+    public async Task<ActionResult<PageList<BlogItemDto>>> GetMyBlogsAsync(BlogFilterDto filter)
+    {
+        filter.UserId = _user.UserId;
+        return await manager.FilterAsync(filter);
+    }
+
+    /// <summary>
+    /// 公开博客
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
+    [HttpPost("public")]
     [AllowAnonymous]
-    public async Task<ActionResult<PageList<BlogItemDto>>> FilterAsync(BlogFilterDto filter)
+    public async Task<ActionResult<PageList<BlogItemDto>>> PublicBlogsAsync(BlogFilterDto filter)
     {
         filter.IsPublic = true;
+        filter.UserId = null;
         return await manager.FilterAsync(filter);
     }
 

@@ -35,7 +35,7 @@ export class BlogComponent {
   }
 
   getNews(): void {
-    this.service.filter(this.filter)
+    this.service.publicBlogs(this.filter)
       .subscribe({
         next: (res) => {
           if (res) {

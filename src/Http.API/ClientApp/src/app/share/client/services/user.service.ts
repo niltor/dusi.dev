@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { Observable } from 'rxjs';
-import { LoginDto } from '../models/auth/login-dto.model';
+import { LoginDto } from '../models/user/login-dto.model';
 import { UserAddDto } from '../models/user/user-add-dto.model';
 import { UserUpdateDto } from '../models/user/user-update-dto.model';
-import { AuthResult } from '../models/auth/auth-result.model';
+import { AuthResult } from '../models/user/auth-result.model';
 import { User } from '../models/user/user.model';
 
 /**

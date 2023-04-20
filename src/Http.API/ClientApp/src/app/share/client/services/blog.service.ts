@@ -18,8 +18,17 @@ export class BlogService extends BaseService {
    * 筛选
    * @param data BlogFilterDto
    */
-  filter(data: BlogFilterDto): Observable<BlogItemDtoPageList> {
+  getMyBlogs(data: BlogFilterDto): Observable<BlogItemDtoPageList> {
     const url = `/api/Blog/filter`;
+    return this.request<BlogItemDtoPageList>('post', url, data);
+  }
+
+  /**
+   * 公开博客
+   * @param data BlogFilterDto
+   */
+  publicBlogs(data: BlogFilterDto): Observable<BlogItemDtoPageList> {
+    const url = `/api/Blog/public`;
     return this.request<BlogItemDtoPageList>('post', url, data);
   }
 

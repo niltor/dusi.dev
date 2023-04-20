@@ -48,7 +48,7 @@ export class IndexComponent implements OnInit {
       this.filter.pageIndex = event.pageIndex + 1;
       this.filter.pageSize = event.pageSize;
     }
-    this.service.filter(this.filter)
+    this.service.getMyBlogs(this.filter)
       .subscribe({
         next: (res) => {
           if (res) {
