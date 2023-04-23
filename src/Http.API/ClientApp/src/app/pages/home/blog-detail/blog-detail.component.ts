@@ -11,6 +11,7 @@ import 'prismjs/components/prism-csharp.min.js';
 import 'prismjs/components/prism-markup.min.js';
 import 'prismjs/components/prism-yaml.min.js';
 import 'prismjs/components/prism-docker.min.js';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-blog-detail',
@@ -28,6 +29,8 @@ export class BlogDetailComponent implements AfterViewInit {
     private snb: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
+    private meta: Meta,
+    private title: Title
   ) {
 
     const id = this.route.snapshot.paramMap.get('id');
@@ -42,6 +45,7 @@ export class BlogDetailComponent implements AfterViewInit {
     this.getDetail();
   }
   ngAfterViewInit(): void {
+
   }
   getDetail(): void {
     this.service.getDetail(this.id)
@@ -50,12 +54,22 @@ export class BlogDetailComponent implements AfterViewInit {
           if (res) {
             this.data = res;
             this.isLoading = false;
+            this.setMeta();
           }
+
         },
         error: (error) => {
           this.snb.open(error.detail);
         }
       })
+  }
+  setMeta(): void {
+    this.meta.addTags([
+      { name: 'description', content: this.data.description ?? '' },
+      { name: 'author', content: this.data.authors ?? '' },
+      { name: 'keywords', content: this.data.tags?.map(t => t.name).join(',') ?? '' }
+    ]);
+    this.title.setTitle(this.data.title ?? this.title);
   }
 
   copyCode(): void {

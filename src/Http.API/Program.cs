@@ -200,8 +200,6 @@ services.AddControllersWithViews()
         options.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);
     });
 
-
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

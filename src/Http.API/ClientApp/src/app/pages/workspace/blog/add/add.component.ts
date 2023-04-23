@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { LanguageType } from 'src/app/share/client/models/enum/language-type.model';
-import { Catalog } from 'src/app/share/admin/models/catalog.model';
+
 import { CatalogService } from 'src/app/share/client/services/catalog.service';
 import { TagsService } from 'src/app/share/client/services/tags.service';
 import { forkJoin, lastValueFrom } from 'rxjs';
@@ -21,6 +21,7 @@ import 'prismjs/components/prism-markup.min.js';
 import 'prismjs/components/prism-yaml.min.js';
 import 'prismjs/components/prism-docker.min.js';
 import { MarkdownService } from 'ngx-markdown';
+import { Catalog } from 'src/app/share/client/models/catalog/catalog.model';
 
 @Component({
   selector: 'app-add',
