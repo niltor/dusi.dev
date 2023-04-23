@@ -83,12 +83,21 @@ public enum BlogType
     /// </summary>
     [Description("云与DevOps")]
     CloudAndDevOps,
-
     /// <summary>
     /// 见解与分析
     /// </summary>
     [Description("见解与分析")]
     View,
+    /// <summary>
+    /// 教程
+    /// </summary>
+    [Description("教程")]
+    Course,
+    /// <summary>
+    /// 技能分享
+    /// </summary>
+    [Description("技能分享")]
+    Skill,
     /// <summary>
     /// 其它
     /// </summary>

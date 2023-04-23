@@ -34,7 +34,9 @@ case 'BlogType':
     case 3: result = 'AI和数据'; break;
     case 4: result = '云与DevOps'; break;
     case 5: result = '见解与分析'; break;
-    case 6: result = '其它'; break;
+    case 6: result = '教程'; break;
+    case 7: result = '技能分享'; break;
+    case 8: result = '其它'; break;
     default: '默认'; break;
   }
 }

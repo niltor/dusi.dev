@@ -5,6 +5,8 @@ export enum BlogType {
   DataAndAI = 3,
   CloudAndDevOps = 4,
   View = 5,
-  Else = 6,
+  Course = 6,
+  Skill = 7,
+  Else = 8,
 
 }
