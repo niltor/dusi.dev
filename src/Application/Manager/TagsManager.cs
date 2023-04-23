@@ -1,4 +1,3 @@
-using Application.IManager;
 using Core.Const;
 using Share.Models.TagsDtos;
 
@@ -7,7 +6,7 @@ namespace Application.Manager;
 public class TagsManager : DomainManagerBase<Tags, TagsUpdateDto, TagsFilterDto, TagsItemDto>, ITagsManager
 {
 
-    private readonly IUserContext _userContext;
+    private new readonly IUserContext _userContext;
     public TagsManager(DataStoreContext storeContext, IUserContext userContext) : base(storeContext)
     {
         _userContext = userContext;
@@ -20,8 +19,8 @@ public class TagsManager : DomainManagerBase<Tags, TagsUpdateDto, TagsFilterDto,
     /// <returns></returns>
     public async Task<Tags> CreateNewEntityAsync(TagsAddDto dto)
     {
-        var entity = dto.MapTo<TagsAddDto, Tags>();
-        var user = await _userContext.GetUserAsync() ?? throw new Exception(ErrorMsg.NotFoundUser);
+        Tags entity = dto.MapTo<TagsAddDto, Tags>();
+        User user = await _userContext.GetUserAsync() ?? throw new Exception(ErrorMsg.NotFoundUser);
         entity.User = user!;
         return entity;
     }
@@ -35,11 +34,11 @@ public class TagsManager : DomainManagerBase<Tags, TagsUpdateDto, TagsFilterDto,
     public async Task<int> BatchAddAsync(List<TagsAddDto> list)
     {
         // 去重添加
-        var user = await _userContext.GetUserAsync();
-        var currentTagNames = await Query.Db.Where(t => t.User.Id == _userContext.UserId)
+        User? user = await _userContext.GetUserAsync();
+        List<string> currentTagNames = await Query.Db.Where(t => t.User.Id == _userContext.UserId)
             .Select(t => t.Name).ToListAsync();
 
-        var newTags = list.Distinct()
+        List<Tags> newTags = list.Distinct()
             .Where(l => !currentTagNames.Contains(l.Name))
             .Select(t => new Tags
             {
@@ -72,7 +71,7 @@ public class TagsManager : DomainManagerBase<Tags, TagsUpdateDto, TagsFilterDto,
     /// <returns></returns>
     public async Task<Tags?> GetOwnedAsync(Guid id)
     {
-        var query = Command.Db.Where(q => q.Id == id);
+        IQueryable<Tags> query = Command.Db.Where(q => q.Id == id);
         query = query.Where(q => q.User.Id == _userContext.UserId);
         return await query.FirstOrDefaultAsync();
     }

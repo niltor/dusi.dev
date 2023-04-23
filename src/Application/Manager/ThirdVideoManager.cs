@@ -5,7 +5,6 @@ namespace Application.Manager;
 public class ThirdVideoManager : DomainManagerBase<ThirdVideo, ThirdVideoUpdateDto, ThirdVideoFilterDto, ThirdVideoItemDto>, IThirdVideoManager
 {
 
-    private readonly IUserContext _userContext;
     public ThirdVideoManager(DataStoreContext storeContext, IUserContext userContext) : base(storeContext)
     {
         _userContext = userContext;
@@ -18,7 +17,7 @@ public class ThirdVideoManager : DomainManagerBase<ThirdVideo, ThirdVideoUpdateD
     /// <returns></returns>
     public Task<ThirdVideo> CreateNewEntityAsync(ThirdVideoAddDto dto)
     {
-        var entity = dto.MapTo<ThirdVideoAddDto, ThirdVideo>();
+        ThirdVideo entity = dto.MapTo<ThirdVideoAddDto, ThirdVideo>();
         // 构建实体
         return Task.FromResult(entity);
     }
@@ -43,7 +42,7 @@ public class ThirdVideoManager : DomainManagerBase<ThirdVideo, ThirdVideoUpdateD
     /// <returns></returns>
     public async Task<ThirdVideo?> GetOwnedAsync(Guid id)
     {
-        var query = Command.Db.Where(q => q.Id == id);
+        IQueryable<ThirdVideo> query = Command.Db.Where(q => q.Id == id);
         // TODO:获取用户所属的对象
         // query = query.Where(q => q.User.Id == _userContext.UserId);
         return await query.FirstOrDefaultAsync();

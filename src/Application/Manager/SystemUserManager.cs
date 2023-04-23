@@ -1,4 +1,3 @@
-using Application.IManager;
 using Share.Models.SystemUserDtos;
 
 namespace Application.Manager;
@@ -30,16 +29,17 @@ public class SystemUserManager : DomainManagerBase<SystemUser, SystemUserUpdateD
     /// <returns></returns>
     public async Task<User?> GetInfoAsUserAsync(Guid id)
     {
-        var sysUser = await FindAsync(id);
+        SystemUser? sysUser = await FindAsync(id);
 
-        if (sysUser == null) { return null; }
-        return new User
-        {
-            UserName = sysUser.UserName,
-            Id = sysUser.Id,
-            Email = sysUser.Email,
-            CreatedTime = sysUser.CreatedTime,
-        };
+        return sysUser == null
+            ? null
+            : new User
+            {
+                UserName = sysUser.UserName,
+                Id = sysUser.Id,
+                Email = sysUser.Email,
+                CreatedTime = sysUser.CreatedTime,
+            };
     }
     /// <summary>
     /// 修改密码
@@ -49,10 +49,10 @@ public class SystemUserManager : DomainManagerBase<SystemUser, SystemUserUpdateD
     /// <returns></returns>
     public async Task<bool> ChangePasswordAsync(SystemUser user, string password)
     {
-        var salt = HashCrypto.BuildSalt();
+        string salt = HashCrypto.BuildSalt();
         user.PasswordHash = HashCrypto.GeneratePwd(password, salt);
         user.PasswordSalt = salt;
-        Command.Update(user);
+        _ = Command.Update(user);
         return await Command.SaveChangeAsync() > 0;
     }
 }

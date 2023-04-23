@@ -10,7 +10,7 @@ public class InitDataTask
         CommandDbContext context = provider.GetRequiredService<CommandDbContext>();
         ILoggerFactory loggerFactory = provider.GetRequiredService<ILoggerFactory>();
         ILogger<InitDataTask> logger = loggerFactory.CreateLogger<InitDataTask>();
-        var configuration = provider.GetRequiredService<IConfiguration>();
+        IConfiguration configuration = provider.GetRequiredService<IConfiguration>();
 
         string? connectionString = context.Database.GetConnectionString();
         try
@@ -46,28 +46,28 @@ public class InitDataTask
     /// </summary>
     public static async Task InitRoleAndUserAsync(CommandDbContext context)
     {
-        var role = new SystemRole()
+        SystemRole role = new()
         {
             Name = "Admin",
             NameValue = Const.Admin
         };
-        var userRole = new SystemRole()
+        SystemRole userRole = new()
         {
             Name = "User",
             NameValue = Const.User
         };
-        var salt = HashCrypto.BuildSalt();
-        var user = new SystemUser()
+        string salt = HashCrypto.BuildSalt();
+        SystemUser user = new()
         {
             UserName = "admin",
             PasswordSalt = salt,
             PasswordHash = HashCrypto.GeneratePwd("123456", salt),
             SystemRoles = new List<SystemRole>() { role },
         };
-        context.SystemRoles.Add(userRole);
-        context.SystemRoles.Add(role);
-        context.SystemUsers.Add(user);
-        await context.SaveChangesAsync();
+        _ = context.SystemRoles.Add(userRole);
+        _ = context.SystemRoles.Add(role);
+        _ = context.SystemUsers.Add(user);
+        _ = await context.SaveChangesAsync();
     }
 
     /// <summary>
@@ -80,10 +80,10 @@ public class InitDataTask
     public static async Task UpdateAsync(CommandDbContext context, IConfiguration configuration, ILogger<InitDataTask> logger)
     {
         // 查询库中版本
-        var version = await context.WebConfigs.Where(c => c.Key == Const.Version).FirstOrDefaultAsync();
+        WebConfig? version = await context.WebConfigs.Where(c => c.Key == Const.Version).FirstOrDefaultAsync();
         if (version == null)
         {
-            var config = new WebConfig
+            WebConfig config = new()
             {
                 IsSystem = true,
                 Valid = true,
@@ -91,21 +91,21 @@ public class InitDataTask
                 // 版本格式:yyMMdd.编号
                 Value = DateTime.UtcNow.ToString("yyMMdd") + ".01"
             };
-            context.Add(config);
-            await context.SaveChangesAsync();
+            _ = context.Add(config);
+            _ = await context.SaveChangesAsync();
             version = config;
         }
         // 比对新版本
-        var newVersion = configuration.GetValue<string>(Const.Version);
+        string? newVersion = configuration.GetValue<string>(Const.Version);
 
-        if (double.TryParse(newVersion, out var newVersionValue)
-            && double.TryParse(version.Value, out var versionValue))
+        if (double.TryParse(newVersion, out double newVersionValue)
+            && double.TryParse(version.Value, out double versionValue))
         {
             if (newVersionValue > versionValue)
             {
                 // TODO:执行更新方法
                 version.Value = newVersionValue.ToString();
-                await context.SaveChangesAsync();
+                _ = await context.SaveChangesAsync();
             }
         }
         else

@@ -1,6 +1,11 @@
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Application.Implement;
+/// <summary>
+/// 读写仓储基类,请勿直接修改基类内容 
+/// </summary>
+/// <typeparam name="TContext"></typeparam>
+/// <typeparam name="TEntity"></typeparam>
 public class CommandStoreBase<TContext, TEntity> : ICommandStore<TEntity>, ICommandStoreExt<TEntity>
     where TContext : DbContext
     where TEntity : EntityBase
@@ -111,7 +116,7 @@ public class CommandStoreBase<TContext, TEntity> : ICommandStore<TEntity>, IComm
         if (chunk != null && entities.Count > chunk)
         {
 
-            entities.Chunk(entities.Count / chunk.Value + 1).ToList()
+            entities.Chunk((entities.Count / chunk.Value) + 1).ToList()
                 .ForEach(block =>
                 {
                     _db.AddRange(block);

@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Application.Implement;
 /// <summary>
-/// 只读仓储
+/// 只读仓储基类,请勿直接修改基类内容
 /// </summary>
 /// <typeparam name="TContext"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
@@ -189,15 +189,12 @@ public class QueryStoreBase<TContext, TEntity> :
         {
             _query = _query.OrderBy(order);
         }
-        else
-        {
-            _query = _query.OrderByDescending(t => t.CreatedTime);
-        }
         int count = _query.Count();
         List<TItem> data = await _query
             .AsNoTracking()
             .Skip((pageIndex - 1) * pageSize)
             .Take(pageSize)
+            .OrderByDescending(t => t.CreatedTime)
             .ProjectTo<TItem>()
             .ToListAsync();
         ResetQuery();
@@ -208,6 +205,7 @@ public class QueryStoreBase<TContext, TEntity> :
             PageIndex = pageIndex
         };
     }
+
 }
 
 

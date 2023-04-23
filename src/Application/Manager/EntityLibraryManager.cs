@@ -1,4 +1,3 @@
-using Application.IManager;
 using Share.Models.EntityLibraryDtos;
 
 namespace Application.Manager;

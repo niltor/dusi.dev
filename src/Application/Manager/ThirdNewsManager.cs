@@ -1,7 +1,3 @@
-using Application.IManager;
-using Core.Utils;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using Share.Models;
 using Share.Models.ThirdNewsDtos;
 
 namespace Application.Manager;
@@ -9,7 +5,7 @@ namespace Application.Manager;
 public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto, ThirdNewsFilterDto, ThirdNewsItemDto>, IThirdNewsManager
 {
 
-    private readonly IUserContext _userContext;
+    private new readonly IUserContext _userContext;
     public ThirdNewsManager(DataStoreContext storeContext, IUserContext userContext) : base(storeContext)
     {
         _userContext = userContext;
@@ -22,7 +18,7 @@ public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto,
     /// <returns></returns>
     public Task<ThirdNews> CreateNewEntityAsync(ThirdNewsAddDto dto)
     {
-        var entity = dto.MapTo<ThirdNewsAddDto, ThirdNews>();
+        ThirdNews entity = dto.MapTo<ThirdNewsAddDto, ThirdNews>();
         // 构建实体
         return Task.FromResult(entity);
     }
@@ -47,26 +43,21 @@ public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto,
         // 未被分类的内容
         if (filter.IsClassified != null)
         {
-            if (filter.IsClassified.Value)
-            {
-                Queryable = Queryable.Where(q =>
+            Queryable = filter.IsClassified.Value
+                ? Queryable.Where(q =>
                     q.NewsType != NewsType.Default &&
                     q.TechType != TechType.Default &&
-                    q.NewsStatus != NewsStatus.Default);
-            }
-            else
-            {
-                Queryable = Queryable.Where(q =>
+                    q.NewsStatus != NewsStatus.Default)
+                : Queryable.Where(q =>
                     q.NewsType == NewsType.Default ||
                     q.TechType == TechType.Default ||
                     q.NewsStatus == NewsStatus.Default);
-            }
         }
         // 仅本周
         if (filter.OnlyWeek != null && filter.OnlyWeek.Value)
         {
             filter.EndDate = DateTimeOffset.UtcNow;
-            var week = Convert.ToInt32(filter.EndDate.Value.DayOfWeek);
+            int week = Convert.ToInt32(filter.EndDate.Value.DayOfWeek);
             week = week == 0 ? 7 : week;
             filter.StartDate = filter.EndDate.Value.AddDays(1 - week);
         }
@@ -87,9 +78,9 @@ public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto,
     /// <returns></returns>
     public async Task<bool> BatchUpdateAsync(ThirdNewsBatchUpdateDto dto)
     {
-        var query = Command.Db.Where(n => dto.Ids.Contains(n.Id)).AsQueryable();
+        IQueryable<ThirdNews> query = Command.Db.Where(n => dto.Ids.Contains(n.Id)).AsQueryable();
         // 删除
-        if (dto.IsDelete != null && dto.IsDelete == true)
+        if (dto.IsDelete is not null and true)
         {
             return await query.ExecuteUpdateAsync(p => p
                .SetProperty(n => n.IsDeleted, true)) > 0;
@@ -101,18 +92,13 @@ public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto,
                 .SetProperty(n => n.TechType, dto.TechType)
                 .SetProperty(n => n.NewsStatus, NewsStatus.Public)) > 0;
         }
-        if (dto.NewsType != null)
-        {
-            return await query.ExecuteUpdateAsync(p => p
+        return dto.NewsType != null
+            ? await query.ExecuteUpdateAsync(p => p
                 .SetProperty(n => n.NewsType, dto.NewsType)
-                .SetProperty(n => n.NewsStatus, NewsStatus.Public)) > 0;
-        }
-        if (dto.NewsStatus != null)
-        {
-            return await query.ExecuteUpdateAsync(p => p
+                .SetProperty(n => n.NewsStatus, NewsStatus.Public)) > 0
+            : dto.NewsStatus != null
+&& await query.ExecuteUpdateAsync(p => p
                 .SetProperty(n => n.NewsStatus, dto.NewsStatus)) > 0;
-        }
-        return false;
     }
 
     /// <summary>
@@ -122,7 +108,7 @@ public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto,
     /// <returns></returns>
     public async Task<ThirdNews?> GetOwnedAsync(Guid id)
     {
-        var query = Command.Db.Where(q => q.Id == id);
+        IQueryable<ThirdNews> query = Command.Db.Where(q => q.Id == id);
         return await query.FirstOrDefaultAsync();
     }
 
@@ -132,7 +118,7 @@ public class ThirdNewsManager : DomainManagerBase<ThirdNews, ThirdNewsUpdateDto,
     /// <returns></returns>
     public ThirdNewsOptionsDto GetEnumOptions()
     {
-        var res = new ThirdNewsOptionsDto
+        ThirdNewsOptionsDto res = new()
         {
             TechType = EnumHelper.ToList(typeof(TechType)),
             NewsType = EnumHelper.ToList(typeof(NewsType))

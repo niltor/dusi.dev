@@ -18,7 +18,7 @@ public class DaprFacade
     /// <returns></returns>
     public static async Task SaveStateAsync<T>(string key, T value, int seconds)
     {
-        var metadata = new Dictionary<string, string>
+        Dictionary<string, string> metadata = new()
         {
             { "ttlInSeconds", seconds.ToString() }
         };
@@ -26,7 +26,7 @@ public class DaprFacade
     }
     public static async Task SaveStateAsync<T>(string store, string key, T value, int seconds)
     {
-        var metadata = new Dictionary<string, string>
+        Dictionary<string, string> metadata = new()
         {
             { "ttlInSeconds", seconds.ToString() }
         };

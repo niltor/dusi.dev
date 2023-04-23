@@ -1,4 +1,3 @@
-using Application.IManager;
 using Share.Models.EntityModelDtos;
 
 namespace Application.Manager;
@@ -16,7 +15,7 @@ public class EntityModelManager : DomainManagerBase<EntityModel, EntityModelUpda
     {
         if (dto.EntityLibraryId != null)
         {
-            var lib = await _libraryManager.GetCurrentAsync(dto.EntityLibraryId.Value);
+            EntityLibrary? lib = await _libraryManager.GetCurrentAsync(dto.EntityLibraryId.Value);
             if (lib != null)
             {
                 entity.EntityLibrary = lib;
