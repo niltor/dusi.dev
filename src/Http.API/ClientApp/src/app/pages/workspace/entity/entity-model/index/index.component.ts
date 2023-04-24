@@ -12,7 +12,6 @@ import { CodeLanguage } from 'src/app/share/client/models/enum/code-language.mod
 import { EntityLibraryService } from 'src/app/share/client/services/entity-library.service';
 import { EntityLibraryItemDto } from 'src/app/share/client/models/entity-library/entity-library-item-dto.model';
 import { MatSelectChange } from '@angular/material/select';
-import { log } from 'console';
 
 @Component({
   selector: 'app-index',
