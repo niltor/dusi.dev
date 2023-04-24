@@ -34,10 +34,9 @@ public class OpenSourceProductManager : DomainManagerBase<OpenSourceProduct, Ope
 
     public override async Task<PageList<OpenSourceProductItemDto>> FilterAsync(OpenSourceProductFilterDto filter)
     {
-        // https://github.com/AterDev/ater.web/blob/56542e5653ee795855705e43482e64df0ee8383d/templates/apistd/src/Core/Utils/Extensions.cs#L82
         Queryable = Queryable
-            .WhereNotNull(filter.Title, q => q.Title == filter.Title);
-        // TODO: custom filter conditions
+            .WhereNotNull(filter.Title, q => q.Title == filter.Title)
+            .WhereNotNull(filter.Tags, q => q.Tags != null && q.Tags.Contains(filter.Tags!));
         return await Query.FilterAsync<OpenSourceProductItemDto>(Queryable, filter.PageIndex, filter.PageSize, filter.OrderBy);
     }
 

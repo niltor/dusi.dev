@@ -5,6 +5,7 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 开源作品
 /// </summary>
+/// <see cref="Application.Manager.OpenSourceProductManager"/>
 public class OpenSourceProductController : ClientControllerBase<IOpenSourceProductManager>
 {
 
@@ -27,6 +28,7 @@ public class OpenSourceProductController : ClientControllerBase<IOpenSourceProdu
     {
         return await manager.FilterAsync(filter);
     }
+    /*
 
     /// <summary>
     /// 新增
@@ -81,4 +83,5 @@ public class OpenSourceProductController : ClientControllerBase<IOpenSourceProdu
         // return Forbid();
         return await manager.DeleteAsync(entity);
     }
+    */
 }

@@ -5,6 +5,7 @@ namespace Http.API.Controllers.AdminControllers;
 /// <summary>
 /// 开源作品
 /// </summary>
+/// <see cref="Application.Manager.OpenSourceProductManager"/>
 public class OpenSourceProductController : RestControllerBase<IOpenSourceProductManager>
 {
 
