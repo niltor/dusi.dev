@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Core.Entities.CMS;
+using Core.Entities.CMS;
+namespace Share.Models.OpenSourceProductDtos;
 /// <summary>
-/// 开源作品
+/// 开源作品添加时请求结构
 /// </summary>
-[Index(nameof(Title))]
-public sealed class OpenSourceProduct : EntityBase
+/// <inheritdoc cref="Core.Entities.CMS.OpenSourceProduct"/>
+public class OpenSourceProductAddDto
 {
     /// <summary>
     /// 标题
@@ -22,7 +21,6 @@ public sealed class OpenSourceProduct : EntityBase
     /// </summary>
     [MaxLength(500)]
     public required string Description { get; set; }
-
     /// <summary>
     /// 缩略图
     /// </summary>
@@ -38,11 +36,5 @@ public sealed class OpenSourceProduct : EntityBase
     /// </summary>
     [MaxLength(300)]
     public string? Tags { get; set; }
-
-    /// <summary>
-    /// 所属用户
-    /// </summary>
-    public User? User { get; set; }
+    
 }
-
-

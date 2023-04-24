@@ -13,6 +13,7 @@ public class DataStoreContext
     public QuerySet<EntityMemberConstraint> EntityMemberConstraintQuery { get; init; }
     public QuerySet<EntityMember> EntityMemberQuery { get; init; }
     public QuerySet<EntityModel> EntityModelQuery { get; init; }
+    public QuerySet<OpenSourceProduct> OpenSourceProductQuery { get; init; }
     public QuerySet<SystemLogs> SystemLogsQuery { get; init; }
     public QuerySet<SystemRole> SystemRoleQuery { get; init; }
     public QuerySet<SystemUser> SystemUserQuery { get; init; }
@@ -26,6 +27,7 @@ public class DataStoreContext
     public CommandSet<EntityMember> EntityMemberCommand { get; init; }
     public CommandSet<EntityMemberConstraint> EntityMemberConstraintCommand { get; init; }
     public CommandSet<EntityModel> EntityModelCommand { get; init; }
+    public CommandSet<OpenSourceProduct> OpenSourceProductCommand { get; init; }
     public CommandSet<SystemLogs> SystemLogsCommand { get; init; }
     public CommandSet<SystemRole> SystemRoleCommand { get; init; }
     public CommandSet<SystemUser> SystemUserCommand { get; init; }
@@ -47,6 +49,7 @@ public class DataStoreContext
         EntityMemberConstraintQueryStore entityMemberConstraintQuery,
         EntityMemberQueryStore entityMemberQuery,
         EntityModelQueryStore entityModelQuery,
+        OpenSourceProductQueryStore openSourceProductQuery,
         SystemLogsQueryStore systemLogsQuery,
         SystemRoleQueryStore systemRoleQuery,
         SystemUserQueryStore systemUserQuery,
@@ -60,6 +63,7 @@ public class DataStoreContext
         EntityMemberCommandStore entityMemberCommand,
         EntityMemberConstraintCommandStore entityMemberConstraintCommand,
         EntityModelCommandStore entityModelCommand,
+        OpenSourceProductCommandStore openSourceProductCommand,
         SystemLogsCommandStore systemLogsCommand,
         SystemRoleCommandStore systemRoleCommand,
         SystemUserCommandStore systemUserCommand,
@@ -86,6 +90,8 @@ public class DataStoreContext
         AddCache(EntityMemberQuery);
         EntityModelQuery = entityModelQuery;
         AddCache(EntityModelQuery);
+        OpenSourceProductQuery = openSourceProductQuery;
+        AddCache(OpenSourceProductQuery);
         SystemLogsQuery = systemLogsQuery;
         AddCache(SystemLogsQuery);
         SystemRoleQuery = systemRoleQuery;
@@ -112,6 +118,8 @@ public class DataStoreContext
         AddCache(EntityMemberConstraintCommand);
         EntityModelCommand = entityModelCommand;
         AddCache(EntityModelCommand);
+        OpenSourceProductCommand = openSourceProductCommand;
+        AddCache(OpenSourceProductCommand);
         SystemLogsCommand = systemLogsCommand;
         AddCache(SystemLogsCommand);
         SystemRoleCommand = systemRoleCommand;
@@ -138,15 +146,17 @@ public class DataStoreContext
     {
         var typename = typeof(TEntity).Name + "QueryStore";
         var set = GetSet(typename);
-        if (set == null) throw new ArgumentNullException($"{typename} class object not found");
-        return (QuerySet<TEntity>)set;
+        return set == null 
+            ? throw new ArgumentNullException($"{typename} class object not found") 
+            : (QuerySet<TEntity>)set;
     }
     public CommandSet<TEntity> CommandSet<TEntity>() where TEntity : EntityBase
     {
         var typename = typeof(TEntity).Name + "CommandStore";
         var set = GetSet(typename);
-        if (set == null) throw new ArgumentNullException($"{typename} class object not found");
-        return (CommandSet<TEntity>)set;
+        return set == null 
+            ? throw new ArgumentNullException($"{typename} class object not found") 
+            : (CommandSet<TEntity>)set;
     }
 
     private void AddCache(object set)

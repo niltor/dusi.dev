@@ -19,3 +19,6 @@ global using Microsoft.Extensions.Logging;
 global using Share.Models;
 global using Http.API.Infrastructure;
 global using Core.Entities.CMS;
+
+
+global using Core.Const;
