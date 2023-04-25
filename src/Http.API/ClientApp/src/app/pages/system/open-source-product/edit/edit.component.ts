@@ -6,6 +6,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { OpenSourceProductUpdateDto } from 'src/app/share/admin/models/open-source-product/open-source-product-update-dto.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 
 @Component({
   selector: 'app-edit',
@@ -20,6 +22,9 @@ export class EditComponent implements OnInit {
   data = {} as OpenSourceProduct;
   updateData = {} as OpenSourceProductUpdateDto;
   formGroup!: FormGroup;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  addOnBlur = true;
+  tagChips: string[] = [];
   constructor(
 
     private service: OpenSourceProductService,
@@ -48,20 +53,26 @@ export class EditComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDetail();
-
-    // TODO:等待数据加载完成
-    // this.isLoading = false;
   }
 
   getDetail(): void {
     this.service.getDetail(this.id)
-      .subscribe(res => {
-        this.data = res;
-        this.initForm();
-        this.isLoading = false;
-      }, error => {
-        this.snb.open(error);
-      })
+      .subscribe({
+        next: (res) => {
+          if (res) {
+            this.data = res;
+            this.tagChips = res.tags!.split(',');
+            this.initForm();
+            this.isLoading = false;
+          } else {
+            this.snb.open('');
+          }
+        },
+        error: (error) => {
+          this.snb.open(error.detail);
+          this.isLoading = false;
+        }
+      });
   }
 
   initForm(): void {
@@ -110,6 +121,7 @@ export class EditComponent implements OnInit {
     if (this.formGroup.valid) {
       this.isProcessing = true;
       this.updateData = this.formGroup.value as OpenSourceProductUpdateDto;
+      this.updateData.tags = this.tagChips.join(',');
       this.service.update(this.id, this.updateData)
         .subscribe({
           next: (res) => {
@@ -131,6 +143,34 @@ export class EditComponent implements OnInit {
     }
   }
 
+  editTag(tag: string, event: MatChipEditedEvent) {
+    const value = event.value.trim();
+    // Remove fruit if it no longer has a name
+    if (!value) {
+      this.remove(tag);
+      return;
+    }
+    // Edit existing fruit
+    const index = this.tagChips.indexOf(tag);
+    if (index >= 0) {
+      this.tagChips[index] = value;
+    }
+  }
+  addTag(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    if (value && this.tagChips.indexOf(value) < 0) {
+      this.tagChips.push(value);
+    }
+    event.chipInput!.clear();
+  }
+
+  remove(tag: string): void {
+    const index = this.tagChips.indexOf(tag);
+
+    if (index >= 0) {
+      this.tagChips.splice(index, 1);
+    }
+  }
   back(): void {
     this.location.back();
   }

@@ -4,55 +4,67 @@
   </button>
   编辑
 </mat-toolbar>
-<form class="d-flex" *ngIf="!isLoading" [formGroup]="formGroup">
+<form class="d-flex mt-2 p-1" *ngIf="!isLoading" [formGroup]="formGroup">
   <div class="d-flex flex-column w-100">
+    <div class="d-flex">
+      <mat-form-field class="d-flex">
+        <mat-label>项目名称</mat-label>
+        <input matInput placeholder="项目名称" formControlName="title" required minlength="" maxlength="100">
+        <mat-error *ngIf="title?.invalid">
+          {{getValidatorMessage('title')}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="flex-grow-1 ms-1">
+        <mat-label>项目地址</mat-label>
+        <input matInput placeholder="项目链接地址1-200字" formControlName="projectUrl" required minlength="" maxlength="200" />
+        <mat-error *ngIf="projectUrl?.invalid">
+          {{getValidatorMessage('projectUrl')}}
+        </mat-error>
+      </mat-form-field>
+    </div>
     <mat-form-field>
-      <mat-label>Title</mat-label>
-      <input matInput placeholder="Title" formControlName="title" minlength="" maxlength="100">
-      <mat-error *ngIf="title?.invalid">
-        {{getValidatorMessage('title')}}
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>ProjectUrl</mat-label>
-      <textarea matInput placeholder="ProjectUrl" formControlName="projectUrl" minlength="" maxlength="200"
-        cols="5"></textarea>
-      <mat-error *ngIf="projectUrl?.invalid">
-        {{getValidatorMessage('projectUrl')}}
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Description</mat-label>
-      <textarea matInput placeholder="Description" formControlName="description" minlength="" maxlength="500"
+      <mat-label>描述</mat-label>
+      <textarea matInput placeholder="描述1-500字" formControlName="description" required minlength="" maxlength="500"
         cols="5"></textarea>
       <mat-error *ngIf="description?.invalid">
         {{getValidatorMessage('description')}}
       </mat-error>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Thumbnail</mat-label>
-      <textarea matInput placeholder="Thumbnail" formControlName="thumbnail" minlength="" maxlength="200"
-        cols="5"></textarea>
+      <mat-label>缩略图</mat-label>
+      <input matInput placeholder="缩略图" formControlName="thumbnail" minlength="" maxlength="200" />
       <mat-error *ngIf="thumbnail?.invalid">
         {{getValidatorMessage('thumbnail')}}
       </mat-error>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Authors</mat-label>
-      <textarea matInput placeholder="Authors" formControlName="authors" minlength="" maxlength="200"
-        cols="5"></textarea>
-      <mat-error *ngIf="authors?.invalid">
-        {{getValidatorMessage('authors')}}
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Tags</mat-label>
-      <textarea matInput placeholder="Tags" formControlName="tags" minlength="" maxlength="300" cols="5"></textarea>
-      <mat-error *ngIf="tags?.invalid">
-        {{getValidatorMessage('tags')}}
-      </mat-error>
-    </mat-form-field>
-
+    <div class="d-flex">
+      <mat-form-field>
+        <mat-label>作者</mat-label>
+        <input matInput placeholder="作者" formControlName="authors" minlength="" maxlength="60">
+        <mat-error *ngIf="authors?.invalid">
+          {{getValidatorMessage('authors')}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="flex-grow-1 ms-1">
+        <mat-label>使用逗号或回车分隔标签</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Enter tags">
+          <mat-chip-row *ngFor="let tag of tagChips" (removed)="remove(tag)" [editable]="true"
+            style="background-color: #f1d893;" (edited)="editTag(tag, $event)"
+            [aria-description]="'press enter to edit ' + tag">
+            {{tag}}
+            <button matChipRemove [attr.aria-label]="'remove ' + tag">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+          <input placeholder="新标签" [matChipInputFor]="chipGrid"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="addTag($event)" maxlength="300" />
+        </mat-chip-grid>
+        <mat-error *ngIf="tags?.invalid">
+          {{getValidatorMessage('tags')}}
+        </mat-error>
+      </mat-form-field>
+    </div>
     <div class="d-flex mt-1">
       <button class="d-flex flex-column" mat-flat-button color="primary" (click)="edit()">保存</button>
     </div>

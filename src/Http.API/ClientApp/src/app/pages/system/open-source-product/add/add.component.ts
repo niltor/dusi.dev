@@ -23,7 +23,6 @@ export class AddComponent implements OnInit {
   isProcessing = false;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   addOnBlur = true;
-  colors = CommonColors;
   tagChips: string[] = [];
   constructor(
 
