@@ -21,7 +21,7 @@ export class IndexComponent implements OnInit {
   isProcessing = false;
   total = 0;
   data: OpenSourceProductItemDto[] = [];
-  columns: string[] = ['title', 'projectUrl', 'description', 'thumbnail', 'authors', 'actions'];
+  columns: string[] = ['title', 'description', 'thumbnail', 'authors', 'actions'];
   dataSource!: MatTableDataSource<OpenSourceProductItemDto>;
   dialogRef!: MatDialogRef<{}, any>;
   @ViewChild('myDialog', { static: true })
