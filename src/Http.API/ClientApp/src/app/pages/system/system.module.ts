@@ -6,6 +6,7 @@ import { RoleModule } from './role/role.module';
 import { UserModule } from './user/user.module';
 import { ThirdNewsModule } from './third-news/third-news.module';
 import { MemberModule } from './member/member.module';
+import { OpenSourceProductModule } from './open-source-product/open-source-product.module';
 
 @NgModule({
   declarations: [],
@@ -16,7 +17,8 @@ import { MemberModule } from './member/member.module';
     RoleModule,
     UserModule,
     MemberModule,
-    ThirdNewsModule
+    ThirdNewsModule,
+    OpenSourceProductModule
   ],
   exports: [
   ]

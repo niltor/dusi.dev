@@ -133,7 +133,7 @@ export class IndexComponent implements OnInit {
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
-    if (value) {
+    if (value && this.newTags.indexOf({ name: value }) < 0) {
       this.newTags.push({ name: value });
     }
     event.chipInput!.clear();
@@ -149,13 +149,11 @@ export class IndexComponent implements OnInit {
 
   editTag(tag: TagsAddDto, event: MatChipEditedEvent) {
     const value = event.value.trim();
-
     // Remove fruit if it no longer has a name
     if (!value) {
       this.remove(tag);
       return;
     }
-
     // Edit existing fruit
     const index = this.newTags.indexOf(tag);
     if (index >= 0) {

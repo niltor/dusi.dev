@@ -22,6 +22,7 @@ public class ContextBase : DbContext
     public DbSet<Catalog> Catalogs { get; set; }
     public DbSet<ThirdNews> ThirdNews { get; set; }
     public DbSet<ThirdVideo> ThirdVideos { get; set; }
+    public DbSet<OpenSourceProduct> OpenSourceProducts { get; set; }
     #endregion
 
     public ContextBase(DbContextOptions options) : base(options)

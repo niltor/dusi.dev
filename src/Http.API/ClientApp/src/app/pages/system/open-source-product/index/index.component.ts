@@ -8,6 +8,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-index',
@@ -47,7 +48,7 @@ export class IndexComponent implements OnInit {
   }
 
   getList(event?: PageEvent): void {
-    if(event) {
+    if (event) {
       this.filter.pageIndex = event.pageIndex + 1;
       this.filter.pageSize = event.pageSize;
     }
@@ -58,7 +59,7 @@ export class IndexComponent implements OnInit {
             if (res.data) {
               this.data = res.data;
               this.total = res.count;
-              this.dataSource = new MatTableDataSource<OpenSourceProduct>(this.data);
+              this.dataSource = new MatTableDataSource<OpenSourceProductItemDto>(this.data);
             }
           } else {
             this.snb.open('');
@@ -92,24 +93,24 @@ export class IndexComponent implements OnInit {
   delete(item: OpenSourceProductItemDto): void {
     this.isProcessing = true;
     this.service.delete(item.id)
-    .subscribe({
-      next: (res) => {
-        if (res) {
-          this.data = this.data.filter(_ => _.id !== item.id);
-          this.dataSource.data = this.data;
-          this.snb.open('删除成功');
-        } else {
-          this.snb.open('删除失败');
+      .subscribe({
+        next: (res) => {
+          if (res) {
+            this.data = this.data.filter(_ => _.id !== item.id);
+            this.dataSource.data = this.data;
+            this.snb.open('删除成功');
+          } else {
+            this.snb.open('删除失败');
+          }
+        },
+        error: (error) => {
+          this.snb.open(error.detail);
+        },
+        complete: () => {
+          this.isProcessing = false;
         }
-      },
-      error: (error) => {
-        this.snb.open(error.detail);
-      },
-      complete: ()=>{
-        this.isProcessing = false;
-      }
-    });
-}
+      });
+  }
 
   /**
    * 编辑

@@ -1,4 +1,3 @@
-import { AccessModifier } from '../enum/access-modifier.model';
 import { CodeLanguage } from '../enum/code-language.model';
 /**
  * 实体模型类查询筛选
@@ -18,14 +17,6 @@ export interface EntityModelFilterDto {
    */
   name?: string | null;
   /**
-   * 实体注释内容
-   */
-  comment?: string | null;
-  /**
-   * 访问修饰符
-   */
-  accessModifier?: AccessModifier | null;
-  /**
    * 编程语言
    */
   codeLanguage?: CodeLanguage | null;
@@ -33,7 +24,9 @@ export interface EntityModelFilterDto {
    * 语言版本
    */
   languageVersion?: string | null;
-  parentEntityId?: string | null;
+  /**
+   * 所属实体库
+   */
   entityLibraryId?: string | null;
 
 }

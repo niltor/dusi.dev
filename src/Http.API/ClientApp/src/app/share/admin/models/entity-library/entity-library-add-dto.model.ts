@@ -1,5 +1,4 @@
 import { EntityModel } from '../entity-model/entity-model.model';
-import { SystemUser } from '../system-user/system-user.model';
 /**
  * 实体库添加时请求结构
  */
@@ -20,10 +19,5 @@ export interface EntityLibraryAddDto {
    * 包含的实体类
    */
   entityModels?: EntityModel[] | null;
-  /**
-   * 系统用户
-   */
-  user?: SystemUser | null;
-  userId: string;
 
 }

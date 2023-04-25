@@ -8,7 +8,23 @@ export class EnumTextPipe implements PipeTransform {
   transform(value: unknown, type: string): unknown {
     let result = '';
     switch (type) {
-      case 'BlogType':
+      case 'ActionType':
+{
+  switch (value)
+  {
+    case 0: result = '其它'; break;
+    case 1: result = '登录'; break;
+    case 2: result = '添加'; break;
+    case 3: result = '更新'; break;
+    case 4: result = '删除'; break;
+    case 5: result = '审核'; break;
+    case 6: result = '导入'; break;
+    case 7: result = '导出'; break;
+    default: '默认'; break;
+  }
+}
+break;
+case 'BlogType':
 {
   switch (value)
   {
@@ -18,7 +34,9 @@ export class EnumTextPipe implements PipeTransform {
     case 3: result = 'AI和数据'; break;
     case 4: result = '云与DevOps'; break;
     case 5: result = '见解与分析'; break;
-    case 6: result = '其它'; break;
+    case 6: result = '教程'; break;
+    case 7: result = '技能分享'; break;
+    case 8: result = '其它'; break;
     default: '默认'; break;
   }
 }

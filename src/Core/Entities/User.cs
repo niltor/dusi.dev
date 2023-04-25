@@ -33,6 +33,7 @@ public class User : EntityBase
     public List<Blog>? Blogs { get; set; }
     public List<Catalog>? Catalogs { get; set; }
     public List<Tags>? Tags { get; set; }
+    public List<OpenSourceProduct>? OpenSources { get; set; }
 }
 public enum UserType
 {

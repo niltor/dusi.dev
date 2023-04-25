@@ -31,7 +31,7 @@ public sealed class OpenSourceProduct : EntityBase
     /// <summary>
     /// 作者
     /// </summary>
-    [MaxLength(200)]
+    [MaxLength(60)]
     public string? Authors { get; set; }
     /// <summary>
     /// 标签

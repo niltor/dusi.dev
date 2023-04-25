@@ -13,15 +13,15 @@ import { Location } from '@angular/common';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-  
+
   id!: string;
   isLoading = true;
   isProcessing = false;
   data = {} as OpenSourceProduct;
   updateData = {} as OpenSourceProductUpdateDto;
   formGroup!: FormGroup;
-    constructor(
-    
+  constructor(
+
     private service: OpenSourceProductService,
     private snb: MatSnackBar,
     private router: Router,
@@ -38,21 +38,21 @@ export class EditComponent implements OnInit {
     }
   }
 
-    get title() { return this.formGroup.get('title'); }
-    get projectUrl() { return this.formGroup.get('projectUrl'); }
-    get description() { return this.formGroup.get('description'); }
-    get thumbnail() { return this.formGroup.get('thumbnail'); }
-    get authors() { return this.formGroup.get('authors'); }
-    get tags() { return this.formGroup.get('tags'); }
+  get title() { return this.formGroup.get('title'); }
+  get projectUrl() { return this.formGroup.get('projectUrl'); }
+  get description() { return this.formGroup.get('description'); }
+  get thumbnail() { return this.formGroup.get('thumbnail'); }
+  get authors() { return this.formGroup.get('authors'); }
+  get tags() { return this.formGroup.get('tags'); }
 
 
   ngOnInit(): void {
     this.getDetail();
-    
+
     // TODO:等待数据加载完成
     // this.isLoading = false;
   }
-  
+
   getDetail(): void {
     this.service.getDetail(this.id)
       .subscribe(res => {
@@ -107,13 +107,13 @@ export class EditComponent implements OnInit {
     }
   }
   edit(): void {
-    if(this.formGroup.valid) {
+    if (this.formGroup.valid) {
       this.isProcessing = true;
       this.updateData = this.formGroup.value as OpenSourceProductUpdateDto;
       this.service.update(this.id, this.updateData)
         .subscribe({
           next: (res) => {
-            if(res){
+            if (res) {
               this.snb.open('修改成功');
               // this.dialogRef.close(res);
               this.router.navigate(['../../index'], { relativeTo: this.route });
@@ -122,12 +122,12 @@ export class EditComponent implements OnInit {
           error: (error) => {
             this.snb.open(error.detail);
           },
-          complate: () => {
+          complete: () => {
             this.isProcessing = false;
           }
         });
     } else {
-        this.snb.open('表单验证不通过，请检查填写的内容!');
+      this.snb.open('表单验证不通过，请检查填写的内容!');
     }
   }
 

@@ -13,6 +13,10 @@ export interface EntityModelItemDto {
    */
   comment: string;
   /**
+   * 代码内容
+   */
+  codeContent?: string | null;
+  /**
    * 访问修饰符
    */
   accessModifier?: AccessModifier | null;

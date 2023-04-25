@@ -1,0 +1,72 @@
+<mat-toolbar class="d-flex gap-1">
+  <button color="basic" mat-icon-button matTooltip="返回" (click)="back()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  添加开源项目
+</mat-toolbar>
+<form class="d-flex mt-2 p-1" *ngIf="!isLoading" [formGroup]="formGroup">
+  <div class="d-flex flex-column w-100">
+    <div class="d-flex">
+      <mat-form-field class="d-flex">
+        <mat-label>项目名称</mat-label>
+        <input matInput placeholder="项目名称" formControlName="title" required minlength="" maxlength="100">
+        <mat-error *ngIf="title?.invalid">
+          {{getValidatorMessage('title')}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="flex-grow-1 ms-1">
+        <mat-label>项目地址</mat-label>
+        <input matInput placeholder="项目链接地址1-200字" formControlName="projectUrl" required minlength="" maxlength="200" />
+        <mat-error *ngIf="projectUrl?.invalid">
+          {{getValidatorMessage('projectUrl')}}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <mat-label>描述</mat-label>
+      <textarea matInput placeholder="描述1-500字" formControlName="description" required minlength="" maxlength="500"
+        cols="5"></textarea>
+      <mat-error *ngIf="description?.invalid">
+        {{getValidatorMessage('description')}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>缩略图</mat-label>
+      <input matInput placeholder="缩略图" formControlName="thumbnail" minlength="" maxlength="200" />
+      <mat-error *ngIf="thumbnail?.invalid">
+        {{getValidatorMessage('thumbnail')}}
+      </mat-error>
+    </mat-form-field>
+    <div class="d-flex">
+      <mat-form-field>
+        <mat-label>作者</mat-label>
+        <input matInput placeholder="作者" formControlName="authors" minlength="" maxlength="60">
+        <mat-error *ngIf="authors?.invalid">
+          {{getValidatorMessage('authors')}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="flex-grow-1 ms-1">
+        <mat-label>使用逗号或回车分隔标签</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Enter tags">
+          <mat-chip-row *ngFor="let tag of tagChips" (removed)="remove(tag)" [editable]="true"
+            style="background-color: #f1d893;" (edited)="editTag(tag, $event)"
+            [aria-description]="'press enter to edit ' + tag">
+            {{tag}}
+            <button matChipRemove [attr.aria-label]="'remove ' + tag">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+          <input placeholder="新标签" formControlName="tags" [matChipInputFor]="chipGrid"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="addTag($event)" maxlength="300" />
+        </mat-chip-grid>
+        <mat-error *ngIf="tags?.invalid">
+          {{getValidatorMessage('tags')}}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="d-flex mt-1">
+      <button class="d-flex flex-column" mat-flat-button color="primary" (click)="add()">保存</button>
+    </div>
+  </div>
+</form>

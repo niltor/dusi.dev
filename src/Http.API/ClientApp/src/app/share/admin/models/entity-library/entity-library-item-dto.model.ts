@@ -16,6 +16,5 @@ export interface EntityLibraryItemDto {
   isPublic: boolean;
   id: string;
   createdTime: Date;
-  updatedTime: Date;
 
 }

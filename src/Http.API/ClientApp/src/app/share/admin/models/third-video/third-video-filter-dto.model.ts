@@ -1,7 +1,7 @@
 /**
- * 实体库查询筛选
+ * 三方视频查询筛选
  */
-export interface EntityLibraryFilterDto {
+export interface ThirdVideoFilterDto {
   pageIndex: number;
   /**
    * 默认最大1000
@@ -11,9 +11,6 @@ export interface EntityLibraryFilterDto {
    * 排序
    */
   orderBy?: any | null;
-  /**
-   * 库名称
-   */
-  name?: string | null;
+  title?: string | null;
 
 }

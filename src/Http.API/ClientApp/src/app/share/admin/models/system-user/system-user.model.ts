@@ -1,4 +1,5 @@
 import { SystemRole } from '../system-role/system-role.model';
+import { SystemLogs } from '../system-logs/system-logs.model';
 import { Sex } from '../enum/sex.model';
 /**
  * 系统用户
@@ -42,6 +43,7 @@ export interface SystemUser {
    */
   avatar?: string | null;
   systemRoles?: SystemRole[] | null;
+  systemLogs?: SystemLogs[] | null;
   /**
    * 性别
    */
