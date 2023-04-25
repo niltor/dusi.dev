@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { UserRoutingModule } from './user-routing.module';
+import { OpenSourceProductRoutingModule } from './open-source-product-routing.module';
 import { ShareModule } from 'src/app/share/share.module';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { IndexComponent } from './index/index.component';
@@ -12,7 +12,7 @@ import { EditComponent } from './edit/edit.component';
   imports: [
     ComponentsModule,
     ShareModule,
-    UserRoutingModule
+    OpenSourceProductRoutingModule
   ]
 })
-export class UserModule { }
+export class OpenSourceProductModule { }

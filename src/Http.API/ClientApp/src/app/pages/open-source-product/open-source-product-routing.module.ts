@@ -9,14 +9,14 @@ import { AdminLayoutComponent } from 'src/app/components/admin-layout/admin-layo
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'open-source-product',
     component: AdminLayoutComponent,
     data: {reuse: true},
     canActivate: [AuthGuard],
     children:
       [
         {
-          path: 'user',
+          path: 'open-source-product',
           canActivateChild: [AuthGuard],
           children: [
             { path: '', pathMatch: 'full', redirectTo: 'index' },
@@ -34,4 +34,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class UserRoutingModule { }
+export class OpenSourceProductRoutingModule { }

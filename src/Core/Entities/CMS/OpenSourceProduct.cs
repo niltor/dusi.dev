@@ -5,7 +5,6 @@ namespace Core.Entities.CMS;
 /// 开源作品
 /// </summary>
 [Index(nameof(Title))]
-[NgPage("opensource", "opensource")]
 public sealed class OpenSourceProduct : EntityBase
 {
     /// <summary>
