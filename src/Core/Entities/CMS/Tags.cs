@@ -19,6 +19,12 @@ public class Tags : EntityBase
     /// </summary>
     [MaxLength(20)]
     public string? Color { get; set; }
+    /// <summary>
+    /// 所属用户
+    /// </summary>
     public required User User { get; set; }
+    /// <summary>
+    /// 所属博客
+    /// </summary>
     public List<Blog>? Blogs { get; set; }
 }
