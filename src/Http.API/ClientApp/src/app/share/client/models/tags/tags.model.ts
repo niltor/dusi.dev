@@ -23,6 +23,9 @@ export interface Tags {
    * 用户账户
    */
   user?: User | null;
+  /**
+   * 所属博客
+   */
   blogs?: Blog[] | null;
 
 }

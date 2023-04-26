@@ -4,6 +4,7 @@ import { EntityModel } from '../entity-model/entity-model.model';
 import { Blog } from '../blog/blog.model';
 import { Catalog } from '../catalog/catalog.model';
 import { Tags } from '../tags/tags.model';
+import { OpenSourceProduct } from '../open-source-product/open-source-product.model';
 /**
  * 用户账户
  */
@@ -29,5 +30,6 @@ export interface User {
   blogs?: Blog[] | null;
   catalogs?: Catalog[] | null;
   tags?: Tags[] | null;
+  openSources?: OpenSourceProduct[] | null;
 
 }
