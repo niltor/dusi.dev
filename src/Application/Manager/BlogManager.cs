@@ -138,6 +138,11 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
         }
 
         var path = Path.Combine(_env.WebRootPath, "markdown", entity.Catalog.Name);
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+
         var fileName = entity.Id.ToString() + ".md";
         await File.WriteAllTextAsync(Path.Combine(path, fileName), dto.Content);
 
