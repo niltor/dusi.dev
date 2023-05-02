@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { OpenSourceProductFilterDto } from 'src/app/share/admin/models/open-source-product/open-source-product-filter-dto.model';
-import { OpenSourceProductItemDto } from 'src/app/share/admin/models/open-source-product/open-source-product-item-dto.model';
-import { OpenSourceProductService } from 'src/app/share/admin/services/open-source-product.service';
+import { OpenSourceProductFilterDto } from 'src/app/share/client/models/open-source-product/open-source-product-filter-dto.model';
+import { OpenSourceProductItemDto } from 'src/app/share/client/models/open-source-product/open-source-product-item-dto.model';
+import { OpenSourceProductService } from 'src/app/share/client/services/open-source-product.service';
 
 @Component({
   selector: 'app-about',

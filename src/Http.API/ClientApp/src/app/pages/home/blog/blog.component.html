@@ -10,7 +10,7 @@
         <mat-card class="w-100 my-1" *ngFor="let item of blogs">
           <mat-card-header>
             <mat-card-title>
-              <a [routerLink]="['/blog',item.id]" target="_blank">
+              <a [routerLink]="['/blogs', item.catalog!.name,item.id+'.html']" target="_blank">
                 {{item.title}}
               </a>
             </mat-card-title>

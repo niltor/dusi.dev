@@ -1,5 +1,8 @@
+using System.IO;
 using Application.Services;
 using Core.Const;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.DocAsCode;
 using Share.Models.BlogDtos;
 
 namespace Application.Manager;
@@ -9,12 +12,14 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     private new readonly IUserContext _userContext;
     private readonly ICatalogManager _catalogManager;
     private readonly ITagsManager _tagsManager;
+    private readonly IWebHostEnvironment _env;
 
-    public BlogManager(DataStoreContext storeContext, IUserContext userContext, ICatalogManager catalogManager, ITagsManager tagsManager) : base(storeContext)
+    public BlogManager(DataStoreContext storeContext, IUserContext userContext, ICatalogManager catalogManager, ITagsManager tagsManager, IWebHostEnvironment env) : base(storeContext)
     {
         _userContext = userContext;
         _catalogManager = catalogManager;
         _tagsManager = tagsManager;
+        _env = env;
     }
 
     /// <summary>
@@ -35,7 +40,8 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
             }
         }
 
-        entity.CatalogId = dto.CatalogId;
+        var catalog = await _catalogManager.GetCurrentAsync(dto.CatalogId);
+        entity.Catalog = catalog!;
         entity.UserId = _userContext.UserId!.Value;
         entity.Authors = _userContext.Username!;
         return entity;
@@ -43,9 +49,22 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
 
     public override async Task<Blog> AddAsync(Blog entity)
     {
+        // 生成markdown文件
+        var path = Path.Combine(_env.WebRootPath, "markdown", entity.Catalog.Name);
+
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+
+        var fileName = entity.Id.ToString() + ".md";
+        await File.WriteAllTextAsync(Path.Combine(path, fileName), entity.Content);
+
         // 发送同步消息
         if (entity.IsPublic)
         {
+            // 构建静态文件
+            _ = Docset.Build(Path.Combine(_env.WebRootPath, "docfx.json"));
             _ = DaprFacade.PublishAsync(Const.PubNewBlog, entity.Id);
         }
         return await base.AddAsync(entity);
@@ -117,6 +136,18 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
                 entity.Tags = tags;
             }
         }
+
+        var path = Path.Combine(_env.WebRootPath, "markdown", entity.Catalog.Name);
+        var fileName = entity.Id.ToString() + ".md";
+        await File.WriteAllTextAsync(Path.Combine(path, fileName), dto.Content);
+
+        // 发布
+        if (entity.IsPublic)
+        {
+            // 构建静态文件
+            _ = Docset.Build(Path.Combine(_env.WebRootPath, "docfx.json"));
+        }
+
         return await base.UpdateAsync(entity, dto);
     }
 
