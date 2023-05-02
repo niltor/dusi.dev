@@ -10,8 +10,9 @@
         <mat-card class="w-100 my-1" *ngFor="let item of blogs">
           <mat-card-header>
             <mat-card-title>
-              <a [routerLink]="['/blogs', item.catalog!.name,item.id+'.html']" target="_blank">
+              <a [routerLink]="['/blogs', item.catalog!.name,item.id+'.html']" target="_blank" matTooltip="在新窗口打开">
                 {{item.title}}
+                <mat-icon class="v-middle" color="primary" >open_in_new</mat-icon>
               </a>
             </mat-card-title>
             <mat-card-subtitle>
@@ -22,7 +23,7 @@
           <mat-card-content [innerHTML]="item.description">
           </mat-card-content>
           <mat-card-actions *ngIf="item.tags">
-            <mat-icon fontSet="material-icons-outlined">local_offer</mat-icon>
+            <mat-icon fontSet="material-icons-outlined" color="accent">local_offer</mat-icon>
             <mat-chip-listbox *ngFor="let tag of item.tags" class="ms-2" matTooltip="标签">
               <mat-chip color="primary">
                 {{tag.name}}

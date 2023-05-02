@@ -32,6 +32,7 @@ export class EditComponent implements OnInit {
   BlogType = BlogType;
   id!: string;
   isLoading = true;
+  isProcessing = false;
   isPreview = false;
   isSplitView = false;
   data = {} as Blog;
@@ -169,17 +170,21 @@ export class EditComponent implements OnInit {
   }
   edit(): void {
     if (this.formGroup.valid) {
+      this.isProcessing = true;
       this.updateData = this.formGroup.value as BlogUpdateDto;
       this.service.update(this.id, this.updateData)
         .subscribe({
           next: (res) => {
             if (res) {
+              this.isProcessing = false;
               this.snb.open('修改成功');
               // this.dialogRef.close(res);
               this.router.navigate(['../../index'], { relativeTo: this.route });
             }
           },
-          error: () => {
+          error: (error) => {
+            this.snb.open(error.detail);
+            this.isProcessing = false;
           }
         });
     }

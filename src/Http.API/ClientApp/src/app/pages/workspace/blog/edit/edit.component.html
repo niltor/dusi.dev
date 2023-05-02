@@ -84,7 +84,8 @@
       <div class="editor row">
         <!-- 输入框 -->
         <mat-form-field class="col">
-          <textarea matInput placeholder="markdown" formControlName="content" style="min-height: 500px;"></textarea>
+          <textarea matInput [cdkTextareaAutosize]="true" placeholder="markdown" formControlName="content"
+            style="min-height: 500px;"></textarea>
         </mat-form-field>
         <!-- 预览 -->
         <markdown class="col p-2" [data]="content?.value" lineNumbers style="min-height: 500px;"></markdown>
@@ -100,7 +101,8 @@
         <ng-template #elseTemplate>
           <!-- 输入框 -->
           <mat-form-field>
-            <textarea matInput placeholder="markdown" formControlName="content" style="min-height: 500px;"></textarea>
+            <textarea matInput [cdkTextareaAutosize]="true" placeholder="markdown" formControlName="content"
+              style="min-height: 500px;"></textarea>
           </mat-form-field>
         </ng-template>
       </div>
@@ -111,7 +113,8 @@
       <mat-slide-toggle class="ms-3" color="primary" formControlName="isOriginal">是否原创</mat-slide-toggle>
     </div>
     <div class="d-flex mt-1">
-      <button class="d-flex flex-column" mat-flat-button color="primary" type="submit" (click)="edit()">保存</button>
+      <button class="d-flex flex-column" mat-flat-button color="primary" type="submit" (click)="edit()"
+        [disabled]="isProcessing">保存</button>
     </div>
   </div>
 </form>

@@ -2,3 +2,13 @@
     width: 800px;
     max-width: 800px;
 }
+
+.mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) .mdc-evolution-chip__text-label {
+    color: #f3f3f3 !important;
+}
+
+.mat-mdc-chip-ripple {
+    background: #4928bfe6;
+    color: #f3f3f3;
+
+}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BlogFilterDto } from 'src/app/share/client/models/blog/blog-filter-dto.model';
 import { BlogItemDto } from 'src/app/share/client/models/blog/blog-item-dto.model';
@@ -8,7 +8,8 @@ import { BlogService } from 'src/app/share/client/services/blog.service';
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
-  styleUrls: ['./blog.component.css']
+  styleUrls: ['./blog.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class BlogComponent {
   isLoading = true;
