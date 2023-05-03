@@ -19,6 +19,8 @@ services:
       - ConnectionStrings__Default=${ASPNETCORE_CONNECTIONSTRINGS}
       - Azure__BlobConnectionString=${AZURE_BLOB_CONNECTIONSTRING}
     restart: always
+    volumes:
+      - "/data/web/markdown:/app/wwwroot/markdown"
     networks:
       - dusi
     ports:
