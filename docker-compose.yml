@@ -17,6 +17,8 @@ services:
       - "ConnectionStrings__Default=Server=localhost;Port=5432;Database=dusi.dev;User Id=postgres;Password=root;"
     networks:
       - dusi
+    volumes:
+      - "/data/web/markdown:/app/wwwroot/markdown"
     ports:
       - "50002:50001"
       - "5200:80"
