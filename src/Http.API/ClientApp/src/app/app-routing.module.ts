@@ -16,9 +16,15 @@ const routes: Routes = [
     },
     {
         path: 'workspace',
+        redirectTo: 'workspace/blog',
+        pathMatch: 'full'
+    },
+    {
+        path: 'workspace',
         loadChildren: () => import('./pages/workspace/workspace.module')
             .then(m => m.WorkspaceModule),
-    }
+    },
+
 ];
 
 @NgModule({
