@@ -131,10 +131,9 @@ public class InitDataTask
         {
             // get alll files in markdown folder
             var files = Directory.GetFiles(Path.Combine(_env.WebRootPath, "markdown"), "*.md", SearchOption.AllDirectories);
-            // get all files name without extension
-            var fileNames = files.Select(f => Path.GetFileNameWithoutExtension(f)).ToList();
+
             // get all blogs from database which not exist in markdown path
-            var blogs = context.Blogs.Where(b => !fileNames.Contains(b.Id.ToString()))
+            var blogs = context.Blogs.Where(b => !files.Contains(Path.Combine(_env.WebRootPath, "markdown", b.Catalog.Name, b.Id.ToString(), ".md")))
                 .Include(b => b.Catalog)
                 .ToList();
 
