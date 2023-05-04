@@ -24,6 +24,7 @@ public class OpenSourceProductController : ClientControllerBase<IOpenSourceProdu
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
+    [AllowAnonymous]
     public async Task<ActionResult<PageList<OpenSourceProductItemDto>>> FilterAsync(OpenSourceProductFilterDto filter)
     {
         return await manager.FilterAsync(filter);

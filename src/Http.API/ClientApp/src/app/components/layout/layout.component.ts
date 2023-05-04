@@ -39,7 +39,7 @@ export class LayoutComponent implements OnInit {
 
   logout(): void {
     this.auth.logout();
-    this.router.navigateByUrl('/index');
+    this.router.navigateByUrl('/login');
     location.reload();
   }
 }

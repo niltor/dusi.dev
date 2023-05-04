@@ -33,6 +33,6 @@ public class BlogItemDto
     /// </summary>
     public Catalog Catalog { get; set; } = default!;
     public List<Tags>? Tags { get; set; }
-
+    public bool IsPublic { get; set; }
     public BlogType BlogType { get; set; }
 }

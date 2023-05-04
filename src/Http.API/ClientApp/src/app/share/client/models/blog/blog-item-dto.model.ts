@@ -27,6 +27,7 @@ export interface BlogItemDto {
    */
   catalog?: Catalog | null;
   tags?: Tags[] | null;
+  isPublic: boolean;
   blogType?: BlogType | null;
 
 }
