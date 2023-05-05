@@ -44,9 +44,7 @@ public static class ServiceExtension
             options.ParseStateValues = true;
             options.IncludeFormattedMessage = true;
             options.IncludeScopes = true;
-#if DEBUG
             options.AddConsoleExporter();
-#endif
         });
         // 返回内容最大长度截取
         int maxLength = 2048;
