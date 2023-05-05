@@ -78,7 +78,6 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
             .SingleOrDefaultAsync(b => b.Id == id);
 
         if (res == null) { return null; }
-        _ = UpdateViewCountAsync(id);
         //await DaprFacade.PublishAsync(Const.PubBlogView, id);
         return res;
     }
@@ -88,7 +87,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    private static async Task UpdateViewCountAsync(Guid id)
+    public async Task UpdateViewCountAsync(Guid id)
     {
         // 统计浏览量,使用缓存
         // 缓存的blog id

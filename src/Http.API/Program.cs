@@ -2,21 +2,17 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Application;
 using Application.Implement;
-using Core.Const;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Share.Options;
-using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
-
 var services = builder.Services;
 var configuration = builder.Configuration;
 services.AddHttpContextAccessor();
-
 
 // 配置
 var azAppConfigConnection = builder.Configuration["AppConfig"];
@@ -200,7 +196,11 @@ services.AddControllersWithViews()
         options.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);
     });
 
+// add middleware
+
+
 var app = builder.Build();
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -219,6 +219,8 @@ else
     //app.UseHsts();
     app.UseHttpsRedirection();
 }
+
+app.UseBlogViewMiddleware();
 app.UseStaticFiles();
 
 // 异常统一处理

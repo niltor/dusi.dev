@@ -25,5 +25,6 @@ public interface IBlogManager : IDomainManager<Blog>
     Task<PageList<BlogItemDto>> FilterAsync(BlogFilterDto filter);
     Task<Blog?> DeleteAsync(Blog entity, bool softDelete = true);
     Task<bool> ExistAsync(Guid id);
+    Task UpdateViewCountAsync(Guid id);
     // TODO: 定义业务方法
 }
