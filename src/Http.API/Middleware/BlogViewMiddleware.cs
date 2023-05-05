@@ -18,14 +18,19 @@ public class BlogViewMiddleware
         var routeValues = context.GetRouteData().Values;
         var requestPath = context.Request.Path.Value;
 
-        var id = requestPath?.Split('/')
-            .LastOrDefault()?
-            .Split('.')
-            .FirstOrDefault();
-
-        if (id != null)
+        if (requestPath != null
+            && requestPath.StartsWith("/blogs")
+            && requestPath.EndsWith(".html"))
         {
-            _ = blogManager.UpdateViewCountAsync(new Guid(id.ToString()));
+            var id = requestPath.Split('/')
+                .LastOrDefault()?
+                .Split('.')
+                .FirstOrDefault();
+
+            if (id != null)
+            {
+                _ = blogManager.UpdateViewCountAsync(new Guid(id.ToString()));
+            }
         }
         // 在此处添加自定义逻辑
         await _next(context);

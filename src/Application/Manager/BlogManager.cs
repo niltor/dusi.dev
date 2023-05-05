@@ -14,7 +14,12 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     private readonly ITagsManager _tagsManager;
     private readonly IWebHostEnvironment _env;
 
-    public BlogManager(DataStoreContext storeContext, IUserContext userContext, ICatalogManager catalogManager, ITagsManager tagsManager, IWebHostEnvironment env) : base(storeContext)
+    public BlogManager(DataStoreContext storeContext,
+                       IUserContext userContext,
+                       ICatalogManager catalogManager,
+                       ITagsManager tagsManager,
+                       IWebHostEnvironment env,
+                       ILogger<BlogManager> logger) : base(storeContext, logger)
     {
         _userContext = userContext;
         _catalogManager = catalogManager;
@@ -89,38 +94,45 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     /// <returns></returns>
     public async Task UpdateViewCountAsync(Guid id)
     {
-        // 统计浏览量,使用缓存
-        // 缓存的blog id
-        HashSet<Guid>? blogIds = await DaprFacade.GetStateAsync<HashSet<Guid>?>(AppConst.BlogViewCacheKey);
-        // 初始添加
-        int ttl = 7 * 24 * 60 * 60;
-        if (blogIds == null)
+        try
         {
-            HashSet<Guid> set = new()
+            // 统计浏览量,使用缓存
+            // 缓存的blog id
+            HashSet<Guid>? blogIds = await DaprFacade.GetStateAsync<HashSet<Guid>?>(AppConst.BlogViewCacheKey);
+            // 初始添加
+            int ttl = 7 * 24 * 60 * 60;
+            if (blogIds == null)
+            {
+                HashSet<Guid> set = new()
             {
                 id
             };
-            await DaprFacade.SaveStateAsync(AppConst.BlogViewCacheKey, set, ttl);
-        }
-        else
-        {
-            // 新数据添加后更新到缓存
-            if (blogIds.Add(id))
+                await DaprFacade.SaveStateAsync(AppConst.BlogViewCacheKey, set, ttl);
+            }
+            else
             {
-                await DaprFacade.SaveStateAsync(AppConst.BlogViewCacheKey, blogIds, ttl);
+                // 新数据添加后更新到缓存
+                if (blogIds.Add(id))
+                {
+                    await DaprFacade.SaveStateAsync(AppConst.BlogViewCacheKey, blogIds, ttl);
+                }
+            }
+            // 数量存缓存
+            int? count = await DaprFacade.GetStateAsync<int?>(AppConst.PrefixBlogView + id.ToString());
+            if (count == null)
+            {
+                // 10分钟
+                await DaprFacade.SaveStateAsync(AppConst.PrefixBlogView + id.ToString(), 1, 10 * 60);
+            }
+            else
+            {
+                count++;
+                await DaprFacade.SaveStateAsync(AppConst.PrefixBlogView + id.ToString(), count, 10 * 60);
             }
         }
-        // 数量存缓存
-        int? count = await DaprFacade.GetStateAsync<int?>(AppConst.PrefixBlogView + id.ToString());
-        if (count == null)
+        catch (Exception ex)
         {
-            // 10分钟
-            await DaprFacade.SaveStateAsync(AppConst.PrefixBlogView + id.ToString(), 1, 10 * 60);
-        }
-        else
-        {
-            count++;
-            await DaprFacade.SaveStateAsync(AppConst.PrefixBlogView + id.ToString(), count, 10 * 60);
+            _logger.LogError("update error:{message}", ex.Message + ex.StackTrace);
         }
     }
 
