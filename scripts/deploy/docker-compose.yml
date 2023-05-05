@@ -21,6 +21,7 @@ services:
     restart: always
     volumes:
       - "/data/web/markdown:/app/wwwroot/markdown"
+      - "/data/web/blogs:/app/wwwroot/blogs"
     networks:
       - dusi
     ports:

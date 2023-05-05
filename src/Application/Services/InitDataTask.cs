@@ -129,17 +129,25 @@ public class InitDataTask
     {
         try
         {
+            var markdownPath = Path.Combine(_env.WebRootPath, "markdown");
+            if (!Directory.Exists(markdownPath))
+            {
+                Directory.CreateDirectory(markdownPath);
+            }
             // get alll files in markdown folder
-            var files = Directory.GetFiles(Path.Combine(_env.WebRootPath, "markdown"), "*.md", SearchOption.AllDirectories);
+            var files = Directory.GetFiles(markdownPath, "*.md", SearchOption.AllDirectories);
+
+            var fileNames = files.Select(f => new FileInfo(f).Directory?.Name ?? "" + Path.GetFileNameWithoutExtension(f))
+                .ToList();
 
             // get all blogs from database which not exist in markdown path
-            var blogs = context.Blogs.Where(b => !files.Contains(Path.Combine(_env.WebRootPath, "markdown", b.Catalog.Name, b.Id.ToString(), ".md")))
+            var blogs = context.Blogs.Where(b => !fileNames.Contains(b.Catalog.Name + b.Id.ToString()))
                 .Include(b => b.Catalog)
                 .ToList();
 
             blogs.ForEach(async (blog) =>
             {
-                var path = Path.Combine(_env.WebRootPath, "markdown", blog.Catalog.Name);
+                var path = Path.Combine(markdownPath, blog.Catalog.Name);
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
