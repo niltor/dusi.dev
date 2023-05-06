@@ -24,6 +24,8 @@ services:
       - "/data/web/blogs:/app/wwwroot/blogs"
     networks:
       - dusi
+    depends_on:
+      - redis
     ports:
       - "50002:50001"
       - "5200:80"
@@ -36,7 +38,6 @@ services:
         "./daprd",
         "-app-id","api",
         "-app-port","80",
-        "-log-level", "debug",
         "-components-path","/components"
       ]
     volumes:
@@ -55,6 +56,8 @@ services:
     restart: always
     networks:
       - dusi
+    depends_on:
+      - redis      
     ports:
       - "50003:50001"
       - "5201:80"
@@ -67,7 +70,6 @@ services:
         "./daprd",
         "-app-id","task",
         "-app-port","80",
-        "-log-level", "debug",
         "-components-path","/components"
       ]
     volumes:
