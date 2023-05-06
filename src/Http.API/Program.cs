@@ -221,8 +221,8 @@ else
     app.UseHttpsRedirection();
 }
 
-app.UseStaticFiles();
 app.UseBlogViewMiddleware();
+app.UseStaticFiles();
 
 // 异常统一处理
 app.UseExceptionHandler(handler =>
