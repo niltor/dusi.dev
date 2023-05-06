@@ -50,6 +50,7 @@ public class UpdateViewCountTask : BackgroundService
     {
         try
         {
+            _logger.LogInformation("⚒️ UpdateViewCountTask...");
             var blogIds = await DaprFacade.GetStateAsync<HashSet<Guid>?>(AppConst.BlogViewCacheKey);
             // 查询要更新blog id
             if (blogIds != null && blogIds.Any())

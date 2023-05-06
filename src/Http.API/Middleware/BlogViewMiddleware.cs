@@ -28,6 +28,8 @@ public class BlogViewMiddleware
                 .LastOrDefault()?
                 .Split('.')
                 .FirstOrDefault();
+
+            _logger.LogInformation("the access blog id:{id}", idstr);
             if (idstr != null)
             {
                 var id = new Guid(idstr);
