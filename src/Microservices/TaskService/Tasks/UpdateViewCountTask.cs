@@ -1,7 +1,10 @@
 ﻿using Application;
 using Application.Services;
+
 using Dapr.Client;
+
 using Microsoft.Extensions.Logging;
+
 using TaskService.Implement.NewsCollector;
 
 namespace TaskService.Tasks;
@@ -72,6 +75,7 @@ public class UpdateViewCountTask : BackgroundService
                         {
                             successIds.Add(new SaveStateItem<int>(item.Key, 0, ""));
                         }
+                        _logger.LogInformation("item:{id} update {count}", item.Key, count);
                     }
                 }
                 // 入库后重置为0
