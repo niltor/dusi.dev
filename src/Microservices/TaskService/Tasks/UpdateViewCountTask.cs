@@ -80,7 +80,11 @@ public class UpdateViewCountTask : BackgroundService
                     }
                 }
                 // 入库后重置为0
-                await DaprFacade.Dapr.SaveBulkStateAsync(AppConst.DefaultStateName, successIds, default);
+                if (successIds.Any())
+                {
+                    await DaprFacade.Dapr.SaveBulkStateAsync(AppConst.DefaultStateName, successIds, default);
+                }
+
             }
         }
         catch (Exception ex)

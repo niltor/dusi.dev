@@ -79,16 +79,16 @@ services:
       - task
     network_mode: "service:task"
 
-  watchtower:
-    image: containrrr/watchtower
-    container_name: watchtower
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /root/.docker/config.json:/config.json
-    command: 
-      [
-        'dusi_task','dusi_api',
-        '--interval','30',
-        '--cleanup'
-      ]
+  # watchtower:
+  #   image: containrrr/watchtower
+  #   container_name: watchtower
+  #   restart: always
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - /root/.docker/config.json:/config.json
+  #   command: 
+  #     [
+  #       'dusi_task','dusi_api',
+  #       '--interval','30',
+  #       '--cleanup'
+  #     ]
