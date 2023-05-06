@@ -22,7 +22,8 @@ RUN dotnet build "Http.API.csproj" -c Release -o /app/build
 FROM node:18.15-alpine AS node
 WORKDIR /src
 COPY ./src/Http.API/ClientApp .
-RUN npm install
+RUN corepack enable pnpm
+RUN pnpm install --force
 RUN npm run build -- --configuration production
 
 
