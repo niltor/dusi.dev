@@ -198,9 +198,7 @@ services.AddControllersWithViews()
 
 // add middleware
 
-
 var app = builder.Build();
-
 
 if (app.Environment.IsDevelopment())
 {
