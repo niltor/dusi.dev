@@ -1,5 +1,7 @@
 ﻿using Application;
 
+using ICSharpCode.Decompiler.IL;
+
 namespace Http.API.Middleware;
 
 /// <summary>
@@ -20,6 +22,7 @@ public class BlogViewMiddleware
         var routeValues = context.GetRouteData().Values;
         var requestPath = context.Request.Path.Value;
 
+        _logger.LogInformation("The requestPath is:{path}", requestPath);
         if (requestPath != null
             && requestPath.StartsWith("/blogs")
             && requestPath.EndsWith(".html"))
