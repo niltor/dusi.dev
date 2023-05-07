@@ -3,10 +3,6 @@ using Application.Services;
 
 using Dapr.Client;
 
-using Microsoft.Extensions.Logging;
-
-using TaskService.Implement.NewsCollector;
-
 namespace TaskService.Tasks;
 
 /// <summary>
@@ -80,7 +76,7 @@ public class UpdateViewCountTask : BackgroundService
                     }
                 }
                 // 入库后重置为0
-                if (successIds.Any())
+                if (successIds != null && successIds.Any())
                 {
                     await DaprFacade.Dapr.SaveBulkStateAsync(AppConst.DefaultStateName, successIds, default);
                 }

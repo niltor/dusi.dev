@@ -31,16 +31,16 @@ jobs:
         docker push ghcr.io/aterdev/dusi-api:latest
 
     - name: SSH Execute Commands
-      uses: JimCronqvist/action-ssh@1.0.0
+      uses: appleboy/ssh-action@v0.1.10
       with:
-        # Command(s) to execute on the remote server.
-        command: |
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE }}
+        script: |
           cd /data/run
           docker-compose pull api
           docker-compose -p dusi up -d 
           docker rmi $(docker images -f "dangling=true" -q)
-        hosts: ${{ secrets.SSH_HOST }}
-        privateKey: ${{ secrets.SSH_PRIVATE }}
         debug: true
        
         
