@@ -41,3 +41,4 @@ jobs:
           docker rmi $(docker images -f "dangling=true" -q)
         hosts: ${{ secrets.SSH_HOST }}
         privateKey: ${{ secrets.SSH_PRIVATE }}
+        debug: true
