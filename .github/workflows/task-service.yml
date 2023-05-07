@@ -38,7 +38,7 @@ jobs:
         password: ${{ secrets.SSH_PASSWORD }}
         script: |
           cd /data/run
-          docker-compose pull api
+          docker-compose pull task
           docker-compose -p dusi up -d 
           docker rmi $(docker images -f "dangling=true" -q)
         debug: true
