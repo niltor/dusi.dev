@@ -15,9 +15,6 @@ services:
   api:
     image: ghcr.io/aterdev/dusi-api:latest
     container_name: dusi_api
-    environment:
-      - ConnectionStrings__Default=${ASPNETCORE_CONNECTIONSTRINGS}
-      - Azure__BlobConnectionString=${AZURE_BLOB_CONNECTIONSTRING}
     restart: always
     volumes:
       - "/data/web/markdown:/app/wwwroot/markdown"
@@ -50,9 +47,6 @@ services:
   task:
     image: ghcr.io/aterdev/dusi-task:latest
     container_name: dusi_task
-    environment:
-      - ConnectionStrings__Default=${ASPNETCORE_CONNECTIONSTRINGS}
-      - Azure__BlobConnectionString=${AZURE_BLOB_CONNECTIONSTRING}
     restart: always
     networks:
       - dusi
@@ -78,17 +72,3 @@ services:
       - redis
       - task
     network_mode: "service:task"
-
-  # watchtower:
-  #   image: containrrr/watchtower
-  #   container_name: watchtower
-  #   restart: always
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - /root/.docker/config.json:/config.json
-  #   command: 
-  #     [
-  #       'dusi_task','dusi_api',
-  #       '--interval','30',
-  #       '--cleanup'
-  #     ]

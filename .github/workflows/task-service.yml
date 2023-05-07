@@ -28,5 +28,16 @@ jobs:
     - name: docker tag & push
       run: |
         docker tag dusi-task:latest ghcr.io/aterdev/dusi-task:latest
-        
         docker push ghcr.io/aterdev/dusi-task:latest
+
+    - name: SSH Execute Commands
+      uses: JimCronqvist/action-ssh@1.0.0
+      with:
+        # Command(s) to execute on the remote server.
+        command: |
+          cd /data/run
+          docker-compose pull task
+          docker-compose -p dusi up -d 
+          docker rmi $(docker images -f "dangling=true" -q)
+        hosts: ${{ secrets.SSH_HOST }}
+        privateKey: ${{ secrets.SSH_PRIVATE }}
