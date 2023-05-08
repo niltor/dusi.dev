@@ -10,5 +10,14 @@
 .mat-mdc-chip-ripple {
     background: #4928bfe6;
     color: #f3f3f3;
+    cursor: pointer;
 
+}
+
+.mdc-evolution-chip__action--presentational {
+    cursor: pointer !important;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+    display: none;
 }

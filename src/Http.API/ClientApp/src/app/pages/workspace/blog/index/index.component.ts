@@ -25,6 +25,7 @@ export class IndexComponent implements OnInit {
   dataSource!: MatTableDataSource<BlogItemDto>;
   filter: BlogFilterDto;
   pageSizeOption = [12, 20, 50];
+  searchKey: string | null = null;
   constructor(
     private service: BlogService,
     private snb: MatSnackBar,
@@ -98,46 +99,6 @@ export class IndexComponent implements OnInit {
         }
       });
   }
-
-  /*
-  openAddDialog(): void {
-    const ref = this.dialog.open(AddComponent, {
-      hasBackdrop: true,
-      disableClose: false,
-      data: {
-      }
-    });
-    ref.afterClosed().subscribe(res => {
-      if (res) {
-        this.snb.open('添加成功');
-        this.getList();
-      }
-    });
-  }
-  openDetailDialog(id: string): void {
-    const ref = this.dialog.open(DetailComponent, {
-      hasBackdrop: true,
-      disableClose: false,
-      data: { id }
-    });
-    ref.afterClosed().subscribe(res => {
-      if (res) { }
-    });
-  }
-  
-  openEditDialog(id: string): void {
-    const ref = this.dialog.open(EditComponent, {
-      hasBackdrop: true,
-      disableClose: false,
-      data: { id }
-    });
-    ref.afterClosed().subscribe(res => {
-      if (res) {
-        this.snb.open('修改成功');
-        this.getList();
-      }
-    });
-  }*/
 
   /**
    * 编辑

@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { MatChipListboxChange } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BlogFilterDto } from 'src/app/share/client/models/blog/blog-filter-dto.model';
 import { BlogItemDto } from 'src/app/share/client/models/blog/blog-item-dto.model';
@@ -19,7 +20,7 @@ export class BlogComponent {
   filter: BlogFilterDto;
   pageIndex = 1;
   count = 0;
-
+  searchKey: string | null = null;
   constructor(
     private service: BlogService,
     private snb: MatSnackBar
@@ -32,10 +33,10 @@ export class BlogComponent {
 
   ngOnInit(): void {
     this.getTypes();
-    this.getNews();
+    this.getBlogs();
   }
 
-  getNews(): void {
+  getBlogs(): void {
     this.service.publicBlogs(this.filter)
       .subscribe({
         next: (res) => {
@@ -71,7 +72,19 @@ export class BlogComponent {
 
   selectblogsType(type: number | null): void {
     this.filter.blogType = type;
-    this.getNews();
+    this.getBlogs();
+  }
+  selectTag(tag: string): void {
+    this.filter.tag = tag;
+    this.getBlogs();
   }
 
+  cancelTag(): void {
+    this.filter.tag = null;
+    this.getBlogs();
+  }
+  clearFilter() {
+    this.filter.title = null;
+    this.getBlogs();
+  }
 }

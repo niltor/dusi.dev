@@ -190,7 +190,6 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     public async Task<List<Guid>?> GetBlogIdsByTagAsync(string tag)
     {
         return await Query.Context.Tags.Where(t => t.Name == tag)
-            .Where(t => t.User.Id == _userContext.UserId)
             .SelectMany(t => t.Blogs!)
             .Select(t => t.Id)
             .ToListAsync();

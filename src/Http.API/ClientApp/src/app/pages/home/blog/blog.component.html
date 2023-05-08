@@ -1,4 +1,5 @@
-<div class="container d-flex">
+<div class="container d-flex" style="padding-bottom: 32px;">
+
   <section class="blogs p-2">
     <!-- 博客 -->
     <div class="d-flex text-center justify-content-center mt-2" *ngIf="isLoading">
@@ -6,13 +7,32 @@
       </mat-spinner>
     </div>
     <section *ngIf="!isLoading">
+      <div class="d-flex align-items-center">
+        <mat-icon matTooltip="筛选" fontSet="material-icons-outlined">
+          filter_alt
+        </mat-icon>
+        <mat-chip *ngIf="filter.tag" matTooltip="取消标签筛选" class="ms-2" (click)="cancelTag()">
+          {{filter.tag}}
+        </mat-chip>
+        <!-- insert flex 1 1 auto  as divider -->
+        <span style="display:flex;flex:1 1 auto"></span>
+        <mat-form-field class="ms-2">
+          <mat-label>搜索博客</mat-label>
+          <input matInput [(ngModel)]="filter.title" (keyup.enter)="getBlogs()" placeholder="搜索标题，按回车确认"
+            (close)="clearFilter()">
+          <button *ngIf="filter.title" matSuffix mat-icon-button aria-label="clear" (click)="clearFilter()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
       <ng-container *ngIf="blogs.length>0; else elseTemplate">
+
         <mat-card class="w-100 my-1" *ngFor="let item of blogs">
           <mat-card-header>
             <mat-card-title>
               <a [routerLink]="['/blogs', item.catalog!.name,item.id+'.html']" target="_blank" matTooltip="在新窗口打开">
                 {{item.title}}
-                <mat-icon class="v-middle" color="primary" >open_in_new</mat-icon>
+                <mat-icon class="v-middle" color="primary">open_in_new</mat-icon>
               </a>
             </mat-card-title>
             <mat-card-subtitle>
@@ -24,8 +44,8 @@
           </mat-card-content>
           <mat-card-actions *ngIf="item.tags">
             <mat-icon fontSet="material-icons-outlined" color="accent">local_offer</mat-icon>
-            <mat-chip-listbox *ngFor="let tag of item.tags" class="ms-2" matTooltip="标签">
-              <mat-chip color="primary">
+            <mat-chip-listbox class="ms-2">
+              <mat-chip color="primary" *ngFor="let tag of item.tags" (click)="selectTag(tag.name)">
                 {{tag.name}}
               </mat-chip>
             </mat-chip-listbox>
@@ -35,7 +55,7 @@
       <ng-template #elseTemplate>
         <div class="p-2">
           <h4>
-            暂无内容！
+            暂无内容，请尝试刷新页面！
           </h4>
         </div>
       </ng-template>
