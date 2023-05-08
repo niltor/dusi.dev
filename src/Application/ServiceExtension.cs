@@ -1,5 +1,7 @@
 ﻿using Application;
+
 using Microsoft.AspNetCore.Http;
+
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;

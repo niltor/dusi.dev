@@ -39,11 +39,10 @@ services:
       ]
     volumes:
       - "./scripts/components/:/components"
-
     depends_on:
       - redis
       - api
-    network_mode: "service:api"
+    networks: "service:api"
 
   task:
     image: dusi-task:latest

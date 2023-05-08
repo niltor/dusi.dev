@@ -1,5 +1,7 @@
 ﻿using Application;
 
+using ICSharpCode.Decompiler.IL;
+
 namespace Http.API.Middleware;
 
 /// <summary>
@@ -28,6 +30,8 @@ public class BlogViewMiddleware
                 .LastOrDefault()?
                 .Split('.')
                 .FirstOrDefault();
+
+            _logger.LogInformation("the access blog id:{id}", idstr);
             if (idstr != null)
             {
                 var id = new Guid(idstr);
@@ -54,6 +58,7 @@ public class BlogViewMiddleware
                             await DaprFacade.SaveStateAsync(AppConst.BlogViewCacheKey, blogIds, ttl);
                         }
                     }
+                    _logger.LogInformation("new blog view id:{id}", id);
                     // 数量存缓存
                     int? count = await DaprFacade.GetStateAsync<int?>(AppConst.PrefixBlogView + id.ToString());
                     if (count == null)
@@ -66,6 +71,7 @@ public class BlogViewMiddleware
                         count++;
                         await DaprFacade.SaveStateAsync(AppConst.PrefixBlogView + id.ToString(), count, 10 * 60);
                     }
+                    _logger.LogInformation("view count:{count}", count);
                 }
                 catch (Exception ex)
                 {

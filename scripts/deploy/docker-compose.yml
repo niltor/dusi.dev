@@ -15,15 +15,14 @@ services:
   api:
     image: ghcr.io/aterdev/dusi-api:latest
     container_name: dusi_api
-    environment:
-      - ConnectionStrings__Default=${ASPNETCORE_CONNECTIONSTRINGS}
-      - Azure__BlobConnectionString=${AZURE_BLOB_CONNECTIONSTRING}
     restart: always
     volumes:
       - "/data/web/markdown:/app/wwwroot/markdown"
       - "/data/web/blogs:/app/wwwroot/blogs"
     networks:
       - dusi
+    depends_on:
+      - redis
     ports:
       - "50002:50001"
       - "5200:80"
@@ -36,7 +35,6 @@ services:
         "./daprd",
         "-app-id","api",
         "-app-port","80",
-        "-log-level", "debug",
         "-components-path","/components"
       ]
     volumes:
@@ -49,12 +47,11 @@ services:
   task:
     image: ghcr.io/aterdev/dusi-task:latest
     container_name: dusi_task
-    environment:
-      - ConnectionStrings__Default=${ASPNETCORE_CONNECTIONSTRINGS}
-      - Azure__BlobConnectionString=${AZURE_BLOB_CONNECTIONSTRING}
     restart: always
     networks:
       - dusi
+    depends_on:
+      - redis      
     ports:
       - "50003:50001"
       - "5201:80"
@@ -67,7 +64,6 @@ services:
         "./daprd",
         "-app-id","task",
         "-app-port","80",
-        "-log-level", "debug",
         "-components-path","/components"
       ]
     volumes:
@@ -76,17 +72,3 @@ services:
       - redis
       - task
     network_mode: "service:task"
-
-  watchtower:
-    image: containrrr/watchtower
-    container_name: watchtower
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /root/.docker/config.json:/config.json
-    command: 
-      [
-        'dusi_task','dusi_api',
-        '--interval','30',
-        '--cleanup'
-      ]

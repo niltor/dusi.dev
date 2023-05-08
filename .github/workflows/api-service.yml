@@ -28,5 +28,19 @@ jobs:
     - name: docker tag & push
       run: |
         docker tag dusi-api:latest ghcr.io/aterdev/dusi-api:latest
-        
         docker push ghcr.io/aterdev/dusi-api:latest
+
+    - name: SSH Execute Commands
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: |
+          cd /data/run
+          docker-compose pull api
+          docker-compose -p dusi up -d 
+          docker rmi $(docker images -f "dangling=true" -q)
+        debug: true
+       
+        

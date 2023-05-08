@@ -1,8 +1,7 @@
 ﻿using Application;
 using Application.Services;
+
 using Dapr.Client;
-using Microsoft.Extensions.Logging;
-using TaskService.Implement.NewsCollector;
 
 namespace TaskService.Tasks;
 
@@ -47,6 +46,7 @@ public class UpdateViewCountTask : BackgroundService
     {
         try
         {
+            _logger.LogInformation("⚒️ UpdateViewCountTask...");
             var blogIds = await DaprFacade.GetStateAsync<HashSet<Guid>?>(AppConst.BlogViewCacheKey);
             // 查询要更新blog id
             if (blogIds != null && blogIds.Any())
@@ -72,10 +72,15 @@ public class UpdateViewCountTask : BackgroundService
                         {
                             successIds.Add(new SaveStateItem<int>(item.Key, 0, ""));
                         }
+                        _logger.LogInformation("item:{id} update {count}", item.Key, count);
                     }
                 }
                 // 入库后重置为0
-                await DaprFacade.Dapr.SaveBulkStateAsync(AppConst.DefaultStateName, successIds, default);
+                if (successIds != null && successIds.Any())
+                {
+                    await DaprFacade.Dapr.SaveBulkStateAsync(AppConst.DefaultStateName, successIds, default);
+                }
+
             }
         }
         catch (Exception ex)

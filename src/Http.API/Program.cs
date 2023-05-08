@@ -1,12 +1,15 @@
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+
 using Application;
 using Application.Implement;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+
 using Share.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -218,8 +221,8 @@ else
     app.UseHttpsRedirection();
 }
 
-app.UseStaticFiles();
 app.UseBlogViewMiddleware();
+app.UseStaticFiles();
 
 // 异常统一处理
 app.UseExceptionHandler(handler =>
@@ -246,9 +249,9 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
+app.UseCloudEvents();
+app.MapControllers();
+app.MapSubscribeHandler();
 app.MapFallbackToFile("index.html");
 
 using (app)
