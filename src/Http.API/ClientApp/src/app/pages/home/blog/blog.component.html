@@ -7,9 +7,9 @@
       </mat-spinner>
     </div>
     <section *ngIf="!isLoading">
-      <div class="d-flex align-items-center">
-        <mat-icon matTooltip="筛选" fontSet="material-icons-outlined">
-          filter_alt
+      <div class="d-flex align-items-center my-1">
+        <mat-icon matTooltip="筛选" fontSet="material-icons-outlined" color="primary">
+          filter_list
         </mat-icon>
         <mat-chip *ngIf="filter.tag" matTooltip="取消标签筛选" class="ms-2" (click)="cancelTag()">
           {{filter.tag}}
