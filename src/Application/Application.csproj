@@ -34,10 +34,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.DocAsCode.App" Version="2.66.2" />
-		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.27.0" />
-		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.27.0" />
-		<PackageReference Include="Azure.Storage.Blobs" Version="12.15.0" />
+		<PackageReference Include="Microsoft.DocAsCode.App" Version="2.67.0" />
+		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.30.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.30.0" />
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.16.0" />
 		<PackageReference Include="Dapr.Client" Version="1.10.0" />
 		<PackageReference Include="OpenTelemetry" Version="1.4.0" />
 		<PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.4.0" />

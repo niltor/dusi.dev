@@ -155,7 +155,9 @@ public class InitDataTask
                 var fileName = blog.Id.ToString() + ".md";
                 await File.WriteAllTextAsync(Path.Combine(path, fileName), blog.Content);
             });
-            await Docset.Build(Path.Combine(_env.WebRootPath, "docfx.json"));
+            await Docset.Build(Path.Combine(_env.WebRootPath, "docfx.json"), new BuildOptions
+            {
+            });
         }
         catch (Exception ex)
         {
