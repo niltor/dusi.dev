@@ -82,7 +82,6 @@ public class EntityModelController : ClientControllerBase<IEntityModelManager>
     /// <param name="description"></param>
     /// <returns>[]</returns>
     [HttpGet("generate")]
-    [AllowAnonymous]
     public async Task<List<string>?> GenerateAsync(string name, string? description = null)
     {
         return await manager.GenerateEntityAsync(name, description);
