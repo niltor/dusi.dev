@@ -76,6 +76,19 @@ public class EntityModelController : ClientControllerBase<IEntityModelManager>
     }
 
     /// <summary>
+    /// 生成模型
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="description"></param>
+    /// <returns>[]</returns>
+    [HttpGet("generate")]
+    [AllowAnonymous]
+    public async Task<List<string>?> GenerateAsync(string name, string? description = null)
+    {
+        return await manager.GenerateEntityAsync(name, description);
+    }
+
+    /// <summary>
     /// ⚠删除
     /// </summary>
     /// <param name="id"></param>

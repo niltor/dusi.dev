@@ -50,9 +50,6 @@ services.AddDbContextPool<CommandDbContext>(option =>
     });
 });
 
-// TODO:临时使用内存缓存
-services.AddDistributedMemoryCache();
-
 services.Configure<AzureOption>(configuration.GetSection("Azure"));
 
 // 注入选项及自定义服务
@@ -62,6 +59,8 @@ services.AddSingleton<StorageService>();
 services.AddDataStore();
 services.AddManager();
 services.AddDaprClient();
+
+services.AddHttpClient<OpenAIClient>();
 
 #region OpenTelemetry:log/trace/metric
 var otlpEndpoint = configuration.GetSection("OTLP")

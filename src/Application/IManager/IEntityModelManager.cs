@@ -15,5 +15,6 @@ public interface IEntityModelManager : IDomainManager<EntityModel>
     Task<PageList<EntityModelItemDto>> FilterAsync(EntityModelFilterDto filter);
     Task<EntityModel?> DeleteAsync(EntityModel entity, bool softDelete = true);
     Task<bool> ExistAsync(Guid id);
+    Task<List<string>?> GenerateEntityAsync(string entityName, string? description = null);
     // TODO: 定义业务方法
 }
