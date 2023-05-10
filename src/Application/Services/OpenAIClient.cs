@@ -45,7 +45,11 @@ public class OpenAIClient
                     Role="assistant"
                 },
                 new Message($"生成【{name}】的实体类型，包含常见业务属性；遵循EF Core 实体类型定义规范；遵循C#11语法特性; 添加类注释和属性注释; 添加必要的索引和字段长度特性"),
-                new Message($"注意避免编辑器nullable警告;时间类型使用DateTimeOffset;{description}")
+
+                new Message("不包含主键属性;不在属性上添加[Required]特性;不包含命名空间代码"){
+                    Role="assistant"
+                },
+                new Message($"时间类型使用DateTimeOffset;{description}")
             },
             N = 2
         };

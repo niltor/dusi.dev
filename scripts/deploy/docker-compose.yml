@@ -19,6 +19,9 @@ services:
     volumes:
       - "/data/web/markdown:/app/wwwroot/markdown"
       - "/data/web/blogs:/app/wwwroot/blogs"
+    environment:
+      - AppConfig=${AppConfig}
+
     networks:
       - dusi
     depends_on:
@@ -50,6 +53,8 @@ services:
     restart: always
     networks:
       - dusi
+    environment:
+      - AppConfig=${AppConfig}
     depends_on:
       - redis      
     ports:
