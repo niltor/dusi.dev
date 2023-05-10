@@ -11,15 +11,22 @@ public class OpenAIClient
     private readonly HttpClient Client;
     private readonly IConfiguration _configuration;
 
-    public OpenAIClient(HttpClient client, IConfiguration configuration)
+    ILogger<OpenAIClient> _logger;
+
+    public OpenAIClient(HttpClient client, IConfiguration configuration, ILogger<OpenAIClient> logger)
     {
         _configuration = configuration;
+        _logger = logger;
         var apiKey = _configuration.GetValue<string>("Azure:OpenAIKey");
-
+        if (string.IsNullOrWhiteSpace(apiKey))
+        {
+            _logger.LogError("openai key is null");
+        }
         client.BaseAddress = new Uri("https://api.openai.com/");
         client.DefaultRequestHeaders.Add("Accept", "application/json");
         client.DefaultRequestHeaders.Add("Authorization", "Bearer " + apiKey);
         Client = client;
+
     }
 
     /// <summary>
