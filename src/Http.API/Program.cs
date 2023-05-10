@@ -30,6 +30,10 @@ if (!string.IsNullOrEmpty(azAppConfigConnection))
             });
     });
 }
+else
+{
+    Console.WriteLine("the az AppConfig is null");
+}
 builder.Services.AddAzureAppConfiguration();
 // database sql
 string? connectionString = configuration.GetConnectionString("Default");
