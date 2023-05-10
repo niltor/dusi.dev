@@ -39,8 +39,7 @@ jobs:
         script: |
           cd /data/run
           docker-compose pull task
-          docker-compose -p dusi stop task-dapr
-          docker-compose -p dusi rm --force
+          docker-compose -p dusi down
           docker-compose -p dusi up -d 
           docker rmi $(docker images -f "dangling=true" -q)
         debug: true
