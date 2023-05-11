@@ -119,7 +119,7 @@
     </div>
 
     <div class="d-flex mt-1">
-      <button class="d-flex flex-column" mat-flat-button color="primary" (click)="add()">保存</button>
+      <button class="d-flex flex-column" mat-flat-button color="primary" (click)="add()" [disabled]="isProcessing">保存</button>
     </div>
   </div>
 </form>

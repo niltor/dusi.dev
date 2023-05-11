@@ -59,26 +59,31 @@ public class EntityModelManager : DomainManagerBase<EntityModel, EntityModelUpda
         if (entity == null)
         {
             var data = await openAIClient.GetEntityAsync(entityName, description);
-            string pattern = @"(?<=```\s*).*?(?=```)";
-            data?.Select(d => d.Message.Content).ToList()
-                .ForEach(msg =>
-                {
-                    Match match = Regex.Match(msg, pattern, RegexOptions.Singleline);
-                    if (match.Success)
-                    {
-
-                        if (match.Value.StartsWith("csharp"))
-                        {
-                            res.Add(match.Value.Replace("csharp", ""));
-                        }
-                        else
-                        {
-                            res.Add(match.Value);
-                        }
-                    }
-                });
-            return res;
+            res = data?.Select(d => d.Message.Content).ToList();
         }
-        return new List<string> { entity.CodeContent ?? "" };
+        else
+        {
+            res.Add(entity.CodeContent!);
+        }
+
+        var contents = new List<string>();
+        string pattern = @"(?<=```\s*).*?(?=```)";
+        res?.ForEach(msg =>
+        {
+            Match match = Regex.Match(msg, pattern, RegexOptions.Singleline);
+            if (match.Success)
+            {
+
+                if (match.Value.StartsWith("csharp"))
+                {
+                    contents.Add(match.Value.Replace("csharp", ""));
+                }
+                else
+                {
+                    contents.Add(match.Value);
+                }
+            }
+        });
+        return contents;
     }
 }
