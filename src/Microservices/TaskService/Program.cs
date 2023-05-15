@@ -46,7 +46,7 @@ services.AddDbContextPool<CommandDbContext>(option =>
     });
 });
 
-
+services.AddHttpContextAccessor();
 services.Configure<AzureOption>(configuration.GetSection("Azure"));
 services.Configure<MetaWeblogOption>(configuration.GetSection("Options:Cnblog"));
 
