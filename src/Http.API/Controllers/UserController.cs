@@ -10,16 +10,19 @@ public class UserController : ClientControllerBase<IUserManager>
 {
     private readonly IConfiguration _config;
     private readonly ISystemUserManager systemUserManager;
+    private readonly OpenAIClient openAIClient;
 
     public UserController(
         IUserContext user,
         ILogger<UserController> logger,
         IUserManager manager,
         IConfiguration config,
-        ISystemUserManager systemUserManager) : base(manager, user, logger)
+        ISystemUserManager systemUserManager,
+        OpenAIClient openAIClient) : base(manager, user, logger)
     {
         _config = config;
         this.systemUserManager = systemUserManager;
+        this.openAIClient = openAIClient;
     }
 
     /// <summary>
@@ -144,13 +147,31 @@ public class UserController : ClientControllerBase<IUserManager>
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    // [ApiExplorerSettings(IgnoreApi = true)]
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpDelete("{id}")]
     public async Task<ActionResult<User?>> DeleteAsync([FromRoute] Guid id)
     {
-        // 实现删除逻辑,注意删除权限
         var entity = await manager.GetOwnedAsync(id);
-        if (entity == null) return NotFound();
+        if (entity == null) return Forbid("无法删除当前用户");
         return await manager.DeleteAsync(entity, false);
+    }
+
+
+    /// <summary>
+    /// chat
+    /// </summary>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    [HttpGet("chat")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public async Task<ActionResult<string>> ChatAsync(string content)
+    {
+        var choices = await openAIClient.ResponseChatAsync(content);
+
+        if (choices != null && choices.Count > 0)
+        {
+            return choices[0].Message.Content;
+        }
+        return NoContent();
     }
 }

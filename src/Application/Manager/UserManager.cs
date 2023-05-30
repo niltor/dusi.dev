@@ -49,12 +49,8 @@ public class UserManager : DomainManagerBase<User, UserUpdateDto, UserFilterDto,
     /// <returns></returns>
     public async Task<User?> GetOwnedAsync(Guid id)
     {
-        IQueryable<User> query = Command.Db.Where(q => q.Id == id);
-        if (!_userContext.IsAdmin)
-        {
-            // TODO:属于当前角色的对象
-            // query = query.Where(q => q.User.Id == _userContext.UserId);
-        }
+        if (id != _userContext.UserId) return null;
+        IQueryable<User> query = Command.Db.Where(q => q.Id == _userContext.UserId);
         return await query.FirstOrDefaultAsync();
     }
 

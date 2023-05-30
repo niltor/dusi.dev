@@ -65,6 +65,36 @@ public class OpenAIClient
         return default;
     }
 
+    /// <summary>
+    /// 对话
+    /// </summary>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public async Task<List<Choice>?> ResponseChatAsync(string content)
+    {
+        var requestData = new GPTRequest
+        {
+            Messages = new List<Message> {
+                new Message("You are a wise and rational polymath who enjoys chatting with other people, your name is freedom, and You are simulating a real human being having a conversation!") {
+                    Role = "system"
+                },
+                new Message("content"),
+            },
+            N = 1,
+            Max_tokens = 100,
+            Temperature = 0.1
+        };
+        var response = await Client.PostAsJsonAsync("/v1/chat/completions", requestData);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var data = await response.Content.ReadFromJsonAsync<JsonElement>();
+            // get [choices field] from data JsonElement
+            var choices = data.GetProperty("choices").Deserialize<List<Choice>>();
+            return choices;
+        }
+        return default;
+    }
     public class Message
     {
         [JsonPropertyName("role")]
@@ -88,6 +118,8 @@ public class OpenAIClient
         public int N { get; set; } = 1;
         [JsonPropertyName("max_tokens")]
         public int Max_tokens { get; set; } = 1500;
+        [JsonPropertyName("temperature")]
+        public double Temperature { get; set; } = 1;
     }
 
     public class Choice
