@@ -1,6 +1,4 @@
 using System.Security.Claims;
-using Core.Const;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Share.Models.AuthDtos;
 using Share.Models.UserDtos;
 namespace Http.API.Controllers;

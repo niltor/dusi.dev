@@ -26,3 +26,4 @@ public class SystemRole : EntityBase
 
     public ICollection<SystemUser>? Users { get; set; }
 }
+

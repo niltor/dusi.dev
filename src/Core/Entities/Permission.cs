@@ -17,6 +17,4 @@ public class Permission : EntityBase
     public string? PermissionPath { get; set; }
     public List<SystemRole>? Roles { get; set; }
     public List<RolePermission>? RolePermissions { get; set; }
-
-
 }
