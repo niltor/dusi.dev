@@ -1,6 +1,4 @@
-using Core.Const;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.DocAsCode;
 using Microsoft.Extensions.Configuration;
 
 namespace Application.Services;
@@ -36,7 +34,7 @@ public class InitDataTask
                 }
                 await UpdateAsync(context, configuration, logger);
                 var env = provider.GetRequiredService<IWebHostEnvironment>();
-                await UpdateStaticFiles(context, env, logger);
+                UpdateStaticFiles(context, env, logger);
             }
         }
         catch (Exception ex)
@@ -53,12 +51,12 @@ public class InitDataTask
         SystemRole role = new()
         {
             Name = "Admin",
-            NameValue = Const.Admin
+            NameValue = AppConst.Admin
         };
         SystemRole userRole = new()
         {
             Name = "User",
-            NameValue = Const.User
+            NameValue = AppConst.User
         };
         string salt = HashCrypto.BuildSalt();
         SystemUser user = new()
@@ -84,14 +82,14 @@ public class InitDataTask
     public static async Task UpdateAsync(CommandDbContext context, IConfiguration configuration, ILogger<InitDataTask> logger)
     {
         // 查询库中版本
-        WebConfig? version = await context.WebConfigs.Where(c => c.Key == Const.Version).FirstOrDefaultAsync();
+        WebConfig? version = await context.WebConfigs.Where(c => c.Key == AppConst.Version).FirstOrDefaultAsync();
         if (version == null)
         {
             WebConfig config = new()
             {
                 IsSystem = true,
                 Valid = true,
-                Key = Const.Version,
+                Key = AppConst.Version,
                 // 版本格式:yyMMdd.编号
                 Value = DateTime.UtcNow.ToString("yyMMdd") + ".01"
             };
@@ -100,7 +98,7 @@ public class InitDataTask
             version = config;
         }
         // 比对新版本
-        string? newVersion = configuration.GetValue<string>(Const.Version);
+        string? newVersion = configuration.GetValue<string>(AppConst.Version);
 
         if (double.TryParse(newVersion, out double newVersionValue)
             && double.TryParse(version.Value, out double versionValue))
@@ -125,7 +123,7 @@ public class InitDataTask
     /// <param name="_env"></param>
     /// <param name="logger"></param>
     /// <returns></returns>
-    public static async Task UpdateStaticFiles(CommandDbContext context, IWebHostEnvironment _env, ILogger<InitDataTask> logger)
+    public static void UpdateStaticFiles(CommandDbContext context, IWebHostEnvironment _env, ILogger<InitDataTask> logger)
     {
         try
         {

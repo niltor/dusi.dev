@@ -58,7 +58,7 @@ public class UserController : ClientControllerBase<IUserManager>
                     TokenExpires = 60 * 24 * 7,
                 };
 
-                var roles = new string[] { Const.User, user.UserType.ToString() };
+                var roles = new string[] { AppConst.User, user.UserType.ToString() };
                 jwt.Claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.UserName),

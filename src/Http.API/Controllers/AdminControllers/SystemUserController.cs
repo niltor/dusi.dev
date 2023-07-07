@@ -1,11 +1,10 @@
-using Core.Const;
 using Share.Models.SystemUserDtos;
 namespace Http.API.Controllers.AdminControllers;
 
 /// <summary>
 /// 系统用户
 /// </summary>
-[Authorize(Const.Admin)]
+[Authorize(AppConst.Admin)]
 public class SystemUserController : RestControllerBase<ISystemUserManager>
 {
     public SystemUserController(

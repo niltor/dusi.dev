@@ -107,10 +107,10 @@ services.AddAuthentication(options =>
 // 验证
 services.AddAuthorization(options =>
 {
-    options.AddPolicy(Const.User, policy =>
-        policy.RequireRole(Const.Admin, Const.User));
-    options.AddPolicy(Const.Admin, policy =>
-        policy.RequireRole(Const.Admin));
+    options.AddPolicy(AppConst.User, policy =>
+        policy.RequireRole(AppConst.Admin, AppConst.User));
+    options.AddPolicy(AppConst.Admin, policy =>
+        policy.RequireRole(AppConst.Admin));
 });
 
 // cors配置 

@@ -1,7 +1,5 @@
-﻿using System.Security.Cryptography.Xml;
-using Application;
+﻿using Application.Const;
 using Application.IManager;
-using Core.Const;
 using Dapr;
 using Microsoft.AspNetCore.Mvc;
 using TaskService.Implement.PostBlog;
@@ -25,7 +23,7 @@ public class SubscribeController : ControllerBase
         this.blogManager = blogManager;
     }
 
-    [Topic(AppConst.DefaultPubSubName, Const.PubNewBlog)]
+    [Topic(AppConst.DefaultPubSubName, AppConst.PubNewBlog)]
     [HttpPost("/blog")]
     public async Task<ActionResult> NewBlog([FromBody] Guid id)
     {

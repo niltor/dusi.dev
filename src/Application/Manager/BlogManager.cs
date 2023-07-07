@@ -1,6 +1,4 @@
-using System.IO;
 using Application.Services;
-using Core.Const;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.DocAsCode;
 using Share.Models.BlogDtos;
@@ -70,7 +68,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
         {
             // 构建静态文件
             _ = Docset.Build(Path.Combine(_env.WebRootPath, "docfx.json"));
-            _ = DaprFacade.PublishAsync(Const.PubNewBlog, entity.Id);
+            _ = DaprFacade.PublishAsync(AppConst.PubNewBlog, entity.Id);
         }
         return await base.AddAsync(entity);
     }

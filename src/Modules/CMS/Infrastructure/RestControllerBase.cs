@@ -1,14 +1,13 @@
-﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-namespace Http.API.Infrastructure;
+namespace CMS.Infrastructure;
 
 /// <summary>
 /// 管理后台权限控制器
 /// </summary>
 [Route("api/admin/[controller]")]
+[Authorize(AppConst.AdminUser)]
 [ApiExplorerSettings(GroupName = "admin")]
-[Authorize(AppConst.Admin)]
 public class RestControllerBase<TManager> : RestControllerBase
      where TManager : class
 {
@@ -27,10 +26,19 @@ public class RestControllerBase<TManager> : RestControllerBase
         _logger = logger;
     }
 
+    /*
     protected async Task<SystemUser?> GetUserAsync()
     {
         return await _user.GetSystemUserAsync();
     }
+    */
+
+    // TODO:角色权限
+    public virtual bool HasPermission()
+    {
+        return true;
+    }
+
 }
 
 /// <summary>
@@ -56,11 +64,12 @@ public class ClientControllerBase<TManager> : RestControllerBase
         _user = user;
         _logger = logger;
     }
-
+    /*
     protected async Task<User?> GetUserAsync()
     {
         return await _user.GetUserAsync();
     }
+    */
 }
 
 /// <summary>
@@ -71,7 +80,23 @@ public class ClientControllerBase<TManager> : RestControllerBase
 [Produces("application/json")]
 public class RestControllerBase : ControllerBase
 {
-
+    /// <summary>
+    /// 400返回格式处理
+    /// </summary>
+    /// <param name="error"></param>
+    /// <returns></returns>
+    [NonAction]
+    public override BadRequestObjectResult BadRequest([ActionResultObjectValue] object? error)
+    {
+        var res = new
+        {
+            Title = "请求错误",
+            Detail = error?.ToString(),
+            Status = 400,
+            TraceId = HttpContext.TraceIdentifier
+        };
+        return base.BadRequest(res);
+    }
     /// <summary>
     /// 404返回格式处理
     /// </summary>
@@ -134,23 +159,5 @@ public class RestControllerBase : ControllerBase
             StatusCode = 500,
 
         };
-    }
-
-    /// <summary>
-    /// 400返回格式处理
-    /// </summary>
-    /// <param name="error"></param>
-    /// <returns></returns>
-    [NonAction]
-    public override BadRequestObjectResult BadRequest([ActionResultObjectValue] object? error)
-    {
-        var res = new
-        {
-            Title = "请求错误",
-            Detail = error?.ToString(),
-            Status = 400,
-            TraceId = HttpContext.TraceIdentifier
-        };
-        return base.BadRequest(res);
     }
 }

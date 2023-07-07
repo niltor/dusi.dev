@@ -1,14 +1,18 @@
-﻿namespace Core.Const;
+﻿namespace Application.Const;
 /// <summary>
-/// 静态变量
+/// 应用程序常量
 /// </summary>
-public static class Const
+public static class AppConst
 {
+    public const string DefaultStateName = "statestore";
+    public const string DefaultPubSubName = "pubsub";
+
     /// <summary>
     /// 管理员policy
     /// </summary>
-    public const string Admin = "Admin";
     public const string AdminUser = "AdminUser";
+
+    public const string Admin = "Admin";
     /// <summary>
     /// 普通用户policy
     /// </summary>
@@ -18,30 +22,17 @@ public static class Const
     /// 版本
     /// </summary>
     public const string Version = "Version";
-
     /// <summary>
     /// blog浏览 pub主题
     /// </summary>
     public const string PubBlogView = "PubBlogView";
     public const string PubNewBlog = "PubNewBlog";
-}
-
-/// <summary>
-/// 错误信息
-/// </summary>
-public static class ErrorMsg
-{
     /// <summary>
-    /// 未找到该用户
+    /// 浏览量前缀
     /// </summary>
-    public const string NotFoundUser = "未找到该用户!";
+    public const string PrefixBlogView = "blogView";
     /// <summary>
-    /// 未找到的资源
+    /// 博客id缓存 key
     /// </summary>
-    public const string NotFoundResource = "未找到的资源!";
-    /// <summary>
-    /// 未找到实体库
-    /// </summary>
-    public const string NotFoundEntityLib = "未找到实体库!";
-
+    public const string BlogViewCacheKey = "blogViewCacheKey";
 }
