@@ -13,5 +13,6 @@
   "IsSplitController": true,
   "Version": "7.1",
   "SwaggerPath": null,
-  "WebAppPath": null
+  "WebAppPath": null,
+  "SolutionType": 0
 }
