@@ -2,7 +2,7 @@
   "RootPath": "./",
   "ProjectId": "ae97e780-d27f-410b-9481-8052ff287eca",
   "DtoPath": "src\\Share",
-  "EntityPath": "src\\Entity",
+  "EntityPath": "src\\Core",
   "DbContextPath": "src\\Database\\EntityFramework",
   "ApplicationPath": "src\\Application",
   "ApiPath": "src\\Http.API",
