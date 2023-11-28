@@ -1,4 +1,4 @@
-﻿using Ater.MetaWeBlog;
+using Ater.MetaWeBlog;
 using Ater.MetaWeBlog.Options;
 using TaskService.Implement.PostBlog;
 

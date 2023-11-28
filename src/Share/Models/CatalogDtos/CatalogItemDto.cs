@@ -1,11 +1,11 @@
-using Core.Entities.CMS;
-using Core.Models;
+using Entity.CMS;
+using Ater.Web.Core.Models;
 
 namespace Share.Models.CatalogDtos;
 /// <summary>
 /// 目录列表元素
 /// </summary>
-/// <inheritdoc cref="Core.Entities.CMS.Catalog"/>
+/// <inheritdoc cref="Entity.CMS.Catalog"/>
 public class CatalogItemDto
 {
     /// <summary>

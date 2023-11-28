@@ -1,7 +1,5 @@
-using Core.Entities;
-using Core.Entities.CMS;
-using Core.Entities.EntityDesign;
-using Core.Models;
+using Entity.EntityDesign;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace EntityFramework;
 
@@ -29,9 +27,33 @@ public class ContextBase : DbContext
     {
     }
 
+    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+    {
+        var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Added).ToList();
+        foreach (var entityEntry in entries)
+        {
+            var property = entityEntry.Metadata.FindProperty("CreatedTime");
+            if (property != null && property.ClrType == typeof(DateTimeOffset))
+            {
+                entityEntry.Property("CreatedTime").CurrentValue = DateTimeOffset.UtcNow;
+            }
+        }
+        entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified).ToList();
+        foreach (var entityEntry in entries)
+        {
+            var property = entityEntry.Metadata.FindProperty("UpdatedTime");
+            if (property != null && property.ClrType == typeof(DateTimeOffset))
+            {
+                entityEntry.Property("UpdatedTime").CurrentValue = DateTimeOffset.UtcNow;
+
+            }
+        }
+        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+    }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.Entity<EntityBase>().UseTpcMappingStrategy();
+        builder.Entity<IEntityBase>().UseTpcMappingStrategy();
 
         builder.Entity<Blog>(e =>
         {
@@ -86,5 +108,25 @@ public class ContextBase : DbContext
         });
 
         base.OnModelCreating(builder);
+        OnModelFilterCreating(builder);
+    }
+
+    private void OnModelFilterCreating(ModelBuilder modelBuilder)
+    {
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            if (typeof(IEntityBase).IsAssignableFrom(entityType.ClrType))
+            {
+                modelBuilder.Entity(entityType.ClrType).HasQueryFilter(ConvertFilterExpression<IEntityBase>(e => !e.IsDeleted, entityType.ClrType));
+            }
+        }
+    }
+
+    private static LambdaExpression ConvertFilterExpression<TInterface>(Expression<Func<TInterface, bool>> filterExpression, Type entityType)
+    {
+        var newParam = Expression.Parameter(entityType);
+        var newBody = ReplacingExpressionVisitor.Replace(filterExpression.Parameters.Single(), newParam, filterExpression.Body);
+
+        return Expression.Lambda(newBody, newParam);
     }
 }

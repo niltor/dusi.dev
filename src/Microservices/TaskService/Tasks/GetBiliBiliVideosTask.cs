@@ -1,4 +1,4 @@
-﻿using TaskService.Implement;
+using TaskService.Implement;
 using static System.Formats.Asn1.AsnWriter;
 using TaskService.Implement.NewsCollector;
 using Application.Services;

@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+using Entity;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace EntityFramework.EntityTypeConfigurations;
 internal class UserConfiguration : EntityBaseConfiguration<SystemUser>

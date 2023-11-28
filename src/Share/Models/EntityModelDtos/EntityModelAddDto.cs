@@ -1,9 +1,9 @@
-using Core.Entities.EntityDesign;
+using Entity.EntityDesign;
 namespace Share.Models.EntityModelDtos;
 /// <summary>
 /// 实体模型类添加时请求结构
 /// </summary>
-/// <inheritdoc cref="Core.Entities.EntityDesign.EntityModel"/>
+/// <inheritdoc cref="Entity.EntityDesign.EntityModel"/>
 public class EntityModelAddDto
 {
     /// <summary>

@@ -1,4 +1,4 @@
-﻿using Ater.MetaWeBlog;
+using Ater.MetaWeBlog;
 using Ater.MetaWeBlog.Options;
 using Microsoft.Extensions.Options;
 using Share.Options;

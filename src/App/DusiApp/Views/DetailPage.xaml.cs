@@ -1,4 +1,4 @@
-﻿namespace DusiApp.Views;
+namespace DusiApp.Views;
 
 public partial class DetailPage : ContentPage
 {

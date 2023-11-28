@@ -1,4 +1,4 @@
-﻿namespace Share.Models.AuthDtos;
+namespace Share.Models.AuthDtos;
 
 public class AuthResult
 {

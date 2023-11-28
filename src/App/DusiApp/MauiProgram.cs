@@ -1,4 +1,4 @@
-﻿using Dusi.Manage.Client;
+using Dusi.Manage.Client;
 
 namespace DusiApp;
 

@@ -1,9 +1,9 @@
-using Core.Entities.EntityDesign;
+using Entity.EntityDesign;
 namespace Share.Models.EntityMemberConstraintDtos;
 /// <summary>
 /// 属性的约束概要
 /// </summary>
-/// <inheritdoc cref="Core.Entities.EntityDesign.EntityMemberConstraint"/>
+/// <inheritdoc cref="Entity.EntityDesign.EntityMemberConstraint"/>
 public class EntityMemberConstraintShortDto
 {
     /// <summary>

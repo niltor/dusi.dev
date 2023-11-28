@@ -1,9 +1,9 @@
-using Core.Entities.CMS;
+using Entity.CMS;
 namespace Share.Models.ThirdVideoDtos;
 /// <summary>
 /// 三方视频列表元素
 /// </summary>
-/// <inheritdoc cref="Core.Entities.CMS.ThirdVideo"/>
+/// <inheritdoc cref="Entity.CMS.ThirdVideo"/>
 public class ThirdVideoItemDto
 {
     [MaxLength(120)]

@@ -1,4 +1,4 @@
-﻿using Application.QueryStore;
+using EntityFramework.QueryStore;
 using Share.Models.AuthDtos;
 
 namespace Http.API.Controllers.AdminControllers;

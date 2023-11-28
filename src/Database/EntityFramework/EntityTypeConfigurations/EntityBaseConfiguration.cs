@@ -1,4 +1,3 @@
-﻿using Core.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace EntityFramework.EntityTypeConfigurations;
 
@@ -6,7 +5,7 @@ namespace EntityFramework.EntityTypeConfigurations;
 /// 基类的配置
 /// </summary>
 /// <typeparam name="Entity"></typeparam>
-internal abstract class EntityBaseConfiguration<Entity> : IEntityTypeConfiguration<Entity> where Entity : EntityBase
+internal abstract class EntityBaseConfiguration<Entity> : IEntityTypeConfiguration<Entity> where Entity : class, IEntityBase
 {
     public virtual void Configure(EntityTypeBuilder<Entity> builder)
     {

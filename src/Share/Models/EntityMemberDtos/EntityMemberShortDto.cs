@@ -1,9 +1,9 @@
-using Core.Entities.EntityDesign;
+using Entity.EntityDesign;
 namespace Share.Models.EntityMemberDtos;
 /// <summary>
 /// 实体属性概要
 /// </summary>
-/// <inheritdoc cref="Core.Entities.EntityDesign.EntityMember"/>
+/// <inheritdoc cref="Entity.EntityDesign.EntityMember"/>
 public class EntityMemberShortDto
 {
     /// <summary>

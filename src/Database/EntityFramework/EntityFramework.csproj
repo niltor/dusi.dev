@@ -9,8 +9,10 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.0" />
 	</ItemGroup>
+
 	<ItemGroup>
-		<ProjectReference Include="..\..\Core\Core.csproj" />
+		<ProjectReference Include="..\..\Entity\Entity.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\Ater.Web.Abstraction\Ater.Web.Abstraction.csproj" />
 	</ItemGroup>
 
 </Project>

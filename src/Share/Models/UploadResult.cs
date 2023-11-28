@@ -1,4 +1,4 @@
-﻿namespace Share.Models;
+namespace Share.Models;
 public class UploadResult
 {
     public string? FilePath { get; set; }

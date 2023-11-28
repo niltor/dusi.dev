@@ -1,4 +1,4 @@
-﻿namespace Share.Options;
+namespace Share.Options;
 
 /// <summary>
 /// 邮件服务选项

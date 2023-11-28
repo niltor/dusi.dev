@@ -1,9 +1,9 @@
-using Core.Entities.CMS;
+using Entity.CMS;
 namespace Share.Models.TagsDtos;
 /// <summary>
 /// 标签列表元素
 /// </summary>
-/// <inheritdoc cref="Core.Entities.CMS.Tags"/>
+/// <inheritdoc cref="Entity.CMS.Tags"/>
 public class TagsItemDto
 {
     /// <summary>

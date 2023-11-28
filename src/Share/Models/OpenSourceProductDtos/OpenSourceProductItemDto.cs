@@ -1,9 +1,9 @@
-using Core.Entities.CMS;
+using Entity.CMS;
 namespace Share.Models.OpenSourceProductDtos;
 /// <summary>
 /// 开源作品列表元素
 /// </summary>
-/// <inheritdoc cref="Core.Entities.CMS.OpenSourceProduct"/>
+/// <inheritdoc cref="Entity.CMS.OpenSourceProduct"/>
 public class OpenSourceProductItemDto
 {
     /// <summary>

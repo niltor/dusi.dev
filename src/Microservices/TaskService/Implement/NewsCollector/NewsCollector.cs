@@ -1,5 +1,5 @@
-﻿using Core.Entities.CMS;
-using Core.Utils;
+using Entity.CMS;
+using Ater.Web.Core.Utils;
 
 namespace TaskService.Implement.NewsCollector;
 

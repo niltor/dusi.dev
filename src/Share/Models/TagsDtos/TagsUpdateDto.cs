@@ -1,9 +1,9 @@
-using Core.Entities.CMS;
+using Entity.CMS;
 namespace Share.Models.TagsDtos;
 /// <summary>
 /// 标签更新时请求结构
 /// </summary>
-/// <inheritdoc cref="Core.Entities.CMS.Tags"/>
+/// <inheritdoc cref="Entity.CMS.Tags"/>
 public class TagsUpdateDto
 {
     /// <summary>

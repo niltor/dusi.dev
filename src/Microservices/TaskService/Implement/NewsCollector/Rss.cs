@@ -13,7 +13,7 @@ public class Rss
     public string? Content { get; set; }
     public string? ThumbUrl { get; set; }
     /// <summary>
-    /// À´Ô´
+    /// ï¿½ï¿½Ô´
     /// </summary>
     public string? Provider { get; set; }
 }

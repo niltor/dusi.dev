@@ -1,9 +1,9 @@
-using Core.Entities.EntityDesign;
+using Entity.EntityDesign;
 namespace Share.Models.EntityLibraryDtos;
 /// <summary>
 /// 实体库列表元素
 /// </summary>
-/// <inheritdoc cref="Core.Entities.EntityDesign.EntityLibrary"/>
+/// <inheritdoc cref="Entity.EntityDesign.EntityLibrary"/>
 public class EntityLibraryItemDto
 {
     /// <summary>

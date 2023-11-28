@@ -1,4 +1,4 @@
-﻿using Core.Utils;
+using Ater.Web.Core.Utils;
 namespace Share.Models.ThirdNewsDtos;
 
 /// <summary>

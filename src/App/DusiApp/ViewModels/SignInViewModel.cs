@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Json;
+using System.Net.Http.Json;
 using CommunityToolkit.Maui.Alerts;
 using Dusi.Manage.Client;
 using Share.Models.AuthDtos;

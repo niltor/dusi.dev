@@ -1,4 +1,4 @@
-﻿
+
 using HtmlAgilityPack;
 using TaskService.Implement.NewsCollector;
 

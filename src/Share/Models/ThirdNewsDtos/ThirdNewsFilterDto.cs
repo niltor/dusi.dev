@@ -1,7 +1,7 @@
-using Core.Entities.CMS;
+using Entity.CMS;
 namespace Share.Models.ThirdNewsDtos;
 
-/// <inheritdoc cref="Core.Entities.CMS.ThirdNews"/>
+/// <inheritdoc cref="Entity.CMS.ThirdNews"/>
 public class ThirdNewsFilterDto : FilterBase
 {
     [MaxLength(100)]
@@ -21,12 +21,12 @@ public class ThirdNewsFilterDto : FilterBase
     public DateTimeOffset? EndDate { get; set; }
 
     /// <summary>
-    /// ÊÇ·ñ±¾ÖÜ
+    /// ï¿½Ç·ï¿½ï¿½ï¿½
     /// </summary>
     public bool? OnlyWeek { get; set; }
 
     /// <summary>
-    /// ÊÇ·ñ±»·ÖÀà
+    /// ï¿½Ç·ñ±»·ï¿½ï¿½ï¿½
     /// </summary>
     public bool? IsClassified { get; set; }
 }

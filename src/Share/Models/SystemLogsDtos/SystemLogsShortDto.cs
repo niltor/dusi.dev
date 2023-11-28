@@ -1,9 +1,9 @@
-using Core.Entities;
+using Entity;
 namespace Share.Models.SystemLogsDtos;
 /// <summary>
 /// 系统日志概要
 /// </summary>
-/// <inheritdoc cref="Core.Entities.SystemLogs"/>
+/// <inheritdoc cref="Entity.SystemLogs"/>
 public class SystemLogsShortDto
 {
     /// <summary>

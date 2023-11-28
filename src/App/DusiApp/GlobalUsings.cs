@@ -1,4 +1,4 @@
-﻿global using CommunityToolkit.Maui;
+global using CommunityToolkit.Maui;
 global using DusiApp.Models;
 global using DusiApp.Services;
 global using CommunityToolkit.Mvvm.ComponentModel;

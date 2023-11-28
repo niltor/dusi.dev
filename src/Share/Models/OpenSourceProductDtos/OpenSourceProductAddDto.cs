@@ -1,9 +1,9 @@
-using Core.Entities.CMS;
+using Entity.CMS;
 namespace Share.Models.OpenSourceProductDtos;
 /// <summary>
 /// 开源作品添加时请求结构
 /// </summary>
-/// <inheritdoc cref="Core.Entities.CMS.OpenSourceProduct"/>
+/// <inheritdoc cref="Entity.CMS.OpenSourceProduct"/>
 public class OpenSourceProductAddDto
 {
     /// <summary>

@@ -1,4 +1,4 @@
-﻿namespace Application.Const;
+namespace Application.Const;
 /// <summary>
 /// 应用程序常量
 /// </summary>

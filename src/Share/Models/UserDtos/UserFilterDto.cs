@@ -1,9 +1,9 @@
-using Core.Entities;
+using Entity;
 namespace Share.Models.UserDtos;
 /// <summary>
 /// 用户账户查询筛选
 /// </summary>
-/// <inheritdoc cref="Core.Entities.User"/>
+/// <inheritdoc cref="Entity.User"/>
 public class UserFilterDto : FilterBase
 {
     /// <summary>

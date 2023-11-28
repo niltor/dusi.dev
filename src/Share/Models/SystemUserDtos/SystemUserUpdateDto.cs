@@ -1,4 +1,4 @@
-using Core.Entities;
+using Entity;
 namespace Share.Models.SystemUserDtos;
 /// <summary>
 /// 系统用户更新时请求结构

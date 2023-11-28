@@ -1,4 +1,4 @@
-﻿using Share.Models.ThirdNewsDtos;
+using Share.Models.ThirdNewsDtos;
 using CommunityToolkit.Maui.Alerts;
 
 namespace DusiApp.ViewModels;

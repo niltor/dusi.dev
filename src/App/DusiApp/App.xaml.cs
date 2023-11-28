@@ -1,4 +1,4 @@
-﻿namespace DusiApp;
+namespace DusiApp;
 
 public partial class App : Application
 {

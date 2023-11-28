@@ -1,6 +1,6 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using Core.Entities.CMS;
-using Core.Utils;
+using CommunityToolkit.Maui.Alerts;
+using Entity.CMS;
+using Ater.Web.Core.Utils;
 using Dusi.Manage.Client;
 using Microsoft.Maui.Controls;
 using Share.Models.ThirdNewsDtos;

@@ -1,4 +1,4 @@
-﻿namespace DusiApp.Models;
+namespace DusiApp.Models;
 
 public class SampleItem
 {

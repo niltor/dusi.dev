@@ -1,4 +1,4 @@
-﻿using TaskService.Implement.NewsCollector;
+using TaskService.Implement.NewsCollector;
 namespace TaskService.Tasks;
 
 /// <summary>

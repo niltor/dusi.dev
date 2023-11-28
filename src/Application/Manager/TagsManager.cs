@@ -48,7 +48,7 @@ public class TagsManager : DomainManagerBase<Tags, TagsUpdateDto, TagsFilterDto,
             .ToList();
 
         Command.Db.AddRange(newTags);
-        return await Command.SaveChangeAsync();
+        return await Command.SaveChangesAsync();
     }
 
     public override async Task<Tags> UpdateAsync(Tags entity, TagsUpdateDto dto)

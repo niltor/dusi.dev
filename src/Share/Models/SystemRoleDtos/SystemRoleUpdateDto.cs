@@ -1,4 +1,4 @@
-using Core.Entities;
+using Entity;
 namespace Share.Models.SystemRoleDtos;
 /// <summary>
 /// 角色更新时请求结构

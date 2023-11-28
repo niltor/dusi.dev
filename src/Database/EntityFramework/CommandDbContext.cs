@@ -1,4 +1,4 @@
-﻿using Core.Models;
+using Ater.Web.Core.Models;
 
 namespace EntityFramework;
 public class CommandDbContext : ContextBase
@@ -9,7 +9,7 @@ public class CommandDbContext : ContextBase
     }
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.Entity<EntityBase>().HasQueryFilter(e => !e.IsDeleted);
+        builder.Entity<IEntityBase>().HasQueryFilter(e => !e.IsDeleted);
         base.OnModelCreating(builder);
     }
 

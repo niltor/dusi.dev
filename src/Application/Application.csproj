@@ -24,6 +24,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Database\EntityFramework\EntityFramework.csproj" />
 		<ProjectReference Include="..\Share\Share.csproj" />
+		<ProjectReference Include="..\Infrastructure\Ater.Web.Abstraction\Ater.Web.Abstraction.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -34,15 +35,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
+
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.0" />
+
 		<PackageReference Include="Microsoft.DocAsCode.App" Version="2.67.5" />
-		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.0.3" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
 		<PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
 		<PackageReference Include="Dapr.Client" Version="1.12.0" />
 		<PackageReference Include="OpenTelemetry" Version="1.7.0-alpha.1" />
 		<PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.7.0-alpha.1" />
 		<PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.7.0-alpha.1" />
-		<PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol.Logs" Version="1.5.0-rc.1" />
 		<PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.7.0-alpha.1" />
 		<PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.6.0-beta.3" />
 		<PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.6.0-beta.3" />

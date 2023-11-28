@@ -1,9 +1,9 @@
-using Core.Entities.CMS;
+using Entity.CMS;
 namespace Share.Models.TagsDtos;
 /// <summary>
 /// 标签查询筛选
 /// </summary>
-/// <inheritdoc cref="Core.Entities.CMS.Tags"/>
+/// <inheritdoc cref="Entity.CMS.Tags"/>
 public class TagsFilterDto : FilterBase
 {
     /// <summary>

@@ -1,4 +1,4 @@
-﻿namespace Http.API.Middleware;
+namespace Http.API.Middleware;
 
 public class CustomBadRequest : ObjectResult
 {

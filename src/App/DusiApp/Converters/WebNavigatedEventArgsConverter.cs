@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Maui.Converters;
+using CommunityToolkit.Maui.Converters;
 
 namespace DusiApp.Converters;
 

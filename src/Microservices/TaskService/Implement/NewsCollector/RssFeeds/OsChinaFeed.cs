@@ -1,4 +1,4 @@
-﻿namespace TaskService.Implement.NewsCollector.RssFeeds;
+namespace TaskService.Implement.NewsCollector.RssFeeds;
 
 public class OsChinaFeed : BaseFeed
 {

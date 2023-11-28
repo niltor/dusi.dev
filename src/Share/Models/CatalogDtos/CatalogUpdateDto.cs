@@ -1,9 +1,9 @@
-using Core.Entities.CMS;
+using Entity.CMS;
 namespace Share.Models.CatalogDtos;
 /// <summary>
 /// 目录更新时请求结构
 /// </summary>
-/// <inheritdoc cref="Core.Entities.CMS.Catalog"/>
+/// <inheritdoc cref="Entity.CMS.Catalog"/>
 public class CatalogUpdateDto
 {
     /// <summary>

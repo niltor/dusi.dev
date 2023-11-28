@@ -47,14 +47,14 @@ public class EntityModelManager : DomainManagerBase<EntityModel, EntityModelUpda
 
 
     /// <summary>
-    /// Éú³ÉÊµÌå
+    /// ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
     /// </summary>
-    /// <param name="entityName">ÊµÌåÃû³Æ</param>
-    /// <param name="description">ÊµÌåÃèÊö</param>
+    /// <param name="entityName">Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
+    /// <param name="description">Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
     public async Task<List<string>?> GenerateEntityAsync(string entityName, string? description = null)
     {
         var res = new List<string>();
-        // ÏÈ´Ó¿âÖĞËÑË÷
+        // ï¿½È´Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         var entity = Query.Db.FirstOrDefault(e => e.Comment.Contains(entityName));
         if (entity == null)
         {

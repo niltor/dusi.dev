@@ -45,7 +45,7 @@ public class UserContext : IUserContext
     }
 
     /// <summary>
-    /// ÅÐ¶Ïµ±Ç°½ÇÉ«
+    /// ï¿½Ð¶Ïµï¿½Ç°ï¿½ï¿½É«
     /// </summary>
     /// <param name="roleName"></param>
     /// <returns></returns>
@@ -55,7 +55,7 @@ public class UserContext : IUserContext
     }
 
     /// <summary>
-    /// ÊÇ·ñ´æÔÚ
+    /// ï¿½Ç·ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     /// <returns></returns>
     public async Task<bool> ExistAsync()

@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder();
 var services = builder.Services;
 var configuration = builder.Configuration;
 
-// ÅäÖÃ
+// ï¿½ï¿½ï¿½ï¿½
 var azAppConfigConnection = builder.Configuration["AppConfig"];
 if (!string.IsNullOrEmpty(azAppConfigConnection))
 {
@@ -50,7 +50,7 @@ services.AddHttpContextAccessor();
 services.Configure<AzureOption>(configuration.GetSection("Azure"));
 services.Configure<MetaWeblogOption>(configuration.GetSection("Options:Cnblog"));
 
-// ÒÀÀµ×¢Èë
+// ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½
 services.AddDataStore();
 services.AddManager();
 services.AddSingleton<StorageService>();
@@ -60,7 +60,7 @@ services.AddSingleton<InfoQFeed>();
 services.AddSingleton<RssHelper>();
 services.AddScoped<NewsCollector>();
 services.AddSingleton<IBlogPublisher, CnBlogPublisher>();
-// ºóÌ¨·þÎñ
+// ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
 services.AddHostedService<NewsCollectTask>();
 services.AddHostedService<UpdateViewCountTask>();
 services.AddHostedService<GetBiliBiliVideosTask>();

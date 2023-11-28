@@ -1,4 +1,4 @@
-using Core.Entities.CMS;
+using Entity.CMS;
 using Share.Models.ThirdNewsDtos;
 namespace Dusi.Manage.Client.Services;
 /// <summary>

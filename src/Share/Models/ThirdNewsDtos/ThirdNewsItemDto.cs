@@ -1,7 +1,7 @@
-using Core.Entities.CMS;
+using Entity.CMS;
 namespace Share.Models.ThirdNewsDtos;
 
-/// <inheritdoc cref="Core.Entities.CMS.ThirdNews"/>
+/// <inheritdoc cref="Entity.CMS.ThirdNews"/>
 public class ThirdNewsItemDto
 {
     [MaxLength(100)]
@@ -20,7 +20,7 @@ public class ThirdNewsItemDto
     [MaxLength(50)]
     public string? Category { get; set; }
     /// <summary>
-    /// ¸ÅÒª
+    /// ï¿½ï¿½Òª
     /// </summary>
     [MaxLength(5000)]
     public string? Description { get; set; }

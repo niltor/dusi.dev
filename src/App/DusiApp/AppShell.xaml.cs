@@ -1,4 +1,4 @@
-﻿using Android.Views.Animations;
+using Android.Views.Animations;
 
 namespace DusiApp;
 

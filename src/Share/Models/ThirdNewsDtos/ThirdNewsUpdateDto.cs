@@ -1,7 +1,7 @@
-using Core.Entities.CMS;
+using Entity.CMS;
 namespace Share.Models.ThirdNewsDtos;
 
-/// <inheritdoc cref="Core.Entities.CMS.ThirdNews"/>
+/// <inheritdoc cref="Entity.CMS.ThirdNews"/>
 public class ThirdNewsUpdateDto
 {
     [MaxLength(200)]

@@ -1,9 +1,9 @@
-using Core.Entities;
+using Entity;
 namespace Share.Models.UserDtos;
 /// <summary>
 /// 用户账户更新时请求结构
 /// </summary>
-/// <inheritdoc cref="Core.Entities.User"/>
+/// <inheritdoc cref="Entity.User"/>
 public class UserUpdateDto
 {
     public string? UserName { get; set; }

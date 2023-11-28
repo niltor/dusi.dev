@@ -14,7 +14,7 @@ public partial class SignInPage : ContentPage
         base.OnAppearing();
         if (AppStatusService.IsLogin())
         {
-            // ÉèÖÃÇëÇótoken
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½token
             var token = Preferences.Default.Get(Const.AccessToken, string.Empty);
 
             ApiService.AdminClient.SetToken(token);
