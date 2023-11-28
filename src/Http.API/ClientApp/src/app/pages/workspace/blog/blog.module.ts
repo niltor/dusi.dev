@@ -9,7 +9,7 @@ import { EditComponent } from './edit/edit.component';
 import { SettingComponent } from './setting/setting.component';
 import { CatalogModule } from './catalog/catalog.module';
 import { TagModule } from './tag/tag.module';
-import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
+import { MARKED_OPTIONS, MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
 
 @NgModule({
   declarations: [IndexComponent, DetailComponent, AddComponent, EditComponent, SettingComponent],
@@ -21,7 +21,7 @@ import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
     TagModule,
     MarkdownModule.forRoot({
       markedOptions: {
-        provide: MarkedOptions,
+        provide: MARKED_OPTIONS,
         useFactory: markedOptionsFactory
       }
     })
@@ -40,7 +40,5 @@ export function markedOptionsFactory(): MarkedOptions {
     gfm: true,
     breaks: false,
     pedantic: false,
-    smartLists: true,
-    smartypants: false,
   };
 }

@@ -8,12 +8,10 @@ import { HomeModule } from './pages/home/home.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { CustomerHttpInterceptor } from './share/customer-http.interceptor';
-import { SystemModule } from './pages/system/system.module';
 import { LoginComponent } from './pages/system/login/login.component';
 import { ShareModule } from './share/share.module';
 import { AccountModule } from './pages/account/account.module';
-import { WorkspaceModule } from './pages/workspace/workspace.module';
-import { MarkdownModule, MarkedOptions, ClipboardOptions, ClipboardButtonComponent, MarkedRenderer } from 'ngx-markdown';
+import { MarkdownModule, MarkedOptions, ClipboardButtonComponent, MarkedRenderer, MARKED_OPTIONS, CLIPBOARD_OPTIONS } from 'ngx-markdown';
 
 @NgModule({
   declarations: [
@@ -33,11 +31,11 @@ import { MarkdownModule, MarkedOptions, ClipboardOptions, ClipboardButtonCompone
     // WorkspaceModule,
     MarkdownModule.forRoot({
       markedOptions: {
-        provide: MarkedOptions,
+        provide: MARKED_OPTIONS,
         useFactory: markedOptionsFactory
       },
       clipboardOptions: {
-        provide: ClipboardOptions,
+        provide: CLIPBOARD_OPTIONS,
         useValue: {
           buttonComponent: ClipboardButtonComponent,
         },
@@ -66,7 +64,5 @@ export function markedOptionsFactory(): MarkedOptions {
     gfm: true,
     breaks: false,
     pedantic: false,
-    smartLists: true,
-    smartypants: false,
   };
 }
