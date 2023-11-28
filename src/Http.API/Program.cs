@@ -1,7 +1,5 @@
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
-
-using Application;
 using Application.Implement;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -66,16 +64,6 @@ services.AddDaprClient();
 
 services.AddHttpClient<OpenAIClient>();
 
-#region OpenTelemetry:log/trace/metric
-var otlpEndpoint = configuration.GetSection("OTLP")
-    .GetValue<string>("Endpoint")
-    ?? "http://localhost:4317";
-services.AddOpenTelemetry("dusi", opt =>
-{
-    opt.Endpoint = new Uri(otlpEndpoint);
-});
-
-#endregion
 #region 接口相关内容:jwt/授权/cors
 // use jwt
 services.AddAuthentication(options =>
