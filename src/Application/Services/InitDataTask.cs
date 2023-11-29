@@ -1,5 +1,7 @@
+using Docfx;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace Application.Services;
 
@@ -34,7 +36,7 @@ public class InitDataTask
                 }
                 await UpdateAsync(context, configuration, logger);
                 var env = provider.GetRequiredService<IWebHostEnvironment>();
-                UpdateStaticFiles(context, env, logger);
+                UpdateStaticFilesAsync(context, env, logger);
             }
         }
         catch (Exception ex)
@@ -123,7 +125,7 @@ public class InitDataTask
     /// <param name="_env"></param>
     /// <param name="logger"></param>
     /// <returns></returns>
-    public static void UpdateStaticFiles(CommandDbContext context, IWebHostEnvironment _env, ILogger<InitDataTask> logger)
+    public static async Task UpdateStaticFilesAsync(CommandDbContext context, IWebHostEnvironment _env, ILogger<InitDataTask> logger)
     {
         try
         {
@@ -153,9 +155,11 @@ public class InitDataTask
                 var fileName = blog.Id.ToString() + ".md";
                 await File.WriteAllTextAsync(Path.Combine(path, fileName), blog.Content);
             });
-#if !DEBUG
-            await Docset.Build(Path.Combine(_env.WebRootPath, "docfx.json"), new BuildOptions{});
-#endif
+
+            if (_env.IsProduction())
+            {
+                await Docset.Build(Path.Combine(_env.WebRootPath, "docfx.json"), new BuildOptions { });
+            }
         }
         catch (Exception ex)
         {

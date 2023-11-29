@@ -1,4 +1,3 @@
-using Application.Services;
 using Docfx;
 using Microsoft.AspNetCore.Hosting;
 using Share.Models.BlogDtos;
@@ -68,7 +67,6 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
         {
             // 构建静态文件
             _ = Docset.Build(Path.Combine(_env.WebRootPath, "docfx.json"));
-            _ = DaprFacade.PublishAsync(AppConst.PubNewBlog, entity.Id);
         }
         return await base.AddAsync(entity);
     }
@@ -83,55 +81,6 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
         if (res == null) { return null; }
         //await DaprFacade.PublishAsync(Const.PubBlogView, id);
         return res;
-    }
-
-    /// <summary>
-    /// 更新浏览量
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public async Task UpdateViewCountAsync(Guid id)
-    {
-        try
-        {
-            // 统计浏览量,使用缓存
-            // 缓存的blog id
-            HashSet<Guid>? blogIds = await DaprFacade.GetStateAsync<HashSet<Guid>?>(AppConst.BlogViewCacheKey);
-            // 初始添加
-            int ttl = 7 * 24 * 60 * 60;
-            if (blogIds == null)
-            {
-                HashSet<Guid> set =
-            [
-                id
-            ];
-                await DaprFacade.SaveStateAsync(AppConst.BlogViewCacheKey, set, ttl);
-            }
-            else
-            {
-                // 新数据添加后更新到缓存
-                if (blogIds.Add(id))
-                {
-                    await DaprFacade.SaveStateAsync(AppConst.BlogViewCacheKey, blogIds, ttl);
-                }
-            }
-            // 数量存缓存
-            int? count = await DaprFacade.GetStateAsync<int?>(AppConst.PrefixBlogView + id.ToString());
-            if (count == null)
-            {
-                // 10分钟
-                await DaprFacade.SaveStateAsync(AppConst.PrefixBlogView + id.ToString(), 1, 10 * 60);
-            }
-            else
-            {
-                count++;
-                await DaprFacade.SaveStateAsync(AppConst.PrefixBlogView + id.ToString(), count, 10 * 60);
-            }
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError("update error:{message}", ex.Message + ex.StackTrace);
-        }
     }
 
     public override async Task<Blog> UpdateAsync(Blog entity, BlogUpdateDto dto)
@@ -165,6 +114,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
         return await base.UpdateAsync(entity, dto);
     }
 
+    [Obsolete]
     public override async Task<PageList<BlogItemDto>> FilterAsync(BlogFilterDto filter)
     {
         // 根据实际业务构建筛选条件

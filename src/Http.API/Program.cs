@@ -14,24 +14,6 @@ var services = builder.Services;
 var configuration = builder.Configuration;
 services.AddHttpContextAccessor();
 
-// 配置
-var azAppConfigConnection = builder.Configuration["AppConfig"];
-if (!string.IsNullOrEmpty(azAppConfigConnection))
-{
-    builder.Configuration.AddAzureAppConfiguration(options =>
-    {
-        options.Connect(azAppConfigConnection)
-            .ConfigureRefresh(refresh =>
-            {
-                refresh.Register("ConfigVersion", refreshAll: true);
-            });
-    });
-}
-else
-{
-    Console.WriteLine("the az AppConfig is null");
-}
-builder.Services.AddAzureAppConfiguration();
 // database sql
 string? connectionString = configuration.GetConnectionString("Default");
 services.AddDbContextPool<QueryDbContext>(option =>

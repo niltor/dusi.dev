@@ -7,6 +7,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<UserSecretsId>81d2c408-d1e0-4db5-8352-0c8b4940cbc1</UserSecretsId>
+		<Trimming>true</Trimming>
 	</PropertyGroup>
 
 	<!--docker-->
