@@ -36,7 +36,7 @@ public class InitDataTask
                 }
                 await UpdateAsync(context, configuration, logger);
                 var env = provider.GetRequiredService<IWebHostEnvironment>();
-                UpdateStaticFilesAsync(context, env, logger);
+                await UpdateStaticFilesAsync(context, env, logger);
             }
         }
         catch (Exception ex)
@@ -145,17 +145,19 @@ public class InitDataTask
                 .Include(b => b.Catalog)
                 .ToList();
 
-            blogs.ForEach(async (blog) =>
+            if (blogs.Count > 0)
             {
-                var path = Path.Combine(markdownPath, blog.Catalog.Name);
-                if (!Directory.Exists(path))
+                foreach (var blog in blogs)
                 {
-                    Directory.CreateDirectory(path);
+                    var path = Path.Combine(markdownPath, blog.Catalog.Name);
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    var fileName = blog.Id.ToString() + ".md";
+                    await File.WriteAllTextAsync(Path.Combine(path, fileName), blog.Content);
                 }
-                var fileName = blog.Id.ToString() + ".md";
-                await File.WriteAllTextAsync(Path.Combine(path, fileName), blog.Content);
-            });
-
+            }
             if (_env.IsProduction())
             {
                 await Docset.Build(Path.Combine(_env.WebRootPath, "docfx.json"), new BuildOptions { });
