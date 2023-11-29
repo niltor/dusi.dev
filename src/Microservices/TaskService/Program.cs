@@ -1,4 +1,4 @@
-using Application.Implement;
+using Application;
 using Application.Services;
 using Share.Options;
 using TaskService.Implement.BlogPublisher;
@@ -13,7 +13,6 @@ var builder = WebApplication.CreateBuilder();
 var services = builder.Services;
 var configuration = builder.Configuration;
 
-// ����
 var azAppConfigConnection = builder.Configuration["AppConfig"];
 if (!string.IsNullOrEmpty(azAppConfigConnection))
 {
@@ -50,7 +49,6 @@ services.AddHttpContextAccessor();
 services.Configure<AzureOption>(configuration.GetSection("Azure"));
 services.Configure<MetaWeblogOption>(configuration.GetSection("Options:Cnblog"));
 
-// ����ע��
 services.AddDataStore();
 services.AddManager();
 services.AddSingleton<StorageService>();
@@ -60,7 +58,6 @@ services.AddSingleton<InfoQFeed>();
 services.AddSingleton<RssHelper>();
 services.AddScoped<NewsCollector>();
 services.AddSingleton<IBlogPublisher, CnBlogPublisher>();
-// ��̨����
 services.AddHostedService<NewsCollectTask>();
 services.AddHostedService<UpdateViewCountTask>();
 services.AddHostedService<GetBiliBiliVideosTask>();

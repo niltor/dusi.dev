@@ -4,7 +4,7 @@ import { CustomRouteReuseStrategy } from './custom-route-strategy';
 import { LoginComponent } from './pages/system/login/login.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'news', pathMatch: 'full' },
+    { path: '', redirectTo: 'blog', pathMatch: 'full' },
     { path: 'index', redirectTo: 'index', pathMatch: 'full' },
     { path: 'account', redirectTo: 'account', pathMatch: 'full' },
     { path: 'login', redirectTo: 'login', pathMatch: 'full' },

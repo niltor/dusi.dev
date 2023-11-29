@@ -1,4 +1,3 @@
-using Entity.EntityDesign;
 using Microsoft.EntityFrameworkCore.Query;
 
 namespace EntityFramework;
@@ -53,8 +52,6 @@ public class ContextBase : DbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.Entity<IEntityBase>().UseTpcMappingStrategy();
-
         builder.Entity<Blog>(e =>
         {
             e.HasIndex(b => b.Title);

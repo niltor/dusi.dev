@@ -1,6 +1,6 @@
 using Application.Services;
+using Docfx;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.DocAsCode;
 using Share.Models.BlogDtos;
 
 namespace Application.Manager;
@@ -101,10 +101,10 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
             int ttl = 7 * 24 * 60 * 60;
             if (blogIds == null)
             {
-                HashSet<Guid> set = new()
-            {
+                HashSet<Guid> set =
+            [
                 id
-            };
+            ];
                 await DaprFacade.SaveStateAsync(AppConst.BlogViewCacheKey, set, ttl);
             }
             else
@@ -185,6 +185,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
         return await Query.FilterAsync<BlogItemDto>(Queryable, filter.PageIndex, filter.PageSize, filter.OrderBy);
     }
 
+    [Obsolete]
     public async Task<List<Guid>?> GetBlogIdsByTagAsync(string tag)
     {
         return await Query.Context.Tags.Where(t => t.Name == tag)

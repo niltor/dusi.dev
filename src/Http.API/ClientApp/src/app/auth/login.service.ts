@@ -34,8 +34,9 @@ export class LoginService {
       this.id = userId;
       this.userName = username;
       this.isLogin = true;
-      if (role?.toLowerCase() == "admin")
+      if (role?.includes('Admin')) {
         this.isAdmin = true;
+      }
     } else {
       this.isLogin = false;
     }

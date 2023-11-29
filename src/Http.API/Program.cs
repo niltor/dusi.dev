@@ -1,6 +1,5 @@
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
-using Application.Implement;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
@@ -60,8 +59,6 @@ services.AddSingleton<StorageService>();
 //services.AddGrpc();
 services.AddDataStore();
 services.AddManager();
-services.AddDaprClient();
-
 services.AddHttpClient<OpenAIClient>();
 
 #region 接口相关内容:jwt/授权/cors
@@ -242,7 +239,6 @@ app.UseAuthorization();
 
 app.UseCloudEvents();
 app.MapControllers();
-app.MapSubscribeHandler();
 app.MapFallbackToFile("index.html");
 
 using (app)
