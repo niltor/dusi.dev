@@ -5,17 +5,17 @@ namespace Http.API.Controllers.AdminControllers;
 /// <summary>
 /// 用户账户
 /// </summary>
-public class UserController : RestControllerBase<IUserManager>
+public class UserController : RestControllerBase<UserManager>
 {
     private readonly IConfiguration _config;
-    private readonly ISystemUserManager systemUserManager;
+    private readonly SystemUserManager systemUserManager;
 
     public UserController(
         IUserContext user,
         ILogger<UserController> logger,
-        IUserManager manager,
+        UserManager manager,
         IConfiguration config,
-        ISystemUserManager systemUserManager) : base(manager, user, logger)
+        SystemUserManager systemUserManager) : base(manager, user, logger)
     {
         _config = config;
         this.systemUserManager = systemUserManager;

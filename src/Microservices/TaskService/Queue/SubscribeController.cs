@@ -1,6 +1,4 @@
-using Application.Const;
-using Application.IManager;
-using Dapr;
+using Application.Manager;
 using Microsoft.AspNetCore.Mvc;
 using TaskService.Implement.PostBlog;
 
@@ -12,18 +10,17 @@ namespace TaskService.Queue;
 public class SubscribeController : ControllerBase
 {
     private readonly IBlogPublisher blogPublisher;
-    private readonly IBlogManager blogManager;
+    private readonly BlogManager blogManager;
 
     public SubscribeController(
         IBlogPublisher blogPublisher,
-        IBlogManager blogManager
+        BlogManager blogManager
         )
     {
         this.blogPublisher = blogPublisher;
         this.blogManager = blogManager;
     }
 
-    [Topic(AppConst.DefaultPubSubName, AppConst.PubNewBlog)]
     [HttpPost("/blog")]
     public async Task<ActionResult> NewBlog([FromBody] Guid id)
     {
@@ -35,7 +32,7 @@ public class SubscribeController : ControllerBase
             {
                 Description = data.Content,
                 Title = data.Title,
-                Categories = new List<string> { data.Catalog.Name }
+                Categories = [data.Catalog.Name]
             };
             blogPublisher.AddBlog(blog);
             return Ok();

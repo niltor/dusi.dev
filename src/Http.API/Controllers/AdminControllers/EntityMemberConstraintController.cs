@@ -4,12 +4,12 @@ namespace Http.API.Controllers.AdminControllers;
 /// <summary>
 /// 属性的约束
 /// </summary>
-public class EntityMemberConstraintController : RestControllerBase<IEntityMemberConstraintManager>
+public class EntityMemberConstraintController : RestControllerBase<EntityMemberConstraintManager>
 {
     public EntityMemberConstraintController(
         IUserContext user,
         ILogger<EntityMemberConstraintController> logger,
-        IEntityMemberConstraintManager manager
+        EntityMemberConstraintManager manager
         ) : base(manager, user, logger)
     {
     }

@@ -4,15 +4,15 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 实体模型类
 /// </summary>
-public class EntityModelController : ClientControllerBase<IEntityModelManager>
+public class EntityModelController : ClientControllerBase<EntityModelManager>
 {
 
-    private readonly IEntityLibraryManager _libraryManager;
+    private readonly EntityLibraryManager _libraryManager;
     public EntityModelController(
         IUserContext user,
         ILogger<EntityModelController> logger,
-        IEntityModelManager manager,
-        IEntityLibraryManager libraryManager) : base(manager, user, logger)
+        EntityModelManager manager,
+        EntityLibraryManager libraryManager) : base(manager, user, logger)
     {
         _libraryManager = libraryManager;
     }

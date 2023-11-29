@@ -1,6 +1,6 @@
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
-
+using Application.Implement;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -39,6 +39,7 @@ services.Configure<AzureOption>(configuration.GetSection("Azure"));
 services.AddSingleton<StorageService>();
 
 //services.AddGrpc();
+services.AddScoped<IUserContext, UserContext>();
 services.AddDataStore();
 services.AddManager();
 services.AddHttpClient<OpenAIClient>();

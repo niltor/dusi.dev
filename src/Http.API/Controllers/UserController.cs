@@ -6,18 +6,18 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 用户账户
 /// </summary>
-public class UserController : ClientControllerBase<IUserManager>
+public class UserController : ClientControllerBase<UserManager>
 {
     private readonly IConfiguration _config;
-    private readonly ISystemUserManager systemUserManager;
+    private readonly SystemUserManager systemUserManager;
     private readonly OpenAIClient openAIClient;
 
     public UserController(
         IUserContext user,
         ILogger<UserController> logger,
-        IUserManager manager,
+        UserManager manager,
         IConfiguration config,
-        ISystemUserManager systemUserManager,
+        SystemUserManager systemUserManager,
         OpenAIClient openAIClient) : base(manager, user, logger)
     {
         _config = config;

@@ -4,12 +4,12 @@ namespace Http.API.Controllers.AdminControllers;
 /// <summary>
 /// 角色表
 /// </summary>
-public class SystemRoleController : RestControllerBase<ISystemRoleManager>
+public class SystemRoleController : RestControllerBase<SystemRoleManager>
 {
     public SystemRoleController(
         IUserContext user,
         ILogger<SystemRoleController> logger,
-        ISystemRoleManager manager
+        SystemRoleManager manager
         ) : base(manager, user, logger)
     {
     }

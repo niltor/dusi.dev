@@ -4,15 +4,15 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 系统日志
 /// </summary>
-public class SystemLogsController : ClientControllerBase<ISystemLogsManager>
+public class SystemLogsController : ClientControllerBase<SystemLogsManager>
 {
-    private readonly ISystemUserManager _systemUserManager;
+    private readonly SystemUserManager _systemUserManager;
 
     public SystemLogsController(
         IUserContext user,
         ILogger<SystemLogsController> logger,
-        ISystemLogsManager manager,
-        ISystemUserManager systemUserManager
+        SystemLogsManager manager,
+        SystemUserManager systemUserManager
         ) : base(manager, user, logger)
     {
         _systemUserManager = systemUserManager;

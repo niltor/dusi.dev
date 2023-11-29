@@ -5,12 +5,12 @@ namespace Http.API.Controllers.AdminControllers;
 /// 系统用户
 /// </summary>
 [Authorize(AppConst.Admin)]
-public class SystemUserController : RestControllerBase<ISystemUserManager>
+public class SystemUserController : RestControllerBase<SystemUserManager>
 {
     public SystemUserController(
         IUserContext user,
         ILogger<SystemUserController> logger,
-        ISystemUserManager manager
+        SystemUserManager manager
         ) : base(manager, user, logger)
     {
     }

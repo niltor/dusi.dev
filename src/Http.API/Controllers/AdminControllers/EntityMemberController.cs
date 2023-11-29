@@ -4,12 +4,12 @@ namespace Http.API.Controllers.AdminControllers;
 /// <summary>
 /// 实体属性
 /// </summary>
-public class EntityMemberController : RestControllerBase<IEntityMemberManager>
+public class EntityMemberController : RestControllerBase<EntityMemberManager>
 {
     public EntityMemberController(
         IUserContext user,
         ILogger<EntityMemberController> logger,
-        IEntityMemberManager manager
+        EntityMemberManager manager
         ) : base(manager, user, logger)
     {
     }

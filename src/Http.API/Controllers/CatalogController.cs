@@ -4,12 +4,12 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 目录
 /// </summary>
-public class CatalogController : ClientControllerBase<ICatalogManager>
+public class CatalogController : ClientControllerBase<CatalogManager>
 {
     public CatalogController(
         IUserContext user,
         ILogger<CatalogController> logger,
-        ICatalogManager manager
+        CatalogManager manager
         ) : base(manager, user, logger)
     {
     }

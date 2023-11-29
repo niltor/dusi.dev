@@ -4,12 +4,12 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 三方视频
 /// </summary>
-public class ThirdVideoController : ClientControllerBase<IThirdVideoManager>
+public class ThirdVideoController : ClientControllerBase<ThirdVideoManager>
 {
     public ThirdVideoController(
         IUserContext user,
         ILogger<ThirdVideoController> logger,
-        IThirdVideoManager manager
+        ThirdVideoManager manager
         ) : base(manager, user, logger)
     {
     }

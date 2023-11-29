@@ -5,12 +5,12 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 实体库
 /// </summary>
-public class EntityLibraryController : ClientControllerBase<IEntityLibraryManager>
+public class EntityLibraryController : ClientControllerBase<EntityLibraryManager>
 {
     public EntityLibraryController(
         IUserContext user,
         ILogger<EntityLibraryController> logger,
-        IEntityLibraryManager manager
+        EntityLibraryManager manager
         ) : base(manager, user, logger)
     {
     }

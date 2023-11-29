@@ -5,13 +5,13 @@ namespace Http.API.Controllers.AdminControllers;
 /// 开源作品
 /// </summary>
 /// <see cref="Application.Manager.OpenSourceProductManager"/>
-public class OpenSourceProductController : RestControllerBase<IOpenSourceProductManager>
+public class OpenSourceProductController : RestControllerBase<OpenSourceProductManager>
 {
 
     public OpenSourceProductController(
         IUserContext user,
         ILogger<OpenSourceProductController> logger,
-        IOpenSourceProductManager manager
+        OpenSourceProductManager manager
         ) : base(manager, user, logger)
     {
 

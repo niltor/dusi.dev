@@ -4,12 +4,12 @@ namespace Http.API.Controllers.AdminControllers;
 /// <summary>
 /// 资讯管理
 /// </summary>
-public class ThirdNewsController : RestControllerBase<IThirdNewsManager>
+public class ThirdNewsController : RestControllerBase<ThirdNewsManager>
 {
     public ThirdNewsController(
         IUserContext user,
         ILogger<ThirdNewsController> logger,
-        IThirdNewsManager manager
+        ThirdNewsManager manager
         ) : base(manager, user, logger)
     {
     }

@@ -5,17 +5,17 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 博客
 /// </summary>
-public class BlogController : ClientControllerBase<IBlogManager>
+public class BlogController : ClientControllerBase<BlogManager>
 {
     private readonly StorageService storageService;
-    private readonly ICatalogManager _catalogManager;
+    private readonly CatalogManager _catalogManager;
 
     public BlogController(
         IUserContext user,
         ILogger<BlogController> logger,
-        IBlogManager manager,
+        BlogManager manager,
         StorageService storageService,
-        ICatalogManager catalogManager) : base(manager, user, logger)
+        CatalogManager catalogManager) : base(manager, user, logger)
     {
         this.storageService = storageService;
         _catalogManager = catalogManager;

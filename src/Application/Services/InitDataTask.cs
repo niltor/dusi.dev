@@ -129,37 +129,38 @@ public class InitDataTask
     {
         try
         {
-            var markdownPath = Path.Combine(_env.WebRootPath, "markdown");
-            if (!Directory.Exists(markdownPath))
-            {
-                Directory.CreateDirectory(markdownPath);
-            }
-            // get alll files in markdown folder
-            var files = Directory.GetFiles(markdownPath, "*.md", SearchOption.AllDirectories);
-
-            var fileNames = files.Select(f => new FileInfo(f).Directory?.Name ?? "" + Path.GetFileNameWithoutExtension(f))
-                .ToList();
-
-            // get all blogs from database which not exist in markdown path
-            var blogs = context.Blogs.Where(b => !fileNames.Contains(b.Catalog.Name + b.Id.ToString()))
-                .Include(b => b.Catalog)
-                .ToList();
-
-            if (blogs.Count > 0)
-            {
-                foreach (var blog in blogs)
-                {
-                    var path = Path.Combine(markdownPath, blog.Catalog.Name);
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                    }
-                    var fileName = blog.Id.ToString() + ".md";
-                    await File.WriteAllTextAsync(Path.Combine(path, fileName), blog.Content);
-                }
-            }
             if (_env.IsProduction())
             {
+                var markdownPath = Path.Combine(_env.WebRootPath, "markdown");
+                if (!Directory.Exists(markdownPath))
+                {
+                    Directory.CreateDirectory(markdownPath);
+                }
+                // get alll files in markdown folder
+                var files = Directory.GetFiles(markdownPath, "*.md", SearchOption.AllDirectories);
+
+                var fileNames = files.Select(f => new FileInfo(f).Directory?.Name ?? "" + Path.GetFileNameWithoutExtension(f))
+                    .ToList();
+
+                // get all blogs from database which not exist in markdown path
+                var blogs = context.Blogs.Where(b => !fileNames.Contains(b.Catalog.Name + b.Id.ToString()))
+                    .Include(b => b.Catalog)
+                    .ToList();
+
+                if (blogs.Count > 0)
+                {
+                    foreach (var blog in blogs)
+                    {
+                        var path = Path.Combine(markdownPath, blog.Catalog.Name);
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+                        var fileName = blog.Id.ToString() + ".md";
+                        await File.WriteAllTextAsync(Path.Combine(path, fileName), blog.Content);
+                    }
+                }
+
                 await Docset.Build(Path.Combine(_env.WebRootPath, "docfx.json"), new BuildOptions { });
             }
         }

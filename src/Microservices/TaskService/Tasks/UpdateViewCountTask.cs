@@ -1,8 +1,3 @@
-using Application.Const;
-using Application.Services;
-
-using Dapr.Client;
-
 namespace TaskService.Tasks;
 
 /// <summary>
@@ -42,46 +37,11 @@ public class UpdateViewCountTask : BackgroundService
         return Task.CompletedTask;
     }
 
-    private async void DoWork(object? state)
+    private void DoWork(object? state)
     {
         try
         {
-            _logger.LogInformation("⚒️ UpdateViewCountTask...");
-            var blogIds = await DaprFacade.GetStateAsync<HashSet<Guid>?>(AppConst.BlogViewCacheKey);
-            // 查询要更新blog id
-            if (blogIds != null && blogIds.Any())
-            {
-                var keys = blogIds.Select(b => AppConst.PrefixBlogView + b.ToString()).ToList();
-                var ids = await DaprFacade.Dapr.GetBulkStateAsync(AppConst.DefaultStateName, keys, 2);
 
-                using var scope = Services.CreateScope();
-                var context = scope.ServiceProvider.GetRequiredService<CommandDbContext>();
-
-                // 入库更新
-                var successIds = new List<SaveStateItem<int>>();
-                foreach (var item in ids)
-                {
-                    if (int.TryParse(item.Value, out int count))
-                    {
-                        var resCount = await context.Blogs
-                            .Where(b => b.Id.ToString() == item.Key.Replace(AppConst.PrefixBlogView, ""))
-                            .ExecuteUpdateAsync(s =>
-                                s.SetProperty(b => b.ViewCount, b => b.ViewCount + count));
-
-                        if (resCount > 0)
-                        {
-                            successIds.Add(new SaveStateItem<int>(item.Key, 0, ""));
-                        }
-                        _logger.LogInformation("item:{id} update {count}", item.Key, count);
-                    }
-                }
-                // 入库后重置为0
-                if (successIds != null && successIds.Any())
-                {
-                    await DaprFacade.Dapr.SaveBulkStateAsync(AppConst.DefaultStateName, successIds, default);
-                }
-
-            }
         }
         catch (Exception ex)
         {

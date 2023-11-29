@@ -4,12 +4,12 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 标签
 /// </summary>
-public class TagsController : ClientControllerBase<ITagsManager>
+public class TagsController : ClientControllerBase<TagsManager>
 {
     public TagsController(
         IUserContext user,
         ILogger<TagsController> logger,
-        ITagsManager manager
+        TagsManager manager
         ) : base(manager, user, logger)
     {
     }

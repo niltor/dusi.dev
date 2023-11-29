@@ -4,17 +4,16 @@ using Share.Models.BlogDtos;
 
 namespace Application.Manager;
 
-public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto, BlogItemDto>, IBlogManager
+public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto, BlogItemDto>, IDomainManager<Blog>
 {
-    private new readonly IUserContext _userContext;
-    private readonly ICatalogManager _catalogManager;
-    private readonly ITagsManager _tagsManager;
+    private readonly CatalogManager _catalogManager;
+    private readonly TagsManager _tagsManager;
     private readonly IWebHostEnvironment _env;
 
     public BlogManager(DataStoreContext storeContext,
                        IUserContext userContext,
-                       ICatalogManager catalogManager,
-                       ITagsManager tagsManager,
+                       CatalogManager catalogManager,
+                       TagsManager tagsManager,
                        IWebHostEnvironment env,
                        ILogger<BlogManager> logger) : base(storeContext, logger)
     {
@@ -138,7 +137,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     [Obsolete]
     public async Task<List<Guid>?> GetBlogIdsByTagAsync(string tag)
     {
-        return await Query.Context.Tags.Where(t => t.Name == tag)
+        return await Stores.QueryContext.Tags.Where(t => t.Name == tag)
             .SelectMany(t => t.Blogs!)
             .Select(t => t.Id)
             .ToListAsync();
