@@ -32,6 +32,7 @@ services.AddDbContextPool<CommandDbContext>(option =>
         _ = sql.CommandTimeout(10);
     });
 });
+services.AddMemoryCache();
 
 services.Configure<AzureOption>(configuration.GetSection("Azure"));
 

@@ -43,7 +43,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
 
         var catalog = await _catalogManager.GetCurrentAsync(dto.CatalogId);
         entity.Catalog = catalog!;
-        entity.UserId = _userContext.UserId!.Value;
+        entity.UserId = _userContext!.UserId!.Value;
         entity.Authors = _userContext.Username!;
         return entity;
     }
@@ -113,7 +113,6 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
         return await base.UpdateAsync(entity, dto);
     }
 
-    [Obsolete]
     public override async Task<PageList<BlogItemDto>> FilterAsync(BlogFilterDto filter)
     {
         // 根据实际业务构建筛选条件
@@ -134,7 +133,6 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
         return await Query.FilterAsync<BlogItemDto>(Queryable, filter.PageIndex, filter.PageSize, filter.OrderBy);
     }
 
-    [Obsolete]
     public async Task<List<Guid>?> GetBlogIdsByTagAsync(string tag)
     {
         return await Stores.QueryContext.Tags.Where(t => t.Name == tag)
@@ -161,7 +159,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     {
         IQueryable<Blog> query = Command.Db.Where(q => q.Id == id);
 
-        query = query.Where(q => q.User.Id == _userContext.UserId)
+        query = query.Where(q => q.User.Id == _userContext!.UserId)
             .Include(b => b.Tags)
             .Include(b => b.Catalog);
 
