@@ -105,15 +105,18 @@ public class ContextBase : DbContext
         });
 
         base.OnModelCreating(builder);
-        OnModelFilterCreating(builder);
+        OnModelExtendCreating(builder);
     }
 
-    private void OnModelFilterCreating(ModelBuilder modelBuilder)
+    private void OnModelExtendCreating(ModelBuilder modelBuilder)
     {
-        var entityTypes = modelBuilder.Model.GetEntityTypes().Where(x => x.BaseType != null && x.BaseType.ClrType == typeof(IEntityBase));
+        var entityTypes = modelBuilder.Model.GetEntityTypes();
+        foreach (var entityType in entityTypes)
         {
             if (typeof(IEntityBase).IsAssignableFrom(entityType.ClrType))
             {
+                modelBuilder.Entity(entityType.Name)
+                    .HasKey("Id");
                 modelBuilder.Entity(entityType.ClrType).HasQueryFilter(ConvertFilterExpression<IEntityBase>(e => !e.IsDeleted, entityType.ClrType));
             }
         }

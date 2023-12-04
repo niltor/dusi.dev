@@ -58,6 +58,8 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
             Directory.CreateDirectory(path);
         }
 
+
+        await base.AddAsync(entity);
         var fileName = entity.Id.ToString() + ".md";
         await File.WriteAllTextAsync(Path.Combine(path, fileName), entity.Content);
 
@@ -67,7 +69,8 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
             // 构建静态文件
             _ = Docset.Build(Path.Combine(_env.WebRootPath, "docfx.json"));
         }
-        return await base.AddAsync(entity);
+
+        return entity;
     }
 
     public override async Task<Blog?> FindAsync(Guid id)

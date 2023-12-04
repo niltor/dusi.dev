@@ -7,6 +7,7 @@ namespace Ater.Web.Core.Models;
 public interface IEntityBase
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
     /// <summary>
     /// 创建时间
