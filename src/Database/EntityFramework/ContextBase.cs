@@ -110,7 +110,7 @@ public class ContextBase : DbContext
 
     private void OnModelFilterCreating(ModelBuilder modelBuilder)
     {
-        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        var entityTypes = modelBuilder.Model.GetEntityTypes().Where(x => x.BaseType != null && x.BaseType.ClrType == typeof(IEntityBase));
         {
             if (typeof(IEntityBase).IsAssignableFrom(entityType.ClrType))
             {
