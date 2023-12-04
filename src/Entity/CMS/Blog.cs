@@ -26,8 +26,6 @@ public class Blog : IEntityBase
     /// </summary>
     [MaxLength(200)]
     public required string Authors { get; set; }
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
     public DateTimeOffset CreatedTime { get; set; }
     public DateTimeOffset UpdatedTime { get; set; }
