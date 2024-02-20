@@ -1,13 +1,6 @@
 <mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav mode="side" opened="true" style="width: auto;">
-    <div class="d-flex flex-row-reverse">
-      <button mat-icon-button *ngIf="opened" (click)="toggle()">
-        <mat-icon>keyboard_double_arrow_left</mat-icon>
-      </button>
-      <button mat-icon-button *ngIf="!opened" (click)="toggle()">
-        <mat-icon>keyboard_double_arrow_right</mat-icon>
-      </button>
-    </div>
+
     <mat-accordion class="example-headers-align" multi>
       <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header>
