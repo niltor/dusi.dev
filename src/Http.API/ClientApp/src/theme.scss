@@ -42,6 +42,9 @@ $light-bg-color: #ffffff;
     --mdc-elevated-card-container-elevation: 0px 0px 2px 1px rgb(142 95 141 / 84%);
   }
 
+  .active {
+    background-color: mat.get-theme-color($m3-dark-theme, primary, 40) !important;
+  }
 }
 
 @media (prefers-color-scheme: light) {
@@ -62,5 +65,9 @@ $light-bg-color: #ffffff;
   .card-style {
     background-color: $light-bg-color !important;
     --mdc-elevated-card-container-elevation: 0px 12px 14px 0px rgb(29 31 35 / 4%);
+  }
+
+  .active {
+    background-color: mat.get-theme-color($m3-dark-theme, primary, 60) !important;
   }
 }
