@@ -16,7 +16,7 @@
         </mat-chip>
         <!-- insert flex 1 1 auto  as divider -->
         <span style="display:flex;flex:1 1 auto"></span>
-        <mat-form-field class="ms-2">
+        <mat-form-field class="ms-2" appearance="outline" subscriptSizing="dynamic">
           <mat-label>搜索博客</mat-label>
           <input matInput [(ngModel)]="filter.title" (keyup.enter)="getBlogs()" placeholder="搜索标题，按回车确认"
             (close)="clearFilter()">
@@ -26,8 +26,7 @@
         </mat-form-field>
       </div>
       <ng-container *ngIf="blogs.length>0; else elseTemplate">
-
-        <mat-card class="w-100 my-1" *ngFor="let item of blogs">
+        <mat-card class="w-100 my-1 mt-2 card-style" *ngFor="let item of blogs">
           <mat-card-header>
             <mat-card-title>
               <a [routerLink]="['/blogs', item.catalog!.name,item.id+'.html']" target="_blank" matTooltip="在新窗口打开">
@@ -45,7 +44,7 @@
           <mat-card-actions *ngIf="item.tags">
             <mat-icon fontSet="material-icons-outlined" color="accent">local_offer</mat-icon>
             <mat-chip-listbox class="ms-2">
-              <mat-chip color="primary" *ngFor="let tag of item.tags" (click)="selectTag(tag.name)">
+              <mat-chip *ngFor="let tag of item.tags" (click)="selectTag(tag.name)">
                 {{tag.name}}
               </mat-chip>
             </mat-chip-listbox>

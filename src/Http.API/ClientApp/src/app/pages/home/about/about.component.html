@@ -1,14 +1,14 @@
 <div class="d-flex p-3 container">
   <div class="col-6">
     <h1>开源项目</h1>
-    <mat-card *ngFor="let item of data" class="mt-2">
+    <mat-card *ngFor="let item of data" class="mt-2 card-style">
       <mat-card-header>
         <mat-card-title>
           <a [href]="item.projectUrl" color="primary" mat-button style="font-size: 1.2rem;" target="_blank">
             ⭐ {{item.title}}
           </a>
         </mat-card-title>
-        <mat-card-subtitle class="m-1" style="color: rgb(53, 53, 53);">
+        <mat-card-subtitle>
           {{item.description}}
         </mat-card-subtitle>
       </mat-card-header>
@@ -17,8 +17,6 @@
           <mat-chip color="primary" *ngFor="let tag of splitTags(item.tags!)">{{tag}}</mat-chip>
         </mat-chip-set>
       </mat-card-content>
-      <!-- <mat-card-actions>
-      </mat-card-actions> -->
     </mat-card>
   </div>
   <div class="col-6 ms-4">
