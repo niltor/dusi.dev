@@ -27,7 +27,7 @@ export class BlogComponent {
   ) {
     this.filter = {
       pageIndex: 1,
-      pageSize: 100
+      pageSize: 12
     }
   }
 

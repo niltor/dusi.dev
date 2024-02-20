@@ -1,3 +1,19 @@
 p {
     font-size: 1rem;
 }
+
+.footer {
+    display: flex;
+    justify-content: center;
+    background-color: rgba(59, 59, 165, 0.938);
+    padding: 0.5rem;
+    font-family: 'Cascadia Code', 'Lucida Sans', 'Lucida Sans Regular';
+    align-items: center;
+}
+
+.des {
+    font-size: 1rem;
+    margin-left: 0.5rem;
+    color: #f0f0f0;
+    text-shadow: 1px 1px 1px 1px #333;
+}
