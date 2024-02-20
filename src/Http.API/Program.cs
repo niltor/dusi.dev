@@ -43,7 +43,6 @@ services.AddSingleton<StorageService>();
 services.AddScoped<IUserContext, UserContext>();
 services.AddDataStore();
 services.AddManager();
-services.AddHttpClient<OpenAIClient>();
 
 #region 接口相关内容:jwt/授权/cors
 // use jwt

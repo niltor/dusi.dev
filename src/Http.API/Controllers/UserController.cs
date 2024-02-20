@@ -10,19 +10,16 @@ public class UserController : ClientControllerBase<UserManager>
 {
     private readonly IConfiguration _config;
     private readonly SystemUserManager systemUserManager;
-    private readonly OpenAIClient openAIClient;
 
     public UserController(
         IUserContext user,
         ILogger<UserController> logger,
         UserManager manager,
         IConfiguration config,
-        SystemUserManager systemUserManager,
-        OpenAIClient openAIClient) : base(manager, user, logger)
+        SystemUserManager systemUserManager) : base(manager, user, logger)
     {
         _config = config;
         this.systemUserManager = systemUserManager;
-        this.openAIClient = openAIClient;
     }
 
     /// <summary>
@@ -59,11 +56,11 @@ public class UserController : ClientControllerBase<UserManager>
                 };
 
                 var roles = new string[] { AppConst.User, user.UserType.ToString() };
-                jwt.Claims = new List<Claim>
-                {
+                jwt.Claims =
+                [
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(ClaimTypes.Email, user.Email??""),
-                };
+                ];
                 var token = jwt.GetToken(user.Id.ToString(), roles);
 
                 return new AuthResult
@@ -154,24 +151,5 @@ public class UserController : ClientControllerBase<UserManager>
         var entity = await manager.GetOwnedAsync(id);
         if (entity == null) return Forbid("无法删除当前用户");
         return await manager.DeleteAsync(entity, false);
-    }
-
-
-    /// <summary>
-    /// chat
-    /// </summary>
-    /// <param name="content"></param>
-    /// <returns></returns>
-    [HttpGet("chat")]
-    [ApiExplorerSettings(IgnoreApi = true)]
-    public async Task<ActionResult<string>> ChatAsync(string content)
-    {
-        var choices = await openAIClient.ResponseChatAsync(content);
-
-        if (choices != null && choices.Count > 0)
-        {
-            return choices[0].Message.Content;
-        }
-        return NoContent();
     }
 }

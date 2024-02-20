@@ -66,7 +66,7 @@ public class InitDataTask
             UserName = "admin",
             PasswordSalt = salt,
             PasswordHash = HashCrypto.GeneratePwd("123456", salt),
-            SystemRoles = new List<SystemRole>() { role },
+            SystemRoles = [role],
         };
         _ = context.SystemRoles.Add(userRole);
         _ = context.SystemRoles.Add(role);
@@ -156,8 +156,12 @@ public class InitDataTask
                         {
                             Directory.CreateDirectory(path);
                         }
-                        var fileName = blog.Id.ToString() + ".md";
-                        await File.WriteAllTextAsync(Path.Combine(path, fileName), blog.Content);
+                        if (blog.Id != Guid.Empty)
+                        {
+                            var fileName = blog.Id.ToString() + ".md";
+                            await File.WriteAllTextAsync(Path.Combine(path, fileName), blog.Content);
+                        }
+
                     }
                 }
 

@@ -50,9 +50,8 @@ public class BlogViewMiddleware
                         if (reason == EvictionReason.Expired)
                         {
                             // update  blog view number 
-                            _context.Blogs
-                            .Where(b => b.Id == new Guid(idstr))
-                            .ExecuteUpdate(s => s.SetProperty(p => p.ViewCount, p => p.ViewCount + (int)value!));
+                            _context.Blogs.Where(b => b.Id == new Guid(idstr))
+                                .ExecuteUpdate(s => s.SetProperty(p => p.ViewCount, p => p.ViewCount + (int)value!));
                         }
                     }
                 });
@@ -67,8 +66,6 @@ public class BlogViewMiddleware
                 {
                     _cache.Set(idstr, 1, cacheOption);
                 }
-
-
             }
         }
         await _next(context);

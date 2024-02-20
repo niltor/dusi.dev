@@ -74,17 +74,6 @@ public class EntityModelController : ClientControllerBase<EntityModelManager>
         return res == null ? NotFound() : res;
     }
 
-    /// <summary>
-    /// 生成模型
-    /// </summary>
-    /// <param name="name"></param>
-    /// <param name="description"></param>
-    /// <returns>[]</returns>
-    [HttpGet("generate")]
-    public async Task<List<string>?> GenerateAsync(string name, string? description = null)
-    {
-        return await manager.GenerateEntityAsync(name, description);
-    }
 
     /// <summary>
     /// ⚠删除

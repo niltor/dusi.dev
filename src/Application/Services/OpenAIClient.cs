@@ -10,7 +10,6 @@ public class OpenAIClient
 {
     private readonly HttpClient Client;
     private readonly IConfiguration _configuration;
-
     ILogger<OpenAIClient> _logger;
 
     public OpenAIClient(HttpClient client, IConfiguration configuration, ILogger<OpenAIClient> logger)
@@ -40,7 +39,7 @@ public class OpenAIClient
         description ??= "实体额外说明:" + description;
         var requestData = new GPTRequest
         {
-            Messages = new List<Message> {
+            Messages = [
                 new Message("生成csharp代码"){
                     Role="assistant"
                 },
@@ -50,7 +49,7 @@ public class OpenAIClient
                     Role="assistant"
                 },
                 new Message($"时间类型使用DateTimeOffset;{description}")
-            },
+            ],
             N = 2
         };
         var response = await Client.PostAsJsonAsync("/v1/chat/completions", requestData);
@@ -74,12 +73,12 @@ public class OpenAIClient
     {
         var requestData = new GPTRequest
         {
-            Messages = new List<Message> {
+            Messages = [
                 new Message("You are a wise and rational polymath who enjoys chatting with other people, your name is freedom, and You are simulating a real human being having a conversation!") {
                     Role = "system"
                 },
                 new Message("content"),
-            },
+            ],
             N = 1,
             Max_tokens = 100,
             Temperature = 0.1
