@@ -189,8 +189,6 @@ else
 {
     // 生产环境需要新的配置
     app.UseCors("default");
-    //app.UseHsts();
-    app.UseHttpsRedirection();
 }
 
 app.UseBlogViewMiddleware();

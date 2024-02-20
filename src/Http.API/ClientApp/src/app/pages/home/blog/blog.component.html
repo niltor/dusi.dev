@@ -63,12 +63,13 @@
   </section>
   <!-- 分类 -->
   <section class="sugguest p-2">
+    @if(typeOptions){
     <mat-card class="card-style">
       <mat-card-header>
         <mat-card-title>分类</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <mat-action-list *ngIf="typeOptions">
+        <mat-action-list>
           <button mat-list-item (click)="selectblogsType(null)">
             全部
           </button>
@@ -78,6 +79,8 @@
         </mat-action-list>
       </mat-card-content>
     </mat-card>
+    }
+
 
   </section>
 </div>

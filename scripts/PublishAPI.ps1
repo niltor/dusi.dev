@@ -53,6 +53,6 @@ if (!$publishAll) {
 scp -r './publish/*' azure:/var/webapi/Dusi
     
 # run command via ssh 
-ssh niltor@40.82.150.217 "sudo systemctl restart Dusi.service"
+ssh azure "sudo systemctl restart Dusi.service"
 
 Set-Location $location
