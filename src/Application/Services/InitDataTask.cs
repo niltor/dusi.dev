@@ -53,7 +53,7 @@ public class InitDataTask
         SystemRole role = new()
         {
             Name = "Admin",
-            NameValue = AppConst.Admin
+            NameValue = AppConst.AdminUser
         };
         SystemRole userRole = new()
         {

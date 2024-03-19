@@ -131,7 +131,7 @@ public class BlogController : ClientControllerBase<BlogManager>
             string fileExt = Path.GetExtension(upload.FileName).ToLowerInvariant();
             long fileSize = upload.Length; //获得文件大小，以字节为单位
             //判断后缀是否是图片
-            string[] permittedExtensions = new string[] { ".jpeg", ".jpg", ".png", ".bmp", ".svg", ".webp" };
+            string[] permittedExtensions = [".jpeg", ".jpg", ".png", ".bmp", ".svg", ".webp"];
 
             if (fileExt == null)
             {

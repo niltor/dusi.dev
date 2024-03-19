@@ -60,14 +60,14 @@ public class AuthController : RestControllerBase
                 {
                     TokenExpires = 60 * 24 * 7,
                 };
-                var token = jwt.GetToken(user.Id.ToString(), roles ?? new string[] { "Unknown" });
+                var token = jwt.GetToken(user.Id.ToString(), roles ?? ["Unknown"]);
                 // 登录状态存储到Redis
                 //await _redis.SetValueAsync("login" + user.Id.ToString(), true, 60 * 24 * 7);
 
                 return new AuthResult
                 {
                     Id = user.Id,
-                    Roles = roles ?? new string[] { "Unknown" },
+                    Roles = roles ?? ["Unknown"],
                     Token = token,
                     Username = user.UserName
                 };

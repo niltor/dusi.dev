@@ -36,7 +36,7 @@ public class EntityLibraryController : ClientControllerBase<EntityLibraryManager
     [HttpPost]
     public async Task<ActionResult<EntityLibrary>> AddAsync(EntityLibraryAddDto form)
     {
-        var user = await _user.GetUserAsync();
+        var user = await _user.GetUserAsync<User>();
         if (user == null) { return NotFound(ErrorMsg.NotFoundUser); }
         var entity = form.MapTo<EntityLibraryAddDto, EntityLibrary>();
         entity.User = user;

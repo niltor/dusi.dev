@@ -4,10 +4,10 @@ public class OsChinaFeed : BaseFeed
 {
     public OsChinaFeed(ILogger<OsChinaFeed> logger) : base(logger, "OSC")
     {
-        Urls = new string[]
-        {
+        Urls =
+        [
                 "https://www.oschina.net/news/rss",
-        };
+        ];
     }
 
     protected override string GetContent(string url) => base.GetContent(url);

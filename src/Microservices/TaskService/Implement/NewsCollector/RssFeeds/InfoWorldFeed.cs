@@ -7,10 +7,10 @@ public class InfoWorldFeed : BaseFeed
 
     public InfoWorldFeed(ILogger<InfoWorldFeed> logger) : base(logger,"InfoWorld")
     {
-        Urls = new string[]
-        {
+        Urls =
+        [
                 "https://www.infoworld.com/index.rss",
-        };
+        ];
         HasContent = false;
     }
 

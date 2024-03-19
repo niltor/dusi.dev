@@ -1,11 +1,10 @@
-using Entity;
 using Share.Models.SystemUserDtos;
 namespace Http.API.Controllers.AdminControllers;
 
 /// <summary>
 /// 系统用户
 /// </summary>
-[Authorize(AppConst.Admin)]
+[Authorize(AppConst.AdminUser)]
 public class SystemUserController : RestControllerBase<SystemUserManager>
 {
     public SystemUserController(
@@ -74,7 +73,7 @@ public class SystemUserController : RestControllerBase<SystemUserManager>
     [HttpPut("password")]
     public async Task<ActionResult<bool>> ChangeMyPassword(string password)
     {
-        var user = await manager.GetCurrentAsync(_user.UserId!.Value);
+        var user = await manager.GetCurrentAsync(_user.UserId);
         if (user == null) return NotFound("未找到该用户");
         return await manager.ChangePasswordAsync(user, password);
     }

@@ -8,8 +8,8 @@ public class MicrosoftFeed : BaseFeed
 {
     public MicrosoftFeed(ILogger<MicrosoftFeed> logger) : base(logger, "MS")
     {
-        Urls = new string[]
-        {
+        Urls =
+        [
                 "https://devblogs.microsoft.com/dotnet/feed/",
                 "https://devblogs.microsoft.com/typescript/feed/",
             //"https://blogs.microsoft.com/ai/feed/",
@@ -17,9 +17,9 @@ public class MicrosoftFeed : BaseFeed
             //"https://devblogs.microsoft.com/powershell/feed/",
             //"https://devblogs.microsoft.com/devops/feed/",
             //"https://devblogs.microsoft.com/visualstudio/feed/"
-        };
-        Authorfilter = new string[] { "MSFT", "Team", "Microsoft", "Visual", "Office", "Blog"
-            ,"Jayme Singleton","Nish Anil","Phillip Carter","Olia Gavrysh","Daniel Roth","Cesar De la Torre"};
+        ];
+        Authorfilter = [ "MSFT", "Team", "Microsoft", "Visual", "Office", "Blog"
+            ,"Jayme Singleton","Nish Anil","Phillip Carter","Olia Gavrysh","Daniel Roth","Cesar De la Torre"];
     }
 
     /// <summary>

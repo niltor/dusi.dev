@@ -134,7 +134,7 @@ public class UserController : ClientControllerBase<UserManager>
     [HttpPut("password")]
     public async Task<ActionResult<bool>> ChangeMyPassword(string password)
     {
-        var user = await manager.GetCurrentAsync(_user.UserId!.Value);
+        var user = await manager.GetCurrentAsync(_user.UserId);
         if (user == null) return NotFound("未找到该用户");
         return await manager.ChangePasswordAsync(user, password);
     }

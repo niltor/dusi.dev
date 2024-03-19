@@ -1,6 +1,5 @@
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
-using Application.Implement;
 using EntityFramework;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
@@ -77,9 +76,9 @@ services.AddAuthentication(options =>
 services.AddAuthorization(options =>
 {
     options.AddPolicy(AppConst.User, policy =>
-        policy.RequireRole(AppConst.Admin, AppConst.User));
-    options.AddPolicy(AppConst.Admin, policy =>
-        policy.RequireRole(AppConst.Admin));
+        policy.RequireRole(AppConst.AdminUser, AppConst.User));
+    options.AddPolicy(AppConst.AdminUser, policy =>
+        policy.RequireRole(AppConst.AdminUser));
 });
 
 // cors配置 

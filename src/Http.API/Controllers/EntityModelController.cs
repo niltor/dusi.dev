@@ -38,7 +38,7 @@ public class EntityModelController : ClientControllerBase<EntityModelManager>
     [HttpPost]
     public async Task<ActionResult<EntityModel>> AddAsync(EntityModelAddDto form)
     {
-        var user = await _user.GetUserAsync();
+        var user = await _user.GetUserAsync<User>();
         if (user == null) { return NotFound(ErrorMsg.NotFoundUser); }
         var lib = await _libraryManager.GetCurrentAsync(form.EntityLibraryId);
         if (lib == null) return NotFound(ErrorMsg.NotFoundEntityLib);

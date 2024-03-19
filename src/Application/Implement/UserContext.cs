@@ -4,7 +4,7 @@ namespace Application.Implement;
 
 public class UserContext : IUserContext
 {
-    public Guid? UserId { get; init; }
+    public Guid UserId { get; init; }
     public Guid? SessionId { get; init; }
     public string? Username { get; init; }
     public string? Email { get; set; }
@@ -55,7 +55,7 @@ public class UserContext : IUserContext
     }
 
     /// <summary>
-    /// �Ƿ����
+    /// 是否存在
     /// </summary>
     /// <returns></returns>
     public async Task<bool> ExistAsync()
@@ -65,13 +65,26 @@ public class UserContext : IUserContext
             await _context.Users.AnyAsync(u => u.Id == UserId);
     }
 
+    /// <summary>
+    /// 获取ip地址
+    /// </summary>
+    /// <returns></returns>
+    public string? GetIpAddress()
+    {
+        HttpRequest? request = _httpContextAccessor.HttpContext?.Request;
+        return request == null
+            ? string.Empty
+            : request.Headers.ContainsKey("X-Forwarded-For")
+            ? request.Headers["X-Forwarded-For"].Where(x => x != null).FirstOrDefault()
+            : _httpContextAccessor.HttpContext!.Connection.RemoteIpAddress?.ToString();
+    }
+
     public async Task<User?> GetUserAsync()
     {
         return await _context.Users.FindAsync(UserId);
     }
-
-    public async Task<SystemUser?> GetSystemUserAsync()
+    public async Task<TUser?> GetUserAsync<TUser>() where TUser : class
     {
-        return await _context.SystemUsers.FindAsync(UserId);
+        return await _context.Set<TUser>().FindAsync(UserId);
     }
 }

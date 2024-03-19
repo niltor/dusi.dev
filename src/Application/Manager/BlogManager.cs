@@ -32,7 +32,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     {
         Blog entity = dto.MapTo<BlogAddDto, Blog>();
 
-        if (dto.TagIds != null && dto.TagIds.Any())
+        if (dto.TagIds != null && dto.TagIds.Count != 0)
         {
             List<Tags> tags = await _tagsManager.Command.Db.Where(t => dto.TagIds.Contains(t.Id)).ToListAsync();
             if (tags != null)
@@ -43,7 +43,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
 
         var catalog = await _catalogManager.GetCurrentAsync(dto.CatalogId);
         entity.Catalog = catalog!;
-        entity.UserId = _userContext!.UserId!.Value;
+        entity.UserId = _userContext!.UserId;
         entity.Authors = _userContext.Username!;
         return entity;
     }
@@ -88,7 +88,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     public override async Task<Blog> UpdateAsync(Blog entity, BlogUpdateDto dto)
     {
         // 处理tagids
-        if (dto.TagIds != null && dto.TagIds.Any())
+        if (dto.TagIds != null && dto.TagIds.Count != 0)
         {
             List<Tags> tags = await _tagsManager.Command.Db.Where(t => dto.TagIds.Contains(t.Id)).ToListAsync();
             if (tags != null)

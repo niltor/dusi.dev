@@ -19,7 +19,7 @@ public class BaseFeed
     /// <summary>
     /// 内容html标签过滤
     /// </summary>
-    protected string[] HtmlTagFilter { get; set; } = { "<h1>", "<h2>", "<h3>", "<h4>", "<h5>", "<p></p>" };
+    protected string[] HtmlTagFilter { get; set; } = ["<h1>", "<h2>", "<h3>", "<h4>", "<h5>", "<p></p>"];
     /// <summary>
     /// xml root名称
     /// </summary>
