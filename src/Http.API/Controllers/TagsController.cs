@@ -5,15 +5,12 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 标签
 /// </summary>
-public class TagsController : ClientControllerBase<TagsManager>
+public class TagsController(
+    IUserContext user,
+    ILogger<TagsController> logger,
+    TagsManager manager
+        ) : ClientControllerBase<TagsManager>(manager, user, logger)
 {
-    public TagsController(
-        IUserContext user,
-        ILogger<TagsController> logger,
-        TagsManager manager
-        ) : base(manager, user, logger)
-    {
-    }
 
     /// <summary>
     /// 筛选
@@ -34,7 +31,7 @@ public class TagsController : ClientControllerBase<TagsManager>
     [HttpPost]
     public async Task<ActionResult<Tags>> AddAsync(TagsAddDto form)
     {
-        var entity = await manager.CreateNewEntityAsync(form);
+        Tags entity = await manager.CreateNewEntityAsync(form);
         return await manager.AddAsync(entity);
     }
 
@@ -57,7 +54,7 @@ public class TagsController : ClientControllerBase<TagsManager>
     [HttpPut("{id}")]
     public async Task<ActionResult<Tags?>> UpdateAsync([FromRoute] Guid id, TagsUpdateDto form)
     {
-        var current = await manager.GetOwnedAsync(id);
+        Tags? current = await manager.GetOwnedAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -70,7 +67,7 @@ public class TagsController : ClientControllerBase<TagsManager>
     [HttpGet("{id}")]
     public async Task<ActionResult<Tags?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        Tags? res = await manager.FindAsync(id);
         return res == null ? NotFound() : res;
     }
 
@@ -83,7 +80,7 @@ public class TagsController : ClientControllerBase<TagsManager>
     [HttpDelete("{id}")]
     public async Task<ActionResult<Tags?>> DeleteAsync([FromRoute] Guid id)
     {
-        var entity = await manager.GetOwnedAsync(id);
+        Tags? entity = await manager.GetOwnedAsync(id);
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity);
     }

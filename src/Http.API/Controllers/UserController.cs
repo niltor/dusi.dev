@@ -6,21 +6,15 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 用户账户
 /// </summary>
-public class UserController : ClientControllerBase<UserManager>
+public class UserController(
+    IUserContext user,
+    ILogger<UserController> logger,
+    UserManager manager,
+    IConfiguration config,
+    SystemUserManager systemUserManager) : ClientControllerBase<UserManager>(manager, user, logger)
 {
-    private readonly IConfiguration _config;
-    private readonly SystemUserManager systemUserManager;
-
-    public UserController(
-        IUserContext user,
-        ILogger<UserController> logger,
-        UserManager manager,
-        IConfiguration config,
-        SystemUserManager systemUserManager) : base(manager, user, logger)
-    {
-        _config = config;
-        this.systemUserManager = systemUserManager;
-    }
+    private readonly IConfiguration _config = config;
+    private readonly SystemUserManager systemUserManager = systemUserManager;
 
     /// <summary>
     /// 登录获取Token
@@ -32,7 +26,7 @@ public class UserController : ClientControllerBase<UserManager>
     public async Task<ActionResult<AuthResult>> LoginAsync(LoginDto dto)
     {
         // 查询用户
-        var user = await manager.Query.Db.Where(u => u.UserName.Equals(dto.UserName))
+        User? user = await manager.Query.Db.Where(u => u.UserName.Equals(dto.UserName))
             .FirstOrDefaultAsync();
         if (user == null)
         {
@@ -41,27 +35,27 @@ public class UserController : ClientControllerBase<UserManager>
 
         if (HashCrypto.Validate(dto.Password, user.PasswordSalt, user.PasswordHash))
         {
-            var sign = _config.GetSection("Jwt")["Sign"];
-            var issuer = _config.GetSection("Jwt")["Issuer"];
-            var audience = _config.GetSection("Jwt")["Audience"];
+            string? sign = _config.GetSection("Jwt")["Sign"];
+            string? issuer = _config.GetSection("Jwt")["Issuer"];
+            string? audience = _config.GetSection("Jwt")["Audience"];
             //var time = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             //1天后过期
             if (!string.IsNullOrWhiteSpace(sign) &&
                 !string.IsNullOrWhiteSpace(issuer) &&
                 !string.IsNullOrWhiteSpace(audience))
             {
-                var jwt = new JwtService(sign, audience, issuer)
+                JwtService jwt = new(sign, audience, issuer)
                 {
                     TokenExpires = 60 * 24 * 7,
                 };
 
-                var roles = new string[] { AppConst.User, user.UserType.ToString() };
+                string[] roles = new string[] { AppConst.User, user.UserType.ToString() };
                 jwt.Claims =
                 [
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(ClaimTypes.Email, user.Email??""),
                 ];
-                var token = jwt.GetToken(user.Id.ToString(), roles);
+                string token = jwt.GetToken(user.Id.ToString(), roles);
 
                 return new AuthResult
                 {
@@ -94,7 +88,7 @@ public class UserController : ClientControllerBase<UserManager>
         {
             return Conflict("该用户名已被使用");
         }
-        var entity = await manager.CreateNewEntityAsync(form);
+        User entity = await manager.CreateNewEntityAsync(form);
         return await manager.AddAsync(entity);
     }
 
@@ -107,7 +101,7 @@ public class UserController : ClientControllerBase<UserManager>
     [HttpPut("{id}")]
     public async Task<ActionResult<User?>> UpdateAsync([FromRoute] Guid id, UserUpdateDto form)
     {
-        var current = await manager.GetOwnedAsync(id);
+        User? current = await manager.GetOwnedAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -134,7 +128,7 @@ public class UserController : ClientControllerBase<UserManager>
     [HttpPut("password")]
     public async Task<ActionResult<bool>> ChangeMyPassword(string password)
     {
-        var user = await manager.GetCurrentAsync(_user.UserId);
+        User? user = await manager.GetCurrentAsync(_user.UserId);
         if (user == null) return NotFound("未找到该用户");
         return await manager.ChangePasswordAsync(user, password);
     }
@@ -148,7 +142,7 @@ public class UserController : ClientControllerBase<UserManager>
     [HttpDelete("{id}")]
     public async Task<ActionResult<User?>> DeleteAsync([FromRoute] Guid id)
     {
-        var entity = await manager.GetOwnedAsync(id);
+        User? entity = await manager.GetOwnedAsync(id);
         if (entity == null) return Forbid("无法删除当前用户");
         return await manager.DeleteAsync(entity, false);
     }

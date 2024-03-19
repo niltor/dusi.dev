@@ -1,26 +1,18 @@
-using TaskService.Implement;
-using static System.Formats.Asn1.AsnWriter;
-using TaskService.Implement.NewsCollector;
 using Application.Services;
+using EntityFramework.DBProvider;
+using TaskService.Implement;
 
 namespace TaskService.Tasks;
 
 /// <summary>
 /// 获取bilibili视频任务
 /// </summary>
-public class GetBiliBiliVideosTask : BackgroundService
+public class GetBiliBiliVideosTask(ILogger<GetBiliBiliVideosTask> logger, IServiceProvider services, StorageService storage) : BackgroundService
 {
-    private readonly ILogger<GetBiliBiliVideosTask> _logger;
+    private readonly ILogger<GetBiliBiliVideosTask> _logger = logger;
     private Timer? _timer;
-    private readonly IServiceProvider Services;
-    private readonly StorageService storage;
-
-    public GetBiliBiliVideosTask(ILogger<GetBiliBiliVideosTask> logger, IServiceProvider services, StorageService storage)
-    {
-        _logger = logger;
-        Services = services;
-        this.storage = storage;
-    }
+    private readonly IServiceProvider Services = services;
+    private readonly StorageService storage = storage;
 
     public override async Task StartAsync(CancellationToken stoppingToken)
     {
@@ -43,31 +35,31 @@ public class GetBiliBiliVideosTask : BackgroundService
 
     private async void DoWork(object? state)
     {
-        var videoTask = new GetBilibiliVideo();
+        GetBilibiliVideo videoTask = new();
         try
         {
-            using var scope = Services.CreateScope();
-            var dbcontext = scope.ServiceProvider.GetRequiredService<CommandDbContext>();
+            using IServiceScope scope = Services.CreateScope();
+            CommandDbContext dbcontext = scope.ServiceProvider.GetRequiredService<CommandDbContext>();
 
-            var data = await videoTask.GetLatestVideoAsync();
+            Entity.CMS.ThirdVideo? data = await videoTask.GetLatestVideoAsync();
             if (data != null && !string.IsNullOrWhiteSpace(data.Identity))
             {
                 // 判断是否重复
-                var exist = dbcontext.ThirdVideos.Any(v => v.Identity == data.Identity);
+                bool exist = dbcontext.ThirdVideos.Any(v => v.Identity == data.Identity);
                 if (exist) { return; }
                 // 处理图片:下载重新上传
-                using (var http = new HttpClient())
+                using (HttpClient http = new())
                 {
-                    var stream = await http.GetStreamAsync(data.ThumbnailUrl + "@320w_200h_1c_!web-space-index-myvideo.webp");
-                    var path = Path.Combine("video", "thumbnail");
-                    var position = data.ThumbnailUrl?.LastIndexOf("/");
+                    Stream stream = await http.GetStreamAsync(data.ThumbnailUrl + "@320w_200h_1c_!web-space-index-myvideo.webp");
+                    string path = Path.Combine("video", "thumbnail");
+                    int? position = data.ThumbnailUrl?.LastIndexOf("/");
                     if (position is not null and > (-1))
                     {
-                        var filename = data.ThumbnailUrl?[(position.Value + 1)..];
+                        string? filename = data.ThumbnailUrl?[(position.Value + 1)..];
 
                         if (filename != null)
                         {
-                            var newPath = await storage.UploadAsync(stream, Path.Combine(path, filename));
+                            string newPath = await storage.UploadAsync(stream, Path.Combine(path, filename));
                             // 修改成新地址
                             data.ThumbnailUrl = newPath;
                         }

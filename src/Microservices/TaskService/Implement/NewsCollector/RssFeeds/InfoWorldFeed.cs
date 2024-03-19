@@ -17,7 +17,7 @@ public class InfoWorldFeed : BaseFeed
     protected override string GetCategories(XElement element)
     {
         XName categoriesTag = "categories";
-        var categories = element.Element(categoriesTag)?.Elements()
+        List<string>? categories = element.Element(categoriesTag)?.Elements()
             .Where(e => e.Name.Equals(Category))
             .Select(e => e.Value)
             .ToList();

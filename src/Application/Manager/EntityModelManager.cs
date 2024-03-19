@@ -2,7 +2,10 @@ using Share.Models.EntityModelDtos;
 
 namespace Application.Manager;
 
-public class EntityModelManager(DataStoreContext storeContext, EntityLibraryManager libraryManager) : DomainManagerBase<EntityModel, EntityModelUpdateDto, EntityModelFilterDto, EntityModelItemDto>(storeContext), IDomainManager<EntityModel>
+public class EntityModelManager(
+    DataAccessContext<EntityModel> storeContext,
+    ILogger<EntityModel> logger,
+    EntityLibraryManager libraryManager) : ManagerBase<EntityModel, EntityModelUpdateDto, EntityModelFilterDto, EntityModelItemDto>(storeContext, logger)
 {
     public override async Task<EntityModel> UpdateAsync(EntityModel entity, EntityModelUpdateDto dto)
     {

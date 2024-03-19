@@ -5,15 +5,12 @@ namespace Http.API.Controllers.AdminControllers;
 /// <summary>
 /// 三方视频
 /// </summary>
-public class ThirdVideoController : RestControllerBase<ThirdVideoManager>
+public class ThirdVideoController(
+    IUserContext user,
+    ILogger<ThirdVideoController> logger,
+    ThirdVideoManager manager
+        ) : RestControllerBase<ThirdVideoManager>(manager, user, logger)
 {
-    public ThirdVideoController(
-        IUserContext user,
-        ILogger<ThirdVideoController> logger,
-        ThirdVideoManager manager
-        ) : base(manager, user, logger)
-    {
-    }
 
     /// <summary>
     /// 筛选
@@ -34,7 +31,7 @@ public class ThirdVideoController : RestControllerBase<ThirdVideoManager>
     [HttpPost]
     public async Task<ActionResult<ThirdVideo>> AddAsync(ThirdVideoAddDto form)
     {
-        var entity = await manager.CreateNewEntityAsync(form);
+        ThirdVideo entity = await manager.CreateNewEntityAsync(form);
         return await manager.AddAsync(entity);
     }
 
@@ -47,7 +44,7 @@ public class ThirdVideoController : RestControllerBase<ThirdVideoManager>
     [HttpPut("{id}")]
     public async Task<ActionResult<ThirdVideo?>> UpdateAsync([FromRoute] Guid id, ThirdVideoUpdateDto form)
     {
-        var current = await manager.GetOwnedAsync(id);
+        ThirdVideo? current = await manager.GetOwnedAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -60,7 +57,7 @@ public class ThirdVideoController : RestControllerBase<ThirdVideoManager>
     [HttpGet("{id}")]
     public async Task<ActionResult<ThirdVideo?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        ThirdVideo? res = await manager.FindAsync(id);
         return (res == null) ? NotFound() : res;
     }
 
@@ -74,7 +71,7 @@ public class ThirdVideoController : RestControllerBase<ThirdVideoManager>
     public async Task<ActionResult<ThirdVideo?>> DeleteAsync([FromRoute] Guid id)
     {
         // TODO:实现删除逻辑,注意删除权限
-        var entity = await manager.GetOwnedAsync(id);
+        ThirdVideo? entity = await manager.GetOwnedAsync(id);
         if (entity == null) return NotFound();
         return Forbid();
         // return await manager.DeleteAsync(entity);

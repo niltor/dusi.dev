@@ -6,24 +6,18 @@ namespace TaskService.Implement.NewsCollector;
 /// <summary>
 /// 采集服务
 /// </summary>
-public class NewsCollector
+public class NewsCollector(ILogger<NewsCollector> logger, CommandDbContext context, RssHelper rssHelper)
 {
-    private readonly ILogger<NewsCollector> _logger;
-    private readonly CommandDbContext _context;
-    private readonly RssHelper rssHelper;
-    public NewsCollector(ILogger<NewsCollector> logger, CommandDbContext context, RssHelper rssHelper)
-    {
-        _logger = logger;
-        _context = context;
-        this.rssHelper = rssHelper;
-    }
+    private readonly ILogger<NewsCollector> _logger = logger;
+    private readonly CommandDbContext _context = context;
+    private readonly RssHelper rssHelper = rssHelper;
 
     public async Task Start()
     {
         try
         {
             _logger.LogInformation("⚡ Collect news");
-            var list = await GetThirdNewsAsync();
+            List<ThirdNews> list = await GetThirdNewsAsync();
             _logger.LogInformation("🔚 collect news: {couont}", list.Count);
             _logger.LogInformation("⚡ Add news");
             await AddThirdNewsAsync(list);
@@ -38,11 +32,11 @@ public class NewsCollector
 
     public async Task<List<ThirdNews>> GetThirdNewsAsync()
     {
-        var news = await rssHelper.GetAllBlogsAsync();
-        var result = new List<ThirdNews>();
+        List<Rss> news = await rssHelper.GetAllBlogsAsync();
+        List<ThirdNews> result = new();
         news.ForEach(news =>
         {
-            var thirdNews = new ThirdNews
+            ThirdNews thirdNews = new()
             {
                 Category = news.Categories,
                 Description = news.Description,
@@ -62,7 +56,7 @@ public class NewsCollector
 
     public async Task AddThirdNewsAsync(List<ThirdNews> list)
     {
-        var result = new List<ThirdNews>(list);
+        List<ThirdNews> result = new(list);
         var news = await _context.ThirdNews
             .IgnoreQueryFilters()
             .OrderByDescending(n => n.DatePublished)
@@ -71,7 +65,7 @@ public class NewsCollector
 
         _logger.LogInformation("📰 Total news: {count}", list.Count);
 
-        foreach (var item in list)
+        foreach (ThirdNews item in list)
         {
             if (news.Any(n => n.Title.GetSimilar(item.Title) >= 0.6 || n.Title.Equals(item.Title)))
             {

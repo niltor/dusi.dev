@@ -5,15 +5,12 @@ namespace Http.API.Controllers.AdminControllers;
 /// <summary>
 /// 资讯管理
 /// </summary>
-public class ThirdNewsController : RestControllerBase<ThirdNewsManager>
+public class ThirdNewsController(
+    IUserContext user,
+    ILogger<ThirdNewsController> logger,
+    ThirdNewsManager manager
+        ) : RestControllerBase<ThirdNewsManager>(manager, user, logger)
 {
-    public ThirdNewsController(
-        IUserContext user,
-        ILogger<ThirdNewsController> logger,
-        ThirdNewsManager manager
-        ) : base(manager, user, logger)
-    {
-    }
 
     /// <summary>
     /// 筛选
@@ -40,7 +37,7 @@ public class ThirdNewsController : RestControllerBase<ThirdNewsManager>
     [HttpPost]
     public async Task<ActionResult<ThirdNews>> AddAsync(ThirdNewsAddDto form)
     {
-        var entity = await manager.CreateNewEntityAsync(form);
+        ThirdNews entity = await manager.CreateNewEntityAsync(form);
         return await manager.AddAsync(entity);
     }
 
@@ -53,7 +50,7 @@ public class ThirdNewsController : RestControllerBase<ThirdNewsManager>
     [HttpPut("{id}")]
     public async Task<ActionResult<ThirdNews?>> UpdateAsync([FromRoute] Guid id, ThirdNewsUpdateDto form)
     {
-        var current = await manager.GetOwnedAsync(id);
+        ThirdNews? current = await manager.GetOwnedAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -78,7 +75,7 @@ public class ThirdNewsController : RestControllerBase<ThirdNewsManager>
     [HttpGet("{id}")]
     public async Task<ActionResult<ThirdNews?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        ThirdNews? res = await manager.FindAsync(id);
         return (res == null) ? NotFound() : res;
     }
 
@@ -91,7 +88,7 @@ public class ThirdNewsController : RestControllerBase<ThirdNewsManager>
     [HttpDelete("{id}")]
     public async Task<ActionResult<ThirdNews?>> DeleteAsync([FromRoute] Guid id)
     {
-        var entity = await manager.GetOwnedAsync(id);
+        ThirdNews? entity = await manager.GetOwnedAsync(id);
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity);
     }

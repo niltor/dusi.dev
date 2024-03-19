@@ -141,7 +141,7 @@ public class QuerySet<TContent, TEntity> :
 
         Queryable = query;
 
-        var count = Queryable.Count();
+        int count = Queryable.Count();
         List<TItem> data = await Queryable
             .Skip((pageIndex - 1) * pageSize)
             .Take(pageSize)
@@ -179,7 +179,7 @@ public class QuerySet<TContent, TEntity> :
         }
 
         Queryable = order != null ? Queryable.OrderBy(order) : (IQueryable<TEntity>)Queryable.OrderByDescending(t => t.CreatedTime);
-        var count = Queryable.Count();
+        int count = Queryable.Count();
         List<TItem> data = await Queryable
             .AsNoTracking()
             .Skip((pageIndex - 1) * pageSize)

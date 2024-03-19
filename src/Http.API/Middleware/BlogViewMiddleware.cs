@@ -6,38 +6,30 @@ namespace Http.API.Middleware;
 /// <summary>
 /// 博客访问中间件，记录访问量
 /// </summary>
-public class BlogViewMiddleware
+public class BlogViewMiddleware(RequestDelegate next, IMemoryCache cache, IServiceScopeFactory serviceScopeFactory)
 {
-    private readonly RequestDelegate _next;
-    private readonly IMemoryCache _cache;
-    private readonly IServiceScopeFactory _serviceScopeFactory;
-
-    public BlogViewMiddleware(RequestDelegate next, IMemoryCache cache, IServiceScopeFactory serviceScopeFactory)
-    {
-        _next = next;
-        _cache = cache;
-        _serviceScopeFactory = serviceScopeFactory;
-
-    }
+    private readonly RequestDelegate _next = next;
+    private readonly IMemoryCache _cache = cache;
+    private readonly IServiceScopeFactory _serviceScopeFactory = serviceScopeFactory;
 
     public async Task Invoke(HttpContext context, ILogger<BlogViewMiddleware> _logger)
     {
         // get route params
-        var routeValues = context.GetRouteData().Values;
-        var requestPath = context.Request.Path.Value;
+        RouteValueDictionary routeValues = context.GetRouteData().Values;
+        string? requestPath = context.Request.Path.Value;
 
         if (requestPath != null
             && requestPath.StartsWith("/blogs")
             && requestPath.EndsWith(".html"))
         {
-            var idstr = requestPath.Split('/')
+            string? idstr = requestPath.Split('/')
                 .LastOrDefault()?
                 .Split('.')
                 .FirstOrDefault();
 
             if (idstr != null)
             {
-                var cacheOption = new MemoryCacheEntryOptions()
+                MemoryCacheEntryOptions cacheOption = new MemoryCacheEntryOptions()
                    .SetPriority(CacheItemPriority.NeverRemove)
                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
 
@@ -45,8 +37,8 @@ public class BlogViewMiddleware
                 {
                     EvictionCallback = (key, value, reason, state) =>
                     {
-                        using var scope = _serviceScopeFactory.CreateScope();
-                        var _context = scope.ServiceProvider.GetRequiredService<CommandDbContext>();
+                        using IServiceScope scope = _serviceScopeFactory.CreateScope();
+                        CommandDbContext _context = scope.ServiceProvider.GetRequiredService<CommandDbContext>();
                         _logger.LogInformation("cache expired");
                         if (reason == EvictionReason.Expired)
                         {

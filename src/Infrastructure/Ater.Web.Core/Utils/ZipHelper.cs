@@ -12,12 +12,12 @@ public static class ZipHelper
     public static void Compress(string inputPath, string outputPath)
     {
         // 判断输入路径是文件还是目录
-        var isFile = File.Exists(inputPath);
+        bool isFile = File.Exists(inputPath);
 
         // 创建输出文件
         using FileStream outputFile = File.Create(outputPath);
         // 创建一个 ZipArchive
-        using var zip = new ZipArchive(outputFile, ZipArchiveMode.Create);
+        using ZipArchive zip = new(outputFile, ZipArchiveMode.Create);
         if (isFile)
         {
             // 如果是文件，添加一个 ZipArchiveEntry
@@ -26,13 +26,13 @@ public static class ZipHelper
         else
         {
             // 如果是目录，遍历所有子文件和子目录
-            foreach (var entry in Directory.EnumerateFileSystemEntries(inputPath, "*", SearchOption.AllDirectories))
+            foreach (string entry in Directory.EnumerateFileSystemEntries(inputPath, "*", SearchOption.AllDirectories))
             {
                 // 获取相对路径
-                var relativePath = Path.GetRelativePath(inputPath, entry);
+                string relativePath = Path.GetRelativePath(inputPath, entry);
 
                 // 判断是文件还是目录
-                var isSubFile = File.Exists(entry);
+                bool isSubFile = File.Exists(entry);
 
                 if (isSubFile)
                 {
@@ -58,20 +58,20 @@ public static class ZipHelper
         // 打开输入文件
         using FileStream inputFile = File.OpenRead(inputPath);
         // 创建一个 ZipArchive
-        using var zip = new ZipArchive(inputFile, ZipArchiveMode.Read);
+        using ZipArchive zip = new(inputFile, ZipArchiveMode.Read);
         // 遍历所有 ZipArchiveEntry
         foreach (ZipArchiveEntry entry in zip.Entries)
         {
             // 获取输出路径
-            var entryOutputPath = Path.Combine(outputPath, entry.FullName);
+            string entryOutputPath = Path.Combine(outputPath, entry.FullName);
 
             // 判断是文件还是目录
-            var isFile = !entryOutputPath.EndsWith(Path.DirectorySeparatorChar);
+            bool isFile = !entryOutputPath.EndsWith(Path.DirectorySeparatorChar);
 
             if (isFile)
             {
                 // 如果是文件，创建输出目录
-                var dir = Path.GetDirectoryName(entryOutputPath);
+                string? dir = Path.GetDirectoryName(entryOutputPath);
                 if (dir != null)
                 {
                     Directory.CreateDirectory(dir);
@@ -98,7 +98,7 @@ public static class ZipHelper
         bool isFile = File.Exists(inputPath);
 
         // 创建一个 ZipArchive
-        using var zip = new ZipArchive(output, ZipArchiveMode.Create, true);
+        using ZipArchive zip = new(output, ZipArchiveMode.Create, true);
         if (isFile)
         {
             // 如果是文件，添加一个 ZipArchiveEntry
@@ -107,7 +107,7 @@ public static class ZipHelper
         else
         {
             // 如果是目录，遍历所有子文件和子目录
-            foreach (var entry in Directory.EnumerateFileSystemEntries(inputPath, "*", SearchOption.AllDirectories))
+            foreach (string entry in Directory.EnumerateFileSystemEntries(inputPath, "*", SearchOption.AllDirectories))
             {
                 // 获取相对路径
                 string relativePath = Path.GetRelativePath(inputPath, entry);
@@ -137,7 +137,7 @@ public static class ZipHelper
     public static void DecompressFromStream(Stream input, string outputPath)
     {
         // 创建一个 ZipArchive
-        using var zip = new ZipArchive(input, ZipArchiveMode.Read);
+        using ZipArchive zip = new(input, ZipArchiveMode.Read);
         // 遍历所有 ZipArchiveEntry
         foreach (ZipArchiveEntry entry in zip.Entries)
         {
@@ -150,7 +150,7 @@ public static class ZipHelper
             if (isFile)
             {
                 // 如果是文件，创建输出目录
-                var dir = Path.GetDirectoryName(entryOutputPath);
+                string? dir = Path.GetDirectoryName(entryOutputPath);
                 if (dir != null)
                 {
                     Directory.CreateDirectory(dir);

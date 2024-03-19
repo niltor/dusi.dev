@@ -35,7 +35,7 @@ public class CommandSet<TContent, TEntity>(TContent commandDbContext) : ICommand
         IQueryable<TEntity> _query = _db.Where(whereExp).AsQueryable();
         if (navigations != null)
         {
-            foreach (var item in navigations)
+            foreach (string item in navigations)
             {
                 _query = _query.Include(item);
             }
@@ -192,10 +192,10 @@ public class CommandSet<TContent, TEntity>(TContent commandDbContext) : ICommand
         Type type = typeof(T);
         foreach (Guid id in ids)
         {
-            var instance = Activator.CreateInstance(type);
+            object? instance = Activator.CreateInstance(type);
             if (instance != null)
             {
-                var entity = instance as T;
+                T? entity = instance as T;
                 entity!.Id = id;
                 res.Add(entity);
             }

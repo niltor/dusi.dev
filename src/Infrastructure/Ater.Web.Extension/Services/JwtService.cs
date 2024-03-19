@@ -29,7 +29,7 @@ public class JwtService(string sign, string audience, string issuer)
         List<Claim> claims = [new Claim(ClaimTypes.NameIdentifier, id)];
         if (roles.Length != 0)
         {
-            foreach (var role in roles)
+            foreach (string role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
@@ -41,7 +41,7 @@ public class JwtService(string sign, string audience, string issuer)
         JwtSecurityToken jwt = new(Issuer, Audience, claims,
             expires: DateTime.UtcNow.AddMinutes(TokenExpires),
             signingCredentials: signingCredentials);
-        var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+        string encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
         return encodedJwt;
     }
 

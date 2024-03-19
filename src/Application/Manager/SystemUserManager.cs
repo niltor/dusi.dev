@@ -2,12 +2,8 @@ using Share.Models.SystemUserDtos;
 
 namespace Application.Manager;
 
-public class SystemUserManager : DomainManagerBase<SystemUser, SystemUserUpdateDto, SystemUserFilterDto, SystemUserItemDto>, IDomainManager<SystemUser>
+public class SystemUserManager(DataAccessContext<SystemUser> storeContext, ILogger<SystemUserManager> logger) : ManagerBase<SystemUser, SystemUserUpdateDto, SystemUserFilterDto, SystemUserItemDto>(storeContext, logger)
 {
-    public SystemUserManager(DataStoreContext storeContext) : base(storeContext)
-    {
-    }
-
     public override async Task<SystemUser> UpdateAsync(SystemUser entity, SystemUserUpdateDto dto)
     {
         // TODO:根据实际业务更新

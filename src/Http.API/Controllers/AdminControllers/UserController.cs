@@ -6,21 +6,15 @@ namespace Http.API.Controllers.AdminControllers;
 /// <summary>
 /// 用户账户
 /// </summary>
-public class UserController : RestControllerBase<UserManager>
+public class UserController(
+    IUserContext user,
+    ILogger<UserController> logger,
+    UserManager manager,
+    IConfiguration config,
+    SystemUserManager systemUserManager) : RestControllerBase<UserManager>(manager, user, logger)
 {
-    private readonly IConfiguration _config;
-    private readonly SystemUserManager systemUserManager;
-
-    public UserController(
-        IUserContext user,
-        ILogger<UserController> logger,
-        UserManager manager,
-        IConfiguration config,
-        SystemUserManager systemUserManager) : base(manager, user, logger)
-    {
-        _config = config;
-        this.systemUserManager = systemUserManager;
-    }
+    private readonly IConfiguration _config = config;
+    private readonly SystemUserManager systemUserManager = systemUserManager;
 
     /// <summary>
     /// 筛选
@@ -45,7 +39,7 @@ public class UserController : RestControllerBase<UserManager>
         {
             return Conflict("该用户名已被使用");
         }
-        var entity = await manager.CreateNewEntityAsync(form);
+        User entity = await manager.CreateNewEntityAsync(form);
         return await manager.AddAsync(entity);
     }
 
@@ -58,7 +52,7 @@ public class UserController : RestControllerBase<UserManager>
     [HttpPut("{id}")]
     public async Task<ActionResult<User?>> UpdateAsync([FromRoute] Guid id, UserUpdateDto form)
     {
-        var current = await manager.GetOwnedAsync(id);
+        User? current = await manager.GetOwnedAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -85,7 +79,7 @@ public class UserController : RestControllerBase<UserManager>
     [HttpPut("password")]
     public async Task<ActionResult<bool>> ChangeMyPassword(string password)
     {
-        var user = await manager.GetCurrentAsync(_user.UserId);
+        User? user = await manager.GetCurrentAsync(_user.UserId);
         if (user == null) return NotFound("未找到该用户");
         return await manager.ChangePasswordAsync(user, password);
     }
@@ -100,7 +94,7 @@ public class UserController : RestControllerBase<UserManager>
     public async Task<ActionResult<User?>> DeleteAsync([FromRoute] Guid id)
     {
         // 实现删除逻辑,注意删除权限
-        var entity = await manager.GetOwnedAsync(id);
+        User? entity = await manager.GetOwnedAsync(id);
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity, false);
     }

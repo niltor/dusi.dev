@@ -5,14 +5,11 @@ namespace Http.API.Controllers.AdminControllers;
 /// <summary>
 /// 博客
 /// </summary>
-public class BlogController : RestControllerBase<BlogManager>
+public class BlogController(
+    IUserContext user,
+    ILogger<BlogController> logger,
+    BlogManager manager) : RestControllerBase<BlogManager>(manager, user, logger)
 {
-    public BlogController(
-        IUserContext user,
-        ILogger<BlogController> logger,
-        BlogManager manager) : base(manager, user, logger)
-    {
-    }
 
     /// <summary>
     /// 筛选

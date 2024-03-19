@@ -2,13 +2,13 @@
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using System.Threading.RateLimiting;
-
 using Http.API;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Share.Options;
 
 namespace Http.API;
 
@@ -26,9 +26,15 @@ public static class ServiceCollectionExtension
         builder.Services.AddTransient<IUserContext, UserContext>();
 
         builder.Services.AddManager();
+
         // TODO:其他模块Manager
         //services.AddSystemModManagers();
+
+        builder.Services.Configure<AzureOption>(builder.Configuration.GetSection("Azure"));
+
         builder.Services.AddSingleton(typeof(CacheService));
+        builder.Services.AddSingleton<StorageService>();
+
 
         builder.Services.AddControllers()
             .ConfigureApiBehaviorOptions(o =>
@@ -107,7 +113,7 @@ public static class ServiceCollectionExtension
             // 验证码  每10秒5次
             options.AddPolicy("captcha", context =>
             {
-                var remoteIpAddress = context.Connection.RemoteIpAddress;
+                IPAddress? remoteIpAddress = context.Connection.RemoteIpAddress;
                 if (!IPAddress.IsLoopback(remoteIpAddress!))
                 {
                     return RateLimitPartition.GetFixedWindowLimiter(remoteIpAddress!.ToString(), _ =>
@@ -165,7 +171,7 @@ public static class ServiceCollectionExtension
         .AddJwtBearer(cfg =>
         {
             cfg.SaveToken = true;
-            var sign = configuration.GetSection("Authentication")["Jwt:Sign"];
+            string? sign = configuration.GetSection("Authentication")["Jwt:Sign"];
             if (string.IsNullOrEmpty(sign))
             {
                 throw new Exception("未找到有效的Jwt配置");
@@ -230,8 +236,8 @@ public static class ServiceCollectionExtension
                 Description = "Client API 文档. 更新时间:" + DateTime.Now.ToString("yyyy-MM-dd H:mm:ss"),
                 Version = "v1"
             });
-            var xmlFiles = Directory.GetFiles(AppContext.BaseDirectory, "*.xml", SearchOption.TopDirectoryOnly);
-            foreach (var item in xmlFiles)
+            string[] xmlFiles = Directory.GetFiles(AppContext.BaseDirectory, "*.xml", SearchOption.TopDirectoryOnly);
+            foreach (string item in xmlFiles)
             {
                 try
                 {
@@ -243,7 +249,7 @@ public static class ServiceCollectionExtension
             c.DescribeAllParametersInCamelCase();
             c.CustomOperationIds((z) =>
             {
-                var descriptor = (ControllerActionDescriptor)z.ActionDescriptor;
+                ControllerActionDescriptor descriptor = (ControllerActionDescriptor)z.ActionDescriptor;
                 return $"{descriptor.ControllerName}_{descriptor.ActionName}";
             });
             c.SchemaFilter<EnumSchemaFilter>();

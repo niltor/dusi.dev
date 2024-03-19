@@ -51,7 +51,7 @@ public class UserContext : IUserContext
     /// <returns></returns>
     public bool IsRole(string roleName)
     {
-        return Roles != null && Roles.Any(r => r.ToLower() == roleName);
+        return Roles != null && Roles.Any(r => r.Equals(roleName, StringComparison.CurrentCultureIgnoreCase));
     }
 
     /// <summary>

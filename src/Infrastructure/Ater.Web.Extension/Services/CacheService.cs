@@ -19,7 +19,7 @@ public class CacheService(IDistributedCache cache)
     public async Task SetValueAsync(string key, object data, int? expiration = null)
     {
         byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(data);
-        var option = new DistributedCacheEntryOptions();
+        DistributedCacheEntryOptions option = new();
         if (expiration != null)
         {
             option.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(expiration.Value);
@@ -38,7 +38,7 @@ public class CacheService(IDistributedCache cache)
     public async Task SetValueAsync(string key, object data, int? sliding = null, int? expiration = null)
     {
         byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(data);
-        var option = new DistributedCacheEntryOptions();
+        DistributedCacheEntryOptions option = new();
         if (sliding.HasValue)
         {
             option.SlidingExpiration = TimeSpan.FromSeconds(sliding.Value);
@@ -68,7 +68,7 @@ public class CacheService(IDistributedCache cache)
     /// <returns></returns>
     public T? GetValue<T>(string key)
     {
-        var bytes = _cache.Get(key);
+        byte[]? bytes = _cache.Get(key);
         if (bytes == null || bytes.Length < 1)
         {
             return default;

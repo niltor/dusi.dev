@@ -1,4 +1,3 @@
-using EntityFramework.QueryStore;
 using Share.Models.AuthDtos;
 
 namespace Http.API.Controllers.AdminControllers;
@@ -9,23 +8,13 @@ namespace Http.API.Controllers.AdminControllers;
 [AllowAnonymous]
 [Route("api/admin/[controller]")]
 [ApiExplorerSettings(GroupName = "admin")]
-public class AuthController : RestControllerBase
+public class AuthController(
+    IConfiguration config,
+    SystemUserManager userManager
+        ) : RestControllerBase
 {
-    private readonly SystemUserQueryStore _store;
-    private readonly IConfiguration _config;
-    //private readonly RedisService _redis;
-
-    public AuthController(
-        IConfiguration config,
-        //RedisService redis,
-        SystemUserQueryStore store
-        )
-    {
-        //_store = userDataStore;
-        _config = config;
-        //_redis = redis;
-        _store = store;
-    }
+    private readonly IConfiguration _config = config;
+    private readonly SystemUserManager userManager = userManager;
 
     /// <summary>
     /// 登录获取Token
@@ -36,7 +25,7 @@ public class AuthController : RestControllerBase
     public async Task<ActionResult<AuthResult>> LoginAsync(LoginDto dto)
     {
         // 查询用户
-        var user = await _store.Db.Where(u => u.UserName.Equals(dto.UserName))
+        SystemUser? user = await userManager.Query.Db.Where(u => u.UserName.Equals(dto.UserName))
             .Include(u => u.SystemRoles)
             .FirstOrDefaultAsync();
         if (user == null)
@@ -46,21 +35,21 @@ public class AuthController : RestControllerBase
 
         if (HashCrypto.Validate(dto.Password, user.PasswordSalt, user.PasswordHash))
         {
-            var sign = _config.GetSection("Jwt")["Sign"];
-            var issuer = _config.GetSection("Jwt")["Issuer"];
-            var audience = _config.GetSection("Jwt")["Audience"];
-            var roles = user.SystemRoles?.Select(r => r.NameValue)?.ToArray();
+            string? sign = _config.GetSection("Jwt")["Sign"];
+            string? issuer = _config.GetSection("Jwt")["Issuer"];
+            string? audience = _config.GetSection("Jwt")["Audience"];
+            string[]? roles = user.SystemRoles?.Select(r => r.NameValue)?.ToArray();
             //var time = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             //1天后过期
             if (!string.IsNullOrWhiteSpace(sign) &&
                 !string.IsNullOrWhiteSpace(issuer) &&
                 !string.IsNullOrWhiteSpace(audience))
             {
-                var jwt = new JwtService(sign, audience, issuer)
+                JwtService jwt = new(sign, audience, issuer)
                 {
                     TokenExpires = 60 * 24 * 7,
                 };
-                var token = jwt.GetToken(user.Id.ToString(), roles ?? ["Unknown"]);
+                string token = jwt.GetToken(user.Id.ToString(), roles ?? ["Unknown"]);
                 // 登录状态存储到Redis
                 //await _redis.SetValueAsync("login" + user.Id.ToString(), true, 60 * 24 * 7);
 

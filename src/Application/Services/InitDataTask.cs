@@ -28,14 +28,14 @@ public class InitDataTask
             else
             {
                 // 判断是否初始化
-                SystemRole? role = await context.SystemRoles.SingleOrDefaultAsync(r => r.Name.ToLower() == "admin");
+                SystemRole? role = await context.SystemRoles.SingleOrDefaultAsync(r => r.Name.Equals("admin", StringComparison.CurrentCultureIgnoreCase));
                 if (role == null)
                 {
                     logger.LogInformation("初始化数据");
                     await InitRoleAndUserAsync(context);
                 }
                 await UpdateAsync(context, configuration, logger);
-                var env = provider.GetRequiredService<IWebHostEnvironment>();
+                IWebHostEnvironment env = provider.GetRequiredService<IWebHostEnvironment>();
                 await UpdateStaticFilesAsync(context, env, logger);
             }
         }
@@ -131,34 +131,34 @@ public class InitDataTask
         {
             if (_env.IsProduction())
             {
-                var markdownPath = Path.Combine(_env.WebRootPath, "markdown");
+                string markdownPath = Path.Combine(_env.WebRootPath, "markdown");
                 if (!Directory.Exists(markdownPath))
                 {
                     Directory.CreateDirectory(markdownPath);
                 }
                 // get alll files in markdown folder
-                var files = Directory.GetFiles(markdownPath, "*.md", SearchOption.AllDirectories);
+                string[] files = Directory.GetFiles(markdownPath, "*.md", SearchOption.AllDirectories);
 
-                var fileNames = files.Select(f => new FileInfo(f).Directory?.Name ?? "" + Path.GetFileNameWithoutExtension(f))
+                List<string> fileNames = files.Select(f => new FileInfo(f).Directory?.Name ?? "" + Path.GetFileNameWithoutExtension(f))
                     .ToList();
 
                 // get all blogs from database which not exist in markdown path
-                var blogs = context.Blogs.Where(b => !fileNames.Contains(b.Catalog.Name + b.Id.ToString()))
+                List<Blog> blogs = context.Blogs.Where(b => !fileNames.Contains(b.Catalog.Name + b.Id.ToString()))
                     .Include(b => b.Catalog)
                     .ToList();
 
                 if (blogs.Count > 0)
                 {
-                    foreach (var blog in blogs)
+                    foreach (Blog? blog in blogs)
                     {
-                        var path = Path.Combine(markdownPath, blog.Catalog.Name);
+                        string path = Path.Combine(markdownPath, blog.Catalog.Name);
                         if (!Directory.Exists(path))
                         {
                             Directory.CreateDirectory(path);
                         }
                         if (blog.Id != Guid.Empty)
                         {
-                            var fileName = blog.Id.ToString() + ".md";
+                            string fileName = blog.Id.ToString() + ".md";
                             await File.WriteAllTextAsync(Path.Combine(path, fileName), blog.Content);
                         }
 

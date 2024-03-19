@@ -6,17 +6,12 @@ namespace Http.API.Controllers.AdminControllers;
 /// 开源作品
 /// </summary>
 /// <see cref="Application.Manager.OpenSourceProductManager"/>
-public class OpenSourceProductController : RestControllerBase<OpenSourceProductManager>
+public class OpenSourceProductController(
+    IUserContext user,
+    ILogger<OpenSourceProductController> logger,
+    OpenSourceProductManager manager
+        ) : RestControllerBase<OpenSourceProductManager>(manager, user, logger)
 {
-
-    public OpenSourceProductController(
-        IUserContext user,
-        ILogger<OpenSourceProductController> logger,
-        OpenSourceProductManager manager
-        ) : base(manager, user, logger)
-    {
-
-    }
 
     /// <summary>
     /// 筛选
@@ -37,7 +32,7 @@ public class OpenSourceProductController : RestControllerBase<OpenSourceProductM
     [HttpPost]
     public async Task<ActionResult<OpenSourceProduct>> AddAsync(OpenSourceProductAddDto dto)
     {
-        var entity = await manager.CreateNewEntityAsync(dto);
+        OpenSourceProduct entity = await manager.CreateNewEntityAsync(dto);
         return await manager.AddAsync(entity);
     }
 
@@ -50,7 +45,7 @@ public class OpenSourceProductController : RestControllerBase<OpenSourceProductM
     [HttpPut("{id}")]
     public async Task<ActionResult<OpenSourceProduct?>> UpdateAsync([FromRoute] Guid id, OpenSourceProductUpdateDto dto)
     {
-        var current = await manager.GetOwnedAsync(id);
+        OpenSourceProduct? current = await manager.GetOwnedAsync(id);
         if (current == null) return NotFound(ErrorMsg.NotFoundResource);
         return await manager.UpdateAsync(current, dto);
     }
@@ -63,7 +58,7 @@ public class OpenSourceProductController : RestControllerBase<OpenSourceProductM
     [HttpGet("{id}")]
     public async Task<ActionResult<OpenSourceProduct?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        OpenSourceProduct? res = await manager.FindAsync(id);
         return (res == null) ? NotFound() : res;
     }
 
@@ -77,7 +72,7 @@ public class OpenSourceProductController : RestControllerBase<OpenSourceProductM
     public async Task<ActionResult<OpenSourceProduct?>> DeleteAsync([FromRoute] Guid id)
     {
         // 注意删除权限
-        var entity = await manager.GetOwnedAsync(id);
+        OpenSourceProduct? entity = await manager.GetOwnedAsync(id);
         if (entity == null) return NotFound();
         // return Forbid();
         return await manager.DeleteAsync(entity);

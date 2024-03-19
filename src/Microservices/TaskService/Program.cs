@@ -1,5 +1,6 @@
 using Application;
 using Application.Services;
+using EntityFramework.DBProvider;
 using Share.Options;
 using TaskService.Implement.NewsCollector;
 using TaskService.Implement.NewsCollector.RssFeeds;
@@ -7,11 +8,11 @@ using TaskService.Tasks;
 
 Console.OutputEncoding = Encoding.UTF8;
 
-var builder = WebApplication.CreateBuilder();
-var services = builder.Services;
-var configuration = builder.Configuration;
+WebApplicationBuilder builder = WebApplication.CreateBuilder();
+IServiceCollection services = builder.Services;
+ConfigurationManager configuration = builder.Configuration;
 
-var azAppConfigConnection = builder.Configuration["AppConfig"];
+string? azAppConfigConnection = builder.Configuration["AppConfig"];
 if (!string.IsNullOrEmpty(azAppConfigConnection))
 {
     builder.Configuration.AddAzureAppConfiguration(options =>
@@ -47,7 +48,6 @@ services.AddHttpContextAccessor();
 services.Configure<AzureOption>(configuration.GetSection("Azure"));
 services.Configure<MetaWeblogOption>(configuration.GetSection("Options:Cnblog"));
 
-services.AddDataStore();
 services.AddManager();
 services.AddSingleton<StorageService>();
 services.AddSingleton<MicrosoftFeed>();
@@ -61,7 +61,7 @@ services.AddHostedService<GetBiliBiliVideosTask>();
 services.AddHealthChecks();
 // controller with  dapr support
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 //app.UseAzureAppConfiguration();
 
 app.UseHealthChecks("/health");

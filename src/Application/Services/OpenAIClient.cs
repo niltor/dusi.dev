@@ -16,7 +16,7 @@ public class OpenAIClient
     {
         _configuration = configuration;
         _logger = logger;
-        var apiKey = _configuration.GetValue<string>("Azure:OpenAIKey");
+        string? apiKey = _configuration.GetValue<string>("Azure:OpenAIKey");
         if (string.IsNullOrWhiteSpace(apiKey))
         {
             _logger.LogError("openai key is null");
@@ -37,7 +37,7 @@ public class OpenAIClient
     public async Task<List<Choice>?> GetEntityAsync(string name, string? description = null)
     {
         description ??= "实体额外说明:" + description;
-        var requestData = new GPTRequest
+        GPTRequest requestData = new()
         {
             Messages = [
                 new Message("生成csharp代码"){
@@ -52,13 +52,13 @@ public class OpenAIClient
             ],
             N = 2
         };
-        var response = await Client.PostAsJsonAsync("/v1/chat/completions", requestData);
+        HttpResponseMessage response = await Client.PostAsJsonAsync("/v1/chat/completions", requestData);
 
         if (response.IsSuccessStatusCode)
         {
-            var data = await response.Content.ReadFromJsonAsync<JsonElement>();
+            JsonElement data = await response.Content.ReadFromJsonAsync<JsonElement>();
             // get [choices field] from data JsonElement
-            var choices = data.GetProperty("choices").Deserialize<List<Choice>>();
+            List<Choice>? choices = data.GetProperty("choices").Deserialize<List<Choice>>();
             return choices;
         }
         return default;
@@ -71,7 +71,7 @@ public class OpenAIClient
     /// <returns></returns>
     public async Task<List<Choice>?> ResponseChatAsync(string content)
     {
-        var requestData = new GPTRequest
+        GPTRequest requestData = new()
         {
             Messages = [
                 new Message("You are a wise and rational polymath who enjoys chatting with other people, your name is freedom, and You are simulating a real human being having a conversation!") {
@@ -83,28 +83,23 @@ public class OpenAIClient
             Max_tokens = 100,
             Temperature = 0.1
         };
-        var response = await Client.PostAsJsonAsync("/v1/chat/completions", requestData);
+        HttpResponseMessage response = await Client.PostAsJsonAsync("/v1/chat/completions", requestData);
 
         if (response.IsSuccessStatusCode)
         {
-            var data = await response.Content.ReadFromJsonAsync<JsonElement>();
+            JsonElement data = await response.Content.ReadFromJsonAsync<JsonElement>();
             // get [choices field] from data JsonElement
-            var choices = data.GetProperty("choices").Deserialize<List<Choice>>();
+            List<Choice>? choices = data.GetProperty("choices").Deserialize<List<Choice>>();
             return choices;
         }
         return default;
     }
-    public class Message
+    public class Message(string content)
     {
         [JsonPropertyName("role")]
         public string Role { get; set; } = "user";
         [JsonPropertyName("content")]
-        public string Content { get; set; } = default!;
-
-        public Message(string content)
-        {
-            Content = content;
-        }
+        public string Content { get; set; } = content;
     }
 
     public class GPTRequest

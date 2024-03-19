@@ -5,18 +5,14 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 实体模型类
 /// </summary>
-public class EntityModelController : ClientControllerBase<EntityModelManager>
+public class EntityModelController(
+    IUserContext user,
+    ILogger<EntityModelController> logger,
+    EntityModelManager manager,
+    EntityLibraryManager libraryManager) : ClientControllerBase<EntityModelManager>(manager, user, logger)
 {
 
-    private readonly EntityLibraryManager _libraryManager;
-    public EntityModelController(
-        IUserContext user,
-        ILogger<EntityModelController> logger,
-        EntityModelManager manager,
-        EntityLibraryManager libraryManager) : base(manager, user, logger)
-    {
-        _libraryManager = libraryManager;
-    }
+    private readonly EntityLibraryManager _libraryManager = libraryManager;
 
     /// <summary>
     /// 筛选
@@ -38,11 +34,11 @@ public class EntityModelController : ClientControllerBase<EntityModelManager>
     [HttpPost]
     public async Task<ActionResult<EntityModel>> AddAsync(EntityModelAddDto form)
     {
-        var user = await _user.GetUserAsync<User>();
+        User? user = await _user.GetUserAsync<User>();
         if (user == null) { return NotFound(ErrorMsg.NotFoundUser); }
-        var lib = await _libraryManager.GetCurrentAsync(form.EntityLibraryId);
+        EntityLibrary? lib = await _libraryManager.GetCurrentAsync(form.EntityLibraryId);
         if (lib == null) return NotFound(ErrorMsg.NotFoundEntityLib);
-        var entity = form.MapTo<EntityModelAddDto, EntityModel>();
+        EntityModel entity = form.MapTo<EntityModelAddDto, EntityModel>();
 
         entity.User = user;
         entity.EntityLibrary = lib;
@@ -58,7 +54,7 @@ public class EntityModelController : ClientControllerBase<EntityModelManager>
     [HttpPut("{id}")]
     public async Task<ActionResult<EntityModel?>> UpdateAsync([FromRoute] Guid id, EntityModelUpdateDto form)
     {
-        var current = await manager.GetCurrentAsync(id);
+        EntityModel? current = await manager.GetCurrentAsync(id);
         if (current == null) return NotFound(ErrorMsg.NotFoundResource);
         return await manager.UpdateAsync(current, form);
     }
@@ -71,7 +67,7 @@ public class EntityModelController : ClientControllerBase<EntityModelManager>
     [HttpGet("{id}")]
     public async Task<ActionResult<EntityModel?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        EntityModel? res = await manager.FindAsync(id);
         return res == null ? NotFound() : res;
     }
 
@@ -84,7 +80,7 @@ public class EntityModelController : ClientControllerBase<EntityModelManager>
     [HttpDelete("{id}")]
     public async Task<ActionResult<EntityModel?>> DeleteAsync([FromRoute] Guid id)
     {
-        var entity = await manager.GetCurrentAsync(id);
+        EntityModel? entity = await manager.GetCurrentAsync(id);
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity);
     }

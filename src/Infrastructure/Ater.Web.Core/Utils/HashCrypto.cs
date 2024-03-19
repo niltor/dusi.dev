@@ -24,7 +24,7 @@ public class HashCrypto
     public static string GeneratePwd(string value, string salt)
     {
         Rfc2898DeriveBytes encrpty = new(value, Encoding.UTF8.GetBytes(salt), 100, HashAlgorithmName.SHA512);
-        var valueBytes = encrpty.GetBytes(32);
+        byte[] valueBytes = encrpty.GetBytes(32);
         return Convert.ToBase64String(valueBytes);
     }
 
@@ -35,8 +35,8 @@ public class HashCrypto
 
     public static string BuildSalt()
     {
-        var randomBytes = new byte[128 / 8];
-        using var generator = RandomNumberGenerator.Create();
+        byte[] randomBytes = new byte[128 / 8];
+        using RandomNumberGenerator generator = RandomNumberGenerator.Create();
         generator.GetBytes(randomBytes);
         return Convert.ToBase64String(randomBytes);
     }
@@ -50,7 +50,7 @@ public class HashCrypto
     public static string HMACSHA256(string key, string content)
     {
         using HMACSHA256 hmac = new(Encoding.UTF8.GetBytes(key));
-        var valueBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(content));
+        byte[] valueBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(content));
         return Convert.ToBase64String(valueBytes);
 
     }
@@ -62,9 +62,9 @@ public class HashCrypto
     /// <returns></returns>
     public static string Md5Hash(string str)
     {
-        var data = MD5.HashData(Encoding.UTF8.GetBytes(str));
+        byte[] data = MD5.HashData(Encoding.UTF8.GetBytes(str));
         StringBuilder sBuilder = new();
-        for (var i = 0; i < data.Length; i++)
+        for (int i = 0; i < data.Length; i++)
         {
             _ = sBuilder.Append(data[i].ToString("x2"));
         }
@@ -77,10 +77,10 @@ public class HashCrypto
     /// <returns></returns>
     public static string Md5FileHash(Stream stream)
     {
-        using var md5 = MD5.Create();
-        var data = md5.ComputeHash(stream);
+        using MD5 md5 = MD5.Create();
+        byte[] data = md5.ComputeHash(stream);
         StringBuilder sBuilder = new();
-        for (var i = 0; i < data.Length; i++)
+        for (int i = 0; i < data.Length; i++)
         {
             _ = sBuilder.Append(data[i].ToString("x2"));
         }
@@ -99,9 +99,9 @@ public class HashCrypto
     /// <returns></returns>
     public static string GetRnd(int length = 4, bool useNum = true, bool useLow = false, bool useUpp = true, bool useSpe = false, string custom = "")
     {
-        var b = new byte[4];
+        byte[] b = new byte[4];
         string s = string.Empty;
-        var str = custom;
+        string str = custom;
         if (useNum)
         {
             str += "0123456789";
@@ -120,14 +120,14 @@ public class HashCrypto
         }
 
         // 范围
-        var range = str.Length - 1;
-        for (var i = 0; i < length; i++)
+        int range = str.Length - 1;
+        for (int i = 0; i < length; i++)
         {
             Rng.GetBytes(b);
             // 随机数
-            var rn = BitConverter.ToUInt32(b, 0) / ((double)uint.MaxValue + 1);
+            double rn = BitConverter.ToUInt32(b, 0) / ((double)uint.MaxValue + 1);
             // 位置
-            var position = (int)(rn * range);
+            int position = (int)(rn * range);
             s += str.Substring(position, 1);
         }
         return s;
@@ -143,13 +143,13 @@ public class HashCrypto
     {
         byte[] encrypted;
         byte[] bytes = Encoding.UTF8.GetBytes(text);
-        using (var aesAlg = Aes.Create())
+        using (Aes aesAlg = Aes.Create())
         {
             aesAlg.Key = Encoding.UTF8.GetBytes(Md5Hash(key));
             aesAlg.IV = aesAlg.Key[..16];
             ICryptoTransform encryptor = aesAlg.CreateEncryptor();
             using MemoryStream memoryStream = new();
-            using var csEncrypt = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write);
+            using CryptoStream csEncrypt = new(memoryStream, encryptor, CryptoStreamMode.Write);
 
             csEncrypt.Write(bytes, 0, bytes.Length);
             csEncrypt.FlushFinalBlock();
@@ -171,7 +171,7 @@ public class HashCrypto
             return string.Empty;
         }
         string? plaintext = null;
-        using (var aesAlg = Aes.Create())
+        using (Aes aesAlg = Aes.Create())
         {
             aesAlg.Key = Encoding.UTF8.GetBytes(Md5Hash(key));
             aesAlg.IV = aesAlg.Key[..16];
@@ -191,7 +191,7 @@ public class HashCrypto
     /// <returns></returns>
     public static string JsonEncrypt(object data)
     {
-        var bytes = JsonSerializer.SerializeToUtf8Bytes(data, JsonSerializerOptions);
+        byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(data, JsonSerializerOptions);
 
         if (bytes != null)
         {
@@ -211,13 +211,13 @@ public class HashCrypto
     /// <returns></returns>
     public static T? JsonDecrypt<T>(string value) where T : class
     {
-        var bytes = Convert.FromBase64String(value);
+        byte[] bytes = Convert.FromBase64String(value);
         if (bytes != null)
         {
             bytes = bytes.Reverse().ToArray();
             bytes = bytes.Select(b => b == byte.MinValue ? byte.MaxValue : (byte)(b - 1))
                 .ToArray();
-            var jsonString = Encoding.UTF8.GetString(bytes);
+            string jsonString = Encoding.UTF8.GetString(bytes);
 
             return JsonSerializer.Deserialize<T>(jsonString, JsonSerializerOptions)!;
         }

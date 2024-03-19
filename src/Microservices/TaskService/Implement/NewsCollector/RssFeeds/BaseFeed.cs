@@ -6,7 +6,7 @@ namespace TaskService.Implement.NewsCollector.RssFeeds;
 /// <summary>
 /// 基础feed
 /// </summary>
-public class BaseFeed
+public class BaseFeed(ILogger logger, string provider)
 {
     /// <summary>
     /// 链接
@@ -24,7 +24,7 @@ public class BaseFeed
     /// xml root名称
     /// </summary>
     protected string RootName { get; set; } = "channel";
-    protected string Provider { get; set; }
+    protected string Provider { get; set; } = provider;
     /// <summary>
     /// xml item 名称
     /// </summary>
@@ -43,13 +43,7 @@ public class BaseFeed
     protected XDocument? xmlDoc;
     protected HttpClient httpClient = new();
 
-    private readonly ILogger _logger;
-    public BaseFeed(ILogger logger, string provider)
-    {
-        _logger = logger;
-        Provider = provider;
-
-    }
+    private readonly ILogger _logger = logger;
 
     /// <summary>
     /// 解析返回
@@ -58,27 +52,27 @@ public class BaseFeed
     /// <returns></returns>
     public async virtual Task<List<Rss>> GetBlogsAsync(int number = 3)
     {
-        var result = new List<Rss>();
-        foreach (var url in Urls)
+        List<Rss> result = new();
+        foreach (string url in Urls)
         {
             try
             {
                 httpClient.DefaultRequestHeaders.Clear();
-                var xmlString = await httpClient.GetStringAsync(url);
+                string xmlString = await httpClient.GetStringAsync(url);
                 if (!string.IsNullOrEmpty(xmlString))
                 {
                     xmlDoc = XDocument.Parse(xmlString);
-                    var xmlList = xmlDoc?.Root?.Element(RootName)?.Elements(ItemName);
-                    var blogs = xmlList?.Select(x =>
+                    IEnumerable<XElement>? xmlList = xmlDoc?.Root?.Element(RootName)?.Elements(ItemName);
+                    List<Rss>? blogs = xmlList?.Select(x =>
                         {
-                            var createTime = DateTimeOffset.UtcNow;
-                            var createTimeString = x.Element(PubDate)?.Value;
+                            DateTimeOffset createTime = DateTimeOffset.UtcNow;
+                            string? createTimeString = x.Element(PubDate)?.Value;
                             if (!string.IsNullOrEmpty(createTimeString))
                             {
                                 DateTimeOffset.TryParse(createTimeString, out createTime);
                             }
 
-                            var description = x.Element(Description)?.Value;
+                            string? description = x.Element(Description)?.Value;
                             // 去除html标签
                             //description = Regex.Replace(description, "<.*?>", String.Empty);
 
@@ -89,7 +83,7 @@ public class BaseFeed
                                     description = description[..5000];
                                 }
                             }
-                            var content = x.Element(Content)?.Value;
+                            string? content = x.Element(Content)?.Value;
                             if (!string.IsNullOrEmpty(content))
                             {
                                 content = content.Replace("<pre", "<pre class=\"notranslate\"");
@@ -143,7 +137,7 @@ public class BaseFeed
     /// <returns></returns>
     protected virtual string GetCategories(XElement element)
     {
-        var categories = element.Elements()
+        string[]? categories = element.Elements()
             .Where(e => e.Name.Equals(Category))?
             .Select(s => s.Value)
             .ToArray();
@@ -168,7 +162,7 @@ public class BaseFeed
         {
             return true;
         }
-        foreach (var item in strArray)
+        foreach (string item in strArray)
         {
             if (key.Contains(item))
             {

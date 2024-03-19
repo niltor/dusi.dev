@@ -5,15 +5,12 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 目录
 /// </summary>
-public class CatalogController : ClientControllerBase<CatalogManager>
+public class CatalogController(
+    IUserContext user,
+    ILogger<CatalogController> logger,
+    CatalogManager manager
+        ) : ClientControllerBase<CatalogManager>(manager, user, logger)
 {
-    public CatalogController(
-        IUserContext user,
-        ILogger<CatalogController> logger,
-        CatalogManager manager
-        ) : base(manager, user, logger)
-    {
-    }
 
     /// <summary>
     /// 筛选
@@ -54,7 +51,7 @@ public class CatalogController : ClientControllerBase<CatalogManager>
     [HttpPost]
     public async Task<ActionResult<Catalog>> AddAsync(CatalogAddDto form)
     {
-        var entity = await manager.CreateNewEntityAsync(form);
+        Catalog entity = await manager.CreateNewEntityAsync(form);
         return await manager.AddAsync(entity);
     }
 
@@ -67,7 +64,7 @@ public class CatalogController : ClientControllerBase<CatalogManager>
     [HttpPut("{id}")]
     public async Task<ActionResult<Catalog?>> UpdateAsync([FromRoute] Guid id, CatalogUpdateDto form)
     {
-        var current = await manager.GetOwnedAsync(id);
+        Catalog? current = await manager.GetOwnedAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -80,7 +77,7 @@ public class CatalogController : ClientControllerBase<CatalogManager>
     [HttpGet("{id}")]
     public async Task<ActionResult<Catalog?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        Catalog? res = await manager.FindAsync(id);
         return res == null ? NotFound() : res;
     }
 
@@ -92,7 +89,7 @@ public class CatalogController : ClientControllerBase<CatalogManager>
     [HttpDelete("{id}")]
     public async Task<ActionResult<Catalog?>> DeleteAsync([FromRoute] Guid id)
     {
-        var entity = await manager.GetOwnedAsync(id);
+        Catalog? entity = await manager.GetOwnedAsync(id);
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity);
     }

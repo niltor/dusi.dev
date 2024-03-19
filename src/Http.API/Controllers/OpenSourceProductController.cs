@@ -5,17 +5,12 @@ namespace Http.API.Controllers;
 /// 开源作品
 /// </summary>
 /// <see cref="Application.Manager.OpenSourceProductManager"/>
-public class OpenSourceProductController : ClientControllerBase<OpenSourceProductManager>
+public class OpenSourceProductController(
+    IUserContext user,
+    ILogger<OpenSourceProductController> logger,
+    OpenSourceProductManager manager
+        ) : ClientControllerBase<OpenSourceProductManager>(manager, user, logger)
 {
-
-    public OpenSourceProductController(
-        IUserContext user,
-        ILogger<OpenSourceProductController> logger,
-        OpenSourceProductManager manager
-        ) : base(manager, user, logger)
-    {
-
-    }
 
     /// <summary>
     /// 筛选

@@ -5,15 +5,12 @@ namespace Http.API.Controllers.AdminControllers;
 /// <summary>
 /// 实体库
 /// </summary>
-public class EntityLibraryController : RestControllerBase<EntityLibraryManager>
+public class EntityLibraryController(
+    IUserContext user,
+    ILogger<EntityLibraryController> logger,
+    EntityLibraryManager manager
+        ) : RestControllerBase<EntityLibraryManager>(manager, user, logger)
 {
-    public EntityLibraryController(
-        IUserContext user,
-        ILogger<EntityLibraryController> logger,
-        EntityLibraryManager manager
-        ) : base(manager, user, logger)
-    {
-    }
 
     /// <summary>
     /// 筛选
@@ -34,7 +31,7 @@ public class EntityLibraryController : RestControllerBase<EntityLibraryManager>
     [HttpPost]
     public async Task<ActionResult<EntityLibrary>> AddAsync(EntityLibraryAddDto form)
     {
-        var entity = form.MapTo<EntityLibraryAddDto, EntityLibrary>();
+        EntityLibrary entity = form.MapTo<EntityLibraryAddDto, EntityLibrary>();
         return await manager.AddAsync(entity);
     }
 
@@ -47,7 +44,7 @@ public class EntityLibraryController : RestControllerBase<EntityLibraryManager>
     [HttpPut("{id}")]
     public async Task<ActionResult<EntityLibrary?>> UpdateAsync([FromRoute] Guid id, EntityLibraryUpdateDto form)
     {
-        var current = await manager.GetCurrentAsync(id);
+        EntityLibrary? current = await manager.GetCurrentAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -60,7 +57,7 @@ public class EntityLibraryController : RestControllerBase<EntityLibraryManager>
     [HttpGet("{id}")]
     public async Task<ActionResult<EntityLibrary?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        EntityLibrary? res = await manager.FindAsync(id);
         return res == null ? NotFound() : res;
     }
 
@@ -73,7 +70,7 @@ public class EntityLibraryController : RestControllerBase<EntityLibraryManager>
     [HttpDelete("{id}")]
     public async Task<ActionResult<EntityLibrary?>> DeleteAsync([FromRoute] Guid id)
     {
-        var entity = await manager.GetCurrentAsync(id);
+        EntityLibrary? entity = await manager.GetCurrentAsync(id);
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity);
     }

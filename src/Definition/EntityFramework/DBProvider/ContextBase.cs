@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore.Query;
 
-namespace EntityFramework;
+namespace EntityFramework.DBProvider;
 
-public class ContextBase : DbContext
+public class ContextBase(DbContextOptions options) : DbContext(options)
 {
     public DbSet<SystemUser> SystemUsers { get; set; }
     public DbSet<SystemRole> SystemRoles { get; set; }
@@ -20,27 +20,24 @@ public class ContextBase : DbContext
     public DbSet<ThirdNews> ThirdNews { get; set; }
     public DbSet<ThirdVideo> ThirdVideos { get; set; }
     public DbSet<OpenSourceProduct> OpenSourceProducts { get; set; }
-    #endregion
 
-    public ContextBase(DbContextOptions options) : base(options)
-    {
-    }
+    #endregion
 
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
-        var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Added).ToList();
-        foreach (var entityEntry in entries)
+        List<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry> entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Added).ToList();
+        foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry? entityEntry in entries)
         {
-            var property = entityEntry.Metadata.FindProperty("CreatedTime");
+            Microsoft.EntityFrameworkCore.Metadata.IProperty? property = entityEntry.Metadata.FindProperty("CreatedTime");
             if (property != null && property.ClrType == typeof(DateTimeOffset))
             {
                 entityEntry.Property("CreatedTime").CurrentValue = DateTimeOffset.UtcNow;
             }
         }
         entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified).ToList();
-        foreach (var entityEntry in entries)
+        foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry? entityEntry in entries)
         {
-            var property = entityEntry.Metadata.FindProperty("UpdatedTime");
+            Microsoft.EntityFrameworkCore.Metadata.IProperty? property = entityEntry.Metadata.FindProperty("UpdatedTime");
             if (property != null && property.ClrType == typeof(DateTimeOffset))
             {
                 entityEntry.Property("UpdatedTime").CurrentValue = DateTimeOffset.UtcNow;
@@ -110,8 +107,8 @@ public class ContextBase : DbContext
 
     private void OnModelExtendCreating(ModelBuilder modelBuilder)
     {
-        var entityTypes = modelBuilder.Model.GetEntityTypes();
-        foreach (var entityType in entityTypes)
+        IEnumerable<Microsoft.EntityFrameworkCore.Metadata.IMutableEntityType> entityTypes = modelBuilder.Model.GetEntityTypes();
+        foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableEntityType entityType in entityTypes)
         {
             if (typeof(IEntityBase).IsAssignableFrom(entityType.ClrType))
             {
@@ -124,8 +121,8 @@ public class ContextBase : DbContext
 
     private static LambdaExpression ConvertFilterExpression<TInterface>(Expression<Func<TInterface, bool>> filterExpression, Type entityType)
     {
-        var newParam = Expression.Parameter(entityType);
-        var newBody = ReplacingExpressionVisitor.Replace(filterExpression.Parameters.Single(), newParam, filterExpression.Body);
+        ParameterExpression newParam = Expression.Parameter(entityType);
+        Expression newBody = ReplacingExpressionVisitor.Replace(filterExpression.Parameters.Single(), newParam, filterExpression.Body);
 
         return Expression.Lambda(newBody, newParam);
     }

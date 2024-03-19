@@ -5,15 +5,12 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 三方视频
 /// </summary>
-public class ThirdVideoController : ClientControllerBase<ThirdVideoManager>
+public class ThirdVideoController(
+    IUserContext user,
+    ILogger<ThirdVideoController> logger,
+    ThirdVideoManager manager
+        ) : ClientControllerBase<ThirdVideoManager>(manager, user, logger)
 {
-    public ThirdVideoController(
-        IUserContext user,
-        ILogger<ThirdVideoController> logger,
-        ThirdVideoManager manager
-        ) : base(manager, user, logger)
-    {
-    }
 
     /// <summary>
     /// 筛选
@@ -38,7 +35,7 @@ public class ThirdVideoController : ClientControllerBase<ThirdVideoManager>
     [AllowAnonymous]
     public async Task<ActionResult<ThirdVideo?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        ThirdVideo? res = await manager.FindAsync(id);
         return (res == null) ? NotFound() : res;
     }
 

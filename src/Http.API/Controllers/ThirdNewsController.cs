@@ -5,15 +5,12 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 资讯
 /// </summary>
-public class ThirdNewsController : ClientControllerBase<ThirdNewsManager>
+public class ThirdNewsController(
+    IUserContext user,
+    ILogger<ThirdNewsController> logger,
+    ThirdNewsManager manager
+        ) : ClientControllerBase<ThirdNewsManager>(manager, user, logger)
 {
-    public ThirdNewsController(
-        IUserContext user,
-        ILogger<ThirdNewsController> logger,
-        ThirdNewsManager manager
-        ) : base(manager, user, logger)
-    {
-    }
 
     /// <summary>
     /// 筛选
@@ -40,7 +37,7 @@ public class ThirdNewsController : ClientControllerBase<ThirdNewsManager>
     [AllowAnonymous]
     public ActionResult<ThirdNewsOptionsDto> GetEnumOptions()
     {
-        var res = manager.GetEnumOptions();
+        ThirdNewsOptionsDto res = manager.GetEnumOptions();
         return Ok(res);
     }
 
@@ -53,7 +50,7 @@ public class ThirdNewsController : ClientControllerBase<ThirdNewsManager>
     [HttpGet("{id}")]
     public async Task<ActionResult<ThirdNews?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        ThirdNews? res = await manager.FindAsync(id);
         return (res == null) ? NotFound() : res;
     }
 

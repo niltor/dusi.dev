@@ -1,6 +1,5 @@
-using Ater.Web.Abstraction;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
@@ -14,11 +13,10 @@ namespace Application;
 /// </summary>
 public static class AppSetting
 {
-    public const string None = "none";
-    public const string PostgreSQL = "postgresql";
-    public const string SQLServer = "sqlserver";
-    public const string Redis = "redis";
-    public const string Memory = "memory";
+    public const string Components = "Components";
+    public const string None = "None";
+    public const string Redis = "Redis";
+    public const string Memory = "Memory";
     public const string Otlp = "otlp";
 
     public const string CommandDB = "CommandDb";
@@ -31,78 +29,49 @@ public static class AppSetting
 /// <summary>
 /// 服务注册扩展
 /// </summary>
-public static class AppServiceCollectionExtensions
+public static partial class AppServiceCollectionExtensions
 {
+    /// <summary>
+    /// 添加默认应用组件
+    /// pgsql/redis/otlp
+    /// </summary>
+    /// <returns></returns>
+    public static IHostApplicationBuilder AddDefaultComponents(this IHostApplicationBuilder builder)
+    {
+        builder.AddPgsqlDbContext();
+        builder.AddRedisCache();
+        string otlpEndpoint = builder.Configuration.GetSection("OTLP")
+            .GetValue<string>("Endpoint")
+            ?? "http://localhost:4317";
+        builder.AddOpenTelemetry("Dusi", opt =>
+        {
+            opt.Endpoint = new Uri(otlpEndpoint);
+            //opt.Headers = "Authorization=Bearer OpenTelemetry";
+        });
+        return builder;
+    }
 
     /// <summary>
-    /// 添加应用组件,如数据库/缓存/日志等
+    /// 添加数据工厂
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="configuration"></param>
     /// <returns></returns>
-    public static IServiceCollection AddAppComponents(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddDbFactory(this IServiceCollection services)
     {
-        var components = configuration.GetSection("Components").Get<AppComponentConfig>();
-        if (components != null)
-        {
-            var db = components.Database;
-            var cache = components.Cache;
-            var logging = components.Logging;
-            if (db != null)
-            {
-                switch (db.ToLower())
-                {
-                    case AppSetting.PostgreSQL:
-                        services.AddPgsqlDbContext(configuration);
-                        break;
-                    case AppSetting.SQLServer:
-                        services.AddSqlServerDbContext(configuration);
-                        break;
-                }
-            }
-
-            if (cache != null)
-            {
-                switch (cache.ToLower())
-                {
-                    case AppSetting.Redis:
-                        services.AddRedisCache(configuration);
-                        break;
-                    case AppSetting.Memory:
-                        services.AddMemoryCache();
-                        break;
-                }
-            }
-
-            if (logging != null)
-            {
-                switch (logging.ToLower())
-                {
-                    case AppSetting.Otlp:
-                        services.AddOpenTelemetry("MyProjectName", opt =>
-                        {
-                            opt.Endpoint = new Uri(configuration.GetConnectionString(AppSetting.Logging)
-                                ?? "http://localhost:4317");
-                        });
-                        break;
-                }
-            }
-
-        }
+        services.AddSingleton<IDbContextFactory<QueryDbContext>, QueryDbContextFactory>();
+        services.AddSingleton<IDbContextFactory<CommandDbContext>, CommandDbContextFactory>();
         return services;
     }
 
     /// <summary>
     /// add postgresql config
     /// </summary>
-    /// <param name="services"></param>
-    /// <param name="configuration"></param>
     /// <returns></returns>
-    public static IServiceCollection AddPgsqlDbContext(this IServiceCollection services, IConfiguration configuration)
+    public static IHostApplicationBuilder AddPgsqlDbContext(this IHostApplicationBuilder builder)
     {
-        var commandString = configuration.GetConnectionString(AppSetting.CommandDB);
-        var queryString = configuration.GetConnectionString(AppSetting.QueryDB);
-        services.AddDbContextPool<QueryDbContext>(option =>
+        string? commandString = builder.Configuration.GetConnectionString(AppSetting.CommandDB);
+        string? queryString = builder.Configuration.GetConnectionString(AppSetting.QueryDB);
+        builder.Services.AddDbContextPool<QueryDbContext>(option =>
         {
             option.UseNpgsql(queryString, sql =>
             {
@@ -110,7 +79,7 @@ public static class AppServiceCollectionExtensions
                 sql.CommandTimeout(10);
             });
         });
-        services.AddDbContextPool<CommandDbContext>(option =>
+        builder.Services.AddDbContextPool<CommandDbContext>(option =>
         {
             option.UseNpgsql(commandString, sql =>
             {
@@ -118,47 +87,43 @@ public static class AppServiceCollectionExtensions
                 sql.CommandTimeout(10);
             });
         });
-        return services;
-    }
-
-    /// <summary>
-    /// add sql server config
-    /// </summary>
-    /// <param name="services"></param>
-    /// <param name="configuration"></param>
-    /// <returns></returns>
-    public static IServiceCollection AddSqlServerDbContext(this IServiceCollection services, IConfiguration configuration)
-    {
-
-        return services;
+        return builder;
     }
 
     /// <summary>
     /// add redis cache config
     /// </summary>
-    /// <param name="services"></param>
-    /// <param name="configuration"></param>
     /// <returns></returns>
-    public static IServiceCollection AddRedisCache(this IServiceCollection services, IConfiguration configuration)
+    public static IHostApplicationBuilder AddRedisCache(this IHostApplicationBuilder builder)
     {
-        return services.AddStackExchangeRedisCache(options =>
+        string? cache = builder.Configuration.GetSection(AppSetting.Components).GetValue<string>(AppSetting.Cache);
+        if (cache == AppSetting.Redis)
         {
-            options.Configuration = configuration.GetConnectionString(AppSetting.Cache);
-            options.InstanceName = configuration.GetConnectionString(AppSetting.CacheInstanceName);
-        });
+            builder.Services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = builder.Configuration.GetConnectionString(AppSetting.Cache);
+                options.InstanceName = builder.Configuration.GetConnectionString(AppSetting.CacheInstanceName);
+            });
+        }
+        else
+        {
+            builder.Services.AddDistributedMemoryCache();
+        }
+        return builder;
     }
+
     /// <summary>
-    /// 添加opentelemetry 服务及选项
+    /// 添加 OpenTelemetry 服务及选项
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="builder"></param>
     /// <param name="serviceName"></param>
     /// <param name="otlpOptions"></param>
     /// <param name="loggerOptions"></param>
     /// <param name="tracerProvider"></param>
     /// <param name="meterProvider"></param>
-    public static IServiceCollection AddOpenTelemetry(this IServiceCollection services,
+    public static IHostApplicationBuilder AddOpenTelemetry(this IHostApplicationBuilder builder,
         string serviceName,
-        Action<OtlpExporterOptions>? otlpOptions = null,
+        Action<OtlpExporterOptions> otlpOptions,
         Action<OpenTelemetryLoggerOptions>? loggerOptions = null,
         Action<TracerProviderBuilder>? tracerProvider = null,
         Action<MeterProviderBuilder>? meterProvider = null)
@@ -166,21 +131,23 @@ public static class AppServiceCollectionExtensions
         ResourceBuilder resource = ResourceBuilder.CreateDefault()
             .AddService(serviceName: serviceName, serviceInstanceId: Environment.MachineName);
 
-        otlpOptions ??= new Action<OtlpExporterOptions>(opt =>
+        IConfigurationSection section = builder.Configuration.GetSection("Opentelemetry");
+        bool exportConsole = false;
+        if (section != null)
         {
-            opt.Endpoint = new Uri("http://localhost:4317");
-        });
+            exportConsole = section.Get<OpentelemetryOption>()?.ExportConsole ?? false;
+        }
 
         loggerOptions ??= new Action<OpenTelemetryLoggerOptions>(options =>
         {
             options.SetResourceBuilder(resource);
             options.AddOtlpExporter(otlpOptions);
-#if DEBUG
-            options.AddConsoleExporter();
-#endif
+            options.ParseStateValues = true;
+            options.IncludeFormattedMessage = true;
+            options.IncludeScopes = true;
+            if (exportConsole)
+                options.AddConsoleExporter();
         });
-        // 返回内容最大长度截取
-        var maxLength = 2048;
         tracerProvider ??= new Action<TracerProviderBuilder>(options =>
         {
             options.AddSource(serviceName)
@@ -188,84 +155,19 @@ public static class AppServiceCollectionExtensions
                 .AddHttpClientInstrumentation(options =>
                 {
                     options.RecordException = true;
-                    options.EnrichWithHttpRequestMessage = (activity, httpRequestMessage) =>
-                    {
-                        if (httpRequestMessage.Content != null)
-                        {
-                            System.Net.Http.Headers.HttpContentHeaders headers = httpRequestMessage.Content.Headers;
-                            // 过滤过长或文件类型
-                            var contentLength = headers.ContentLength ?? 0;
-                            var contentType = headers.ContentType?.ToString();
-                            if (contentLength > maxLength * 2
-                            || (contentType != null && contentType.Contains("multipart/form-data"))) { }
-                            else
-                            {
-                                string body = httpRequestMessage.Content.ReadAsStringAsync().Result;
-                                activity.SetTag("requestBody", body);
-                            }
-                        }
-                    };
-
-                    options.EnrichWithHttpResponseMessage = (activity, httpResponseMessage) =>
-                    {
-                        // TODO:添加自定义过滤
-                        if (httpResponseMessage.Content != null)
-                        {
-                            if (httpResponseMessage.Content.Headers?.ContentLength < maxLength)
-                            {
-                                // 不要使用await:The stream was already consumed. It cannot be read again
-                                string body = httpResponseMessage.Content.ReadAsStringAsync().Result;
-                                body = body.Length > maxLength ? body[0..maxLength] : body;
-                                activity.SetTag("responseBody", body);
-                            }
-                        }
-                    };
-                    options.EnrichWithException = (activity, exception) =>
-                    {
-                    };
                 })
                 .AddAspNetCoreInstrumentation(options =>
                 {
-                    options.RecordException = true;
-                    options.EnrichWithHttpRequest = async (activity, request) =>
-                    {
-                        IHeaderDictionary headers = request.Headers;
-                        // 过滤过长或文件类型
-                        long contentLength = request.ContentLength ?? 0;
-                        string? contentType = request.ContentType?.ToString();
-                        if (contentLength > maxLength * 2
-                        || (contentType != null && contentType.Contains("multipart/form-data")))
-                        {
-                            activity.SetTag("requestBody", "file upload");
-                        }
-                        else
-                        {
-                            request.EnableBuffering();
-                            request.Body.Position = 0;
-                            StreamReader reader = new(request.Body);
-                            activity.SetTag("requestBody", await reader.ReadToEndAsync());
-                            request.Body.Position = 0;
-                        }
-                    };
-
-                    options.EnrichWithHttpResponse = (activity, response) =>
-                    {
-                    };
-
                     options.EnrichWithException = (activity, exception) =>
                     {
                         activity.SetTag("stackTrace", exception.StackTrace);
                         activity.SetTag("message", exception.Message);
                     };
                 })
-                .AddSqlClientInstrumentation()
-#if DEBUG
-            .AddConsoleExporter()
-#endif
                 .AddOtlpExporter(otlpOptions);
         });
 
-        meterProvider = new Action<MeterProviderBuilder>(options =>
+        meterProvider ??= new Action<MeterProviderBuilder>(options =>
         {
             options.AddMeter(serviceName)
                 .SetResourceBuilder(resource)
@@ -273,16 +175,16 @@ public static class AppServiceCollectionExtensions
                 .AddAspNetCoreInstrumentation()
                 .AddOtlpExporter(otlpOptions);
         });
-
-        services.AddLogging(loggerBuilder =>
+        builder.Services.AddLogging(loggerBuilder =>
         {
-            loggerBuilder.ClearProviders();
+            if (exportConsole)
+                loggerBuilder.ClearProviders();
             loggerBuilder.AddOpenTelemetry(loggerOptions);
         });
-        services.AddOpenTelemetry()
+        builder.Services.AddOpenTelemetry()
             .WithTracing(tracerProvider)
             .WithMetrics(meterProvider);
 
-        return services;
+        return builder;
     }
 }

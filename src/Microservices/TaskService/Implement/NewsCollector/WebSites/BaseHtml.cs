@@ -25,7 +25,7 @@ public class BaseHtml
 
     public async virtual Task<List<Rss>> GetListAsync(int number = 3)
     {
-        var result = new List<Rss>();
+        List<Rss> result = new();
         return await Task.FromResult(result);
     }
 

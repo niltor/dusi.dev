@@ -17,16 +17,16 @@ public class JwtMiddleware(RequestDelegate next, CacheService redis, ILogger<Jwt
     public async Task Invoke(HttpContext context)
     {
         // 可匿名访问的放行
-        var endpoint = context.GetEndpoint();
-        var allowAnon = endpoint?.Metadata.GetMetadata<IAllowAnonymous>() != null;
+        Endpoint? endpoint = context.GetEndpoint();
+        bool allowAnon = endpoint?.Metadata.GetMetadata<IAllowAnonymous>() != null;
         if (allowAnon)
         {
             await _next(context);
             return;
         }
 
-        var token = context.Request.Headers[AppConst.Authorization].FirstOrDefault()?.Split(" ").Last() ?? string.Empty;
-        var client = context.Request.Headers[AppConst.ClientHeader].FirstOrDefault() ?? AppConst.Web;
+        string token = context.Request.Headers[AppConst.Authorization].FirstOrDefault()?.Split(" ").Last() ?? string.Empty;
+        string client = context.Request.Headers[AppConst.ClientHeader].FirstOrDefault() ?? AppConst.Web;
 
         if (token == null)
         {
@@ -35,17 +35,17 @@ public class JwtMiddleware(RequestDelegate next, CacheService redis, ILogger<Jwt
         }
         try
         {
-            var id = JwtService.GetClaimValue(token, ClaimTypes.NameIdentifier);
+            string id = JwtService.GetClaimValue(token, ClaimTypes.NameIdentifier);
             // TODO:策略判断
             if (id.NotEmpty())
             {
-                var securityPolicy = _cache.GetValue<LoginSecurityPolicy>(AppConst.LoginSecurityPolicy) ?? new LoginSecurityPolicy();
+                LoginSecurityPolicy securityPolicy = _cache.GetValue<LoginSecurityPolicy>(AppConst.LoginSecurityPolicy) ?? new LoginSecurityPolicy();
                 if (securityPolicy.SessionLevel == SessionLevel.OnlyOne)
                 {
                     client = AppConst.AllPlatform;
                 }
-                var key = AppConst.LoginCachePrefix + client + id;
-                var cacheToken = _cache.GetValue<string>(key);
+                string key = AppConst.LoginCachePrefix + client + id;
+                string? cacheToken = _cache.GetValue<string>(key);
                 if (cacheToken.IsEmpty())
                 {
                     await SetResponseAndComplete(context, 401);
@@ -78,12 +78,12 @@ public class JwtMiddleware(RequestDelegate next, CacheService redis, ILogger<Jwt
             TraceId = context.TraceIdentifier
         };
 
-        var content = JsonSerializer.Serialize(res);
+        string content = JsonSerializer.Serialize(res);
         byte[] byteArray = Encoding.UTF8.GetBytes(content);
 
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = statusCode;
-        await context.Response.Body.WriteAsync(byteArray, 0, byteArray.Length);
+        await context.Response.Body.WriteAsync(byteArray);
         await context.Response.CompleteAsync();
     }
 }

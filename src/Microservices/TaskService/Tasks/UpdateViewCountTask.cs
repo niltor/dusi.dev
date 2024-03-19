@@ -3,17 +3,11 @@ namespace TaskService.Tasks;
 /// <summary>
 /// 浏览量更新服务
 /// </summary>
-public class UpdateViewCountTask : BackgroundService
+public class UpdateViewCountTask(ILogger<UpdateViewCountTask> logger, IServiceProvider services) : BackgroundService
 {
-    private readonly ILogger<UpdateViewCountTask> _logger;
+    private readonly ILogger<UpdateViewCountTask> _logger = logger;
     private Timer? _timer;
-    private readonly IServiceProvider Services;
-
-    public UpdateViewCountTask(ILogger<UpdateViewCountTask> logger, IServiceProvider services)
-    {
-        _logger = logger;
-        Services = services;
-    }
+    private readonly IServiceProvider Services = services;
 
     public override async Task StartAsync(CancellationToken stoppingToken)
     {

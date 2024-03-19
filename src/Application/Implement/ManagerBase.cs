@@ -1,9 +1,10 @@
+using Ater.Web.Abstraction.EntityFramework;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Application.Implement;
 
 /// <summary>
-/// 基类，请勿直接修改，自定义可修改 DomainManagerBase
+/// Manager base class
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
 /// <typeparam name="TUpdate"></typeparam>
@@ -13,37 +14,45 @@ public partial class ManagerBase<TEntity, TUpdate, TFilter, TItem>
     where TEntity : class, IEntityBase
     where TFilter : FilterBase
 {
-    /// <summary>
-    /// 仓储上下文，可通过Store访问到其他实体的上下文
-    /// </summary>
-    public DataStoreContext Stores { get; init; }
+    protected readonly ILogger _logger;
     /// <summary>
     /// 实体的只读仓储实现
     /// </summary>
-    public QuerySet<TEntity> Query { get; init; }
+    public QuerySet<QueryDbContext, TEntity> Query { get; init; }
     /// <summary>
     /// 实体的可写仓储实现
     /// </summary>
-    public CommandSet<TEntity> Command { get; init; }
+    public CommandSet<CommandDbContext, TEntity> Command { get; init; }
     public IQueryable<TEntity> Queryable { get; set; }
+
+    public CommandDbContext CommandContext { get; init; }
+
+    public QueryDbContext QueryContext { get; init; }
     /// <summary>
     /// 是否自动保存(调用SaveChanges)
     /// </summary>
     public bool AutoSave { get; set; } = true;
+    /// <summary>
+    /// 错误信息
+    /// </summary>
+    public string ErrorMsg { get; set; } = string.Empty;
+
     public DatabaseFacade Database { get; init; }
 
-    public ManagerBase(DataStoreContext storeContext)
+    public ManagerBase(DataAccessContext<TEntity> dataAccessContext, ILogger logger)
     {
-        Stores = storeContext;
-        Query = Stores.QuerySet<TEntity>();
-        Command = Stores.CommandSet<TEntity>();
+        Query = dataAccessContext.QuerySet();
+        Command = dataAccessContext.CommandSet();
         Queryable = Query.Queryable;
         Database = Command.Database;
+        _logger = logger;
+        CommandContext = dataAccessContext.CommandContext;
+        QueryContext = dataAccessContext.QueryContext;
     }
 
     public async Task<int> SaveChangesAsync()
     {
-        return await Stores.SaveChangesAsync();
+        return await Command.SaveChangesAsync();
     }
 
     private async Task AutoSaveAsync()
@@ -97,8 +106,9 @@ public partial class ManagerBase<TEntity, TUpdate, TFilter, TItem>
     {
         return await Query.FindAsync<TDto>(whereExp);
     }
+
     /// <summary>
-    /// 是否存在
+    /// id是否存在
     /// </summary>
     /// <param name="id">主键id</param>
     /// <returns></returns>

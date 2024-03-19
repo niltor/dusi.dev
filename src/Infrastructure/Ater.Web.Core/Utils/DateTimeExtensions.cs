@@ -13,7 +13,7 @@ public static class DateTimeExtensions
     public static DateTimeOffset ToDateTimeOffset(this DateOnly dateOnly, TimeZoneInfo? zone = null)
     {
         zone ??= TimeZoneInfo.Local;
-        var dateTime = dateOnly.ToDateTime(new TimeOnly(0));
+        DateTime dateTime = dateOnly.ToDateTime(new TimeOnly(0));
         return new DateTimeOffset(dateTime, zone.GetUtcOffset(dateTime));
     }
 

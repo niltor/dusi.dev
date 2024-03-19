@@ -5,15 +5,12 @@ namespace Http.API.Controllers.AdminControllers;
 /// <summary>
 /// 实体属性
 /// </summary>
-public class EntityMemberController : RestControllerBase<EntityMemberManager>
+public class EntityMemberController(
+    IUserContext user,
+    ILogger<EntityMemberController> logger,
+    EntityMemberManager manager
+        ) : RestControllerBase<EntityMemberManager>(manager, user, logger)
 {
-    public EntityMemberController(
-        IUserContext user,
-        ILogger<EntityMemberController> logger,
-        EntityMemberManager manager
-        ) : base(manager, user, logger)
-    {
-    }
 
     /// <summary>
     /// 筛选
@@ -34,7 +31,7 @@ public class EntityMemberController : RestControllerBase<EntityMemberManager>
     [HttpPost]
     public async Task<ActionResult<EntityMember>> AddAsync(EntityMemberAddDto form)
     {
-        var entity = form.MapTo<EntityMemberAddDto, EntityMember>();
+        EntityMember entity = form.MapTo<EntityMemberAddDto, EntityMember>();
         return await manager.AddAsync(entity);
     }
 
@@ -47,7 +44,7 @@ public class EntityMemberController : RestControllerBase<EntityMemberManager>
     [HttpPut("{id}")]
     public async Task<ActionResult<EntityMember?>> UpdateAsync([FromRoute] Guid id, EntityMemberUpdateDto form)
     {
-        var current = await manager.GetCurrentAsync(id);
+        EntityMember? current = await manager.GetCurrentAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -60,7 +57,7 @@ public class EntityMemberController : RestControllerBase<EntityMemberManager>
     [HttpGet("{id}")]
     public async Task<ActionResult<EntityMember?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        EntityMember? res = await manager.FindAsync(id);
         return res == null ? NotFound() : res;
     }
 
@@ -73,7 +70,7 @@ public class EntityMemberController : RestControllerBase<EntityMemberManager>
     [HttpDelete("{id}")]
     public async Task<ActionResult<EntityMember?>> DeleteAsync([FromRoute] Guid id)
     {
-        var entity = await manager.GetCurrentAsync(id);
+        EntityMember? entity = await manager.GetCurrentAsync(id);
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity);
     }

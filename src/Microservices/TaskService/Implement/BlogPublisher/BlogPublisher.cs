@@ -3,14 +3,10 @@ namespace TaskService.Implement.BlogPublisher;
 /// <summary>
 /// blog publisher 
 /// </summary>
-public class BlogPublisher : IBlogPublisher
+public class BlogPublisher(string baseUrl) : IBlogPublisher
 {
-    public string BaseUrl { get; set; }
+    public string BaseUrl { get; set; } = baseUrl;
 
-    public BlogPublisher(string baseUrl)
-    {
-        BaseUrl = baseUrl;
-    }
     public virtual string GetToken(AuthOption option)
     {
         return string.Empty;

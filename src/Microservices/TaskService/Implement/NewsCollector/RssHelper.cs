@@ -1,21 +1,15 @@
 using TaskService.Implement.NewsCollector.RssFeeds;
 namespace TaskService.Implement.NewsCollector;
 
-public class RssHelper
+public class RssHelper(InfoQFeed infoQFeed, OsChinaFeed osChinaFeed, MicrosoftFeed microsoftFeed)
 {
-    private readonly MicrosoftFeed microsoftFeed;
-    private readonly OsChinaFeed osChinaFeed;
-    private readonly InfoQFeed infoQFeed;
+    private readonly MicrosoftFeed microsoftFeed = microsoftFeed;
+    private readonly OsChinaFeed osChinaFeed = osChinaFeed;
+    private readonly InfoQFeed infoQFeed = infoQFeed;
 
-    public RssHelper(InfoQFeed infoQFeed, OsChinaFeed osChinaFeed, MicrosoftFeed microsoftFeed)
-    {
-        this.infoQFeed = infoQFeed;
-        this.osChinaFeed = osChinaFeed;
-        this.microsoftFeed = microsoftFeed;
-    }
     public static bool IsContainKey(string[] strArray, string key)
     {
-        foreach (var item in strArray)
+        foreach (string item in strArray)
         {
             if (key.Contains(item))
             {
@@ -31,8 +25,8 @@ public class RssHelper
     /// <returns></returns>
     public async Task<List<Rss>> GetAllBlogsAsync()
     {
-        var result = new List<Rss>();
-        var list = await microsoftFeed.GetBlogsAsync();
+        List<Rss> result = new();
+        List<Rss> list = await microsoftFeed.GetBlogsAsync();
         result.AddRange(list);
 
         list = await osChinaFeed.GetBlogsAsync(6);
@@ -44,8 +38,8 @@ public class RssHelper
         // 过滤旧数据
         result = result.Where(r => r.CreateTime >= DateTime.Now.AddDays(-1)).ToList();
 
-        var blogs = new List<Rss>();
-        foreach (var blog in result)
+        List<Rss> blogs = new();
+        foreach (Rss blog in result)
         {
             if (!blogs.Any(b => b.Title.Contains(blog.Title)))
             {

@@ -5,15 +5,12 @@ namespace Http.API.Controllers.AdminControllers;
 /// 系统用户
 /// </summary>
 [Authorize(AppConst.AdminUser)]
-public class SystemUserController : RestControllerBase<SystemUserManager>
+public class SystemUserController(
+    IUserContext user,
+    ILogger<SystemUserController> logger,
+    SystemUserManager manager
+        ) : RestControllerBase<SystemUserManager>(manager, user, logger)
 {
-    public SystemUserController(
-        IUserContext user,
-        ILogger<SystemUserController> logger,
-        SystemUserManager manager
-        ) : base(manager, user, logger)
-    {
-    }
 
     /// <summary>
     /// 筛选
@@ -34,7 +31,7 @@ public class SystemUserController : RestControllerBase<SystemUserManager>
     [HttpPost]
     public async Task<ActionResult<SystemUser>> AddAsync(SystemUserAddDto form)
     {
-        var entity = form.MapTo<SystemUserAddDto, SystemUser>();
+        SystemUser entity = form.MapTo<SystemUserAddDto, SystemUser>();
         return await manager.AddAsync(entity);
     }
 
@@ -47,7 +44,7 @@ public class SystemUserController : RestControllerBase<SystemUserManager>
     [HttpPut("{id}")]
     public async Task<ActionResult<SystemUser?>> UpdateAsync([FromRoute] Guid id, SystemUserUpdateDto form)
     {
-        var current = await manager.GetCurrentAsync(id);
+        SystemUser? current = await manager.GetCurrentAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -60,7 +57,7 @@ public class SystemUserController : RestControllerBase<SystemUserManager>
     [HttpGet("{id}")]
     public async Task<ActionResult<SystemUser?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        SystemUser? res = await manager.FindAsync(id);
         return res == null ? NotFound() : res;
     }
 
@@ -73,7 +70,7 @@ public class SystemUserController : RestControllerBase<SystemUserManager>
     [HttpPut("password")]
     public async Task<ActionResult<bool>> ChangeMyPassword(string password)
     {
-        var user = await manager.GetCurrentAsync(_user.UserId);
+        SystemUser? user = await manager.GetCurrentAsync(_user.UserId);
         if (user == null) return NotFound("未找到该用户");
         return await manager.ChangePasswordAsync(user, password);
     }
@@ -87,7 +84,7 @@ public class SystemUserController : RestControllerBase<SystemUserManager>
     [HttpDelete("{id}")]
     public async Task<ActionResult<SystemUser?>> DeleteAsync([FromRoute] Guid id)
     {
-        var entity = await manager.GetCurrentAsync(id);
+        SystemUser? entity = await manager.GetCurrentAsync(id);
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity);
     }

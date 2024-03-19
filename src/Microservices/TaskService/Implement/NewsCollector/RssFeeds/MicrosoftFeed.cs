@@ -29,13 +29,13 @@ public class MicrosoftFeed : BaseFeed
     protected override string? GetThumb(XElement? x)
     {
         if (x == null) return null;
-        var guidLink = new Uri(x.Value);
-        var guid = HttpUtility.ParseQueryString(x.Value).Get("p");
-        var link = guidLink.AbsoluteUri.Replace(guidLink.Query, "");
+        Uri guidLink = new(x.Value);
+        string? guid = HttpUtility.ParseQueryString(x.Value).Get("p");
+        string link = guidLink.AbsoluteUri.Replace(guidLink.Query, "");
 
-        var hw = new HtmlWeb();
-        var doc = hw.LoadFromWebAsync(link).Result;
-        var content = doc.DocumentNode.SelectSingleNode($"//article[@id='post-{guid}']//noscript/img")?
+        HtmlWeb hw = new();
+        HtmlDocument doc = hw.LoadFromWebAsync(link).Result;
+        string? content = doc.DocumentNode.SelectSingleNode($"//article[@id='post-{guid}']//noscript/img")?
             .GetAttributeValue("src", null);
         return content;
     }

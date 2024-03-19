@@ -2,28 +2,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Http.API.Migrations
+namespace Http.API.Migrations;
+
+/// <inheritdoc />
+public partial class updateUserType : Migration
 {
     /// <inheritdoc />
-    public partial class updateUserType : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AddColumn<int>(
-                name: "UserType",
-                table: "Users",
-                type: "integer",
-                nullable: false,
-                defaultValue: 0);
-        }
+        migrationBuilder.AddColumn<int>(
+            name: "UserType",
+            table: "Users",
+            type: "integer",
+            nullable: false,
+            defaultValue: 0);
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "UserType",
-                table: "Users");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropColumn(
+            name: "UserType",
+            table: "Users");
     }
 }

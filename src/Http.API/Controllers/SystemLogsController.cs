@@ -4,20 +4,14 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 系统日志
 /// </summary>
-public class SystemLogsController : ClientControllerBase<SystemLogsManager>
+public class SystemLogsController(
+    IUserContext user,
+    ILogger<SystemLogsController> logger,
+    SystemLogsManager manager,
+    SystemUserManager systemUserManager
+        ) : ClientControllerBase<SystemLogsManager>(manager, user, logger)
 {
-    private readonly SystemUserManager _systemUserManager;
-
-    public SystemLogsController(
-        IUserContext user,
-        ILogger<SystemLogsController> logger,
-        SystemLogsManager manager,
-        SystemUserManager systemUserManager
-        ) : base(manager, user, logger)
-    {
-        _systemUserManager = systemUserManager;
-
-    }
+    private readonly SystemUserManager _systemUserManager = systemUserManager;
 
     /// <summary>
     /// 筛选
@@ -40,7 +34,7 @@ public class SystemLogsController : ClientControllerBase<SystemLogsManager>
     {
         if (!await _systemUserManager.ExistAsync(dto.SystemUserId))
             return NotFound("不存在的");
-        var entity = await manager.CreateNewEntityAsync(dto);
+        SystemLogs entity = await manager.CreateNewEntityAsync(dto);
         return await manager.AddAsync(entity);
     }
 
@@ -53,11 +47,11 @@ public class SystemLogsController : ClientControllerBase<SystemLogsManager>
     [HttpPut("{id}")]
     public async Task<ActionResult<SystemLogs?>> UpdateAsync([FromRoute] Guid id, SystemLogsUpdateDto dto)
     {
-        var current = await manager.GetOwnedAsync(id);
+        SystemLogs? current = await manager.GetOwnedAsync(id);
         if (current == null) return NotFound(ErrorMsg.NotFoundResource);
         if (current.SystemUser.Id != dto.SystemUserId)
         {
-            var systemUser = await _systemUserManager.GetCurrentAsync(dto.SystemUserId);
+            SystemUser? systemUser = await _systemUserManager.GetCurrentAsync(dto.SystemUserId);
             if (systemUser == null) return NotFound("不存在的");
             current.SystemUser = systemUser;
         }
@@ -72,7 +66,7 @@ public class SystemLogsController : ClientControllerBase<SystemLogsManager>
     [HttpGet("{id}")]
     public async Task<ActionResult<SystemLogs?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        SystemLogs? res = await manager.FindAsync(id);
         return (res == null) ? NotFound() : res;
     }
 
@@ -86,7 +80,7 @@ public class SystemLogsController : ClientControllerBase<SystemLogsManager>
     public async Task<ActionResult<SystemLogs?>> DeleteAsync([FromRoute] Guid id)
     {
         // TODO:实现删除逻辑,注意删除权限
-        var entity = await manager.GetOwnedAsync(id);
+        SystemLogs? entity = await manager.GetOwnedAsync(id);
         if (entity == null) return NotFound();
         return Forbid();
         // return await manager.DeleteAsync(entity);

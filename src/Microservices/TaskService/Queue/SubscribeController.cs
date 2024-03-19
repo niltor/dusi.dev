@@ -7,28 +7,22 @@ namespace TaskService.Queue;
 /// <summary>
 /// 订阅接口
 /// </summary>
-public class SubscribeController : ControllerBase
+public class SubscribeController(
+    IBlogPublisher blogPublisher,
+    BlogManager blogManager
+        ) : ControllerBase
 {
-    private readonly IBlogPublisher blogPublisher;
-    private readonly BlogManager blogManager;
-
-    public SubscribeController(
-        IBlogPublisher blogPublisher,
-        BlogManager blogManager
-        )
-    {
-        this.blogPublisher = blogPublisher;
-        this.blogManager = blogManager;
-    }
+    private readonly IBlogPublisher blogPublisher = blogPublisher;
+    private readonly BlogManager blogManager = blogManager;
 
     [HttpPost("/blog")]
     public async Task<ActionResult> NewBlog([FromBody] Guid id)
     {
-        var data = await blogManager.Query.Db.Include(b => b.Catalog)
+        Entity.CMS.Blog? data = await blogManager.Query.Db.Include(b => b.Catalog)
             .SingleOrDefaultAsync(b => b.Id == id);
         if (data != null)
         {
-            var blog = new Blog
+            Blog blog = new()
             {
                 Description = data.Content,
                 Title = data.Title,

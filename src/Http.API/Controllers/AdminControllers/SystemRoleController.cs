@@ -4,15 +4,12 @@ namespace Http.API.Controllers.AdminControllers;
 /// <summary>
 /// 角色表
 /// </summary>
-public class SystemRoleController : RestControllerBase<SystemRoleManager>
+public class SystemRoleController(
+    IUserContext user,
+    ILogger<SystemRoleController> logger,
+    SystemRoleManager manager
+        ) : RestControllerBase<SystemRoleManager>(manager, user, logger)
 {
-    public SystemRoleController(
-        IUserContext user,
-        ILogger<SystemRoleController> logger,
-        SystemRoleManager manager
-        ) : base(manager, user, logger)
-    {
-    }
 
     /// <summary>
     /// 筛选
@@ -33,7 +30,7 @@ public class SystemRoleController : RestControllerBase<SystemRoleManager>
     [HttpPost]
     public async Task<ActionResult<SystemRole>> AddAsync(SystemRoleAddDto form)
     {
-        var entity = form.MapTo<SystemRoleAddDto, SystemRole>();
+        SystemRole entity = form.MapTo<SystemRoleAddDto, SystemRole>();
         return await manager.AddAsync(entity);
     }
 
@@ -46,7 +43,7 @@ public class SystemRoleController : RestControllerBase<SystemRoleManager>
     [HttpPut("{id}")]
     public async Task<ActionResult<SystemRole?>> UpdateAsync([FromRoute] Guid id, SystemRoleUpdateDto form)
     {
-        var current = await manager.GetCurrentAsync(id);
+        SystemRole? current = await manager.GetCurrentAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -59,7 +56,7 @@ public class SystemRoleController : RestControllerBase<SystemRoleManager>
     [HttpGet("{id}")]
     public async Task<ActionResult<SystemRole?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        SystemRole? res = await manager.FindAsync(id);
         if (res == null) return NotFound();
         return res;
     }
@@ -73,7 +70,7 @@ public class SystemRoleController : RestControllerBase<SystemRoleManager>
     [HttpDelete("{id}")]
     public async Task<ActionResult<SystemRole?>> DeleteAsync([FromRoute] Guid id)
     {
-        var entity = await manager.GetCurrentAsync(id);
+        SystemRole? entity = await manager.GetCurrentAsync(id);
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity);
     }

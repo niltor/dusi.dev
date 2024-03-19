@@ -11,9 +11,9 @@ public class DateHelper
     public static (DateOnly startDate, DateOnly endDate) GetCurrentWeekDate()
     {
         DateTimeOffset now = DateTimeOffset.UtcNow;
-        var weekDay = now.GetWeekDay();
-        var startDate = now.AddDays(-weekDay + 1).ToDateOnly();
-        var endDate = now.AddDays(7 - weekDay).ToDateOnly();
+        int weekDay = now.GetWeekDay();
+        DateOnly startDate = now.AddDays(-weekDay + 1).ToDateOnly();
+        DateOnly endDate = now.AddDays(7 - weekDay).ToDateOnly();
         return (startDate, endDate);
     }
 
@@ -25,8 +25,8 @@ public class DateHelper
     public static DateOnly GetDateByWeekday(int weekday)
     {
         DateTimeOffset now = DateTimeOffset.UtcNow;
-        var today = now.GetWeekDay();
-        var date = now.AddDays(weekday - today).ToDateOnly();
+        int today = now.GetWeekDay();
+        DateOnly date = now.AddDays(weekday - today).ToDateOnly();
         return date;
     }
 
@@ -37,7 +37,7 @@ public class DateHelper
     public static (DateOnly startDate, DateOnly endDate) GetCurrentMonthDate()
     {
         DateTimeOffset now = DateTimeOffset.UtcNow;
-        var startDate = new DateOnly(now.Year, now.Month, 1);
+        DateOnly startDate = new(now.Year, now.Month, 1);
         DateOnly endDate = startDate.AddMonths(1).AddDays(-1);
         return (startDate, endDate);
     }
@@ -50,7 +50,7 @@ public class DateHelper
     public static DateOnly GetMonthLastWeekdayDate(DayOfWeek dayOfWeek)
     {
         DateTimeOffset now = DateTimeOffset.UtcNow;
-        var startDate = new DateOnly(now.Year, now.Month, 1);
+        DateOnly startDate = new(now.Year, now.Month, 1);
         DateOnly endDate = startDate.AddMonths(1).AddDays(-1);
 
         while (endDate.DayOfWeek != dayOfWeek)

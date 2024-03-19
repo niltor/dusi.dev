@@ -5,15 +5,12 @@ namespace Http.API.Controllers.AdminControllers;
 /// <summary>
 /// 实体模型类
 /// </summary>
-public class EntityModelController : RestControllerBase<EntityModelManager>
+public class EntityModelController(
+    IUserContext user,
+    ILogger<EntityModelController> logger,
+    EntityModelManager manager
+        ) : RestControllerBase<EntityModelManager>(manager, user, logger)
 {
-    public EntityModelController(
-        IUserContext user,
-        ILogger<EntityModelController> logger,
-        EntityModelManager manager
-        ) : base(manager, user, logger)
-    {
-    }
 
     /// <summary>
     /// 筛选
@@ -34,7 +31,7 @@ public class EntityModelController : RestControllerBase<EntityModelManager>
     [HttpPost]
     public async Task<ActionResult<EntityModel>> AddAsync(EntityModelAddDto form)
     {
-        var entity = form.MapTo<EntityModelAddDto, EntityModel>();
+        EntityModel entity = form.MapTo<EntityModelAddDto, EntityModel>();
         return await manager.AddAsync(entity);
     }
 
@@ -47,7 +44,7 @@ public class EntityModelController : RestControllerBase<EntityModelManager>
     [HttpPut("{id}")]
     public async Task<ActionResult<EntityModel?>> UpdateAsync([FromRoute] Guid id, EntityModelUpdateDto form)
     {
-        var current = await manager.GetCurrentAsync(id);
+        EntityModel? current = await manager.GetCurrentAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -60,7 +57,7 @@ public class EntityModelController : RestControllerBase<EntityModelManager>
     [HttpGet("{id}")]
     public async Task<ActionResult<EntityModel?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        EntityModel? res = await manager.FindAsync(id);
         return res == null ? NotFound() : res;
     }
 
@@ -73,7 +70,7 @@ public class EntityModelController : RestControllerBase<EntityModelManager>
     [HttpDelete("{id}")]
     public async Task<ActionResult<EntityModel?>> DeleteAsync([FromRoute] Guid id)
     {
-        var entity = await manager.GetCurrentAsync(id);
+        EntityModel? entity = await manager.GetCurrentAsync(id);
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity);
     }

@@ -7,21 +7,15 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 博客
 /// </summary>
-public class BlogController : ClientControllerBase<BlogManager>
+public class BlogController(
+    IUserContext user,
+    ILogger<BlogController> logger,
+    BlogManager manager,
+    StorageService storageService,
+    CatalogManager catalogManager) : ClientControllerBase<BlogManager>(manager, user, logger)
 {
-    private readonly StorageService storageService;
-    private readonly CatalogManager _catalogManager;
-
-    public BlogController(
-        IUserContext user,
-        ILogger<BlogController> logger,
-        BlogManager manager,
-        StorageService storageService,
-        CatalogManager catalogManager) : base(manager, user, logger)
-    {
-        this.storageService = storageService;
-        _catalogManager = catalogManager;
-    }
+    private readonly StorageService storageService = storageService;
+    private readonly CatalogManager _catalogManager = catalogManager;
 
     /// <summary>
     /// 筛选
@@ -69,7 +63,7 @@ public class BlogController : ClientControllerBase<BlogManager>
     [AllowAnonymous]
     public async Task<ActionResult<Blog>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        Blog? res = await manager.FindAsync(id);
         return res == null ? NotFound() : res;
     }
 
@@ -86,7 +80,7 @@ public class BlogController : ClientControllerBase<BlogManager>
 
         if (!await _catalogManager.ExistAsync(dto.CatalogId))
             return NotFound("不存在的目录");
-        var entity = await manager.CreateNewEntityAsync(dto);
+        Blog entity = await manager.CreateNewEntityAsync(dto);
         return await manager.AddAsync(entity);
     }
 
@@ -99,13 +93,13 @@ public class BlogController : ClientControllerBase<BlogManager>
     [HttpPut("{id}")]
     public async Task<ActionResult<Blog?>> UpdateAsync([FromRoute] Guid id, BlogUpdateDto dto)
     {
-        var current = await manager.GetOwnedAsync(id);
+        Blog? current = await manager.GetOwnedAsync(id);
         if (current == null) return NotFound(ErrorMsg.NotFoundResource);
 
         // 修改了所属目录
         if (current.Catalog.Id != dto.CatalogId)
         {
-            var catalog = await _catalogManager.GetCurrentAsync(dto.CatalogId);
+            Catalog? catalog = await _catalogManager.GetCurrentAsync(dto.CatalogId);
             if (catalog == null) return NotFound("不存在的目录");
             current.Catalog = catalog;
         }
@@ -148,10 +142,10 @@ public class BlogController : ClientControllerBase<BlogManager>
             }
 
             string fileName = HashCrypto.Md5FileHash(upload.OpenReadStream());
-            var blobPath = Path.Combine("images", DateTime.UtcNow.ToString("yyyy-MM-dd"), fileName + fileExt);
+            string blobPath = Path.Combine("images", DateTime.UtcNow.ToString("yyyy-MM-dd"), fileName + fileExt);
 
             // 上传云存储
-            var url = await storageService.UploadAsync(upload.OpenReadStream(), blobPath);
+            string url = await storageService.UploadAsync(upload.OpenReadStream(), blobPath);
 
             return new UploadResult()
             {
@@ -173,7 +167,7 @@ public class BlogController : ClientControllerBase<BlogManager>
     public async Task<ActionResult<Blog?>> DeleteAsync([FromRoute] Guid id)
     {
         // TODO:实现删除逻辑,注意删除权限
-        var entity = await manager.GetOwnedAsync(id);
+        Blog? entity = await manager.GetOwnedAsync(id);
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity);
     }

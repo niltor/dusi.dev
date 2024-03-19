@@ -4,24 +4,17 @@ using Share.Models.BlogDtos;
 
 namespace Application.Manager;
 
-public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto, BlogItemDto>, IDomainManager<Blog>
+public class BlogManager(DataAccessContext<Blog> storeContext,
+                   IUserContext userContext,
+                   CatalogManager catalogManager,
+                   TagsManager tagsManager,
+                   IWebHostEnvironment env,
+                   ILogger<BlogManager> logger) : ManagerBase<Blog, BlogUpdateDto, BlogFilterDto, BlogItemDto>(storeContext, logger)
 {
-    private readonly CatalogManager _catalogManager;
-    private readonly TagsManager _tagsManager;
-    private readonly IWebHostEnvironment _env;
-
-    public BlogManager(DataStoreContext storeContext,
-                       IUserContext userContext,
-                       CatalogManager catalogManager,
-                       TagsManager tagsManager,
-                       IWebHostEnvironment env,
-                       ILogger<BlogManager> logger) : base(storeContext, logger)
-    {
-        _userContext = userContext;
-        _catalogManager = catalogManager;
-        _tagsManager = tagsManager;
-        _env = env;
-    }
+    private readonly IUserContext _userContext = userContext;
+    private readonly CatalogManager _catalogManager = catalogManager;
+    private readonly TagsManager _tagsManager = tagsManager;
+    private readonly IWebHostEnvironment _env = env;
 
     /// <summary>
     /// 创建待添加实体
@@ -41,7 +34,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
             }
         }
 
-        var catalog = await _catalogManager.GetCurrentAsync(dto.CatalogId);
+        Catalog? catalog = await _catalogManager.GetCurrentAsync(dto.CatalogId);
         entity.Catalog = catalog!;
         entity.UserId = _userContext!.UserId;
         entity.Authors = _userContext.Username!;
@@ -51,7 +44,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
     public override async Task<Blog> AddAsync(Blog entity)
     {
         // 生成markdown文件
-        var path = Path.Combine(_env.WebRootPath, "markdown", entity.Catalog.Name);
+        string path = Path.Combine(_env.WebRootPath, "markdown", entity.Catalog.Name);
 
         if (!Directory.Exists(path))
         {
@@ -60,7 +53,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
 
 
         await base.AddAsync(entity);
-        var fileName = entity.Id.ToString() + ".md";
+        string fileName = entity.Id.ToString() + ".md";
         await File.WriteAllTextAsync(Path.Combine(path, fileName), entity.Content);
 
         // 发送同步消息
@@ -97,13 +90,13 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
             }
         }
 
-        var path = Path.Combine(_env.WebRootPath, "markdown", entity.Catalog.Name);
+        string path = Path.Combine(_env.WebRootPath, "markdown", entity.Catalog.Name);
         if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);
         }
 
-        var fileName = entity.Id.ToString() + ".md";
+        string fileName = entity.Id.ToString() + ".md";
         await File.WriteAllTextAsync(Path.Combine(path, fileName), dto.Content);
 
         // 发布
@@ -138,7 +131,7 @@ public class BlogManager : DomainManagerBase<Blog, BlogUpdateDto, BlogFilterDto,
 
     public async Task<List<Guid>?> GetBlogIdsByTagAsync(string tag)
     {
-        return await Stores.QueryContext.Tags.Where(t => t.Name == tag)
+        return await QueryContext.Tags.Where(t => t.Name == tag)
             .SelectMany(t => t.Blogs!)
             .Select(t => t.Id)
             .ToListAsync();

@@ -13,6 +13,7 @@ global using Ater.Web.Core.Utils;
 global using Ater.Web.Extension.Middleware;
 global using Ater.Web.Extension.Services;
 global using Entity;
+global using EntityFramework.DBProvider;
 global using Http.API.Middleware;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc;

@@ -57,13 +57,13 @@ public static partial class Extensions
         ParameterExpression parameter = Expression.Parameter(sourceType, "e");
 
         // 只构造都存在的属性
-        var sourceNames = sourceType.GetProperties()
+        List<string> sourceNames = sourceType.GetProperties()
             .Select(s => s.Name).ToList();
-        var props = resultType.GetProperties().ToList();
+        List<System.Reflection.PropertyInfo> props = resultType.GetProperties().ToList();
         props = props.Where(p => sourceNames.Contains(p.Name)).ToList();
         //props = props.Intersect(sourceProps).ToList();
 
-        var bindings = props.Select(p =>
+        List<MemberAssignment> bindings = props.Select(p =>
              Expression.Bind(p, Expression.PropertyOrField(parameter, p.Name))
         ).ToList();
         MemberInitExpression body = Expression.MemberInit(Expression.New(resultType), bindings);
@@ -102,7 +102,7 @@ public static partial class Extensions
     {
         IOrderedQueryable<T> orderQuery = default!;
         ParameterExpression parameter = Expression.Parameter(typeof(T), "e");
-        var count = 0;
+        int count = 0;
         foreach (KeyValuePair<string, bool> item in dic)
         {
             MemberExpression prop = Expression.PropertyOrField(parameter, item.Key);
@@ -161,8 +161,8 @@ public static partial class Extensions
             ?? throw new ArgumentException("Invalid property expression", nameof(propertyExpression));
         Type propertyType = memberExpression.Type;
 
-        var minValObj = Convert.ChangeType(minVal, propertyType);
-        var maxValObj = Convert.ChangeType(maxVal, propertyType);
+        object minValObj = Convert.ChangeType(minVal, propertyType);
+        object maxValObj = Convert.ChangeType(maxVal, propertyType);
 
         ConstantExpression minExpr = Expression.Constant(minValObj, propertyType);
         ConstantExpression maxExpr = Expression.Constant(maxValObj, propertyType);
@@ -171,7 +171,7 @@ public static partial class Extensions
         BinaryExpression leftExpr = Expression.GreaterThanOrEqual(propertyAccess, minExpr);
         BinaryExpression rightExpr = Expression.LessThanOrEqual(propertyAccess, maxExpr);
         BinaryExpression andExpr = Expression.AndAlso(leftExpr, rightExpr);
-        var lambdaExpr = Expression.Lambda<Func<TSource, bool>>(andExpr, parameter);
+        Expression<Func<TSource, bool>> lambdaExpr = Expression.Lambda<Func<TSource, bool>>(andExpr, parameter);
 
         return source.Where(lambdaExpr);
     }
@@ -244,8 +244,8 @@ public static partial class Extensions
         DateOnly minVal,
         DateOnly maxVal)
     {
-        var minValObj = minVal.ToDateTimeOffset();
-        var maxValObj = maxVal.ToDateTimeOffset();
+        DateTimeOffset minValObj = minVal.ToDateTimeOffset();
+        DateTimeOffset maxValObj = maxVal.ToDateTimeOffset();
         return source.Between<T, DateTimeOffset>(propertyExpression, minValObj, maxValObj);
     }
 
@@ -276,7 +276,7 @@ public static partial class Extensions
     public static List<T> BuildTree<T>(this List<T> nodes) where T : ITreeNode<T>
     {
         nodes.ForEach(n => { n.Children = []; });
-        var nodeDict = nodes.ToDictionary(n => n.Id);
+        Dictionary<Guid, T> nodeDict = nodes.ToDictionary(n => n.Id);
         List<T> res = [];
 
         foreach (T node in nodes)

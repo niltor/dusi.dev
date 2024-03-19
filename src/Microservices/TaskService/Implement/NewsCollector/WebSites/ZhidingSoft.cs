@@ -20,37 +20,37 @@ public class ZhidingSoft : BaseHtml
 
     public async override Task<List<Rss>> GetListAsync(int number = 3)
     {
-        var result = new List<Rss>();
-        var cookieContainer = new CookieContainer();
-        using (var handler = new HttpClientHandler() { CookieContainer = cookieContainer })
-        using (var client = new HttpClient(handler))
+        List<Rss> result = new();
+        CookieContainer cookieContainer = new();
+        using (HttpClientHandler handler = new() { CookieContainer = cookieContainer })
+        using (HttpClient client = new(handler))
         {
             //cookieContainer.Add(new Cookie("nsdr", @"""em=geethin%2540outlook.com|tkn=1|fnm=niltor|industry=Aerospace%252FDefense%2520Contractor|jobFunction=Applications|jobPosition=Manager""", "/", "infoworld.com"));
             //cookieContainer.Add(new Cookie("idg_uuid", "745fb237-4296-42e1-95ed-e06ebfa7c6ac", "/", "infoworld.com"));
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             // 转换编码
-            var response = await client.GetByteArrayAsync(Url);
-            var content = Encoding.GetEncoding("GB2312").GetString(response);
+            byte[] response = await client.GetByteArrayAsync(Url);
+            string content = Encoding.GetEncoding("GB2312").GetString(response);
 
             if (!string.IsNullOrEmpty(content))
             {
-                var doc = new HtmlDocument();
+                HtmlDocument doc = new();
                 doc.LoadHtml(content);
-                var rootNodes = doc.DocumentNode.SelectSingleNode(RootName);
+                HtmlNode rootNodes = doc.DocumentNode.SelectSingleNode(RootName);
                 if (rootNodes != null)
                 {
-                    var itemsNodes = rootNodes.SelectNodes(ItemName);
+                    HtmlNodeCollection itemsNodes = rootNodes.SelectNodes(ItemName);
 
                     itemsNodes.ToList().ForEach(node =>
                     {
-                        var date = node.SelectSingleNode(PubDate)?.InnerText.Trim();
-                        var catetory = node.SelectSingleNode(Category);
+                        string? date = node.SelectSingleNode(PubDate)?.InnerText.Trim();
+                        HtmlNode catetory = node.SelectSingleNode(Category);
 
-                        var news = new Rss
+                        Rss news = new()
                         {
                             Categories = node.SelectSingleNode(Category)?.InnerText?.Trim(),
-                            CreateTime = DateTime.TryParse(date, out var pubDate) ? pubDate : DateTime.Now,
+                            CreateTime = DateTime.TryParse(date, out DateTime pubDate) ? pubDate : DateTime.Now,
                             Description = node.SelectSingleNode(Description)?.InnerText?.Trim(),
                             Title = node.SelectSingleNode(Title)?.InnerText?.Trim() ?? "",
                             Link = node.SelectSingleNode(Link)?.GetAttributeValue("href", "")

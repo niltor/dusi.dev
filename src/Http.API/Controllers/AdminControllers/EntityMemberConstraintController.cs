@@ -5,15 +5,12 @@ namespace Http.API.Controllers.AdminControllers;
 /// <summary>
 /// 属性的约束
 /// </summary>
-public class EntityMemberConstraintController : RestControllerBase<EntityMemberConstraintManager>
+public class EntityMemberConstraintController(
+    IUserContext user,
+    ILogger<EntityMemberConstraintController> logger,
+    EntityMemberConstraintManager manager
+        ) : RestControllerBase<EntityMemberConstraintManager>(manager, user, logger)
 {
-    public EntityMemberConstraintController(
-        IUserContext user,
-        ILogger<EntityMemberConstraintController> logger,
-        EntityMemberConstraintManager manager
-        ) : base(manager, user, logger)
-    {
-    }
 
     /// <summary>
     /// 筛选
@@ -34,7 +31,7 @@ public class EntityMemberConstraintController : RestControllerBase<EntityMemberC
     [HttpPost]
     public async Task<ActionResult<EntityMemberConstraint>> AddAsync(EntityMemberConstraintAddDto form)
     {
-        var entity = form.MapTo<EntityMemberConstraintAddDto, EntityMemberConstraint>();
+        EntityMemberConstraint entity = form.MapTo<EntityMemberConstraintAddDto, EntityMemberConstraint>();
         return await manager.AddAsync(entity);
     }
 
@@ -47,7 +44,7 @@ public class EntityMemberConstraintController : RestControllerBase<EntityMemberC
     [HttpPut("{id}")]
     public async Task<ActionResult<EntityMemberConstraint?>> UpdateAsync([FromRoute] Guid id, EntityMemberConstraintUpdateDto form)
     {
-        var current = await manager.GetCurrentAsync(id);
+        EntityMemberConstraint? current = await manager.GetCurrentAsync(id);
         if (current == null) return NotFound();
         return await manager.UpdateAsync(current, form);
     }
@@ -60,7 +57,7 @@ public class EntityMemberConstraintController : RestControllerBase<EntityMemberC
     [HttpGet("{id}")]
     public async Task<ActionResult<EntityMemberConstraint?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        EntityMemberConstraint? res = await manager.FindAsync(id);
         return res == null ? NotFound() : res;
     }
 
@@ -73,7 +70,7 @@ public class EntityMemberConstraintController : RestControllerBase<EntityMemberC
     [HttpDelete("{id}")]
     public async Task<ActionResult<EntityMemberConstraint?>> DeleteAsync([FromRoute] Guid id)
     {
-        var entity = await manager.GetCurrentAsync(id);
+        EntityMemberConstraint? entity = await manager.GetCurrentAsync(id);
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity);
     }

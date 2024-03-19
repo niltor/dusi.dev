@@ -10,7 +10,7 @@ public class RSAHelper
     /// <returns>包含公钥和私钥的元组。</returns>
     public static (string publicKey, string privateKey) GenerateKeys()
     {
-        using var rsa = RSA.Create();
+        using RSA rsa = RSA.Create();
         return (
             Convert.ToBase64String(rsa.ExportRSAPublicKey()),
             Convert.ToBase64String(rsa.ExportRSAPrivateKey())
@@ -25,7 +25,7 @@ public class RSAHelper
     /// <returns>加密的数据。</returns>
     public static byte[] Encrypt(string publicKey, string plainText)
     {
-        using var rsa = RSA.Create();
+        using RSA rsa = RSA.Create();
         rsa.ImportRSAPublicKey(Convert.FromBase64String(publicKey), out _);
         return rsa.Encrypt(Encoding.UTF8.GetBytes(plainText), RSAEncryptionPadding.OaepSHA256);
     }
@@ -38,9 +38,9 @@ public class RSAHelper
     /// <returns>解密的字符串。</returns>
     public static string Decrypt(string privateKey, byte[] encryptedData)
     {
-        using var rsa = RSA.Create();
+        using RSA rsa = RSA.Create();
         rsa.ImportRSAPrivateKey(Convert.FromBase64String(privateKey), out _);
-        var decryptedBytes = rsa.Decrypt(encryptedData, RSAEncryptionPadding.OaepSHA256);
+        byte[] decryptedBytes = rsa.Decrypt(encryptedData, RSAEncryptionPadding.OaepSHA256);
         return Encoding.UTF8.GetString(decryptedBytes);
     }
 
@@ -52,7 +52,7 @@ public class RSAHelper
     /// <returns>签名。</returns>
     public static byte[] SignData(string privateKey, byte[] data)
     {
-        using var rsa = RSA.Create();
+        using RSA rsa = RSA.Create();
         rsa.ImportRSAPrivateKey(Convert.FromBase64String(privateKey), out _);
         return rsa.SignData(data, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
     }
@@ -66,7 +66,7 @@ public class RSAHelper
     /// <returns>如果数据和签名有效，则为true；否则为false。</returns>
     public static bool VerifyData(string publicKey, byte[] data, byte[] signature)
     {
-        using var rsa = RSA.Create();
+        using RSA rsa = RSA.Create();
         rsa.ImportRSAPublicKey(Convert.FromBase64String(publicKey), out _);
         return rsa.VerifyData(data, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
     }
