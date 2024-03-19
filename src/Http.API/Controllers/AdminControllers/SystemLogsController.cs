@@ -1,3 +1,4 @@
+using Entity;
 using Share.Models.SystemLogsDtos;
 namespace Http.API.Controllers.AdminControllers;
 

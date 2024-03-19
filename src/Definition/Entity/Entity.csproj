@@ -16,10 +16,10 @@
 
 	<ItemGroup>
 		<PackageReference Include="Mapster" Version="7.4.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Infrastructure\Ater.Web.Core\Ater.Web.Core.csproj" />
+	  <ProjectReference Include="..\..\Infrastructure\Ater.Web.Core\Ater.Web.Core.csproj" />
 	</ItemGroup>
 </Project>

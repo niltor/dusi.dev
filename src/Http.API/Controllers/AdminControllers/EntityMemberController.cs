@@ -1,3 +1,4 @@
+using Entity.EntityDesign;
 using Share.Models.EntityMemberDtos;
 namespace Http.API.Controllers.AdminControllers;
 

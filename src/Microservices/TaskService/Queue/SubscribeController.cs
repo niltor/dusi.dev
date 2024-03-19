@@ -1,6 +1,6 @@
 using Application.Manager;
 using Microsoft.AspNetCore.Mvc;
-using TaskService.Implement.PostBlog;
+using TaskService.Implement.BlogPublisher;
 
 namespace TaskService.Queue;
 

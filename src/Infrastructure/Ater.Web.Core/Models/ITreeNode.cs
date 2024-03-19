@@ -1,4 +1,4 @@
-namespace Ater.Web.Core.Models;
+﻿namespace Ater.Web.Core.Models;
 /// <summary>
 /// 树型结构
 /// </summary>

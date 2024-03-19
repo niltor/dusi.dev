@@ -60,7 +60,8 @@ public class SystemRoleController : RestControllerBase<SystemRoleManager>
     public async Task<ActionResult<SystemRole?>> GetDetailAsync([FromRoute] Guid id)
     {
         var res = await manager.FindAsync(id);
-        return res == null ? NotFound() : res;
+        if (res == null) return NotFound();
+        return res;
     }
 
     /// <summary>

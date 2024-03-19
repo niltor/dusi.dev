@@ -1,10 +1,8 @@
 using Application;
 using Application.Services;
 using Share.Options;
-using TaskService.Implement.BlogPublisher;
 using TaskService.Implement.NewsCollector;
 using TaskService.Implement.NewsCollector.RssFeeds;
-using TaskService.Implement.PostBlog;
 using TaskService.Tasks;
 
 Console.OutputEncoding = Encoding.UTF8;
@@ -57,21 +55,17 @@ services.AddSingleton<OsChinaFeed>();
 services.AddSingleton<InfoQFeed>();
 services.AddSingleton<RssHelper>();
 services.AddScoped<NewsCollector>();
-services.AddSingleton<IBlogPublisher, CnBlogPublisher>();
 services.AddHostedService<NewsCollectTask>();
 services.AddHostedService<UpdateViewCountTask>();
 services.AddHostedService<GetBiliBiliVideosTask>();
 services.AddHealthChecks();
 // controller with  dapr support
-services.AddControllers().AddDapr();
 
 var app = builder.Build();
 //app.UseAzureAppConfiguration();
 
 app.UseHealthChecks("/health");
 
-app.UseCloudEvents();
 app.MapControllers();
-app.MapSubscribeHandler();
 
 app.Run();

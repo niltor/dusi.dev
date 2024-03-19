@@ -1,4 +1,4 @@
-namespace Ater.Web.Core.Utils;
+﻿namespace Ater.Web.Core.Utils;
 /// <summary>
 /// 日期帮助类
 /// </summary>

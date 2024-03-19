@@ -1,3 +1,4 @@
+using Entity;
 using Share.Models.SystemUserDtos;
 namespace Http.API.Controllers.AdminControllers;
 

@@ -6,8 +6,6 @@ namespace Ater.Web.Core.Models;
 /// <inheritdoc/>
 public interface IEntityBase
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
     /// <summary>
     /// 创建时间
@@ -21,5 +19,5 @@ public interface IEntityBase
     /// 软删除
     /// </summary>
     public bool IsDeleted { get; set; }
-}
 
+}

@@ -1,13 +1,14 @@
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Application.Implement;
+using EntityFramework;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-
 using Share.Options;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -218,7 +219,6 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseCloudEvents();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 

@@ -1,3 +1,4 @@
+using Entity.CMS;
 using Share.Models.CatalogDtos;
 namespace Http.API.Controllers;
 

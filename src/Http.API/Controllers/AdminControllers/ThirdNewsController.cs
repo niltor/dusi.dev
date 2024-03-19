@@ -1,3 +1,4 @@
+using Entity.CMS;
 using Share.Models.ThirdNewsDtos;
 namespace Http.API.Controllers.AdminControllers;
 

@@ -1,4 +1,4 @@
-namespace TaskService.Implement.PostBlog;
+namespace TaskService.Implement.BlogPublisher;
 
 /// <summary>
 /// 发布博客

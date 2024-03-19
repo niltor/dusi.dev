@@ -1,4 +1,4 @@
-namespace Ater.Web.Core.Models;
+﻿namespace Ater.Web.Core.Models;
 /// <summary>
 /// http在请求返回的错误格式
 /// </summary>
