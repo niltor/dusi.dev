@@ -7,7 +7,6 @@ builder.AddDefaultComponents();
 builder.AddDefaultWebServices();
 
 WebApplication app = builder.Build();
-
 app.UseDefaultWebServices();
 
 using (app)

@@ -69,8 +69,8 @@ public static partial class AppServiceCollectionExtensions
     /// <returns></returns>
     public static IHostApplicationBuilder AddPgsqlDbContext(this IHostApplicationBuilder builder)
     {
-        string? commandString = builder.Configuration.GetConnectionString(AppSetting.CommandDB);
-        string? queryString = builder.Configuration.GetConnectionString(AppSetting.QueryDB);
+        string? commandString = builder.Configuration.GetConnectionString(AppConst.Default);
+        string? queryString = builder.Configuration.GetConnectionString(AppConst.Default);
         builder.Services.AddDbContextPool<QueryDbContext>(option =>
         {
             option.UseNpgsql(queryString, sql =>

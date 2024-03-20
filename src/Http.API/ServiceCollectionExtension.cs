@@ -23,15 +23,11 @@ public static class ServiceCollectionExtension
     {
         builder.Services.ConfigWebComponents(builder.Configuration);
         builder.Services.AddHttpContextAccessor();
-        builder.Services.AddTransient<IUserContext, UserContext>();
+        builder.Services.AddScoped<IUserContext, UserContext>();
 
         builder.Services.AddManager();
 
-        // TODO:其他模块Manager
-        //services.AddSystemModManagers();
-
         builder.Services.Configure<AzureOption>(builder.Configuration.GetSection("Azure"));
-
         builder.Services.AddSingleton(typeof(CacheService));
         builder.Services.AddSingleton<StorageService>();
 
@@ -73,6 +69,7 @@ public static class ServiceCollectionExtension
         }
 
         app.UseRateLimiter();
+        app.UseBlogViewMiddleware();
         app.UseStaticFiles();
         app.UseRouting();
         app.UseMiddleware<JwtMiddleware>();

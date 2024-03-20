@@ -20,7 +20,7 @@ public class ZhidingSoft : BaseHtml
 
     public async override Task<List<Rss>> GetListAsync(int number = 3)
     {
-        List<Rss> result = new();
+        List<Rss> result = [];
         CookieContainer cookieContainer = new();
         using (HttpClientHandler handler = new() { CookieContainer = cookieContainer })
         using (HttpClient client = new(handler))

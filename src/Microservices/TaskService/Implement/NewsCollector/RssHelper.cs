@@ -25,7 +25,7 @@ public class RssHelper(InfoQFeed infoQFeed, OsChinaFeed osChinaFeed, MicrosoftFe
     /// <returns></returns>
     public async Task<List<Rss>> GetAllBlogsAsync()
     {
-        List<Rss> result = new();
+        List<Rss> result = [];
         List<Rss> list = await microsoftFeed.GetBlogsAsync();
         result.AddRange(list);
 
@@ -38,7 +38,7 @@ public class RssHelper(InfoQFeed infoQFeed, OsChinaFeed osChinaFeed, MicrosoftFe
         // 过滤旧数据
         result = result.Where(r => r.CreateTime >= DateTime.Now.AddDays(-1)).ToList();
 
-        List<Rss> blogs = new();
+        List<Rss> blogs = [];
         foreach (Rss blog in result)
         {
             if (!blogs.Any(b => b.Title.Contains(blog.Title)))

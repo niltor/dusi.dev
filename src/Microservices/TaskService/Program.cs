@@ -1,6 +1,6 @@
 using Application;
+using Application.Implement;
 using Application.Services;
-using EntityFramework.DBProvider;
 using Share.Options;
 using TaskService.Implement.NewsCollector;
 using TaskService.Implement.NewsCollector.RssFeeds;
@@ -44,10 +44,11 @@ services.AddDbContextPool<CommandDbContext>(option =>
     });
 });
 
-services.AddHttpContextAccessor();
 services.Configure<AzureOption>(configuration.GetSection("Azure"));
 services.Configure<MetaWeblogOption>(configuration.GetSection("Options:Cnblog"));
 
+services.AddHttpContextAccessor();
+services.AddTransient<IUserContext, UserContext>();
 services.AddManager();
 services.AddSingleton<StorageService>();
 services.AddSingleton<MicrosoftFeed>();
@@ -59,13 +60,10 @@ services.AddHostedService<NewsCollectTask>();
 services.AddHostedService<UpdateViewCountTask>();
 services.AddHostedService<GetBiliBiliVideosTask>();
 services.AddHealthChecks();
-// controller with  dapr support
 
 WebApplication app = builder.Build();
 //app.UseAzureAppConfiguration();
 
 app.UseHealthChecks("/health");
-
-app.MapControllers();
 
 app.Run();

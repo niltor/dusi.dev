@@ -1,5 +1,4 @@
 using System.Xml.Linq;
-using TaskService.Implement.NewsCollector;
 
 namespace TaskService.Implement.NewsCollector.RssFeeds;
 
@@ -11,11 +10,11 @@ public class BaseFeed(ILogger logger, string provider)
     /// <summary>
     /// 链接
     /// </summary>
-    public string[] Urls { get; set; } = Array.Empty<string>();
+    public string[] Urls { get; set; } = [];
     /// <summary>
     /// 作者过滤
     /// </summary>
-    protected string[] Authorfilter { get; set; } = Array.Empty<string>();
+    protected string[] Authorfilter { get; set; } = [];
     /// <summary>
     /// 内容html标签过滤
     /// </summary>
@@ -50,9 +49,9 @@ public class BaseFeed(ILogger logger, string provider)
     /// </summary>
     /// <param name="number">数量</param>
     /// <returns></returns>
-    public async virtual Task<List<Rss>> GetBlogsAsync(int number = 3)
+    public virtual async Task<List<Rss>> GetBlogsAsync(int number = 3)
     {
-        List<Rss> result = new();
+        List<Rss> result = [];
         foreach (string url in Urls)
         {
             try

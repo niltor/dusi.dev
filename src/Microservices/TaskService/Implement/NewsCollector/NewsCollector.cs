@@ -1,5 +1,4 @@
 using Entity.CMS;
-using Ater.Web.Core.Utils;
 
 namespace TaskService.Implement.NewsCollector;
 
@@ -33,7 +32,7 @@ public class NewsCollector(ILogger<NewsCollector> logger, CommandDbContext conte
     public async Task<List<ThirdNews>> GetThirdNewsAsync()
     {
         List<Rss> news = await rssHelper.GetAllBlogsAsync();
-        List<ThirdNews> result = new();
+        List<ThirdNews> result = [];
         news.ForEach(news =>
         {
             ThirdNews thirdNews = new()
