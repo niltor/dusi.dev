@@ -171,4 +171,13 @@ public class BlogController(
         if (entity == null) return NotFound();
         return await manager.DeleteAsync(entity);
     }
+
+
+    [HttpGet("exportAll")]
+    [AllowAnonymous]
+    public async Task<ActionResult> ExportAllAsync()
+    {
+        await manager.ExportAllAsync();
+        return Ok();
+    }
 }

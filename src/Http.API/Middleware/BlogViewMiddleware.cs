@@ -1,4 +1,3 @@
-using EntityFramework;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Http.API.Middleware;

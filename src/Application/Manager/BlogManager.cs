@@ -1,3 +1,4 @@
+using System.IO.Compression;
 using Docfx;
 using Microsoft.AspNetCore.Hosting;
 using Share.Models.BlogDtos;
@@ -160,5 +161,35 @@ public class BlogManager(DataAccessContext<Blog> storeContext,
             .Include(b => b.Catalog);
 
         return await query.FirstOrDefaultAsync();
+    }
+
+    /// <summary>
+    /// 导出所有博客，一个博客一个.md文件，并按分类目录压缩
+    /// </summary>
+    /// <returns></returns>
+    public async Task<string> ExportAllAsync()
+    {
+        string path = Path.Combine(_env.WebRootPath, "markdown1");
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+
+        List<Blog> blogs = await Command.Db.Include(b => b.Catalog).ToListAsync();
+        foreach (var blog in blogs)
+        {
+            string fileName = blog.Title.ToString() + ".md";
+
+            var dirPath = Path.Combine(path, blog.Catalog.Name);
+            if (!Directory.Exists(dirPath))
+            {
+                Directory.CreateDirectory(dirPath);
+            }
+            await File.WriteAllTextAsync(Path.Combine(dirPath, fileName), blog.Content);
+        }
+
+        string zipPath = Path.Combine(_env.WebRootPath, "markdown.zip");
+        ZipFile.CreateFromDirectory(path, zipPath);
+        return zipPath;
     }
 }
